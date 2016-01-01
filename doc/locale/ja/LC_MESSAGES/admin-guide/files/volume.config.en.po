@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# c47ead38eada4ad89500b4f3e027cfec
+#: ../../admin-guide/files/volume.config.en.rst:20
+msgid "volume.config"
+msgstr ""
+
+# 056ac01f477a497daec3dbc347d26822
+#: ../../admin-guide/files/volume.config.en.rst:24
+msgid ""
+"The :file:`volume.config` file enables you to manage your cache space "
+"more efficiently and restrict disk usage by creating cache volumes of "
+"different sizes for specific protocols. You can further configure these "
+"volumes to store data from certain origin servers and/or domains in the "
+":file:`hosting.config` file."
+msgstr ""
+
+# b9f1898fd2e340039218f2cee7a05195
+#: ../../admin-guide/files/volume.config.en.rst:32
+msgid ""
+"The volume configuration must be the same on all nodes in a cluster. You "
+"must stop Traffic Server before you change the cache volume size and "
+"protocol assignment. For step-by-step instructions about partitioning the"
+" cache, refer to :ref:`partitioning-the-cache`."
+msgstr ""
+
+# 7fd54d8c294547ca9b92b0f85e410b6b
+#: ../../admin-guide/files/volume.config.en.rst:38
+msgid "Format"
+msgstr ""
+
+# dfbbb3c30d154f168ead392d74894ef1
+#: ../../admin-guide/files/volume.config.en.rst:40
+msgid ""
+"For each volume you want to create, enter a line with the following "
+"format: ::"
+msgstr ""
+
+# 0464f790172b4f36a1bbd87c6366267c
+#: ../../admin-guide/files/volume.config.en.rst:45
+msgid ""
+"where ``volume_number`` is a number between 1 and 255 (the maximum number"
+" of volumes is 255) and ``protocol_type`` is ``http``. Traffic Server "
+"supports ``http`` for HTTP volume types; ``volume_size`` is the amount of"
+" cache space allocated to the volume. This value can be either a "
+"percentage of the total cache space or an absolute value. The absolute "
+"value must be a multiple of 128 MB, where 128 MB is the smallest value. "
+"If you specify a percentage, then the size is rounded down to the closest"
+" multiple of 128 MB."
+msgstr ""
+
+# 37d3e5d881a84f40a57d617c1d6a0618
+#: ../../admin-guide/files/volume.config.en.rst:54
+msgid ""
+"Each volume is striped across several disks to achieve parallel I/O. For "
+"example: if there are four disks, then a 1-GB volume will have 256 MB on "
+"each disk (assuming each disk has enough free space available). If you do"
+" not allocate all the disk space in the cache, then the extra disk space "
+"is not used. You can use the extra space later to create new volumes "
+"without deleting and clearing the existing volumes."
+msgstr ""
+
+# 269402adc81d471883e8343197ea5013
+#: ../../admin-guide/files/volume.config.en.rst:62
+msgid "Examples"
+msgstr ""
+
+# 478ce0c657c64d7abf83674b5135b45a
+#: ../../admin-guide/files/volume.config.en.rst:64
+msgid ""
+"The following example partitions the cache evenly between HTTP and HTTPS "
+"requests::"
+msgstr ""
+

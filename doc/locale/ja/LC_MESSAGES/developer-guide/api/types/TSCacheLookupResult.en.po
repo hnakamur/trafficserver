@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 937a6ce1be3b4ae7acfc9b3d6a487b7e
+#: ../../developer-guide/api/types/TSCacheLookupResult.en.rst:20
+msgid "TSCacheLookupResult"
+msgstr ""
+
+# d99a23350a57452ead2baecd6aaba547
+#: ../../developer-guide/api/types/TSCacheLookupResult.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 222e5d373b714a7a85b3033aaac493a7
+#: ../../developer-guide/api/types/TSCacheLookupResult.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# a7bd1ec044e24cf2a25291a83d9f2224
+#: ../../developer-guide/api/types/TSCacheLookupResult.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# ca31d7579f514243bb42a7e5862e9b25
+#: ../../developer-guide/api/types/TSCacheLookupResult.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# a7cafce110594c7c901620f2c8c06a4c
+#: ../../developer-guide/api/types/TSCacheLookupResult.en.rst:43
+msgid "Description"
+msgstr ""
+

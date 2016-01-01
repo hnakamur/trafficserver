@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# c3742fbbef764e898125ee475c27be28
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:22
+msgid "TSVConnFdCreate"
+msgstr ""
+
+# e45d2165a57d4628942412c5de7c6acf
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:24
+msgid "Create a TSVConn from a socket."
+msgstr ""
+
+# 39c20646af37446f99e7eeb860fc38c9
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:27
+msgid "Synopsis"
+msgstr ""
+
+# fc54ee9d5ec245bfb1a0b091a229be12
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:29
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 1a38936915524f71a6675b6527fc8a05
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:34
+msgid "Description"
+msgstr ""
+
+# 499287629d9d4ed6a8f82cfc20a90d9a
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:36
+msgid ""
+":func:`TSVConnFdCreate` accepts a network socket :arg:`fd` and returns a "
+"new :type:`TSVConn` constructed from the socket. The socket descriptor "
+"must be an already connected socket. It will be placed into non-blocking "
+"mode."
+msgstr ""
+
+# b13a2359c520481cb55b54f8d8acd2a0
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:41
+msgid "Return Values"
+msgstr ""
+
+# 00e3c496bd0a478b9c8f620686c89e3a
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:43
+msgid ""
+"On success, the returned :type:`TSVConn` object owns the socket and the "
+"caller must not close it. If :func:`TSVConnFdCreate` fails, "
+":literal:`NULL` is returned, the socket is unchanged and the caller must "
+"close it."
+msgstr ""
+
+# f4ca6ee5d715469aa9d043d4afffa829
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:48
+msgid "Examples"
+msgstr ""
+
+# de13bafa4ce54ed0925e692dcf3ab096
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:50
+msgid ""
+"The example below is excerpted from `example/intercept/intercept.cc` in "
+"the Traffic Server source distribution. It demonstrates how to use "
+":func:`TSVConnFdCreate` to construct a :type:`TSVConn` from a connected "
+"socket."
+msgstr ""
+
+# 72afc4f2b7df4c239592cb5707b1edde
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:60
+msgid "See Also"
+msgstr ""
+
+# a88e2d2f67534153b9f77b56c1505a31
+#: ../../developer-guide/api/functions/TSVConnFdCreate.en.rst:62
+msgid ":manpage:`TSAPI(3ts)`"
+msgstr ""
+

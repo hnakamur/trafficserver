@@ -1,0 +1,227 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 81d7b40150e74bc48dee2fe6c8030af2
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:23
+msgid "Sample Buffered Null Transform Plugin"
+msgstr ""
+
+# 83cf10878905431db939bfb78b05a0ae
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:25
+msgid ""
+"The buffered null transform, ``bnull-transform.c``, reads the response "
+"content into a buffer and then writes the full buffer out to the client. "
+"Many examples of transformations, such as compression, require you to "
+"gather the full response content in order to perform the transformation."
+msgstr ""
+
+# 0d9a4196482a475eb60d824e2c3b857a
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:30
+msgid ""
+"The buffered null transform uses a state variable to keep track of when "
+"it is (a) reading data into the buffer and (b) writing the data from the "
+"buffer to the downstream vconnection."
+msgstr ""
+
+# a14349ef594047e5888744bd0d3e3072
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:34
+msgid "The following is a step-by-step walk through the buffered null transform:"
+msgstr ""
+
+# 95cb2cbc5a1e460a9dd8d4a0e792305d
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:37
+msgid "Gets a handle to HTTP transactions."
+msgstr ""
+
+# 659418bb17544a00bb62c72fdc0138fc
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:46
+msgid ""
+"With this ``TSPluginInit`` routine, the plugin is called back every time "
+"Traffic Server reads a response header."
+msgstr ""
+
+# 953e43ac572241efbcb9b716b8f11c79
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:49
+msgid "Checks to see if the transaction response is transformable."
+msgstr ""
+
+# 2c29c15ff3ff4427bbe22552714390f1
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:61
+msgid ""
+"The default behavior for transformations is to cache the transformed "
+"content (if desired, you also can tell Traffic Server to cache "
+"untransformed content). Therefore, only responses received directly from "
+"an origin server need to be transformed. Objects served from the cache "
+"are already transformed. To determine whether the response is from the "
+"origin server, the routine transformable checks the response header for "
+"the \"200 OK\" server response."
+msgstr ""
+
+# 3c2b67aeae6e4112987d1f074e6278d8
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:88
+msgid ""
+"If the response is transformable, then the plugin creates a "
+"transformation vconnection that gets called back when the response data "
+"is ready to be transformed (as it is streaming from the origin server)."
+msgstr ""
+
+# 89c1f80adbc6431c83f6066aa08c9098
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:102
+msgid ""
+"The previous code fragment shows that the handler function for the "
+"transformation vconnection is ``bnull_transform``."
+msgstr ""
+
+# b96ee927d2ca41f8b00f25cf1055a7f5
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:105
+msgid ""
+"The ``bnull_transform`` function has to handle ``ERROR``, "
+"``WRITE_COMPLETE``, ``WRITE_READY``, and ``IMMEDIATE`` events. If the "
+"transform is just beginning, the event received is probably "
+"``IMMEDIATE``. The ``bnull_transform`` function calls "
+"``handle_transform`` to handle ``WRITE_READY`` and ``IMMEDIATE``."
+msgstr ""
+
+# 692fd90d8d2a419a8fe6fb0d27049060
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:111
+msgid ""
+"The ``handle_transform`` function examines the data parameter for the "
+"continuation passed to it (the continuation passed to "
+"``handle_transform`` is the transformation vconnection). The data "
+"structure keeps track of two states: copying the data into the buffer "
+"(``STATE_BUFFER_DATA``) and writing the contents of the buffer to the "
+"output vconnection (``STATE_OUTPUT_DATA``)."
+msgstr ""
+
+# 72d1dbf7cced45218a6ff8fc1b6fa721
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:118
+msgid ""
+"Get a handle to the input VIO (see the ``handle_buffering`` function). "
+"``input_vio = TSVConnWriteVIOGet (contp);`` This is so that the "
+"transformation can get information about the upstream vconnection's write"
+" operation to the input buffer."
+msgstr ""
+
+# a27c78f8dbd24d599da3d315f6dafd09
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:123
+msgid ""
+"Copy data from the input buffer to the output buffer. See the "
+"``handle_buffering`` function for the following code fragment:"
+msgstr ""
+
+# 188c969d1b7042eea02d1653cf56fe64
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:131
+msgid ""
+"Tell the input buffer that the transformation has read the data. See the "
+"``handle_buffering`` function for the following code fragment:"
+msgstr ""
+
+# 6462e901d4c64d57864291143bb13b2b
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:138
+msgid ""
+"Modify the input VIO to tell it how much data has been read (increase the"
+" value of ``ndone``). See the ``handle_buffering`` function for the "
+"following code fragment:"
+msgstr ""
+
+# 4d126467efc04c0197e02b797124f2fa
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:146
+msgid ""
+"If there is more data left to read ( if ndone < nbytes), then the "
+"``handle_buffering`` function wakes up the upstream vconnection by "
+"sending it ``WRITE_READY``:"
+msgstr ""
+
+# 1f8152a273624b6b80770f1c762b9b0c
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:159
+msgid ""
+"The process of passing data through the transformation is illustrated in "
+"the following diagram. The transformation sends ``WRITE_READY`` events "
+"when it needs more data; when data is available, the upstream vconnection"
+" reenables the transformation with an ``IMMEDIATE`` event."
+msgstr ""
+
+# 2e8f78649c7f4e629f7f47ace0703c89
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:165
+msgid "The following diagram illustrates the read from an input vconnection:"
+msgstr ""
+
+# 9bd2bfbeaf4f43b6862b84374465ace8
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:168
+msgid ""
+"**Reading Data Into the Buffer (the ``STATE_BUFFER_DATA`` State)** "
+"{#ReadingDataIntoBuffer}"
+msgstr ""
+
+# cd818681171e4766baf1f326f2f9d42c
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:174
+msgid "Reading Data Into the Buffer the STATE\\_BUFFER\\_DATA State"
+msgstr ""
+
+# cef28dc9d3bb47b180a1d1772424bc2a
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:176
+msgid ""
+"When the data is read into the output buffer, the ``handle_buffering`` "
+"function sets the state of the transformation's data structure to "
+"``STATE_OUTPUT_DATA`` and calls the upstream vconnection back with the "
+"``WRITE_COMPLETE`` event."
+msgstr ""
+
+# cddaf63146c742baa8e391a3819477c6
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:187
+msgid ""
+"The upstream vconnection will probably shut down the write operation when"
+" it receives the ``WRITE_COMPLETE`` event. The handler function of the "
+"transformation, ``bnull_transform``, receives an ``IMMEDIATE`` event and "
+"calls the ``handle_transform`` function. This time, the state is "
+"``STATE_OUTPUT_DATA``, so ``handle_transform`` calls ``handle_output``."
+msgstr ""
+
+# 19b2ae5692a34dca9193c316dd9b8db5
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:194
+msgid ""
+"The ``handle_output`` function gets a handle to the output vconnection: "
+"``output_conn = TSTransformOutputVConnGet (contp);``"
+msgstr ""
+
+# e671ad3972084bb0a1fbdceb645679e0
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:197
+msgid ""
+"The ``handle_output`` function writes the buffer to the output "
+"vconnection:"
+msgstr ""
+
+# e3d304038c164f40b82e40168712dba2
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:206
+msgid "The following diagram illustrates the write to the output vconnection:"
+msgstr ""
+
+# 53c7361cb293409d8852a0efb096817d
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:209
+msgid ""
+"**Writing the Buffered Data to the Output Vconnection** "
+"{#WritingBufferedtDataIntoVConnection}"
+msgstr ""
+
+# 1b7c6a06a24c46cbb7c42c1b3b857660
+#: ../../developer-guide/plugins/http-transformations/sample-buffered-null-transformation-plugin.en.rst:215
+msgid "Writing the Buffered Data to the Output Vconnection"
+msgstr ""
+

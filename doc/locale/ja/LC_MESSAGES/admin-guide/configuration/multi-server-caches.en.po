@@ -1,0 +1,342 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 8fa2f5832ce3445e9d2179b9551f1d44
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:4
+msgid "Traffic Server Cluster"
+msgstr ""
+
+# f6ac4922b8a34457be377f7e2dfe158f
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:23
+msgid ""
+"Traffic Server scales from a single node to multiple nodes that form a "
+"cluster allowing you to improve system performance and reliability."
+msgstr ""
+
+# 5e933e8c59fa415fae0a22ad7b83e0b3
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:30
+msgid "Understanding Traffic Server Clusters"
+msgstr ""
+
+# f621552830504d78b33e9497908ca653
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:32
+msgid ""
+"A Traffic Server cluster consists of multiple Traffic Server nodes. The "
+"nodes in a cluster share configuration information and can form a single "
+"logical cache. Traffic Server detects the addition and deletion of nodes "
+"in the cluster automatically and can detect when a node is unavailable. "
+"Traffic Server uses its own protocol for clustering, which is multicast "
+"for node location and heartbeat, but unicast for all data exchange within"
+" the cluster. Traffic Server has two clustering modes:"
+msgstr ""
+
+# 66b82fc6288343baa85b7ce8665577a8
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:40
+msgid "Management-only mode; refer to `Management-Only Clustering`_ below."
+msgstr ""
+
+# de0637f3942a4d8f8b51d8744841295a
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:41
+msgid "Full-clustering mode; refer to `Full Clustering`_"
+msgstr ""
+
+# ac3a24c3f1184df4b506107e1638c291
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:44
+msgid "Management-Only Clustering"
+msgstr ""
+
+# 62748501076d4181b1dbb23fadd3cb3c
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:46
+msgid ""
+"In management-only clustering mode, Traffic Server cluster nodes share "
+"configuration information. You can administer all the nodes at the same "
+"time. Traffic Server uses a multicast management protocol to provide a "
+"single system image of your Traffic Server cluster. Information about "
+"cluster membership, configuration, and exceptions is shared across all "
+"nodes, and the :program:`traffic_manager` process automatically "
+"propagates configuration changes to all the nodes."
+msgstr ""
+
+# 7d4e8a2bac534febaa629f7dd5660152
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:55
+msgid "Full Clustering"
+msgstr ""
+
+# 98e6c1f303534739a51c997739e6bb2c
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:57
+msgid ""
+"In full-clustering mode, as well as sharing configuration information, a "
+"Traffic Server cluster distributes its cache across its nodes into a "
+"single, virtual object store, rather than replicating the cache node by "
+"node. Traffic Server can provide an enormous aggregate cache size and can"
+" maximize cache hit rate by storing objects only once across the entire "
+"cluster."
+msgstr ""
+
+# aeda8ee3add741cba6d0ec94305c520d
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:64
+msgid ""
+"A fully clustered Traffic Server maps objects to specific nodes in the "
+"cluster. When a node receives a request, it checks to see if the request "
+"is a hit somewhere in the cluster. If the request is a hit on a different"
+" node, the node handling the request obtains the object from the hit node"
+" and serves it to the client. Traffic Server uses its own communication "
+"protocol to obtain an object from sibling cluster nodes."
+msgstr ""
+
+# 214cc3e92ef24f61b3fa263523cb24cc
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:71
+msgid ""
+"If a node fails or is shut down and removed, Traffic Server removes "
+"references to the missing node on all nodes in the cluster."
+msgstr ""
+
+# 25dd958a19524a57ab99635f371f0ef3
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:74
+msgid ""
+"Full clustering recommends a dedicated network interface for cluster "
+"communication to achieve better performance."
+msgstr ""
+
+# 9ab3339142ee4132a63cca661b957063
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:78
+msgid "Enabling Clustering Mode"
+msgstr ""
+
+# e30f67dd11954614968f77a5b10b3135
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:80
+msgid ""
+"Before a node is added into a cluster, please ensure that the following "
+"conditions are being met:"
+msgstr ""
+
+# 085353ffc15e4121816c47c4cc5098a4
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:83
+msgid "All nodes are running the same operating system:"
+msgstr ""
+
+# e6b2f9be1d16430d8525439ba49ad1e8
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:85
+msgid "The same distribution, e.g.: RHEL 6.6"
+msgstr ""
+
+# 463967bf4423430b99b2ebff6d2f6368
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:86
+msgid "The same kernel, e.g.: 2.6.32-504.23.4.el6"
+msgstr ""
+
+# 4be57189b276495dba4421ec389ac9ff
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:87
+msgid "The same architecture, e.g.: x86_64"
+msgstr ""
+
+# acc60244a224425f9b97411d356132bd
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:89
+msgid "All nodes have the same version of Traffic Server installed"
+msgstr ""
+
+# 7856b73cdb004961a2d2eb48197ce06a
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:90
+msgid "All nodes are composed of the same hardware"
+msgstr ""
+
+# 65fa8c208ec241869a4f4b8291b30af3
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:91
+msgid "All nodes are on the same switch or same VLAN."
+msgstr ""
+
+# 8c7775c733f945618410d852a3b6356a
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:93
+msgid ""
+"Traffic Server does not apply the clustering mode change to all the nodes"
+" in the cluster. You must change the clustering mode on each node "
+"individually. You may following these instructions:"
+msgstr ""
+
+# 19f8727a4b72471cb88450c67496f877
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:97
+msgid ""
+"Setup the same cluster name, with :ts:cv:`proxy.config.proxy_name`, e.g. "
+"``MyCluster``."
+msgstr ""
+
+# 7f69466ddac140f88979e1d73362830e
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:99
+msgid ""
+"Set :ts:cv:`proxy.local.cluster.type` to ``1`` to enable cluster mode. "
+"The following values of this configuration are valid:"
+msgstr ""
+
+# cef4de70cbba4afbb932b1c58c9d7e1b
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:103
+msgid "Value"
+msgstr ""
+
+# ff73ec4a65f241878d32374ed9239aab
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:103
+msgid "Description"
+msgstr ""
+
+# 05b8d12a44a140659d8afdc43f9bcd8a
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:105
+msgid "1"
+msgstr ""
+
+# b7bc528f0f9e43ab9f26b1b3b5e72938
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:105
+msgid "Full-Clustering mode"
+msgstr ""
+
+# a2b04ec2b0824e41ae63ba5e19b93caa
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:106
+msgid "2"
+msgstr ""
+
+# 4425c6d5c16e458c8b36c28c98466d71
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:106
+msgid "Management-Only mode"
+msgstr ""
+
+# 9e3ec23b5fa14c3a8397297540780e7f
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:107
+msgid "3"
+msgstr ""
+
+# 7798b7465a7d4adc9c25fba2407d4c3c
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:107
+msgid "No clustering (*default*)"
+msgstr ""
+
+# 2db19b88114a4afe9d277c67e8b434d4
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:110
+msgid ""
+"Configure :ts:cv:`proxy.config.cluster.ethernet_interface`, e.g.: "
+"``eth0``. This should be replaced with the node's real interface. We "
+"recommends a dedicated physical interface here. Refer to "
+":ts:cv:`proxy.local.cluster.type` for a full description."
+msgstr ""
+
+# 2d6f0dcbc76442b2a67854ef1901da51
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:115
+msgid "Enable configuration changes::"
+msgstr ""
+
+# 45dd341b17dc4d16826681757ee9a943
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:119
+msgid "Restart traffic server::"
+msgstr ""
+
+# 3c183e9b436c482096a89d7136cb1596
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:123
+msgid ""
+"The :program:`traffic_server` and :program:`traffic_manager` processes "
+"will need to restart after the change of "
+":ts:cv:`proxy.local.cluster.type` and "
+":ts:cv:`proxy.config.cluster.ethernet_interface` have taken place."
+msgstr ""
+
+# cd507cf6de724c2ab7639e1cc6a9980c
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:127
+msgid ""
+"Traffic Server will join the cluster in about 10 seconds. To verify the "
+"hosts in the cluster, you can run::"
+msgstr ""
+
+# dad4db6e3a4b4b8e8c465df89548c988
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:132
+msgid ""
+"Cluster node status is also tracked in ``cluster.config`` in the "
+"configuration directory. This configuration is generated by the system "
+"and should not be edited. It contains a list of the machines that are "
+"currently members of the cluster, for example::"
+msgstr ""
+
+# f2c6b418e2b448f996346f6ce829e747
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:142
+msgid ""
+"After successfully joining a cluster, all changes of global "
+"configurations performed on any node in that cluster will take effect on "
+"all nodes, removing the need to manually duplicate configuration changes "
+"across each node individually."
+msgstr ""
+
+# 2ad145acac784e02bedc13cde996d436
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:147
+msgid "Deleting Nodes from a Cluster"
+msgstr ""
+
+# 88c4c451b3714b34a22b61a293bbf465
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:149
+msgid ""
+"To delete a node from the Traffic Server cluster, return the setting "
+":ts:cv:`proxy.local.cluster.type` to the default value ``3`` and reload."
+msgstr ""
+
+# eab7d05f47f44c6580972ff182dc0320
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:153
+msgid "Common issues for Cluster setup"
+msgstr ""
+
+# 28ab1061c9b1454bade7735f9bad737d
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:155
+msgid ""
+"The Cluster member auto discovery is built upon multi-casting UDP, and as"
+" such is impossible to setup where multi-casting is not avaliable, such "
+"as AWS EC2."
+msgstr ""
+
+# 865d12d13b2c4751a9d7f255c176217b
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:158
+msgid ""
+"The Cluster will depend on ports 8088, 8089, and 8086. These ports must "
+"not be blocked by any network configurations or firewalls on the network "
+"used for internal cluster communication."
+msgstr ""
+
+# 734cb51023d54358a115e8c85d1d9ebb
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:163
+msgid "Performance Tuning for Busy Clusters"
+msgstr ""
+
+# 6560e490fe14400db0e545fa1937ffe2
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:165
+msgid ""
+"Beginning with version 3.2.0, Apache Traffic Server can handle multiple "
+"internal cluster connections and the number of Cluster Threads is "
+"configurable. Each of the threads will keep one connection open to all "
+"peering cluster nodes."
+msgstr ""
+
+# 64e4dc4846414f2da7fa08459130cac0
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:170
+msgid "Increasing Cluster Threads"
+msgstr ""
+
+# 68cee96124ef4536a7fb872208226e5d
+#: ../../admin-guide/configuration/multi-server-caches.en.rst:172
+msgid ""
+"In the cluster environment, the current performance of the cluster "
+"threads will consume the same cpu usage as a normal network thread. It's "
+"reasonable to keep roughly the same number of cluster threads as network "
+"threads. For example, if you are running a system with 10 network "
+"processing threads, you can set the number of cluster threads by "
+"modifying :ts:cv:`proxy.config.cluster.threads` to ``10``::"
+msgstr ""
+

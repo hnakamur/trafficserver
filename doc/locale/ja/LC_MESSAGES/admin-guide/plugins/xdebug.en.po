@@ -1,0 +1,201 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 32ae2d39613846c58e98b6f88cd41f76
+#: ../../admin-guide/plugins/xdebug.en.rst:4
+msgid "XDebug Plugin"
+msgstr ""
+
+# 8dd76d0714e64b68b6310e3e631c6176
+#: ../../admin-guide/plugins/xdebug.en.rst:23
+msgid ""
+"The `XDebug` plugin allows HTTP clients to debug the operation of the "
+"Traffic Server cache using the default ``X-Debug`` header. The plugin is "
+"triggered by the presence of the ``X-Debug`` or the configured header in "
+"the client request. The contents of this header should be the names of "
+"the debug headers that are desired in the response. The `XDebug` plugin "
+"will remove the ``X-Debug`` header from the client request and inject the"
+" desired headers into the client response."
+msgstr ""
+
+# 0b9cfb79d9074bacbe2a79068f101cbe
+#: ../../admin-guide/plugins/xdebug.en.rst:31
+msgid ""
+"`XDebug` is a global plugin. It is installed by adding it to the "
+":file:`plugin.config` file. It currently takes a single, optional "
+"configuration option, ``--header``. E.g."
+msgstr ""
+
+# f408137aae9f4228b029624c1d9ee38d
+#: ../../admin-guide/plugins/xdebug.en.rst:35
+msgid "--header=ATS-My-Debug"
+msgstr ""
+
+# d6e4b3492c19446a8b8dc94977d18205
+#: ../../admin-guide/plugins/xdebug.en.rst:37
+msgid "This overrides the default ``X-Debug`` header name."
+msgstr ""
+
+# 12e1e81f65234667af0fa12a02c1c073
+#: ../../admin-guide/plugins/xdebug.en.rst:41
+msgid "Debugging Headers"
+msgstr ""
+
+# 19b186cdb69542f286046f37f7e6a721
+#: ../../admin-guide/plugins/xdebug.en.rst:43
+msgid "The `XDebug` plugin is able to generate the following debugging headers:"
+msgstr ""
+
+# d59f1cda8c27430d86357aca1d4129b4
+#: ../../admin-guide/plugins/xdebug.en.rst:48
+msgid "Via"
+msgstr ""
+
+# 13876b06c6a740c2a07a0db285186839
+#: ../../admin-guide/plugins/xdebug.en.rst:46
+msgid ""
+"If the ``Via`` header is requested, the `XDebug` plugin sets the "
+":ts:cv:`proxy.config.http.insert_response_via_str` configuration variable"
+" to ``3`` for the request."
+msgstr ""
+
+# c88ff1ea10904d7b86c98cfa02064532
+#: ../../admin-guide/plugins/xdebug.en.rst:53
+msgid "Diags"
+msgstr ""
+
+# ecb2c64e3d614c71898b5f3b7f822c87
+#: ../../admin-guide/plugins/xdebug.en.rst:51
+msgid ""
+"If the ``Diags`` header is requested, the `XDebug` plugin enables the "
+"transaction specific diagnostics for the transaction. This also requires "
+"that :ts:cv:`proxy.config.diags.debug.enabled` is set to ``1``."
+msgstr ""
+
+# 28dbcf13f051452e9c0522846239ce9d
+#: ../../admin-guide/plugins/xdebug.en.rst:58
+msgid "X-Cache-Key"
+msgstr ""
+
+# 362ddd4f3d4e48de89764112109f5ebe
+#: ../../admin-guide/plugins/xdebug.en.rst:56
+msgid ""
+"The ``X-Cache-Key`` header contains the URL that identifies the HTTP "
+"object in the Traffic Server cache. This header is particularly useful if"
+" a custom cache key is being used."
+msgstr ""
+
+# 12c45b5f453b434ba10af3cea65aaf8e
+#: ../../admin-guide/plugins/xdebug.en.rst:71
+msgid "X-Cache"
+msgstr ""
+
+# 0d692e0d8e9846828bd9a73cdb90f57a
+#: ../../admin-guide/plugins/xdebug.en.rst:61
+msgid "The ``X-Cache`` header contains the results of any cache lookup."
+msgstr ""
+
+# c9507280982040a2bd4e50ef89626ae4
+#: ../../admin-guide/plugins/xdebug.en.rst:64
+msgid "Value"
+msgstr ""
+
+# cb5f690bac574e7295ca41b70bf8b9b1
+#: ../../admin-guide/plugins/xdebug.en.rst:64
+msgid "Description"
+msgstr ""
+
+# b868cdd9d96d4b2d95a1363a2b73113e
+#: ../../admin-guide/plugins/xdebug.en.rst:66
+msgid "none"
+msgstr ""
+
+# ea5df22c88fe42c9a569c3bdffb86ca7
+#: ../../admin-guide/plugins/xdebug.en.rst:66
+msgid "No cache lookup was attempted."
+msgstr ""
+
+# 18e1b5804f034f6db218a6ac70f9bb1a
+#: ../../admin-guide/plugins/xdebug.en.rst:67
+msgid "miss"
+msgstr ""
+
+# fdd19a49afc74a36a2edc90ef1dbed13
+#: ../../admin-guide/plugins/xdebug.en.rst:67
+msgid "The object was not found in the cache."
+msgstr ""
+
+# cc68b7e4bfe24b73a16b551a1ba959b6
+#: ../../admin-guide/plugins/xdebug.en.rst:68
+msgid "hit-stale"
+msgstr ""
+
+# 466b1f3cc54a49e6baff44c740ae0525
+#: ../../admin-guide/plugins/xdebug.en.rst:68
+msgid "The object was found in the cache, but it was stale."
+msgstr ""
+
+# 07a6174244b14ae8959a02aa9ba3f024
+#: ../../admin-guide/plugins/xdebug.en.rst:69
+msgid "hit-fresh"
+msgstr ""
+
+# 617f5be55cdb4d66acd625153b7e7188
+#: ../../admin-guide/plugins/xdebug.en.rst:69
+msgid "The object was fresh in the cache."
+msgstr ""
+
+# e81b1f675603408dabe183aced7bfb12
+#: ../../admin-guide/plugins/xdebug.en.rst:70
+msgid "skipped"
+msgstr ""
+
+# b2adcde8799047a3a3fd2f63da77da11
+#: ../../admin-guide/plugins/xdebug.en.rst:70
+msgid "The cache lookup was skipped."
+msgstr ""
+
+# c2aeaea432674e46aff2b4ac7842a372
+#: ../../admin-guide/plugins/xdebug.en.rst:75
+msgid "X-Cache-Generation"
+msgstr ""
+
+# c65efbe0f43148d2bcdc742b74f6b11e
+#: ../../admin-guide/plugins/xdebug.en.rst:74
+msgid ""
+"The cache generation ID for this transaction, as specified by the "
+":ts:cv:`proxy.config.http.cache.generation` configuration variable."
+msgstr ""
+
+# 219688b08ad14ab6ad87262c7ba964ba
+#: ../../admin-guide/plugins/xdebug.en.rst:82
+msgid "X-Milestones"
+msgstr ""
+
+# 28cf50a7e9db419a95e34cccc2e4fd57
+#: ../../admin-guide/plugins/xdebug.en.rst:78
+msgid ""
+"The ``X-Milestones`` header contains detailed information about how long "
+"the transaction took to traverse portions of the HTTP state machine. The "
+"timing information is obtained from the :c:func:`TSHttpTxnMilestoneGet` "
+"API. Each milestone value is a fractional number of seconds since the "
+"beginning of the transaction."
+msgstr ""
+

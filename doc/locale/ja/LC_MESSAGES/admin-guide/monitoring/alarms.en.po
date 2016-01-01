@@ -1,0 +1,119 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 09e7bef421794e32b22d10e7949f82c0
+#: ../../admin-guide/monitoring/alarms.en.rst:23
+msgid "Traffic Manager Alarms"
+msgstr ""
+
+# 777812fb898b447a9dbebddec1b20b84
+#: ../../admin-guide/monitoring/alarms.en.rst:25
+msgid ""
+"|TS| signals an alarm when it detects a problem. For example, the space "
+"allocated to event logs could be full or |TS| may not be able to write to"
+" a configuration file."
+msgstr ""
+
+# df58dd78992b44a285be14aaba5b563e
+#: ../../admin-guide/monitoring/alarms.en.rst:30
+msgid "Email Alarms"
+msgstr ""
+
+# d6915ac85b97447e99965d9edba7a290
+#: ../../admin-guide/monitoring/alarms.en.rst:32
+msgid ""
+"To configure |TS| to send an email to a specific address whenever an "
+"alarm occurs, follow the steps below:"
+msgstr ""
+
+# 7a351057807043ea86897c16d8709662
+#: ../../admin-guide/monitoring/alarms.en.rst:35
+msgid ""
+"Set :ts:cv:`proxy.config.alarm_email` in :file:`records.config` to the "
+"email address you want to receive alarm notifications. ::"
+msgstr ""
+
+# 7ee56e51fb2a43d6993cae67d624472e
+#: ../../admin-guide/monitoring/alarms.en.rst:40
+msgid ""
+"Run the command :option:`traffic_ctl config reload` to apply the "
+"configuration changes."
+msgstr ""
+
+# e9ca79929ab942bebb3e6a6062b811c8
+#: ../../admin-guide/monitoring/alarms.en.rst:43
+msgid "Using a Script File for Alarms"
+msgstr ""
+
+# 9d12f642ff6f496e91b2b9b6a5f2aad2
+#: ../../admin-guide/monitoring/alarms.en.rst:45
+msgid ""
+"Alarm messages are built into Traffic Server and cannot be changed. "
+"However, you can write a script file to execute certain actions when an "
+"alarm is signaled. Traffic Server provides a sample script file named "
+"``example_alarm_bin.sh`` in the ``bin`` directory which can serve as the "
+"basis for your custom alarm scripts."
+msgstr ""
+
+# 295d20dd1d1844849e885015e80a85f8
+#: ../../admin-guide/monitoring/alarms.en.rst:52
+msgid "Viewing Statistics from Traffic Line"
+msgstr ""
+
+# ceb00db2043c4a8ab731786a472022e5
+#: ../../admin-guide/monitoring/alarms.en.rst:54
+msgid ""
+"You can use the Traffic Line command-line interface to view statistics "
+"about Traffic Server performance and web traffic. In addition to viewing "
+"statistics, you can also configure, stop, and restart the Traffic Server "
+"system. For additional information, refer to :ref:`configure-using-"
+"traffic-line` and :program:`traffic_line`. You can view specific "
+"information about a Traffic Server node or cluster by specifying the "
+"variable that corresponds to the statistic you want to see."
+msgstr ""
+
+# b17d1c1655a54fbcab4400f739ca858d
+#: ../../admin-guide/monitoring/alarms.en.rst:63
+msgid "To view a statistic, enter the following command:::"
+msgstr ""
+
+# 913c9d98095840c8b0f954d22885ecbe
+#: ../../admin-guide/monitoring/alarms.en.rst:67
+msgid ""
+"where ``variable`` is the variable representing the information you want "
+"to view. For a list of variables you can specify, refer to :ref:`Traffic "
+"Server Metrics <traffic-line-performance-statistics>`."
+msgstr ""
+
+# 940ee57bafe84ab785b28e2876b0d773
+#: ../../admin-guide/monitoring/alarms.en.rst:71
+msgid ""
+"For example, the following command displays the document hit rate for the"
+" Traffic Server node:::"
+msgstr ""
+
+# 7f9c48819a334ad6828d71018f7b6459
+#: ../../admin-guide/monitoring/alarms.en.rst:76
+msgid ""
+"If the Traffic Server ``bin`` directory is not in your path, then prepend"
+" the Traffic Line command with ``./`` (for example: :option:`traffic_ctl "
+"metric get` ``VARIABLE``)."
+msgstr ""
+

@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3124e130e8414d1290c1217971746bea
+#: ../../developer-guide/api/functions/TSMimeHdrFieldLengthGet.en.rst:22
+msgid "TSMimeHdrFieldLengthGet"
+msgstr ""
+
+# e31e352cae0c4b37b9c2c2dfca9a4e48
+#: ../../developer-guide/api/functions/TSMimeHdrFieldLengthGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# e3a1c077a702485183e95012e14820f9
+#: ../../developer-guide/api/functions/TSMimeHdrFieldLengthGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 01776b66c3b84cda9935f90700fc6192
+#: ../../developer-guide/api/functions/TSMimeHdrFieldLengthGet.en.rst:32
+msgid "Description"
+msgstr ""
+

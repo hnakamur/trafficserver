@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 75e40a36617a4bcaa8b71ffa603e26ab
+#: ../../admin-guide/files/plugin.config.en.rst:21
+msgid "plugin.config"
+msgstr ""
+
+# 32c574ca823544768dead87e1b0e77f2
+#: ../../admin-guide/files/plugin.config.en.rst:26
+msgid "Description"
+msgstr ""
+
+# dd3f7678f89c417fa37dd4a431fa0963
+#: ../../admin-guide/files/plugin.config.en.rst:28
+msgid ""
+"The :file:`plugin.config` file controls run-time loadable plugins "
+"available to |TS|, as well as their configuration.  Plugins listed in "
+"this file are referred to as *global plugins* because they are always "
+"loaded and have global effect. This is in contrast to plugins specified "
+"in :file:`remap.config`, whose effects are limited to the specific "
+"mapping rules to which they are applied."
+msgstr ""
+
+# a87ee2456bbb495a999d07b78adbba11
+#: ../../admin-guide/files/plugin.config.en.rst:34
+msgid ""
+"Each configuration line consists of a path to an ``.so`` file. This path "
+"can either be absolute, or relative to the plugin directory (usually "
+"``/usr/local/libexec/trafficserver``).  Failure to load a plugin is "
+"fatal, and will cause |TS| to abort. In general, it is not possible to "
+"know whether it is safe for the service to run without a particular "
+"plugin, since plugins can have arbitrary effects on caching and "
+"authorization policies."
+msgstr ""
+
+# aa03e4f1803a422485156a8f9a1d93c7
+#: ../../admin-guide/files/plugin.config.en.rst:43
+msgid ""
+"Plugins should only be listed once. The order in which the plugins are "
+"listed is also the order in which they are chained for request "
+"processing."
+msgstr ""
+
+# 80f016c4c5274258b3910097759c8728
+#: ../../admin-guide/files/plugin.config.en.rst:47
+msgid ""
+"An option list of whitespace-separated arguments may follow the plugin "
+"name. These are passed as an argument vector to the plugin's "
+"initialization function, :c:func:`TSPluginInit`. Arguments that begin "
+"with the ``$`` character designate |TS| configuration variables. These "
+"arguments will be replaced with the value of the corresponding "
+"configuration variable before the plugin is loaded.  When using "
+"configuration variable expansion, note that most |TS| configuration can "
+"be changed. If a plugin requires the current value, it must obtain that "
+"using the management API."
+msgstr ""
+
+# 69c446e8ffb044e6a70d09d7618605f9
+#: ../../admin-guide/files/plugin.config.en.rst:57
+msgid "Examples"
+msgstr ""
+
+# 79914bff92c840b5a77dd35d353ea813
+#: ../../admin-guide/files/plugin.config.en.rst:71
+msgid "See Also"
+msgstr ""
+
+# 80883d9f4e6b413f80ec276cf3cd26f3
+#: ../../admin-guide/files/plugin.config.en.rst:73
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSPluginInit(3ts)`, "
+":manpage:`remap.config(5)`"
+msgstr ""
+

@@ -1,0 +1,422 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 5c9b0c415f9545cbb73e08933760f634
+#: ../../admin-guide/installation/index.en.rst:23
+msgid "Installing Traffic Server"
+msgstr ""
+
+# 5f3215a623334c8ca7917de5501ffd76
+#: ../../admin-guide/installation/index.en.rst:31
+msgid "Supported Platforms"
+msgstr ""
+
+# aac8e9b677b34732a6095fef574c9256
+#: ../../admin-guide/installation/index.en.rst:36
+msgid "Traffic Server Versioning"
+msgstr ""
+
+# e48c755cd1454be4ab034b59def040bf
+#: ../../admin-guide/installation/index.en.rst:38
+msgid ""
+"Before you get started with Traffic Server you may have to decide which "
+"version you want to use. Traffic Server follows the `Semantic Versioning "
+"<http://semver.org>`_ guidelines."
+msgstr ""
+
+# 18cf4a716b7441c69519093926e2b1b2
+#: ../../admin-guide/installation/index.en.rst:42
+msgid ""
+"A complete version number is made of a version-triplet: "
+"``MAJOR.MINOR.PATCH``."
+msgstr ""
+
+# 885ce3a756224071aea28e2990be663a
+#: ../../admin-guide/installation/index.en.rst:44
+msgid ""
+"As of v4.0.0, there are no longer any development (or unstable) releases."
+" All releases are considered stable and ready for production use. "
+"Releases within a major version are always upgrade compatible. More "
+"details are available on the `New Release Processes "
+"<https://cwiki.apache.org/confluence/display/TS/Release+Process>`_ wiki "
+"page."
+msgstr ""
+
+# 72eacccb85604023a8db891764e5e26f
+#: ../../admin-guide/installation/index.en.rst:51
+msgid ""
+"Sometimes we speak of *trunk*, *master* or *HEAD*, all of which are used "
+"interchangeably. Trunk and master, or sometimes TIP or HEAD, refer to the"
+" latest code in a Git version control system (also referred to as a "
+"*repository* or *Git repo*). Master is always kept releasable, and "
+"compatible with the current major release version. Incompatible changes "
+"are sometimes committed on a next-major release branch; for example, we "
+"have the ``5.0.x`` branch where changes incompatible with 4.x are "
+"managed."
+msgstr ""
+
+# ae7847c5a84a43bebf9b8ab58eba9502
+#: ../../admin-guide/installation/index.en.rst:62
+msgid "Binary Distributions"
+msgstr ""
+
+# a609ced252fb4e4b9ccdecb836c92b67
+#: ../../admin-guide/installation/index.en.rst:67
+msgid "Building From Source"
+msgstr ""
+
+# a481a5c50f8a4d31b159cb1ddcb76771
+#: ../../admin-guide/installation/index.en.rst:72
+msgid "Retrieving Tarballs"
+msgstr ""
+
+# 6f259061feaf44f0bd498968e32b06df
+#: ../../admin-guide/installation/index.en.rst:74
+msgid ""
+"Compressed archives of the source code for |TS| are available on the "
+"official website's `Downloads "
+"<https://trafficserver.apache.org/downloads>`_ page. From there you may "
+"select the version most appropriate for your needs. The |TS| project does"
+" not provide binary downloads."
+msgstr ""
+
+# b07a3c52ad144ecabbd4fba29eaf9d73
+#: ../../admin-guide/installation/index.en.rst:82
+msgid "Cloning from Version Control"
+msgstr ""
+
+# cb7c38668ab24aeeaea41274f5baf515
+#: ../../admin-guide/installation/index.en.rst:84
+msgid ""
+"|TS| uses a `public Git repository <https://git-wip-"
+"us.apache.org/repos/asf/trafficserver.git>`_ for version control. This "
+"repository will also provide the most cutting edge source code if you "
+"wish to test out the latest features and bug fixes."
+msgstr ""
+
+# c63d02a26d404f589521d5d66f0a01fb
+#: ../../admin-guide/installation/index.en.rst:90
+msgid ""
+"We do also have a `GitHub Mirror "
+"<https://github.com/apache/trafficserver>`_ that you may use to submit "
+"pull requests. However, it may not be entirely up-to-date, and you should"
+" always refer to our official project Git repository for the very latest "
+"state of the source code."
+msgstr ""
+
+# cdbc08d359f2452a97e518db92c9fc3d
+#: ../../admin-guide/installation/index.en.rst:98
+msgid "Build Dependencies"
+msgstr ""
+
+# f15fd010028646bcb307465ec9da5a35
+#: ../../admin-guide/installation/index.en.rst:100
+msgid ""
+"In order to build Traffic Server from source you will need the following "
+"development tools and libraries installed:"
+msgstr ""
+
+# 516e2c71832a487c8bdcbd4e79bc8f58
+#: ../../admin-guide/installation/index.en.rst:103
+msgid "pkgconfig"
+msgstr ""
+
+# cb3b6d95cf8a491fa10f9fbb8b5f127e
+#: ../../admin-guide/installation/index.en.rst:104
+msgid "libtool"
+msgstr ""
+
+# 7dc5878678f641188bea43e33e158e93
+#: ../../admin-guide/installation/index.en.rst:105
+msgid "gcc (>= 4.3 or clang > 3.0)"
+msgstr ""
+
+# 83a99980b04f4880a1b41bf5256848c7
+#: ../../admin-guide/installation/index.en.rst:106
+msgid "GNU make"
+msgstr ""
+
+# edbddef61c134bcca272afdb8c407903
+#: ../../admin-guide/installation/index.en.rst:107
+msgid "openssl"
+msgstr ""
+
+# 1c9767539c9345f5947dbfc87ae34331
+#: ../../admin-guide/installation/index.en.rst:108
+msgid "tcl"
+msgstr ""
+
+# 93df8a2ef40b4ba49968c216c46357d4
+#: ../../admin-guide/installation/index.en.rst:109
+msgid "expat"
+msgstr ""
+
+# d491930401df47819ec3f17907a4e1f0
+#: ../../admin-guide/installation/index.en.rst:110
+msgid "pcre"
+msgstr ""
+
+# 03499e3cdef440d1a1e368b123c261db
+#: ../../admin-guide/installation/index.en.rst:111
+msgid "libcap"
+msgstr ""
+
+# b3a646a9c80a46239e3042998f7e8bdd
+#: ../../admin-guide/installation/index.en.rst:112
+msgid "flex (for TPROXY)"
+msgstr ""
+
+# 0456c4a275054219857a6675422df112
+#: ../../admin-guide/installation/index.en.rst:113
+msgid "hwloc"
+msgstr ""
+
+# 85099da418f545eaab5871edee0be83f
+#: ../../admin-guide/installation/index.en.rst:114
+msgid "lua"
+msgstr ""
+
+# 8becdc9aba5346bc85125dd5e1dba24c
+#: ../../admin-guide/installation/index.en.rst:115
+msgid "curses (for :program:`traffic_top`)"
+msgstr ""
+
+# 3543ba1dd4f642d6a116c040799f9c95
+#: ../../admin-guide/installation/index.en.rst:116
+msgid "curl (for :program:`traffic_top`)"
+msgstr ""
+
+# 5b4e963512e34b99955fdb6edad32a1b
+#: ../../admin-guide/installation/index.en.rst:118
+msgid "If you're building from a git clone, you'll also need:"
+msgstr ""
+
+# 1b7021d72b5c4633b130e402b3aed6b3
+#: ../../admin-guide/installation/index.en.rst:120
+msgid "git"
+msgstr ""
+
+# 223a219bb1844e8bb2ca04801c228448
+#: ../../admin-guide/installation/index.en.rst:121
+msgid "autoconf"
+msgstr ""
+
+# 879fded22a944efcb47a45ddb3231474
+#: ../../admin-guide/installation/index.en.rst:122
+msgid "automake"
+msgstr ""
+
+# 977dce77bb8646f49a3a0d36ec92c1d9
+#: ../../admin-guide/installation/index.en.rst:127
+msgid "Layouts"
+msgstr ""
+
+# 23df9c7f4b4d4f419559b6c4f7865b4f
+#: ../../admin-guide/installation/index.en.rst:132
+msgid "Preparing the Source Tree"
+msgstr ""
+
+# 83b12880323848bea8cad0191e90d065
+#: ../../admin-guide/installation/index.en.rst:134
+msgid ""
+"If you are buiding from a checkout of the Git repository, you will need "
+"to prepare the source tree by regenerating the configuration scripts. "
+"This is performed by running::"
+msgstr ""
+
+# 023b8368aabd42df9e882bb42d593a2e
+#: ../../admin-guide/installation/index.en.rst:140
+msgid "At the base directory of your local clone."
+msgstr ""
+
+# a73c95bbd25a4602bad642d0f170ede9
+#: ../../admin-guide/installation/index.en.rst:145
+msgid "Configuration Options"
+msgstr ""
+
+# 3ca31643fd1847c08b2150e182f67b6b
+#: ../../admin-guide/installation/index.en.rst:147
+msgid ""
+"|TS| uses the standard ``configure`` script method of configuring the "
+"source tree for building. A full list of available options may always be "
+"obtained by running the following in the base directory of your "
+"unpackaged archive or Git working copy::"
+msgstr ""
+
+# 1ece7012cf5b48a8a6befb8cab68f73e
+#: ../../admin-guide/installation/index.en.rst:154
+msgid ""
+"A ``configure`` script will be generated from ``configure.ac`` which may "
+"now be used to configure the source tree for your build. ::"
+msgstr ""
+
+# 7814326f7d3a4555aa1308039f879fd5
+#: ../../admin-guide/installation/index.en.rst:159
+msgid ""
+"By default, Traffic Server will be built to use the ``nobody`` user and "
+"group. You may change this with the ``--with-user`` argument to "
+"``configure``::"
+msgstr ""
+
+# 2bc372ff93da452e8be4253dee232b06
+#: ../../admin-guide/installation/index.en.rst:164
+msgid ""
+"If dependencies are not in standard paths (``/usr/local`` or ``/usr``), "
+"you may need to pass options to ``configure`` to account for that::"
+msgstr ""
+
+# c7d03ed1ad15414c8a2e121818ada9ac
+#: ../../admin-guide/installation/index.en.rst:169
+msgid ""
+"Most ``configure`` path-options accept a format of "
+"\"*INCLUDE_PATH*:*LIBRARY_PATH*\"::"
+msgstr ""
+
+# 9ddeb58675ff4417b0a6f79f4edc783f
+#: ../../admin-guide/installation/index.en.rst:173
+msgid ""
+"Once the source tree has been configured, you may proceed on to building "
+"with the generated Makefiles. The ``make check`` command may be used to "
+"perform sanity checks on the resulting build, prior to installation, and "
+"it is recommended that you use this. ::"
+msgstr ""
+
+# 0a86ac8fd4834538b4b0664d20168191
+#: ../../admin-guide/installation/index.en.rst:181
+msgid ""
+"With the source built and checked, you may now install all of the "
+"binaries, header files, documentation, and other artifacts to their final"
+" locations on your system. ::"
+msgstr ""
+
+# a477e2cffb5545dc8a7144be93c98b17
+#: ../../admin-guide/installation/index.en.rst:187
+msgid ""
+"Finally, it is recommended that you run the regression test suite. Please"
+" note that the regression tests will only be successful with the default "
+"layout. ::"
+msgstr ""
+
+# 5c2db9c2a32e41f1843fd553053c683c
+#: ../../admin-guide/installation/index.en.rst:196
+msgid "Adding SPDY Support"
+msgstr ""
+
+# 0ea39585c2d043829cf0065f361b5a14
+#: ../../admin-guide/installation/index.en.rst:198
+msgid ""
+"Traffic Server v5.0.x and above are capable of supporting SPDY, but it is"
+" optional and must be explicitly configured during the build process."
+msgstr ""
+
+# 79ed74b238034c4488451e93c7167fcf
+#: ../../admin-guide/installation/index.en.rst:201
+msgid "Clone the spdylay Git repository from tatsuhiro. ::"
+msgstr ""
+
+# 85665288c9024d7f861fd6a2732c0af1
+#: ../../admin-guide/installation/index.en.rst:205
+msgid "Generate fresh configure scripts. ::"
+msgstr ""
+
+# 44479a8436864d779bb54954e9277a8d
+#: ../../admin-guide/installation/index.en.rst:209
+msgid ""
+"Run the generated configuration script, choosing an installation location"
+" for the overlay. ::"
+msgstr ""
+
+# 692f250d4c0c45339de9f162aecae808
+#: ../../admin-guide/installation/index.en.rst:214
+msgid "Build and install the overlay. ::"
+msgstr ""
+
+# 4673c22b63e94ad3a7176c3536e2ced4
+#: ../../admin-guide/installation/index.en.rst:218
+msgid ""
+"Set the ``PKG_CONFIG_PATH`` enviroment variable to the appropriate path "
+"in your newly-installed overlay directory. ::"
+msgstr ""
+
+# c95901d189674a0d9fa8e1343c758bd1
+#: ../../admin-guide/installation/index.en.rst:223
+msgid ""
+"Finally, you may proceed with the regular building of |TS| from source, "
+"with the addition of a single new configuration option to enable SPDY "
+"support in the produced binaries. ::"
+msgstr ""
+
+# bdabd6998eb44cf894107b312b564348
+#: ../../admin-guide/installation/index.en.rst:232
+msgid "Start Traffic Server"
+msgstr ""
+
+# e72b6b35248145ddbb6528108851625e
+#: ../../admin-guide/installation/index.en.rst:234
+msgid ""
+"To start Traffic Server manually, issue the ``trafficserver`` command, "
+"passing in the subcommand ``start``. This command starts all the "
+"processes that work together to process Traffic Server requests as well "
+"as manage, control, and monitor the health of the Traffic Server system. "
+"::"
+msgstr ""
+
+# 9e865e9eee8a4b29ad78b32e083d6e85
+#: ../../admin-guide/installation/index.en.rst:242
+msgid ""
+"The :program:`traffic_ctl` provides a quick way of viewing Traffic Server"
+" statistics and configuring the Traffic Server system via a command-line "
+"interface."
+msgstr ""
+
+# 4f963e5c16584fb9808f6ade594bd910
+#: ../../admin-guide/installation/index.en.rst:245
+msgid ":program:`traffic_ctl` commands take the following form::"
+msgstr ""
+
+# d2e9d630afb644debfc4ac287dec76a6
+#: ../../admin-guide/installation/index.en.rst:249
+msgid "For a list of :program:`traffic_ctl` commands, enter::"
+msgstr ""
+
+# 620f3de70ac545158a01f1ce35413068
+#: ../../admin-guide/installation/index.en.rst:253
+msgid ""
+"Please note that :program:`traffic_ctl`, while a fine tool for an "
+"administrator, is a poor choice for automation, especially that of "
+"monitoring. See our chapter on :ref:`monitoring-traffic` for how to do "
+"that more efficiently and effectively."
+msgstr ""
+
+# f063ce2cda9748fa91a2aabf4d56b61c
+#: ../../admin-guide/installation/index.en.rst:261
+msgid "Stop Traffic Server"
+msgstr ""
+
+# 88959bf515ca4dfbb6b8e69e52d23725
+#: ../../admin-guide/installation/index.en.rst:263
+msgid ""
+"To stop Traffic Server, always use the :program:`trafficserver` command, "
+"passing in the attribute ``stop``. This command stops all the Traffic "
+"Server processes (:program:`traffic_manager`, :program:`traffic_server`, "
+"and :program:`traffic_cop`). Do not manually stop processes, as this can "
+"lead to unpredictable results. ::"
+msgstr ""
+

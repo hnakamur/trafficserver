@@ -1,0 +1,197 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# a40c25891dce4519bd0679c84b776dd7
+#: ../../admin-guide/transparent-proxy.en.rst:4
+msgid "Transparent Proxying"
+msgstr ""
+
+# 0ef70ed91f88447bb6011ddd594228cd
+#: ../../admin-guide/transparent-proxy.en.rst:32
+msgid ""
+"Transparent Proxying is the ability of a proxy (such as ATS) to intercept"
+" connections between clients and servers without being visible."
+msgstr ""
+
+# 27b542b748e243c5a9d52cce194ac10a
+#: ../../admin-guide/transparent-proxy.en.rst:35
+msgid ""
+"The general network structure that will be used in this documentation is "
+"shown in the following figure."
+msgstr ""
+
+# db15e847b9894a4bad179630dbcf36da
+#: ../../admin-guide/transparent-proxy.en.rst:42
+msgid "ATS basic traffic flow of Transparent Proxy"
+msgstr ""
+
+# b318ea02ef9f4222b9a0835ef29da561
+#: ../../admin-guide/transparent-proxy.en.rst:44
+msgid ""
+"There must be a gateway device through which all network traffic passes "
+"from the client to the Internet (or external cloud). The gateway is "
+"responsible for effectively splicing ATS in to selected streams of that "
+"traffic. Each traffic stream is split in two, with ATS terminating both "
+"sides. That is, stream green-1, red-2, is split in to the green "
+"connection and the red connection. Note that ATS may or may not be on the"
+" gateway system, the redirected traffic can flow over other network "
+"infrastructure."
+msgstr ""
+
+# 8352cab724df4ebeb8fcab7269b9ebac
+#: ../../admin-guide/transparent-proxy.en.rst:53
+msgid ""
+"Because ATS uses two connections, transparency can be set independently "
+"on the client and origin server (Internet / external cloud) side. We will"
+" define what is generally called \"transparent proxy\" as two aspects, "
+"*inbound transparency* and *outbound transparency*."
+msgstr ""
+
+# c85c2948043a41b18c76b153820cb250
+#: ../../admin-guide/transparent-proxy.en.rst:58
+msgid ""
+"Inbound transparency is a proxy that is transparent to connections that "
+"are inbound to the proxy, i.e. a connection initiated by a client which "
+"connects to the proxy (green-1). Similarly, outbound transparency is a "
+"proxy that is transparent to connections that are outbound from the "
+"proxy, i.e. a connection initiated by the proxy to an origin server "
+"(red-2)."
+msgstr ""
+
+# 826eee030b854494860504136e640267
+#: ../../admin-guide/transparent-proxy.en.rst:65
+msgid ""
+"In most situations these two types of transparency are combined, but that"
+" is not required. Traffic Server supports transparency independently on "
+"the two sides."
+msgstr ""
+
+# 2ebdd5472a85401ea58aac19b072db12
+#: ../../admin-guide/transparent-proxy.en.rst:71
+msgid ""
+"It is critical to note that any transparency requires specialized routing"
+" and cannot be done solely by configuring ATS. ATS transparency also "
+"requires support from the Linux kernel and therefore currently only works"
+" on sufficiently recent Linux kernels that support the following "
+"features:"
+msgstr ""
+
+# 28293381a7c2426fa9869f545528a4e4
+#: ../../admin-guide/transparent-proxy.en.rst:77
+msgid "TPROXY"
+msgstr ""
+
+# d36a57c2ae154285a2d77985770c3e72
+#: ../../admin-guide/transparent-proxy.en.rst:78
+msgid "POSIX capabilities"
+msgstr ""
+
+# f84a25da13c545549ae03f553165aa98
+#: ../../admin-guide/transparent-proxy.en.rst:80
+msgid ""
+"In addition the specialized routing will require using ``iptables`` and "
+"in some cases ``ebtables``."
+msgstr ""
+
+# fe4199e0937a437488069d2f93344c27
+#: ../../admin-guide/transparent-proxy.en.rst:83
+msgid ""
+"Standard build procedures should work for transparency support but if not"
+" consult these :ref:`more detailed instructions <building-ats-for-"
+"transparency>`."
+msgstr ""
+
+# 662369efe78341c79d1d37a8468f51d1
+#: ../../admin-guide/transparent-proxy.en.rst:86
+msgid ""
+"Transparency is configured per server port, not globally. This is done "
+"via the configuration values :ts:cv:`proxy.config.http.server_ports`. In "
+"addition, :ts:cv:`proxy.config.reverse_proxy.enabled` must be enabled if "
+"the client side is transparent. That should be fixed in a future patch."
+msgstr ""
+
+# b4e1567ad2b34f9cab57ad96db6d39a5
+#: ../../admin-guide/transparent-proxy.en.rst:95
+msgid "In the first case use the attribute character (replacing the default 'X')"
+msgstr ""
+
+# 57c65ef91b6f496da8ec7f1f1b63ddac
+#: ../../admin-guide/transparent-proxy.en.rst:98
+msgid "**Attribute** **Transparency Style** **Reverse Proxy**"
+msgstr ""
+
+# 0001d32f59e746e3bb13985837a8e684
+#: ../../admin-guide/transparent-proxy.en.rst:101
+msgid "``=``"
+msgstr ""
+
+# f3a7501c9ce64a91a603dafba588ef7a
+#: ../../admin-guide/transparent-proxy.en.rst:101
+msgid "Full transparency: either"
+msgstr ""
+
+# 421efc63b8ec4243b41a263070253721
+#: ../../admin-guide/transparent-proxy.en.rst:104
+msgid "``>``"
+msgstr ""
+
+# 226945f6e3d743bba6cd10c16c5bc79c
+#: ../../admin-guide/transparent-proxy.en.rst:104
+msgid "Inbound (client) transparency: enabled"
+msgstr ""
+
+# 94e348e467ac44c6aba7c515ecd4c59f
+#: ../../admin-guide/transparent-proxy.en.rst:107
+msgid "``<``"
+msgstr ""
+
+# d2e60d2f69e64aa4863a50ac284edb1c
+#: ../../admin-guide/transparent-proxy.en.rst:107
+msgid "Outbound (origin server) transparency: either"
+msgstr ""
+
+# 75e4b95bf0274ab3b6b8aa98c0d79bcf
+#: ../../admin-guide/transparent-proxy.en.rst:109
+msgid ""
+"In the outbound transparent case clients must connect directly to ATS "
+"either through an explicit proxy mechanism or by advertising the IP "
+"address of the ATS server via DNS as the origin server address."
+msgstr ""
+
+# 2c74e1cc3fb24c079d5b0e64503d7fc3
+#: ../../admin-guide/transparent-proxy.en.rst:113
+msgid "Some tested scenarios --"
+msgstr ""
+
+# 444b02c9ccea4e6cb36725d2c8862277
+#: ../../admin-guide/transparent-proxy.en.rst:115
+msgid ":doc:`transparent-proxy/bridge.en`"
+msgstr ""
+
+# 038de547889349daaa3bcd87341d4f10
+#: ../../admin-guide/transparent-proxy.en.rst:116
+msgid ":doc:`transparent-proxy/router-inline.en`"
+msgstr ""
+
+# 5de7ee8edfd14faba0f6d97adfe10893
+#: ../../admin-guide/transparent-proxy.en.rst:117
+msgid ":doc:`transparent-proxy/wccp-configuration.en`"
+msgstr ""
+

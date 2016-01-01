@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# c3acd8bf497947998c759a1066706f89
+#: ../../developer-guide/debugging/memory-leaks.en.rst:23
+msgid "Memory Leaks"
+msgstr ""
+
+# 7a80aea865bb48ee85ca6d2c9d15e80f
+#: ../../developer-guide/debugging/memory-leaks.en.rst:25
+msgid ""
+"Memory leaks in a plugin can be detected using e.g. an MRTG graph related"
+" to memory - you can use memory dump information. Enable ``mem dump`` in "
+":file:`records.config` as follows:"
+msgstr ""
+
+# 7ba36f9b255d46e6bdef70d3a00fd1f2
+#: ../../developer-guide/debugging/memory-leaks.en.rst:33
+msgid ""
+"This causes Traffic Server to dump memory information to ``traffic.out`` "
+"at ``<value>`` (intervals are in seconds). A zero value means that it is "
+"disabled."
+msgstr ""
+

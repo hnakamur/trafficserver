@@ -1,0 +1,318 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# b6487be1fe1343e29ab3ace759a889b6
+#: ../../appendices/glossary.en.rst:23
+msgid "Glossary"
+msgstr ""
+
+# a806a0b860ab4827b2824834f373b093
+#: ../../appendices/glossary.en.rst:84
+msgid "alternate"
+msgstr ""
+
+# a475303782a34f7b8674fcd141fc0e68
+#: ../../appendices/glossary.en.rst:86
+msgid ""
+"A variant of a :term:`cache object`. This was originally created to "
+"handle the `VARY mechanism "
+"<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.44>`_ but "
+"has since been used for additional purposes. All alternates of an object "
+"must be equivalent in some manner. That is, they are alternate forms of "
+"the same stream. The most common example is having normal and compressed "
+"versions of the stream."
+msgstr ""
+
+# 69656c34c2db4fddbc338189e5d3670a
+#: ../../appendices/glossary.en.rst:121
+msgid "cache fragment"
+msgstr ""
+
+# 89f7af862b964f33967092043422bf94
+#: ../../appendices/glossary.en.rst:123
+msgid ""
+"The unit of storage in the cache. All reads from the cache always read "
+"exactly one fragment. Fragments may be written in groups, but every write"
+" is always an integral number of fragments. Each fragment has a "
+"corresponding :term:`directory entry` which describes its location in the"
+" cache storage."
+msgstr ""
+
+# 2433accada514d988875a34339f46deb
+#: ../../appendices/glossary.en.rst:68
+msgid "cache ID"
+msgstr ""
+
+# 1b06154faab54ca99cd2ecfee2a240a3
+#: ../../appendices/glossary.en.rst:70
+msgid ""
+"A 128 bit value used as a fixed sized identifier for an object in the "
+"cache. This is computed from the :term:`cache key` using the `MD5 hashing"
+" function <http://www.openssl.org/docs/crypto/md5.html>`_."
+msgstr ""
+
+# 28a8fbd4513d41738b870ce1a46527c6
+#: ../../appendices/glossary.en.rst:63
+msgid "cache key"
+msgstr ""
+
+# f8f6f9ced0b14030bcc1d5d31c7de570
+#: ../../appendices/glossary.en.rst:65
+msgid ""
+"A byte sequence that is a globally unique identifier for an :term:`object"
+" <cache object>` in the cache. By default the URL for the object is used."
+msgstr ""
+
+# ac567cb37a524493bbfd59e85732e5b8
+#: ../../appendices/glossary.en.rst:78
+msgid "cache object"
+msgstr ""
+
+# 7d1e933fed4840a494649a11e54f8588
+#: ../../appendices/glossary.en.rst:80
+msgid ""
+"The minimal self contained unit of data in the cache. Cache objects are "
+"the stored version of equivalent content streams from an origin server. A"
+" single object can have multiple variants called :term:`alternates "
+"<alternate>`."
+msgstr ""
+
+# 8e209d5940fe418f8763ce1453b7a5df
+#: ../../appendices/glossary.en.rst:147
+msgid "cache partition"
+msgstr ""
+
+# 3ceac772f25f449b814b163c6106b5e7
+#: ../../appendices/glossary.en.rst:59
+msgid "cache span"
+msgstr ""
+
+# d14bae03b8bf4265aa5ae145404fbc3b
+#: ../../appendices/glossary.en.rst:61
+msgid "The physical storage described by a single line in :file:`storage.config`."
+msgstr ""
+
+# f4ec704766e44364b9767fb0032e4d3a
+#: ../../appendices/glossary.en.rst:53
+msgid "cache stripe"
+msgstr ""
+
+# 2dcbf614a1e54d6c97917257189496fb
+#: ../../appendices/glossary.en.rst:55
+msgid ""
+"A homogenous, persistent store for the cache in a single :term:`cache "
+"span`. A stripe always resides entirely on a single physical device and "
+"is treated as an undifferentiated span of bytes. This is the smallest "
+"independent unit of storage."
+msgstr ""
+
+# 0d65ac6bc3be4685ab7095f6854a8e7e
+#: ../../appendices/glossary.en.rst:73
+msgid "cache tag"
+msgstr ""
+
+# f46c0c4dc5fd4dfc96316517acaf4dcb
+#: ../../appendices/glossary.en.rst:75
+msgid ""
+"The bottom few bits (12 currently) of the :term:`cache ID`. This is used "
+"in the :ref:`cache directory <cache-directory>` for a preliminary "
+"identity check before going to disk."
+msgstr ""
+
+# b4b3266dc6fb4786b752a424d2a24064
+#: ../../appendices/glossary.en.rst:47
+msgid "cache volume"
+msgstr ""
+
+# da40e387da2a46f987b40f33a637d492
+#: ../../appendices/glossary.en.rst:49
+msgid ""
+"A user defined unit of persistent storage for the cache. Cache volumes "
+"are defined in :file:`volume.config`. A cache volume is by default spread"
+" across :term:`cache span`\\ s to increase robustness. Each section of a "
+"cache volume on a specific cache span is a :term:`cache stripe`."
+msgstr ""
+
+# c91efb16d5364520960dacc1af403de5
+#: ../../appendices/glossary.en.rst:27
+msgid "continuation"
+msgstr ""
+
+# 61055e5d987a4dfcb26d58731a978d0d
+#: ../../appendices/glossary.en.rst:29
+msgid ""
+"A callable object that contains state. These are are mechanism used by "
+"|TS| to implement callbacks and continued computations. Continued "
+"computations are critical to efficient processing of traffic because by "
+"avoiding any blocking operations that wait on external events. In any "
+"such case a continuation is used so that other processing can continue "
+"until the external event occurs. At that point the continuation is "
+"invoked to continue the suspended processing. This can be considered "
+"similar to co-routines."
+msgstr ""
+
+# 692c688e9a934425880324e99a3e19bd
+#: ../../appendices/glossary.en.rst:113
+msgid "directory bucket"
+msgstr ""
+
+# c8ce6d64a4bc4126a07dcdb0e3db38a9
+#: ../../appendices/glossary.en.rst:115
+msgid ""
+"A contiguous fixed sized group of :term:`directory entries <directory "
+"entry>`. This is used for hash bucket maintenance optimization."
+msgstr ""
+
+# 8016043648a74886b10c279e10088968
+#: ../../appendices/glossary.en.rst:118
+msgid "directory entry"
+msgstr ""
+
+# 48ec6d5f67b94a419f6ec8ad33bde318
+#: ../../appendices/glossary.en.rst:120
+msgid "An in memory entry that describes a :term:`cache fragment`."
+msgstr ""
+
+# 7a9622cf40ad48bda3eb9c8bae2d3e04
+#: ../../appendices/glossary.en.rst:106
+msgid "directory segment"
+msgstr ""
+
+# b481c4b51af345dab7a5a0fbd9812b9c
+#: ../../appendices/glossary.en.rst:108
+msgid ""
+"A contiguous group of :term:`buckets <directory bucket>`. Each "
+":term:`cache stripe` has a set of segments all of which have the same "
+"number of buckets, although the number of buckets per segment can vary "
+"between cache stripes. Segments are administrative in purpose to minimize"
+" the size of free list and hash bucket pointers."
+msgstr ""
+
+# 2ab34cfd0fbe47959b32b87ad21f3c4b
+#: ../../appendices/glossary.en.rst:131
+msgid "fresh"
+msgstr ""
+
+# a69aab9873c1418c84a5d7ed0f56bb67
+#: ../../appendices/glossary.en.rst:133
+msgid ""
+"The state of a :term:`cache object` which can be served directly from the"
+" the cache in response to client requests. Fresh objects have not met or "
+"passed their :term:`origin server` defined expiration time, nor have they"
+" reached the algorithmically determined :term:`stale` age."
+msgstr ""
+
+# c25ca9ed8ed74103943355757cd23c68
+#: ../../appendices/glossary.en.rst:128
+msgid "object store"
+msgstr ""
+
+# a890f029ab8a4cad89cce2d89677b9db
+#: ../../appendices/glossary.en.rst:130
+msgid "The database of :term:`cache objects <cache object>`."
+msgstr ""
+
+# 39443a8a4c684260bd5e98d92b6ea374
+#: ../../appendices/glossary.en.rst:143
+msgid "origin server"
+msgstr ""
+
+# a17b07e4940a4e60bf7f1ddd9553a90d
+#: ../../appendices/glossary.en.rst:145
+msgid ""
+"An HTTP server which provides the original source of content being cached"
+" by Traffic Server."
+msgstr ""
+
+# dc692895e44744d6843e0feaf2a531ab
+#: ../../appendices/glossary.en.rst:96
+msgid "revalidation"
+msgstr ""
+
+# fecc630a49da4be3b8bb50593ceab541
+#: ../../appendices/glossary.en.rst:98
+msgid ""
+"Verifying that a currently cached object is still valid. This is usually "
+"done using an `If-Modified-Since "
+"<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.25>`_ "
+"request which allows the origin server to validate the content without "
+"resending the content."
+msgstr ""
+
+# 46d3fb7562334193b7f9f37cdc765032
+#: ../../appendices/glossary.en.rst:37
+msgid "session"
+msgstr ""
+
+# f9b16babab1e4e4197196b52a9afbe70
+#: ../../appendices/glossary.en.rst:39
+msgid ""
+"A single connection from a client to Traffic Server, covering all "
+"requests and responses on that connection. A session starts when the "
+"client connection opens, and ends when the connection closes."
+msgstr ""
+
+# 7f273a2e66ac4dcb8a4502e38b319709
+#: ../../appendices/glossary.en.rst:137
+msgid "stale"
+msgstr ""
+
+# 9ea483629f6d421db9bc2d747d46e143
+#: ../../appendices/glossary.en.rst:139
+msgid ""
+"The state of a :term:`cache object` which is not yet expired, but has "
+"reached an algorithmically determined age at which the :term:`origin "
+"server` will be contacted to :term:`revalidate <revalidation>` the "
+"freshness of the object. Contrast with :term:`fresh`."
+msgstr ""
+
+# 336aad660f9d4d9c8e585b06354958c7
+#: ../../appendices/glossary.en.rst:93
+msgid "storage unit"
+msgstr ""
+
+# 0d8f5001b6aa4f5990697ec54a1440d2
+#: ../../appendices/glossary.en.rst:95
+msgid "Obsolete term for :term:`cache span`."
+msgstr ""
+
+# 9576f25456a046fcba4bca4f88443267
+#: ../../appendices/glossary.en.rst:42
+msgid "transaction"
+msgstr ""
+
+# 66e8cad99027412286faa51471d2af11
+#: ../../appendices/glossary.en.rst:44
+msgid ""
+"A client request and response, either from the origin server or from the "
+"cache. A transaction begins when |TS| receives a request, and ends when "
+"|TS| sends the response."
+msgstr ""
+
+# 34d21731453c4144a4f6fe9ed8ce1a8d
+#: ../../appendices/glossary.en.rst:103
+msgid "write cursor"
+msgstr ""
+
+# 5e5e956cb3ed410c87ff29d58a96fe71
+#: ../../appendices/glossary.en.rst:105
+msgid "The location in a :term:`cache stripe` where new data is written."
+msgstr ""
+

@@ -1,0 +1,421 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 2c813f7cd5644b0381cdd0874c69a10d
+#: ../../admin-guide/performance/index.en.rst:23
+msgid "Performance Tuning"
+msgstr ""
+
+# 3ac16dfdb23f4403908c67e280882a65
+#: ../../admin-guide/performance/index.en.rst:25
+msgid ""
+"|ATS| in its default configuration should perform suitably for running "
+"the included regression test suite, but will need special attention to "
+"both its own configuration and the environment in which it runs to "
+"perform optimally for production usage."
+msgstr ""
+
+# 6e1732db2fb64d07bd478746faacb84e
+#: ../../admin-guide/performance/index.en.rst:30
+msgid ""
+"There are numerous options and strategies for tuning the performance of "
+"|TS| and we attempt to document as many of them as possible in the "
+"sections below. Because |TS| offers enough flexibility to be useful for "
+"many caching and proxying scenarios, which tuning strategies will be most"
+" effective for any given use case may differ, as well as the specific "
+"values for various configuration options."
+msgstr ""
+
+# 085fb929b7c34d758be7ece012c0cfca
+#: ../../admin-guide/performance/index.en.rst:41
+msgid "Before You Start"
+msgstr ""
+
+# c0775f6c8ea64734aedc723986beae73
+#: ../../admin-guide/performance/index.en.rst:43
+msgid ""
+"One of the most important aspects of any attempt to optimize the "
+"performance of a |TS| installation is the ability to measure that "
+"installation's performance; both prior to and after any changes are made."
+" To that end, it is strongly recommended that you establish some means to"
+" monitor and record a variety of performance metrics: request and "
+"response speed, latency, and throughput; memory and CPU utilization; and "
+"storage I/O operations."
+msgstr ""
+
+# 999cac0c124d4b8a841d0bf6b9853eec
+#: ../../admin-guide/performance/index.en.rst:50
+msgid ""
+"Attempts to tune a system without being able to compare the impact of "
+"changes made will at best result in haphazard, *feel good* results that "
+"may end up having no real world impact on your customers' experiences, "
+"and at worst may even result in lower performance than before you "
+"started. Additionally, in the all too common situation of budget "
+"constraints, having proper measurements of existing performance will "
+"greatly ease the process of focusing on those individual components that,"
+" should they require hardware expenditures or larger investments of "
+"employee time, have the highest potential gains relative to their cost."
+msgstr ""
+
+# ce8d99194d90446a8a9c555c504eee36
+#: ../../admin-guide/performance/index.en.rst:61
+msgid "Building Traffic Server"
+msgstr ""
+
+# de33b785f3274526ba88abc01ad801c5
+#: ../../admin-guide/performance/index.en.rst:63
+msgid ""
+"While the default compilation settings for |TS| will produce a set of "
+"binaries capable of serving most caching and proxying needs, there are "
+"some build options worth considering in specific environments."
+msgstr ""
+
+# a0e4eba997894c1fb7927a749e485cb4
+#: ../../admin-guide/performance/index.en.rst:74
+msgid "Hardware Tuning"
+msgstr ""
+
+# 9fd57c74f8b843a686ad74bd9fefc340
+#: ../../admin-guide/performance/index.en.rst:76
+msgid ""
+"As with any other server software, efficient allocation of hardware "
+"resources will have a significant impact on |TS| performance."
+msgstr ""
+
+# a16daa2e44624d06b78d40d0b1e7c116
+#: ../../admin-guide/performance/index.en.rst:80
+msgid "CPU Selection"
+msgstr ""
+
+# a49c8aab3c014ea1bbd3cfdd0a7df4bf
+#: ../../admin-guide/performance/index.en.rst:82
+msgid ""
+"|ATS| uses a hybrid event-driven engine and multi-threaded processing "
+"model for handling incoming requests. As such, it is highly scalable and "
+"makes efficient use of modern, multicore processor architectures."
+msgstr ""
+
+# fe401527f1854c099a92adfe512d2aae
+#: ../../admin-guide/performance/index.en.rst:98
+msgid "Memory Allocation"
+msgstr ""
+
+# 2d0a068246e743bc853363c2d66f8f44
+#: ../../admin-guide/performance/index.en.rst:100
+msgid ""
+"Though |TS| stores cached content within an on-disk host database, the "
+"entire :ref:`cache-directory` is always maintained in memory during "
+"server operation. Additionally, most operating systems will maintain disk"
+" caches within system memory. It is also possible, and commonly "
+"advisable, to maintain an in-memory cache of frequently accessed content."
+msgstr ""
+
+# 9396f731616646dcbe356eb245fdd59e
+#: ../../admin-guide/performance/index.en.rst:106
+msgid ""
+"The memory footprint of the |TS| process is largely fixed at the time of "
+"server startup. Your |TS| systems will need at least enough memory to "
+"satisfy basic operating system requirements, as well as capacity for the "
+"cache directory, and any memory cache you wish to use. The default "
+"settings allocate roughly 10 megabytes of RAM cache for every gigabyte of"
+" disk cache storage, though this setting can be adjusted manually in "
+":file:`records.config` using the setting "
+":ts:cv:`proxy.config.cache.ram_cache.size`. |TS| will, under the default "
+"configuration, adjust this automatically if your system does not have "
+"enough physical memory to accomodate the aforementioned target."
+msgstr ""
+
+# 4ddbf290d1644eae8a1bc6eef053e742
+#: ../../admin-guide/performance/index.en.rst:116
+msgid ""
+"Aside from the cost of physical memory, and necessary supporting hardware"
+" to make use of large amounts of RAM, there is little downside to "
+"increasing the memory allocation of your cache servers. You will see, "
+"however, no benefit from sizing your memory allocation larger than the "
+"sum of your content (and index overhead)."
+msgstr ""
+
+# d4f71c1053a9492f9bd8bf925161dec7
+#: ../../admin-guide/performance/index.en.rst:123
+msgid "Disk Storage"
+msgstr ""
+
+# f9c88efd6f174320a4d2dba47490b1f0
+#: ../../admin-guide/performance/index.en.rst:125
+msgid ""
+"Except in cases where your entire cache may fit into system memory, your "
+"cache nodes will eventually need to interact with their disks. While a "
+"more detailed discussion of storage stratification is covered in `Cache "
+"Partitioning`_ below, very briefly you may be able to realize gains in "
+"performance by separating more frequently accessed content onto faster "
+"disks (PCIe SSDs, for instance) while maintaining the bulk of your on-"
+"disk cache objects, which may not receive the same high volume of "
+"requests, on lower-cost mechanical drives."
+msgstr ""
+
+# 3a377362ebd74a67b49ba65baf137baf
+#: ../../admin-guide/performance/index.en.rst:136
+msgid "Operating System Tuning"
+msgstr ""
+
+# 5bece283664849fda9d4398fa134acca
+#: ../../admin-guide/performance/index.en.rst:138
+msgid ""
+"|ATS| is supported on a variety of operating systems, and as a result the"
+" tuning strategies available at the OS level will vary depending upon "
+"your chosen platform."
+msgstr ""
+
+# 3deab1b8a0874ac28bd34f9f00ea21a0
+#: ../../admin-guide/performance/index.en.rst:143
+msgid "General Recommendations"
+msgstr ""
+
+# 0ba5c2114a754736beb5c308834f9092
+#: ../../admin-guide/performance/index.en.rst:146
+msgid "TCP Keep Alive"
+msgstr ""
+
+# 99c256617bbe4d5a8bdea163dfd9a56d
+#: ../../admin-guide/performance/index.en.rst:149
+msgid "TCP Congestion Control Settings"
+msgstr ""
+
+# b0b501979ebb43388c13bec5666fbe42
+#: ../../admin-guide/performance/index.en.rst:152
+msgid "Ephemeral and Reserved Ports"
+msgstr ""
+
+# 37a4f4013fe84cb1b39b1ca891415006
+#: ../../admin-guide/performance/index.en.rst:155
+msgid "Jumbo Frames"
+msgstr ""
+
+# 531feae123c94bf5aaa090c9786e2dd1
+#: ../../admin-guide/performance/index.en.rst:160
+msgid "Linux"
+msgstr ""
+
+# d8f7a27fa00d42b6ad7c39f39668f10c
+#: ../../admin-guide/performance/index.en.rst:163
+msgid "FreeBSD"
+msgstr ""
+
+# 2b304ecfe23b489383cbe734f185b7f0
+#: ../../admin-guide/performance/index.en.rst:166
+msgid "OmniOS / illumos"
+msgstr ""
+
+# 13e4e0594e5141ccb889d7f958b63b2d
+#: ../../admin-guide/performance/index.en.rst:169
+msgid "Mac OS X"
+msgstr ""
+
+# 4e28aed6461343d89921638ddda12c43
+#: ../../admin-guide/performance/index.en.rst:172
+msgid "Traffic Server Tuning"
+msgstr ""
+
+# e57dd36c08814a04b60dcb1eba61f785
+#: ../../admin-guide/performance/index.en.rst:174
+msgid ""
+"|TS| itself, of course, has many options you may want to consider "
+"adjusting to achieve optimal performance in your environment. Many of "
+"these settings are recorded in :file:`records.config` and may be adjusted"
+" with the :option:`traffic_ctl config set` command line utility while the"
+" server is operating."
+msgstr ""
+
+# ba673b265cfd428c806cefab0aab9eec
+#: ../../admin-guide/performance/index.en.rst:180
+msgid "CPU and Thread Optimization"
+msgstr ""
+
+# 7ac93a2f915a4db2b07e0450a5247a3e
+#: ../../admin-guide/performance/index.en.rst:183
+msgid "Thread Scaling"
+msgstr ""
+
+# 8dcfd8f612b54523b12d63cb373007f3
+#: ../../admin-guide/performance/index.en.rst:185
+msgid ""
+"By default, |TS| creates 1.5 threads per CPU core on the host system. "
+"This may be adjusted with the following settings in "
+":file:`records.config`:"
+msgstr ""
+
+# 474daf41b9384fb3b1d14b1590bca319
+#: ../../admin-guide/performance/index.en.rst:188
+msgid ":ts:cv:`proxy.config.exec_thread.autoconfig`"
+msgstr ""
+
+# c52fb69adec64f89a4628bc41b137d52
+#: ../../admin-guide/performance/index.en.rst:189
+msgid ":ts:cv:`proxy.config.exec_thread.autoconfig.scale`"
+msgstr ""
+
+# 9097c22c3d164695b52cecdb52d47844
+#: ../../admin-guide/performance/index.en.rst:190
+msgid ":ts:cv:`proxy.config.exec_thread.limit`"
+msgstr ""
+
+# 5c7aed58a0e8471b87a9f93d970cbbb6
+#: ../../admin-guide/performance/index.en.rst:193
+msgid "Thread Affinity"
+msgstr ""
+
+# 82457271a3bc4df59d05725d6f9307ff
+#: ../../admin-guide/performance/index.en.rst:195
+msgid ""
+"On multi-socket servers, such as Intel architectures with NUMA, you can "
+"adjust the thread affinity configuration to take advantage of cache "
+"pipelines and faster memory access, as well as preventing possibly costly"
+" thread migrations across sockets. This is adjusted with "
+":ts:cv:`proxy.config.exec_thread.affinity` in :file:`records.config`. ::"
+msgstr ""
+
+# 53c98a097482417db1c36bbec7dc8aa5
+#: ../../admin-guide/performance/index.en.rst:204
+msgid "Thread Stack Size"
+msgstr ""
+
+# ff481dcdfa57400ba86ad82708d07efa
+#: ../../admin-guide/performance/index.en.rst:206
+msgid ":ts:cv:`proxy.config.thread.default.stacksize`"
+msgstr ""
+
+# 37fa2ec6f93049b6ae50bf05ae2c42d5
+#: ../../admin-guide/performance/index.en.rst:213
+msgid "Polling Timeout"
+msgstr ""
+
+# b2487d2e16ca48e590a49cbba037eff8
+#: ../../admin-guide/performance/index.en.rst:215
+msgid ""
+"If you are experiencing unusually or unacceptably high CPU utilization "
+"during idle workloads, you may consider adjusting the polling timeout "
+"with :ts:cv:`proxy.config.net.poll_timeout`::"
+msgstr ""
+
+# ec4cf9c1962d4d93bc1a5c3ba82f90f6
+#: ../../admin-guide/performance/index.en.rst:222
+msgid "Memory Optimization"
+msgstr ""
+
+# e8cc53934c174f56a96d7473ff86ba48
+#: ../../admin-guide/performance/index.en.rst:224
+msgid ""
+":ts:cv:`proxy.config.thread.default.stacksize` "
+":ts:cv:`proxy.config.cache.ram_cache.size`"
+msgstr ""
+
+# 5e7f12c5f6914a87bd9e479152437381
+#: ../../admin-guide/performance/index.en.rst:229
+msgid "Disk Storage Optimization"
+msgstr ""
+
+# a2c6a19f98ed4711a0ebad658fb5e74d
+#: ../../admin-guide/performance/index.en.rst:231
+msgid ""
+":ts:cv:`proxy.config.cache.force_sector_size` "
+":ts:cv:`proxy.config.cache.max_doc_size` "
+":ts:cv:`proxy.config.cache.target_fragment_size`"
+msgstr ""
+
+# 3504ecafcef8440abb0b8ec3982b2380
+#: ../../admin-guide/performance/index.en.rst:236
+msgid "Cache Partitioning"
+msgstr ""
+
+# 9fd4f3bd50a24e4085db57834c21df82
+#: ../../admin-guide/performance/index.en.rst:239
+msgid "Network Tuning"
+msgstr ""
+
+# 50ac833bedea4683a0ecef6f4ed5127e
+#: ../../admin-guide/performance/index.en.rst:241
+msgid ":ts:cv:`proxy.config.net.connections_throttle`"
+msgstr ""
+
+# dfe23546f1cc41be8949f480817d3bb7
+#: ../../admin-guide/performance/index.en.rst:244
+msgid "Error responses from origins are conistent and costly"
+msgstr ""
+
+# ce9521b6ffab42b7877db9091f3ccd02
+#: ../../admin-guide/performance/index.en.rst:246
+msgid ""
+"If error responses are costly for your origin server to generate, you may"
+" elect to have |TS| cache these responses for a period of time. The "
+"default behavior is to consider all of these responses to be uncacheable,"
+" which will lead to every client request to result in an origin request."
+msgstr ""
+
+# 2c29ac4b02ca4a91b7a45eb38b4f8003
+#: ../../admin-guide/performance/index.en.rst:251
+msgid ""
+"This behavior is controlled by both enabling the feature via "
+":ts:cv:`proxy.config.http.negative_caching_enabled` and setting the cache"
+" time (in seconds) with "
+":ts:cv:`proxy.config.http.negative_caching_lifetime`. ::"
+msgstr ""
+
+# cc3f4741dbc94c9b8e311e00a4e80273
+#: ../../admin-guide/performance/index.en.rst:259
+msgid "SSL-Specific Options"
+msgstr ""
+
+# c666a90b23b243a48831cdf918c71254
+#: ../../admin-guide/performance/index.en.rst:261
+msgid ""
+":ts:cv:`proxy.config.ssl.max_record_size` "
+":ts:cv:`proxy.config.ssl.session_cache` "
+":ts:cv:`proxy.config.ssl.session_cache.size`"
+msgstr ""
+
+# 92d9294c176c4511bf24534f5747afca
+#: ../../admin-guide/performance/index.en.rst:266
+msgid "Thread Types"
+msgstr ""
+
+# 9719fbda1be34374beea4c71ab2c4dbc
+#: ../../admin-guide/performance/index.en.rst:269
+msgid "Logging Configuration"
+msgstr ""
+
+# f68dd4b62ebd455ab8e92a991c944777
+#: ../../admin-guide/performance/index.en.rst:279
+msgid "Plugin Tuning"
+msgstr ""
+
+# 352fbd8fe93e45f8a7430e0990470024
+#: ../../admin-guide/performance/index.en.rst:282
+msgid "Common Scenarios and Pitfalls"
+msgstr ""
+
+# 9b6249e5cd8f4b339c982bfd35e4c363
+#: ../../admin-guide/performance/index.en.rst:284
+msgid ""
+"While environments vary widely and |TS| is useful in a great number of "
+"different situations, there are at least some recurring elements that may"
+" be used as shortcuts to identifying problem areas, or realizing easier "
+"performance gains."
+msgstr ""
+

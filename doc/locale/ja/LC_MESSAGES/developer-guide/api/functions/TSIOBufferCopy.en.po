@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 014d9815fcf24a04b819e363b76a2f19
+#: ../../developer-guide/api/functions/TSIOBufferCopy.en.rst:22
+msgid "TSIOBufferCopy"
+msgstr ""
+
+# d5c5b8df4d654b09a9e9e2a0106404e6
+#: ../../developer-guide/api/functions/TSIOBufferCopy.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# ef6ece5bf9c64ddda08fa5936a557558
+#: ../../developer-guide/api/functions/TSIOBufferCopy.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 5320e3aeae9d407688545b3a44671066
+#: ../../developer-guide/api/functions/TSIOBufferCopy.en.rst:32
+msgid "Description"
+msgstr ""
+

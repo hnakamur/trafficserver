@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 4b72ec6aa93b4359ac6a508e8a269369
+#: ../../developer-guide/api/functions/TSVIONTodoGet.en.rst:22
+msgid "TSVIONTodoGet"
+msgstr ""
+
+# ee29129f2868452990a2367b18f19f75
+#: ../../developer-guide/api/functions/TSVIONTodoGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 3b4314942a5f4f718cabf777685d44f7
+#: ../../developer-guide/api/functions/TSVIONTodoGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# b84f0e712932432284062e5cd408c922
+#: ../../developer-guide/api/functions/TSVIONTodoGet.en.rst:32
+msgid "Description"
+msgstr ""
+

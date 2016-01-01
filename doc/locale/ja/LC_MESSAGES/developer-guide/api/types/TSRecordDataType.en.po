@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# a9a1831820e945bd85a5b2bf6a73d651
+#: ../../developer-guide/api/types/TSRecordDataType.en.rst:20
+msgid "TSRecordDataType"
+msgstr ""
+
+# 4b193268d7ec465cb44bf3ca6e7f75df
+#: ../../developer-guide/api/types/TSRecordDataType.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 6bf856fb2d954714af4da9b89297bcf6
+#: ../../developer-guide/api/types/TSRecordDataType.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# b24595e8302f407cb1c212bca0c9554b
+#: ../../developer-guide/api/types/TSRecordDataType.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# 8ccdd6780b5d4f1ca3f5ba83bf01c22d
+#: ../../developer-guide/api/types/TSRecordDataType.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# 9d9f0484b1ce406fbaaf8a8af7acfbff
+#: ../../developer-guide/api/types/TSRecordDataType.en.rst:51
+msgid "Description"
+msgstr ""
+

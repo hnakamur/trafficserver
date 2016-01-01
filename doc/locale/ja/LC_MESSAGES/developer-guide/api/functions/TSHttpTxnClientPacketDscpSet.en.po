@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# f32ab33684b34598b4b9cd691c432f74
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:21
+msgid "TSHttpTxnClientPacketDscpSet"
+msgstr ""
+
+# 53146ad72a36410097a26c944ed2947d
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:24
+msgid "Synopsis"
+msgstr ""
+
+# 90d9bc6d210649b8a92479bef93eac28
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:26
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# d6c62e28189b4cb2a78dcc4ecf9b5c66
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:31
+msgid "Description"
+msgstr ""
+
+# 3081eb20d9ad425cbb880ecf7b155075
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:33
+msgid "Change packet :arg:`dscp` for the client side connection."
+msgstr ""
+
+# 8aef9726853d4b0fbe7adbd6853237ba
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:37
+msgid "Changes take effect immediately."
+msgstr ""
+
+# e5d082a4687c465d99ab0ee182ad3a3f
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:40
+msgid "See Also"
+msgstr ""
+
+# 66c5d8d3e5d5449a908f0f0aeb4e81b3
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketDscpSet.en.rst:42
+msgid "`Traffic Shaping`_"
+msgstr ""
+

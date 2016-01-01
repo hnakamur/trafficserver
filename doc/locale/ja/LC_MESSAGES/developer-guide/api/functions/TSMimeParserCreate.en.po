@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 29b9cf0d0486407e90cad7ec46005659
+#: ../../developer-guide/api/functions/TSMimeParserCreate.en.rst:22
+msgid "TSMimeParserCreate"
+msgstr ""
+
+# 6842aa6dbbec4bd199594b7ae5d003de
+#: ../../developer-guide/api/functions/TSMimeParserCreate.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 6d339180603b4fb2830ae39eae41df9d
+#: ../../developer-guide/api/functions/TSMimeParserCreate.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# a10aeab090e6429c8b9c4c8dd0731697
+#: ../../developer-guide/api/functions/TSMimeParserCreate.en.rst:32
+msgid "Description"
+msgstr ""
+
+# aaeec903a93a45589ec56f137b5cac05
+#: ../../developer-guide/api/functions/TSMimeParserCreate.en.rst:34
+msgid "Creates a MIME parser."
+msgstr ""
+
+# cdad83540dd6462fab7a34f394577a48
+#: ../../developer-guide/api/functions/TSMimeParserCreate.en.rst:36
+msgid ""
+"The parser's data structure contains information about the header being "
+"parsed.  A single MIME parser can be used multiple times, though not "
+"simultaneously.  Before being used again, the parser must be cleared by "
+"calling :c:func:`TSMimeParserClear`."
+msgstr ""
+

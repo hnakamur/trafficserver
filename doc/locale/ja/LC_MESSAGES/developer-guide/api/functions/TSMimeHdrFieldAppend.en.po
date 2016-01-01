@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 701c17a2833547c6bc433a4c59b1b6f8
+#: ../../developer-guide/api/functions/TSMimeHdrFieldAppend.en.rst:22
+msgid "TSMimeHdrFieldAppend"
+msgstr ""
+
+# d5f7ac6f956045adaaee973ea3e79e3d
+#: ../../developer-guide/api/functions/TSMimeHdrFieldAppend.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# f6e87bc213004e49b9000e4411916bed
+#: ../../developer-guide/api/functions/TSMimeHdrFieldAppend.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 73a1a0722bf74fbcb43232a00c905178
+#: ../../developer-guide/api/functions/TSMimeHdrFieldAppend.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 0b7c237914c64d3186325f555f22d423
+#: ../../developer-guide/api/functions/TSMimeHdrFieldAppend.en.rst:34
+msgid ""
+"Returns the :c:type:`TSMLoc` location of a specified MIME field from "
+"within the MIME header located at :arg:`hdr`."
+msgstr ""
+
+# 324b4d9d6a994956ba48078e036ce54b
+#: ../../developer-guide/api/functions/TSMimeHdrFieldAppend.en.rst:37
+msgid ""
+"The retrieved_str parameter specifies which field to retrieve.  For each "
+"MIME field in the MIME header, a pointer comparison is done between the "
+"field name and retrieved_str.  This is a much quicker retrieval function "
+"than :c:func:`TSMimeHdrFieldFind` since it obviates the need for a string"
+" comparison.  However, retrieved_str must be one of the predefined field "
+"names of the form :c:data:`TS_MIME_FIELD_XXX` for the call to succeed.  "
+"Release the returned :c:type:`TSMLoc` handle with a call to "
+":c:func:`TSHandleMLocRelease`."
+msgstr ""
+

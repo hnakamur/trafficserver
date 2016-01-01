@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 48ac184b7f704c3aabed2d93117acfa7
+#: ../../developer-guide/api/functions/TSHttpHdrDestroy.en.rst:22
+msgid "TSHttpHdrDestroy"
+msgstr ""
+
+# ffcb2bd8fd8c4a67886a6ae719745401
+#: ../../developer-guide/api/functions/TSHttpHdrDestroy.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 53748d01aba14e51b2f026884b6948c6
+#: ../../developer-guide/api/functions/TSHttpHdrDestroy.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 4f780221a5504ed184a1277d6b09b957
+#: ../../developer-guide/api/functions/TSHttpHdrDestroy.en.rst:32
+msgid "Description"
+msgstr ""
+
+# bfd9ba097f0b44c7b42139edbc9204f7
+#: ../../developer-guide/api/functions/TSHttpHdrDestroy.en.rst:34
+msgid ""
+"Destroys the HTTP header located at :arg:`hdr_loc` within the marshal "
+"buffer :arg:`bufp`."
+msgstr ""
+
+# 7ed6c72282cd4d37a0d71fe267fbaa6a
+#: ../../developer-guide/api/functions/TSHttpHdrDestroy.en.rst:39
+msgid ""
+"Do not forget to release the handle :arg:`hdr_loc` with a call to "
+":c:func:`TSHandleMLocRelease`."
+msgstr ""
+

@@ -1,0 +1,526 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# d9c7ecc56d5f4ae3bef5779027f15cd9
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:23
+msgid "Header Functions"
+msgstr ""
+
+# 889dac5dd05845ae8773deee7e8c284e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:25
+msgid ""
+"The Traffic Server API HTTP header functions enable you to work with HTTP"
+" header data stored in marshal buffers."
+msgstr ""
+
+# 6d8498d3404043f28f4e4abb20d8b594
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:28
+msgid ""
+"The HTTP header data structure is a parsed version of the HTTP header "
+"defined in the HTTP protocol specification. An HTTP header is composed of"
+" a request or response line followed by zero or more MIME fields. In "
+"fact, an HTTP header is a subclass of a MIME header; all of the MIME "
+"header routines operate on HTTP headers."
+msgstr ""
+
+# 26a615ff9dd9468faa70af66d994910e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:34
+msgid ""
+"An HTTP **request line** is composed of a method, a URL, and version. A "
+"**response line** is composed of a version, status code, and reason "
+"phrase. See `About HTTP Headers <../http-headers#AboutHTTPHeaders>`__ for"
+" additional details and examples."
+msgstr ""
+
+# 2600a4eec21847029d8cd070f522dc6e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:39
+msgid ""
+"To facilitate fast comparisons and reduce storage size, Traffic Server "
+"defines several pre-allocated method names. These names correspond to the"
+" methods defined in the HTTP 1.1 specification"
+msgstr ""
+
+# 21e95bd0b9834c569814ddf1fda20412
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:44
+msgid "``TS_HTTP_METHOD_CONNECT``"
+msgstr ""
+
+# 5c1cf72e19c0414c968cc9f05e96b6ca
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:44
+msgid "\"CONNECT\""
+msgstr ""
+
+# b5b017bb79b5467c89af3940eb620dca
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:47
+msgid "``TS_HTTP_METHOD_DELETE``"
+msgstr ""
+
+# 164c0e78618e47adbe26196c347f1ef3
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:47
+msgid "\"DELETE\""
+msgstr ""
+
+# d303e7353b0e4e16ac6900632a399fe6
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:50
+msgid "``TS_HTTP_METHOD_GE``"
+msgstr ""
+
+# 4a8422e2207848fa96112ba33c010777
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:50
+msgid "\"GET\""
+msgstr ""
+
+# ce4576eae407472f973fc8adbeecfd87
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:53
+msgid "``TS_HTTP_METHOD_HEAD``"
+msgstr ""
+
+# f8c6f91e1a294dc68be783a404a795e4
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:53
+msgid "\"HEAD\""
+msgstr ""
+
+# 84061130ad8044189ca3a6b53be31509
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:56
+msgid "``TS_HTTP_METHOD_ICP_QUERY``"
+msgstr ""
+
+# 584dd22b3b0348b99d908f8bae5d1170
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:56
+msgid "\"ICP\\_QUERY\""
+msgstr ""
+
+# ee0000c2ce3c4fc19475c1eaca9a51f6
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:59
+msgid "``TS_HTTP_METHOD_OPTIONS``"
+msgstr ""
+
+# f740e28ae2ca429ebf5cd2f1373c1ecb
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:59
+msgid "\"OPTIONS\""
+msgstr ""
+
+# 953a5b87f9964fab8d1804717bf1c616
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:62
+msgid "``TS_HTTP_METHOD_POST``"
+msgstr ""
+
+# 38ba03a5593b4529b05d6e547f574efb
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:62
+msgid "\"POST\""
+msgstr ""
+
+# dfc048c4de7342bc8f3e70776b828da4
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:65
+msgid "``TS_HTTP_METHOD_PURGE``"
+msgstr ""
+
+# a3f534b6aaa849f1ba054e0d086d5fac
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:65
+msgid "\"PURGE\""
+msgstr ""
+
+# 559aa7177fd242c684688ace098c7c97
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:68
+msgid "``TS_HTTP_METHOD_PUT``"
+msgstr ""
+
+# 464676f579294c039c9678ec55d0c261
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:68
+msgid "\"PUT\""
+msgstr ""
+
+# 01e6c24afd2a4b8bb6c63bf687f02bba
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:71
+msgid "``TS_HTTP_METHOD_TRACE``"
+msgstr ""
+
+# d8c011c5facf4e8eb6685228c7ecbeab
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:71
+msgid "\"TRACE\""
+msgstr ""
+
+# c5d91d1f8d6f4157aec020b725ffdf19
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:74
+msgid "``TS_HTTP_METHOD_PUSH``"
+msgstr ""
+
+# a5d79b876eb24aa49948d0ba2415ffc0
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:74
+msgid "\"PUSH\""
+msgstr ""
+
+# 2e8a7862837b4ef7a57cf7feb64cc6dd
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:76
+msgid ""
+"Traffic Server also defines several common values that appear in HTTP "
+"headers."
+msgstr ""
+
+# 612c7fc0a4a4475cb046b887fb5ba8c7
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:80
+msgid "``TS_HTTP_VALUE_BYTES``"
+msgstr ""
+
+# 7adf0b0f39b04a2bb96c1c43e5c66e55
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:80
+msgid "\"bytes\""
+msgstr ""
+
+# 7fa6ed6280f64d3ab4e08773601dff95
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:83
+msgid "``TS_HTTP_VALUE_CHUNKED``"
+msgstr ""
+
+# 7e9d4b8478b14207960219b8109d1fec
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:83
+msgid "\"chunked\""
+msgstr ""
+
+# 3200f907a4e34f8eb91d20bd250120ad
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:86
+msgid "``TS_HTTP_VALUE_CLOSE``"
+msgstr ""
+
+# e501931f96244951830c68c57486ce61
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:86
+msgid "\"close\""
+msgstr ""
+
+# 98b86638d9974a979f99ca6371657bd6
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:89
+msgid "``TS_HTTP_VALUE_COMPRESS``"
+msgstr ""
+
+# 5b9d9f68a0bf48e9b1467f9a7b34ca3f
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:89
+msgid "\"compress\""
+msgstr ""
+
+# 248468e08e7f4f32b4b96968245dc44b
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:92
+msgid "``TS_HTTP_VALUE_DEFLATE``"
+msgstr ""
+
+# 5cdd82e91cad48b5a0d91036438d7834
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:92
+msgid "\"deflate\""
+msgstr ""
+
+# 14afab4067e248148751845a68355353
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:95
+msgid "``TS_HTTP_VALUE_GZIP``"
+msgstr ""
+
+# 1255fe94d238419ba2f8d080a98e82ac
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:95
+msgid "\"gzip\""
+msgstr ""
+
+# 84f04b2b0b464a3e97751f6f4597eac3
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:98
+msgid "``TS_HTTP_VALUE_IDENTITY``"
+msgstr ""
+
+# 97eaf483cd884fbfbe2fc25c76d2c9e3
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:98
+msgid "\"identity\""
+msgstr ""
+
+# 0abc0a56f48d4abda69757960082d68d
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:101
+msgid "``TS_HTTP_VALUE_KEEP_ALIVE``"
+msgstr ""
+
+# d51b5bbc5b854534a971f4c4091eeeec
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:101
+msgid "\"keep-alive\""
+msgstr ""
+
+# bd4271810ae044809a7c7cdfc6723220
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:104
+msgid "``TS_HTTP_VALUE_MAX_AGE``"
+msgstr ""
+
+# b5b1b0100b4b40ba96ebae6434de070d
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:104
+msgid "\"max-age\""
+msgstr ""
+
+# 810edebf861c46f48b728ecbe37b8bef
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:107
+msgid "``TS_HTTP_VALUE_MAX_STALE``"
+msgstr ""
+
+# b7843a9d593342f6a82300b92d49fed7
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:107
+msgid "\"max-stale\""
+msgstr ""
+
+# 059df8a362954ba0a9902375a410e81f
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:110
+msgid "``TS_HTTP_VALUE_MIN_FRESH``"
+msgstr ""
+
+# dd4c6f50e4ca4aa8b444904235e76b0e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:110
+msgid "\"min-fresh\""
+msgstr ""
+
+# f76551e39ad842c992cd346b7ceb69dc
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:113
+msgid "``TS_HTTP_VALUE_MUST_REVALIDATE``"
+msgstr ""
+
+# 4156a5f3be6e43a9b18638f3e291596d
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:113
+msgid "\"must-revalidate\""
+msgstr ""
+
+# 52cc516227444c21ae756abbbe2c3f5a
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:116
+msgid "``TS_HTTP_VALUE_NONE``"
+msgstr ""
+
+# 87fd712b7e9e4dc49d88c78deec65d7a
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:116
+msgid "\"none\""
+msgstr ""
+
+# 4617930de93b433a897c00953fff97cc
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:119
+msgid "``TS_HTTP_VALUE_NO_CACHE``"
+msgstr ""
+
+# 88d1fb2fb11a4ef08502bd66d847cd74
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:119
+msgid "\"no-cache\""
+msgstr ""
+
+# 61a48b134be94bef9800b113d36c1885
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:122
+msgid "``TS_HTTP_VALUE_NO_STORE``"
+msgstr ""
+
+# 367cc62ed3144f13a5a8541e4e4a0801
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:122
+msgid "\"no-store\""
+msgstr ""
+
+# b26f5ea68d1b41d28231debb718a9fc6
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:125
+msgid "``TS_HTTP_VALUE_NO_TRANSFORM``"
+msgstr ""
+
+# e5466d0cbc074e8db1cd047a5c63e49e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:125
+msgid "\"no-transform\""
+msgstr ""
+
+# d9971197ed11402097bfc53933e8828c
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:128
+msgid "``TS_HTTP_VALUE_ONLY_IF_CACHED``"
+msgstr ""
+
+# 2ca768ad10624d4c89ccea8a75045dcb
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:128
+msgid "\"only-if-cached\""
+msgstr ""
+
+# 5144ed9bae6d4375b39d75e4024dec74
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:131
+msgid "``TS_HTTP_VALUE_PRIVATE``"
+msgstr ""
+
+# 8ca09af012d94f6b8b918d8018014e91
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:131
+msgid "\"private\""
+msgstr ""
+
+# 3ba93f06b96f4f69a7a0b74d23d305a9
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:134
+msgid "``TS_HTTP_VALUE_PROXY_REVALIDATE``"
+msgstr ""
+
+# e1e13b7ace2f480bb776c5f3badbacf1
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:134
+msgid "\"proxy-revalidate\""
+msgstr ""
+
+# 802cefedec2f4ddeaf8aed59ee91d609
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:137
+msgid "``TS_HTTP_VALUE_PUBLIC``"
+msgstr ""
+
+# d7c47b14a8b5425c8c0785a63a99fadc
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:137
+msgid "\"public\""
+msgstr ""
+
+# 5794d84a0dbc4ac69b253eacf408cd3d
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:140
+msgid "``TS_HTTP_VALUE_S_MAX_AGE``"
+msgstr ""
+
+# dd5351c4af6449e0b2bf0f39ade013a9
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:140
+msgid "\"s-maxage\""
+msgstr ""
+
+# 9a6302511baf483fac6bb16933cfadfb
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:142
+msgid ""
+"The method names and header values above are defined in ``ts.h`` as "
+"``const char*`` strings. When Traffic Server sets a method or a header "
+"value, it checks to make sure that the new value is one of the known "
+"values. If it is, then it stores a pointer into a global table (instead "
+"of storing the known value in the marshal buffer). The method names and "
+"header values listed above are also pointers into this table. This allows"
+" simple pointer comparison of the value returned from ``TSHttpMethodGet``"
+" with one of the values listed above. It is also recommended that you use"
+" the above values when referring to one of the known schemes, since this "
+"removes the possibility of a spelling error."
+msgstr ""
+
+# 91fdfa0c5c664f1a924b147a7829012b
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:153
+msgid "The **HTTP Header Functions** are listed below:"
+msgstr ""
+
+# dfac9bc80f72467585ee8a2f84f5d597
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:155
+msgid ":c:func:`TSHttpHdrClone`"
+msgstr ""
+
+# e1ed66c074de498f924ed3f0b78548ce
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:156
+msgid ":c:func:`TSHttpHdrCopy`"
+msgstr ""
+
+# 30b730b8ef9e47f3b3187d6520cb439e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:157
+msgid ":c:func:`TSHttpHdrCreate`"
+msgstr ""
+
+# 6ee59dc5dd5d4341b722d841986f8102
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:158
+msgid ":c:func:`TSHttpHdrDestroy`"
+msgstr ""
+
+# b5280dfc8aca4746a7ab97867e26921a
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:159
+msgid ":c:func:`TSHttpHdrLengthGet`"
+msgstr ""
+
+# 60b4ac7be75649968541582dde070c84
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:160
+msgid ":c:func:`TSHttpHdrMethodGet`"
+msgstr ""
+
+# e6d492fbf9dc459293f6a20746707c68
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:161
+msgid ":c:func:`TSHttpHdrMethodSet`"
+msgstr ""
+
+# 8a1e610a43fc4d7f81fe6bcc17d5effd
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:162
+msgid ":c:func:`TSHttpHdrPrint`"
+msgstr ""
+
+# 892260b2becd4fbb8289a4e977fc30ee
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:163
+msgid ":c:func:`TSHttpHdrReasonGet`"
+msgstr ""
+
+# 3dd2665f779e482fa7bff436c56ad30e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:164
+msgid ":c:func:`TSHttpHdrReasonLookup`"
+msgstr ""
+
+# 5b200d6cadb349d79668895758edd4c2
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:165
+msgid ":c:func:`TSHttpHdrReasonSet`"
+msgstr ""
+
+# 4524fe2c774045ed98d532c026181ebf
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:166
+msgid ":c:func:`TSHttpHdrStatusGet`"
+msgstr ""
+
+# f6dd03e11c784d4897a876f3c6b1c033
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:167
+msgid ":c:func:`TSHttpHdrStatusSet`"
+msgstr ""
+
+# afcaaae3216949418873f3c7cf92a4d2
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:168
+msgid ":c:func:`TSHttpHdrTypeGet`"
+msgstr ""
+
+# 31d68fc340c940f8be21faf1ce35895e
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:169
+msgid ":c:func:`TSHttpHdrTypeSet`"
+msgstr ""
+
+# 9404d6456a8047d4be3ba8a87419cfd3
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:170
+msgid ":c:func:`TSHttpHdrUrlGet`"
+msgstr ""
+
+# 13f475a5c69b4df3b4d9168310925168
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:171
+msgid ":c:func:`TSHttpHdrUrlSet`"
+msgstr ""
+
+# f41cb99a53084038b3e38bec96e6eb3a
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:172
+msgid ":c:func:`TSHttpHdrVersionGet`"
+msgstr ""
+
+# a174de0a75f5494cbb479ec0248b3799
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:173
+msgid ":c:func:`TSHttpHdrVersionSet`"
+msgstr ""
+
+# 66dfa9392a104bf88df6452f8ed962b9
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:174
+msgid ":c:func:`TSHttpParserClear`"
+msgstr ""
+
+# ae542010ed34489c977a6fbaef2c7783
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:175
+msgid ":c:func:`TSHttpParserCreate`"
+msgstr ""
+
+# 6907b56ab2dc4628bc1cb42ede1093a6
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:176
+msgid ":c:func:`TSHttpParserDestroy`"
+msgstr ""
+
+# 55c963f6ebb042dca9fbd36efd94248f
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:177
+msgid ":c:func:`TSHttpHdrParseReq`"
+msgstr ""
+
+# 13253640e0544cf580a718210979819d
+#: ../../developer-guide/plugins/http-headers/header-functions.en.rst:178
+msgid ":c:func:`TSHttpHdrParseResp`"
+msgstr ""
+

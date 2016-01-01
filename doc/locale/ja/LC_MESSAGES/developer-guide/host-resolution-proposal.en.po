@@ -1,0 +1,432 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 0adfe41388bd4296b3ca3a091c760a49
+#: ../../developer-guide/host-resolution-proposal.en.rst:21
+msgid "Host Resolution Proposal"
+msgstr ""
+
+# ac7a51f1299d4b1abbc21787c13e7001
+#: ../../developer-guide/host-resolution-proposal.en.rst:24
+msgid "Introduction"
+msgstr ""
+
+# 080844b05cd1447889a540f9afce1cf3
+#: ../../developer-guide/host-resolution-proposal.en.rst:26
+msgid ""
+"The current mechanism for resolving host names to IP addresses for "
+"Traffic Server is contained the HostDB and DNS libraries. These take "
+"hostnames and provide IP addresses for them."
+msgstr ""
+
+# 1bde81248afd438d9a17736f0f8a6f57
+#: ../../developer-guide/host-resolution-proposal.en.rst:29
+msgid ""
+"The current implementation is generally considered inadequate, both from "
+"a functionality point of view and difficulty in working with it in other "
+"parts of Traffic Server. As Traffic Server is used in more complex "
+"situtations this inadequacy presents increasing problems."
+msgstr ""
+
+# adcdfa98845d479eb468c5f63de67728
+#: ../../developer-guide/host-resolution-proposal.en.rst:34
+msgid "Goals"
+msgstr ""
+
+# 64caa8337993455681f0504e142e7da2
+#: ../../developer-guide/host-resolution-proposal.en.rst:36
+msgid ""
+"Updating the host name resolution (currently referred to as \"HostDB\") "
+"has several functions goals"
+msgstr ""
+
+# b8659f2a6af94f13b684629e2592ebd2
+#: ../../developer-guide/host-resolution-proposal.en.rst:38
+msgid "Enable additional processing layers to be easily added."
+msgstr ""
+
+# 956b303798be428ab940f83868b88c3b
+#: ../../developer-guide/host-resolution-proposal.en.rst:39
+msgid "Enable plugins to directly access the name resolution logic"
+msgstr ""
+
+# 5236206d669c4f3a81fec174fd7fff26
+#: ../../developer-guide/host-resolution-proposal.en.rst:40
+msgid "Enable plugins to provide name resolution"
+msgstr ""
+
+# b4a0a40221df4b63a9a83ad029b93ba8
+#: ../../developer-guide/host-resolution-proposal.en.rst:41
+msgid "Asynchronous (immediate resolve or callback on block)"
+msgstr ""
+
+# fd61e0bd3b94414b8b8d9fe964420a16
+#: ../../developer-guide/host-resolution-proposal.en.rst:42
+msgid ""
+"Minimize allocations -- in particular no allocations for cached "
+"resolutions"
+msgstr ""
+
+# 91a77e5efe084f22b537b143fdf257c2
+#: ../../developer-guide/host-resolution-proposal.en.rst:43
+msgid ""
+"Simplify interactions with the resolution, particularly with regard to "
+"nameservers, origin server failover, and address family handling."
+msgstr ""
+
+# 3dbced46f3a748ecb4fd5af693ec7566
+#: ../../developer-guide/host-resolution-proposal.en.rst:46
+msgid ""
+"It is also necessary to support a number of specific features that are "
+"either currently available or strongly desired."
+msgstr ""
+
+# cd34b45e098b45aa92236f114d985591
+#: ../../developer-guide/host-resolution-proposal.en.rst:48
+msgid "SplitDNS or its equivalent"
+msgstr ""
+
+# 8e341b6f690a4aa4afc9c874c2751639
+#: ../../developer-guide/host-resolution-proposal.en.rst:49
+msgid "Use of a hosts file (e.g. ``/etc/hosts``)"
+msgstr ""
+
+# 3ae4cd5dc12f42fcbdbe4d5216d887a9
+#: ../../developer-guide/host-resolution-proposal.en.rst:50
+msgid "Simultaneous IPv4 and IPv6 queries"
+msgstr ""
+
+# 61c0e93f5d8344cb9db4301ea6a06169
+#: ../../developer-guide/host-resolution-proposal.en.rst:51
+msgid "IP family control"
+msgstr ""
+
+# 63c2264c57034cb0b633ebd5eace6db8
+#: ../../developer-guide/host-resolution-proposal.en.rst:52
+msgid ""
+"Negative caching *  Server connection failures *  Query failures *  "
+"Nameserver failures."
+msgstr ""
+
+# 14451baf6db84f0dab72664c950d5c36
+#: ../../developer-guide/host-resolution-proposal.en.rst:56
+msgid "Address validity time out control"
+msgstr ""
+
+# 72c20a561b5c485ebcd7b7579ef85150
+#: ../../developer-guide/host-resolution-proposal.en.rst:57
+msgid "Address round robin support"
+msgstr ""
+
+# 4d9a73b2c807420093bf11817b0bebbe
+#: ../../developer-guide/host-resolution-proposal.en.rst:58
+msgid "SRV record support (weighted records)"
+msgstr ""
+
+# d240f3cee2af4f9e927a8f15dd626416
+#: ../../developer-guide/host-resolution-proposal.en.rst:59
+msgid "Nameserver round robin"
+msgstr ""
+
+# 87bdb06969594b928a77942fc07f22e6
+#: ../../developer-guide/host-resolution-proposal.en.rst:60
+msgid "Plugin access to nameserver data (add, remove, enumerate)"
+msgstr ""
+
+# cc14ba12193d4e8cbd8c48a8abb760aa
+#: ../../developer-guide/host-resolution-proposal.en.rst:61
+msgid "Plugin provision of resolvers."
+msgstr ""
+
+# 78dcab5067e64a58bb193702a3ef23d9
+#: ../../developer-guide/host-resolution-proposal.en.rst:62
+msgid "Hooks for plugin detection / recovery from resolution events."
+msgstr ""
+
+# 506ce43d123e4709825967ac99758fd8
+#: ../../developer-guide/host-resolution-proposal.en.rst:64
+msgid ""
+"One issue is persistence of the cached resolutions. This creates problems"
+" for the current implementation (because of size limits it imposes on the"
+" cached data) but also allows for quicker restarts in a busy environment."
+msgstr ""
+
+# 6969a3b77aec48ed8b99c9013dd3df0f
+#: ../../developer-guide/host-resolution-proposal.en.rst:68
+msgid "Basics"
+msgstr ""
+
+# 176d36dafb2e4030a63e217e7e3e2701
+#: ../../developer-guide/host-resolution-proposal.en.rst:70
+msgid ""
+"The basic design is to separate the functionality into chainable layers "
+"so that a resolver with the desired attributes can be assembled from "
+"those layers. The core interface is that of a lazy iterator. This object "
+"returns one of four results when asked for an address"
+msgstr ""
+
+# 7f289919f67045b1b00b0d9101ce5b06
+#: ../../developer-guide/host-resolution-proposal.en.rst:74
+msgid "An IP address"
+msgstr ""
+
+# e9df531ae9b2471382673a1b6f21544c
+#: ../../developer-guide/host-resolution-proposal.en.rst:75
+msgid "Done(no more addresses are available)"
+msgstr ""
+
+# 76885f78ae9b4f78abc8ef0daa1d3fc3
+#: ../../developer-guide/host-resolution-proposal.en.rst:76
+msgid "Wait(an address may be available in the future)"
+msgstr ""
+
+# 193a5a8be6a34683a12d56f6600128cf
+#: ../../developer-guide/host-resolution-proposal.en.rst:77
+msgid "Fail (no address is available and none will be so in the future)"
+msgstr ""
+
+# 0c6eebcd3e54454aa7e7c41ed83653c1
+#: ../../developer-guide/host-resolution-proposal.en.rst:79
+msgid ""
+"Each layer (except the bottom) uses this API and also provides it. This "
+"enables higher level logic such as the state machine to simply use the "
+"resolver as a list without having to backtrack states in the case of "
+"failures, or have special cases for different resolution sources."
+msgstr ""
+
+# d12210a9403648339706d2b4ec57b3ec
+#: ../../developer-guide/host-resolution-proposal.en.rst:83
+msgid ""
+"To perform a resolution, a client creates a query object (potentially on "
+"the stack), initializes it with the required data (at least the hostname)"
+" and then starts the resolution. Methods on the query object allow its "
+"state and IP address data to be accessed."
+msgstr ""
+
+# a24d3c7d3ea9461db15ab791704c410d
+#: ../../developer-guide/host-resolution-proposal.en.rst:88
+msgid "Required Resolvers"
+msgstr ""
+
+# 80f44e672e4d4d3abbf9d9ccbd5f06e7
+#: ../../developer-guide/host-resolution-proposal.en.rst:92
+msgid "Nameserver"
+msgstr ""
+
+# 945b5a15c82e470d88633dd677a0f53f
+#: ../../developer-guide/host-resolution-proposal.en.rst:91
+msgid ""
+"A bottom level resolver that directly queries a nameserver for DNS data. "
+"This contains much of the functionality currently in the ``iocore/dns`` "
+"directory."
+msgstr ""
+
+# 9f42772f05794e62b14b56d0f631c394
+#: ../../developer-guide/host-resolution-proposal.en.rst:96
+msgid "SplitDNS"
+msgstr ""
+
+# a488bcbdb8ed472880d6fb60b4b81f6d
+#: ../../developer-guide/host-resolution-proposal.en.rst:95
+msgid ""
+"A resolver that directs requests to one of several resolvers. To emulate "
+"current behavior these would be Nameserver instances."
+msgstr ""
+
+# 9af999264ee54a5fa4233b6d399f88a4
+#: ../../developer-guide/host-resolution-proposal.en.rst:100
+msgid "NameserverGroup"
+msgstr ""
+
+# 5ca568a65efe4471b63824b382ea7d9c
+#: ../../developer-guide/host-resolution-proposal.en.rst:99
+msgid ""
+"A grouping mechanism for Nameserver instances that provides failover, "
+"round robin, and ordering capabilities. It may be reasonable to merge "
+"this with the SplitDNS resolver."
+msgstr ""
+
+# 5e9961912b7d41ea95beb733a989963d
+#: ../../developer-guide/host-resolution-proposal.en.rst:103
+msgid "HostFile"
+msgstr ""
+
+# 4e27dfe7f961473dab39747214b0aae3
+#: ../../developer-guide/host-resolution-proposal.en.rst:103
+msgid "A resolver that uses a local file to resolve names."
+msgstr ""
+
+# 7c5826954cd54119b97eb9674bc387e8
+#: ../../developer-guide/host-resolution-proposal.en.rst:107
+msgid "AddressCache"
+msgstr ""
+
+# 6bcfb3a66f8c4d2c8ad8323ec6884657
+#: ../../developer-guide/host-resolution-proposal.en.rst:106
+msgid ""
+"A resolver that also has a cache for resolution results. It requires "
+"another resolver instance to perform the actual resolution."
+msgstr ""
+
+# 984f71440a6d4ce0b72d6edf32747536
+#: ../../developer-guide/host-resolution-proposal.en.rst:111
+msgid "Preloaded"
+msgstr ""
+
+# 4c983616506d40848db08fa2ea4cfdb5
+#: ../../developer-guide/host-resolution-proposal.en.rst:110
+msgid ""
+"A resolver that can contain one or more explicitly set IP addresses which"
+" are returned. When those are exhausted it falls back to another "
+"resolver."
+msgstr ""
+
+# 9f0d452438884326b9c1dabb4f44b500
+#: ../../developer-guide/host-resolution-proposal.en.rst:114
+msgid "Configuration"
+msgstr ""
+
+# 0521222e128f491590e80c6d2bfd5c2c
+#: ../../developer-guide/host-resolution-proposal.en.rst:116
+msgid ""
+"To configuration the resolution, each resolver would be assigned a tag. "
+"It is not, however, sufficient to simply provide the list of resolver "
+"tags because some resolvers require additional configuration. "
+"Unfortunately this will likely require a separate configuration file "
+"outside of :file:`records.config`, although we would be able to remove "
+":file:`splitdns.config`. In this case we would need chain start / end "
+"markers around a list of resolver tags. Each tag would the be able to "
+"take additional resolver configuration data. For instance, for a SplitDNS"
+" resolver the nameservers."
+msgstr ""
+
+# 0e766b2bd98a4618bd4cff05b998bc97
+#: ../../developer-guide/host-resolution-proposal.en.rst:123
+msgid "Examples"
+msgstr ""
+
+# 6e2ba3caaaba4b108d77d11335d49d08
+#: ../../developer-guide/host-resolution-proposal.en.rst:125
+msgid ""
+"Transparent operations would benefit from the *Preloaded* resolver. This "
+"would be loaded with the origin host address provided by the client "
+"connection. This could be done early in processing and then no more logic"
+" would be required to skip DNS processing as it would happen without "
+"additional action by the state machine. It would handle the problem of de"
+" facto denial of service if an origin server becomes unavailable in that "
+"configuration, as *Preloaded* would switch to alternate addresses "
+"automatically."
+msgstr ""
+
+# 5cd4d1c528aa40928cabacd9ec437a2e
+#: ../../developer-guide/host-resolution-proposal.en.rst:131
+msgid ""
+"Adding host file access would be easier as well, as it could be done in a"
+" much more modular fashion and then added to the stack at configuration "
+"time. Whether such addresses were cached would be controlled by chain "
+"arrangement rather yet more configuration knobs."
+msgstr ""
+
+# 78ccdff35e1b4daeb8b4fa07a426a754
+#: ../../developer-guide/host-resolution-proposal.en.rst:135
+msgid ""
+"The default configuration would be *Preloaded* : *AddressCache* : "
+"*Nameserver*."
+msgstr ""
+
+# ea64ba0b94864624a4088f46bdca5926
+#: ../../developer-guide/host-resolution-proposal.en.rst:137
+msgid ""
+"In all cases the state machine makes requests against the request object "
+"to get IP addresses as needed."
+msgstr ""
+
+# 7a5313a1bafc49e58aea6909d15ffe0e
+#: ../../developer-guide/host-resolution-proposal.en.rst:140
+msgid "Issues"
+msgstr ""
+
+# 702e78391ea34cc0a61de72bac8827a8
+#: ../../developer-guide/host-resolution-proposal.en.rst:143
+msgid "Request object allocation"
+msgstr ""
+
+# 3c980eed21324b8aada887ab1aa98683
+#: ../../developer-guide/host-resolution-proposal.en.rst:145
+msgid ""
+"The biggest hurdle is being able to unwind a resolver chain when a block "
+"is encountered. There are some ways to deal with this."
+msgstr ""
+
+# af50b5249fa54c5ba47146acf0d83294
+#: ../../developer-guide/host-resolution-proposal.en.rst:147
+msgid ""
+"1) Set a maximum resolver chain length and declare the request instance "
+"so that there is storage for state for that many resolvers. If needed and"
+" additional value of maximum storage per chain could be set as well. The "
+"expected number of elements in a chain is expected to be limited, 10 "
+"would likely be a reaosnable limit. If settable at source configuration "
+"time this should be sufficient."
+msgstr ""
+
+# c8fd543bc63941d0b0a4dd8343d71314
+#: ../../developer-guide/host-resolution-proposal.en.rst:152
+msgid ""
+"2) Embed class allocators in resolver chains and mark the top / outermost"
+" / first resolver. The maximum state size for a resolution can be "
+"calculated when the chain is created and then the top level resolver can "
+"use an allocation pool to efficiently allocate request objects. This has "
+"an advantage that with a wrapper class the request object can be passed "
+"along cheaply. Whether that's an advantage in practice is unclear."
+msgstr ""
+
+# c824ae9a17fe490f97717053843bbe4d
+#: ../../developer-guide/host-resolution-proposal.en.rst:158
+msgid "Plugin resolvers"
+msgstr ""
+
+# c839c9855160475ab0fe641d4aebcf75
+#: ../../developer-guide/host-resolution-proposal.en.rst:160
+msgid ""
+"If plugins can provide resolvers, how can these can integrated in to "
+"existing resolver chains for use by the HTTP SM for instance?"
+msgstr ""
+
+# bce2030b2bbc4bb3981d4bd7a320aad6
+#: ../../developer-guide/host-resolution-proposal.en.rst:164
+msgid "Feedback"
+msgstr ""
+
+# b0cb0d46b5e040bdbf90ff5582ec32fc
+#: ../../developer-guide/host-resolution-proposal.en.rst:166
+msgid ""
+"It should be possible for a client to provide feedback about addresses "
+"(e.g., the origin server at this address is not available). Not all "
+"resolvers will handle feedback but some will and that must be possible."
+msgstr ""
+
+# 458bfba2f9114fb6854338451d17514c
+#: ../../developer-guide/host-resolution-proposal.en.rst:169
+msgid ""
+"Related to this is that caching resolvers (such as *AddressCache*) must "
+"be able to iterator over all resolved addresses even if their client does"
+" not ask for them. In effect they must background fill the address data."
+msgstr ""
+

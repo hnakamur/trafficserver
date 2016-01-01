@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 6d1838f3494e45b19930c34cc951408b
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:23
+msgid "Cache Volume"
+msgstr ""
+
+# df3a315ed539432cad39958580374a19
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:25
+msgid ""
+"Each configured :ref:`cache-volume` receives a complete set of statistics"
+" from |TS|. They are differentiated from each other by the incrementing "
+"number that is part of the statistic name. The volume number begins at "
+":literal:`0` and increments by :literal:`1` for each additional volume."
+msgstr ""
+
+# 46872641f492416fa20e95d3cdbefe01
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:30
+msgid ""
+"The statistics are documented in this section using the default volume "
+"number in a configuration with only one cache volume: :literal:`0`."
+msgstr ""
+
+# f14b7f5bfd9d4f97abe59ee909022ac4
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:37
+msgid "Represents the total number of bytes allocated for the cache volume."
+msgstr ""
+
+# 9db065bdc3f14673a1ed52d07d571138
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:43
+msgid ""
+"Represents the number of bytes in this cache volume which are occupied by"
+" cache objects."
+msgstr ""
+
+# 4bf4e74215a44469b70b109854bb24a2
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:52
+msgid ""
+"Represents the total number of directory entries which have been "
+"allocated in this cache volume."
+msgstr ""
+
+# 3ddbf060b90640a39dcc6a38208ab3be
+#: ../../admin-guide/monitoring/statistics/core/cache-volume.en.rst:58
+msgid ""
+"Represents the number of allocated directory entries in this cache volume"
+" which are in use."
+msgstr ""
+

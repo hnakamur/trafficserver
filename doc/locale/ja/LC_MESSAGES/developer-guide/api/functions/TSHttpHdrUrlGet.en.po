@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 44954f5502b84a46aca75085e6028dee
+#: ../../developer-guide/api/functions/TSHttpHdrUrlGet.en.rst:22
+msgid "TSHttpHdrUrlGet"
+msgstr ""
+
+# f269bffd463447df8a8adbeaadc2ea16
+#: ../../developer-guide/api/functions/TSHttpHdrUrlGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 6c5845738802436481c3d2ff7ad4127e
+#: ../../developer-guide/api/functions/TSHttpHdrUrlGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 64c55f04d9d34a3da96a2ea7b1d901b2
+#: ../../developer-guide/api/functions/TSHttpHdrUrlGet.en.rst:32
+msgid "Description"
+msgstr ""
+

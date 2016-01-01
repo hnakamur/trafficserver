@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 7b68f64ab3d943bfaf751e0f319ccd04
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:23
+msgid "SSL/TLS"
+msgstr ""
+
+# 897eb36a28eb4b7687f0e62addcfeac6
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:28
+msgid ""
+"Indicates the number of certificates presented by origin servers which "
+"contained invalid information, since statistics collection began."
+msgstr ""
+
+# c56b0a35216c448881a42dff19b76692
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:34
+msgid ""
+"The number of origin server SSL certificates presented which failed "
+"verification, since statistics collection began."
+msgstr ""
+
+# f2cb15e3641a4db5908d1d3485039ced
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:40
+msgid ""
+"The number of SSL connections to origin servers which returned data that "
+"could not be properly decrypted, since statistics collection began."
+msgstr ""
+
+# 9e86c9cd326e45f2afc697b5140ea464
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:46
+msgid ""
+"The number of SSL connections to origin servers for which expired origin "
+"certificates were presented, since statistics collection began."
+msgstr ""
+
+# 9fbd0de87b2848488856329a5dbfe189
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:52
+msgid ""
+"The number of SSL connections to origin servers which encountered "
+"otherwise uncategorized errors, since statistics collection began."
+msgstr ""
+
+# e058e689c6164615997761476a9ea5e8
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:58
+msgid ""
+"The number of SSL connections to origin servers during which a revoked "
+"certificate was presented by the origin, since statistics collection "
+"began."
+msgstr ""
+
+# 52263944958b4f039a3b45a8b29c8eaa
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:64
+msgid ""
+"The number of SSL connections to origin servers during which the origin "
+"presented a certificate signed by an unrecognized Certificate Authority, "
+"since statistics collection began."
+msgstr ""
+
+# d90e7876be884ca7a4f1010464a44822
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:74
+msgid ""
+"The number of SSL connections to origin servers which were terminated due"
+" to unsupported SSL/TLS protocol versions, since statistics collection "
+"began."
+msgstr ""
+
+# e72eb5934f05414db1f8c32a33caf25e
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:120
+msgid ""
+"The total amount of time spent performing SSL/TLS handshakes for new "
+"sessions since statistics collection began."
+msgstr ""
+
+# d13298c84556459b8c9396fb48d19bb9
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:126
+msgid ""
+"The total number of SSL/TLS handshakes successfully performed since "
+"statistics collection began."
+msgstr ""
+
+# 1a0dda4b55c54cf094583f4147465eac
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:150
+msgid ""
+"Incoming client SSL connections which have presented invalid data in lieu"
+" of a client certificate, since statistics collection began."
+msgstr ""
+
+# be714e6d30ff4f46b8325c33b46e881e
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:156
+msgid ""
+"Incoming client SSL connections which presented a client certificate that"
+" did not pass verification, since statistics collection began."
+msgstr ""
+
+# 2706e5beb90547eb8d5747928b8fbd4f
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:162
+msgid ""
+"Incoming client SSL connections which failed to be properly decrypted, "
+"since statistics collection began."
+msgstr ""
+
+# f43186f2eddc415cac2377b2b7410c68
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:168
+msgid ""
+"Incoming client SSL connections which presented a client certificate that"
+" had already expired, since statistics collection began."
+msgstr ""
+
+# 581d7c659c374571a587672fb10ab790
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:174
+msgid ""
+"Incoming client SSL connections which experienced otherwise uncategorized"
+" errors, since statistics collection began."
+msgstr ""
+
+# 3950a562cf564f1ea6499d2eb1a66ee0
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:180
+msgid ""
+"Incoming client SSL connections which presented a client certificate that"
+" had been revoked, since statistics collection began."
+msgstr ""
+
+# 0da04102442146f5a5983dbe223d1144
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:186
+msgid ""
+"Incoming client SSL connections which successfully used a previously "
+"negotiated session, since statistics collection began."
+msgstr ""
+
+# ab84f4e1a7b540d8aec2a6a4accf625c
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:192
+msgid ""
+"Incoming client SSL connections which unsuccessfully attempted to use a "
+"previously negotiated session, since statistics collection began."
+msgstr ""
+
+# 479f059b3acb4d90babe0e570d8e953e
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:198
+msgid ""
+"A counter indicating the number of SSL sessions negotiated for incoming "
+"client connections, since statistics collection began."
+msgstr ""
+
+# f3fdb79fad574abd8a1f9a68222b8dfd
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:204
+msgid ""
+"Incoming client SSL connections which terminated with an expired session,"
+" since statistics collection began."
+msgstr ""
+
+# 50910ec919704f58a91e0b249904bf9e
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:210
+msgid ""
+"Incoming client SSL connections which presented a client certificate "
+"signed by an unrecognized Certificate Authority, since statistics "
+"collection began."
+msgstr ""
+
+# d4c86ab624724c53ac52846266cf0d4a
+#: ../../admin-guide/monitoring/statistics/core/ssl.en.rst:219
+msgid ""
+"Incoming client SSL connections terminated due to an unsupported or "
+"disabled version of SSL/TLS, since staistics collection began."
+msgstr ""
+

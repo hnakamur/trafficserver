@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 25673b9d953b457c86fea50892c846b5
+#: ../../developer-guide/api/functions/TSHttpHdrPrint.en.rst:22
+msgid "TSHttpHdrPrint"
+msgstr ""
+
+# c607fb37efea4d40b2e4b74210d0512e
+#: ../../developer-guide/api/functions/TSHttpHdrPrint.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 1d4f96cb7c8b4d8a868f7ac62ca6039f
+#: ../../developer-guide/api/functions/TSHttpHdrPrint.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 8728afb9e0554330998bb6ebdb799db9
+#: ../../developer-guide/api/functions/TSHttpHdrPrint.en.rst:32
+msgid "Description"
+msgstr ""
+

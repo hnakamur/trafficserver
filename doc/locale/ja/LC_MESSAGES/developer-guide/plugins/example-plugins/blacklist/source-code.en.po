@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# acc1474776e44f4b81c70263797f1867
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:23
+msgid "Sample Source Code"
+msgstr ""
+
+# 73801561c26a4d779d76235d0f8e5d96
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:28
+msgid "blacklist-1.c"
+msgstr ""
+
+# 8bb69ecfa2834b44a6a29ffbe89ada98
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:30
+msgid ""
+"The sample blacklisting plugin included in the Traffic Server SDK is "
+"``blacklist-1.c``. This plugin checks every incoming HTTP client request "
+"against a list of blacklisted web sites. If the client requests a "
+"blacklisted site, then the plugin returns an ``Access forbidden`` message"
+" to the client."
+msgstr ""
+
+# e4e2b4b44f2343229733f25897d45691
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:36
+msgid "This plugin illustrates:"
+msgstr ""
+
+# 4d116bc0368a4c97ad53a366241834e5
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:38
+msgid "An HTTP transaction extension"
+msgstr ""
+
+# dd7d3368e05941f3854c3363c14f2d24
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:40
+msgid "How to examine HTTP request headers"
+msgstr ""
+
+# 6969e51550be4283a1a42f0d0f434482
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:42
+msgid "How to use the logging interface"
+msgstr ""
+
+# 0268fd957c444041ac3944aad16b738f
+#: ../../developer-guide/plugins/example-plugins/blacklist/source-code.en.rst:44
+msgid "How to use the plugin configuration management interface"
+msgstr ""
+

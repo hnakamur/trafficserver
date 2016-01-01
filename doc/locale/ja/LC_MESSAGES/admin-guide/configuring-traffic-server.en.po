@@ -1,0 +1,119 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# bac9df9a27034d74b8a50c67d03173de
+#: ../../admin-guide/configuring-traffic-server.en.rst:4
+msgid "Configuring Traffic Server"
+msgstr ""
+
+# edfbe138a24944b7aa457205b6600479
+#: ../../admin-guide/configuring-traffic-server.en.rst:23
+msgid "Traffic Server provides several options for configuring the system."
+msgstr ""
+
+# 5fce620a8acc4ede9a10a58e7e86cbd7
+#: ../../admin-guide/configuring-traffic-server.en.rst:31
+msgid "Configure Traffic Server Using Traffic Line"
+msgstr ""
+
+# 9d45289edfd444cfa015f9441deeca7b
+#: ../../admin-guide/configuring-traffic-server.en.rst:33
+msgid ""
+"Traffic Line enables you to quickly and easily change your Traffic Server"
+" configuration via command-line interface."
+msgstr ""
+
+# d73c11390ed6477bb49e2ca12548f231
+#: ../../admin-guide/configuring-traffic-server.en.rst:37
+msgid "View Configuration Options in Traffic Line"
+msgstr ""
+
+# 5404f644fb284dd2a7c707b5bdd04a41
+#: ../../admin-guide/configuring-traffic-server.en.rst:39
+msgid "To view a configuration setting, enter the following command::"
+msgstr ""
+
+# b685b7ab9af64e70b244812958d8d812
+#: ../../admin-guide/configuring-traffic-server.en.rst:43
+msgid ""
+"where *var* is the variable associated with the configuration option. For"
+" a list of variables, refer to :ref:`configuration-variables`."
+msgstr ""
+
+# 22fb7fb1ed044505bb70be6b67c2580a
+#: ../../admin-guide/configuring-traffic-server.en.rst:47
+msgid "Change Configuration Options in Traffic Line"
+msgstr ""
+
+# 1c36d63c628143f6aefb44e5ad86ca14
+#: ../../admin-guide/configuring-traffic-server.en.rst:49
+msgid ""
+"To change the value of a configuration setting, enter the following "
+"command::"
+msgstr ""
+
+# 71c3a8ce518a45768eb5e0331ce8d96c
+#: ../../admin-guide/configuring-traffic-server.en.rst:54
+msgid ""
+"where *var* is the variable associated with the configuration option and "
+"*value* is the value you want to use. For a list of the variables, see "
+":ref:`configuration-variables`."
+msgstr ""
+
+# cf0ca6d79b454737b819355b914ae66f
+#: ../../admin-guide/configuring-traffic-server.en.rst:59
+msgid "Configure Traffic Server Using Configuration Files"
+msgstr ""
+
+# a3e3f78d8ddb41858d862ac80db8c59c
+#: ../../admin-guide/configuring-traffic-server.en.rst:61
+msgid ""
+"As an alternative to using Traffic Line, you can change Traffic Server "
+"configuration options by manually editing specific variables in "
+":file:`records.config`."
+msgstr ""
+
+# 1679431c9c2b443e9b9f85d3266e3141
+#: ../../admin-guide/configuring-traffic-server.en.rst:65
+msgid ""
+"Traffic Server must reread the configuration files for any changes to "
+"take effect. This is done with :option:`traffic_ctl config reload`. Some "
+"configuration changes require a full restart of Traffic Server."
+msgstr ""
+
+# d144dc9ab1b14609beb990f4f440e512
+#: ../../admin-guide/configuring-traffic-server.en.rst:69
+msgid "The following is a sample portion of :file:`records.config`:"
+msgstr ""
+
+# 416674e6239d4a3c988f43865f79de01
+#: ../../admin-guide/configuring-traffic-server.en.rst:75
+msgid "Sample records.config file"
+msgstr ""
+
+# c055f58f6d744d5bae117b8d0496cec8
+#: ../../admin-guide/configuring-traffic-server.en.rst:77
+msgid ""
+"In addition to :file:`records.config`, Traffic Server provides other "
+"configuration files that are used to configure specific features. You can"
+" manually edit all configuration files as described in :ref:`admin-"
+"configuration-files`."
+msgstr ""
+

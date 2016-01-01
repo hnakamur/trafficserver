@@ -1,0 +1,684 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 2f8265902f744a819837def5df181c1f
+#: ../../developer-guide/config-vars.en.rst:58
+msgid "Configuration Variable Implementation"
+msgstr ""
+
+# 040c39a7c3c045848684e0f7614b3592
+#: ../../developer-guide/config-vars.en.rst:60
+msgid ""
+"Adding a new configuration variable in :file:`records.config` requires a "
+"number of steps which are mostly documented here."
+msgstr ""
+
+# f254112191684f89bdd2014290c0bce0
+#: ../../developer-guide/config-vars.en.rst:63
+msgid ""
+"Before adding a new configuration variable, please discuss it on the "
+"mailing list. It will commonly be the case that a better name, or a more "
+"general approach to the problem which solves several different issues, "
+"may be suggested."
+msgstr ""
+
+# bd8b6dff57b64bfc8dd36a12445978f3
+#: ../../developer-guide/config-vars.en.rst:68
+msgid "Defining the Variable"
+msgstr ""
+
+# 741ab1ac5871498ca647b9978dbafde8
+#: ../../developer-guide/config-vars.en.rst:70
+msgid ""
+"To begin, the new configuration variables must be added to "
+"|RecordsConfig.cc|_. This contains a long array of configuration variable"
+" records. The fields for each record are:"
+msgstr ""
+
+# f343c428ac544ed1b85276d785d764bf
+#: ../../developer-guide/config-vars.en.rst:102
+msgid "type:``RecT``"
+msgstr ""
+
+# b748a1606b5845e3b7f51f5fe743e255
+#: ../../developer-guide/config-vars.en.rst:75
+msgid "Type of record. The valid values are:"
+msgstr ""
+
+# 47f561b16fda4a15b9e0c51c812e6fb3
+#: ../../developer-guide/config-vars.en.rst:78
+msgid "``RECT_NULL``"
+msgstr ""
+
+# a74bf594add24258a0a278fec6294ecd
+#: ../../developer-guide/config-vars.en.rst:78
+msgid "Undefined record."
+msgstr ""
+
+# 4aea0e4a2f1c4e88a66cb2f04d616f15
+#: ../../developer-guide/config-vars.en.rst:81
+msgid "``RECT_CONFIG``"
+msgstr ""
+
+# 5714aa7914b6489cb383057477cf4c79
+#: ../../developer-guide/config-vars.en.rst:81
+msgid "General configuration variable."
+msgstr ""
+
+# 44cde9f448b34857bbcf250baa085453
+#: ../../developer-guide/config-vars.en.rst:84
+msgid "``RECT_PROCESS``"
+msgstr ""
+
+# 4a8dcdc6882f4e4a81c2e63559d2eb97
+#: ../../developer-guide/config-vars.en.rst:84
+msgid "Process related statistic."
+msgstr ""
+
+# 8b6df0790d8941f1a8b84d41dd87d669
+#: ../../developer-guide/config-vars.en.rst:87
+msgid "``RECT_NODE``"
+msgstr ""
+
+# 8dd1ee7d3dc04050aa87a6de4dd0e8b6
+#: ../../developer-guide/config-vars.en.rst:87
+msgid "Local statistic."
+msgstr ""
+
+# 8e69cb31e62e4ceab2e8a47022caef20
+#: ../../developer-guide/config-vars.en.rst:90
+msgid "``RECT_CLUSTER``"
+msgstr ""
+
+# 64095c98d407409bb831f8626f4fb700
+#: ../../developer-guide/config-vars.en.rst:90
+msgid "Cluster statistic."
+msgstr ""
+
+# 25e97b3040dc49738bb29b704737597c
+#: ../../developer-guide/config-vars.en.rst:93
+msgid "``RECT_LOCAL``"
+msgstr ""
+
+# 7cc5a487d71a42298443b8ecf54b1b5b
+#: ../../developer-guide/config-vars.en.rst:93
+msgid "Configuration variable that is explicitly not shared across a cluster."
+msgstr ""
+
+# 57012bcba9144cf0bbff48de7bee655d
+#: ../../developer-guide/config-vars.en.rst:96
+msgid "``RECT_PLUGIN``"
+msgstr ""
+
+# db98fe2fc242440d9d506ccc9d076ac0
+#: ../../developer-guide/config-vars.en.rst:96
+msgid "Plugin created statistic."
+msgstr ""
+
+# c5b8e70f2f1f44be9ce795bfe73bc9ef
+#: ../../developer-guide/config-vars.en.rst:98
+msgid ""
+"In general, ``RECT_CONFIG`` should be used unless it is required that the"
+" value not be shared among members of a cluster, in which case "
+"``RECT_LOCAL`` should be used. If you use ``RECT_LOCAL``, you must also "
+"start the line with ``LOCAL`` instead of ``CONFIG`` and the name should "
+"use ``.local.`` instead of ``.config.``."
+msgstr ""
+
+# 1e32b48617a24942a83390e0dc002b0f
+#: ../../developer-guide/config-vars.en.rst:108
+msgid "name:``char const*``"
+msgstr ""
+
+# b87f7bbf63d34e1086f5ac314c339f98
+#: ../../developer-guide/config-vars.en.rst:105
+msgid ""
+"The fully qualified name of the configuration variable. Although there "
+"appears to be a hierarchial naming scheme, that's just a convention, and "
+"it is not actually used by the code. Nonetheless, new variables should "
+"adhere to the hierarchial scheme."
+msgstr ""
+
+# 30a9701e459c4326bebd7fc92c570aca
+#: ../../developer-guide/config-vars.en.rst:112
+msgid "value_type:``RecDataT``"
+msgstr ""
+
+# 92c7441082c94c0db711a37cd5e32c6a
+#: ../../developer-guide/config-vars.en.rst:111
+msgid ""
+"The data type of the value. It should be one of ``RECD_INT``, "
+"``RECD_STRING``, ``RECD_FLOAT`` as appropriate."
+msgstr ""
+
+# f27358fa94274ca386ad2331821277e5
+#: ../../developer-guide/config-vars.en.rst:116
+msgid "default:``char const*``"
+msgstr ""
+
+# c4c3fa7ebe72458cb19d5c70870b6e75
+#: ../../developer-guide/config-vars.en.rst:115
+msgid ""
+"The default value for the variable. This is always a string regardless of"
+" the *value_type*."
+msgstr ""
+
+# 176957098edc413cb1b4ad96a3163a2d
+#: ../../developer-guide/config-vars.en.rst:122
+msgid "update:``RecUpdateT``"
+msgstr ""
+
+# fa4d965e40e746cab7a388ecd0aadb23
+#: ../../developer-guide/config-vars.en.rst:119
+msgid "Information about how the variable is updated. The valid values are:"
+msgstr ""
+
+# 367e3415418a4091ac830d4ab4d3c0b5
+#: ../../developer-guide/config-vars.en.rst:122
+msgid "``RECU_NULL``"
+msgstr ""
+
+# 0083ad1627994019a800f99ffa57b549
+#: ../../developer-guide/config-vars.en.rst:122
+msgid "Behavior is unknown or unspecified."
+msgstr ""
+
+# 80b64b83d54e4098988bb897743064ab
+#: ../../developer-guide/config-vars.en.rst:127
+msgid "``RECU_DYNAMIC``"
+msgstr ""
+
+# 936956d001a7440ead89c98f565e24a5
+#: ../../developer-guide/config-vars.en.rst:127
+msgid "This can be updated via command line tools."
+msgstr ""
+
+# d7eb8643b33a4f4b8919bc6968457c79
+#: ../../developer-guide/config-vars.en.rst:130
+msgid "``RECD_RESTART_TS``"
+msgstr ""
+
+# e9f5ac671b704aff8d4dbc52e871d8e7
+#: ../../developer-guide/config-vars.en.rst:130
+msgid ""
+"The :program:`traffic_server` process must be restarted for a new value "
+"to take effect."
+msgstr ""
+
+# 75aa71eb09d9498185ba9f480309f3c7
+#: ../../developer-guide/config-vars.en.rst:133
+msgid "``RECD_RESTART_TM``"
+msgstr ""
+
+# ef82d4337dc74f1cb44c5ca1fb9f02ef
+#: ../../developer-guide/config-vars.en.rst:133
+msgid ""
+"The :program:`traffic_manager` process must be restarted for a new value "
+"to take effect."
+msgstr ""
+
+# 82d95d1091d241f2968a416860a9b005
+#: ../../developer-guide/config-vars.en.rst:136
+msgid "``RECD_RESTART_TC``"
+msgstr ""
+
+# 6bda792f0cd5474e9c05605453c83098
+#: ../../developer-guide/config-vars.en.rst:136
+msgid ""
+"The :program:`traffic_cop` process must be restarted for a new value to "
+"take effect."
+msgstr ""
+
+# 1841e87be5184dcab37a32ac95ee82fb
+#: ../../developer-guide/config-vars.en.rst:142
+msgid "required:``RecordRequiredType``"
+msgstr ""
+
+# 2b5a5da7b03d4a5593aee2cb53e31fb8
+#: ../../developer-guide/config-vars.en.rst:139
+msgid ""
+"Effectively a boolean that specifies if the record is required to be "
+"present, with ``RR_NULL`` meaning not required and ``RR_REQUIRED`` "
+"indicating that it is required. Given that using ``RR_REQUIRED`` would be"
+" a major incompatibility, ``RR_NULL`` is generally the better choice."
+msgstr ""
+
+# d27f1082295d4827ba4e76c68e905ebe
+#: ../../developer-guide/config-vars.en.rst:158
+msgid "check:``RecCheckT``"
+msgstr ""
+
+# aae404d7a84f4ae39492564072847136
+#: ../../developer-guide/config-vars.en.rst:145
+msgid ""
+"Additional type checking. It is unclear if this is actually implemented. "
+"The valid values are:"
+msgstr ""
+
+# 4530c6213dc14bfa92acf5c9f5f2b7b7
+#: ../../developer-guide/config-vars.en.rst:149
+msgid "``RECC_NULL``"
+msgstr ""
+
+# 5e8e149a90bc420f8a6fbffa3022ac8d
+#: ../../developer-guide/config-vars.en.rst:149
+msgid "No additional checking."
+msgstr ""
+
+# eda6a2fc82df4400a3cbc1fe5b22ce40
+#: ../../developer-guide/config-vars.en.rst:152
+msgid "``RECC_STR``"
+msgstr ""
+
+# cda0b7a36def409db7382d31fed5a9bc
+#: ../../developer-guide/config-vars.en.rst:152
+msgid "Verify the value is a string."
+msgstr ""
+
+# 200d5c4cd17f43699fe5bdf5133c4976
+#: ../../developer-guide/config-vars.en.rst:155
+msgid "``RECC_INT``"
+msgstr ""
+
+# 073e163105824c609d856ae1743169dc
+#: ../../developer-guide/config-vars.en.rst:155
+msgid "Verify the value is an integer."
+msgstr ""
+
+# 40905166a77e4c06aa4cdbe8b293650e
+#: ../../developer-guide/config-vars.en.rst:158
+msgid "``RECC_IP``"
+msgstr ""
+
+# 8062669405f0415baedcbacfbd909afa
+#: ../../developer-guide/config-vars.en.rst:158
+msgid "Verify the value is an IP address. Unknown if this checks for IPv6."
+msgstr ""
+
+# 20197d81ebdd48f2bc490de7f434ee83
+#: ../../developer-guide/config-vars.en.rst:165
+msgid "pattern:``char const*``"
+msgstr ""
+
+# 4555b5a8aa224393a8a52ff04e6423cd
+#: ../../developer-guide/config-vars.en.rst:163
+msgid ""
+"This provides a regular expressions (PCRE format) for validating the "
+"value, beyond the basic type validation performed by ``RecCheckT``. This "
+"can be ``NULL`` if there is no regular expression to use."
+msgstr ""
+
+# c98b52eaa01a4722ada27f55fbaf2cc0
+#: ../../developer-guide/config-vars.en.rst:178
+msgid "access:``RecAccessT``"
+msgstr ""
+
+# 4fed4931c2974ed38fd0d28f8bf1e1d8
+#: ../../developer-guide/config-vars.en.rst:168
+msgid "Access control. The valid values are:"
+msgstr ""
+
+# 5d8ecf1c508d47bbaa0df95d1287b039
+#: ../../developer-guide/config-vars.en.rst:171
+msgid "``RECA_NULL``"
+msgstr ""
+
+# ca0dbbb9cf1346dea6a7c0d9726c6d72
+#: ../../developer-guide/config-vars.en.rst:171
+msgid "The value is read / write."
+msgstr ""
+
+# 76af1f7f8ef143cf9e7e0353b2ca08e4
+#: ../../developer-guide/config-vars.en.rst:174
+msgid "``RECA_READ_ONLY``"
+msgstr ""
+
+# c8bac01b093e4969bc18f8166776b975
+#: ../../developer-guide/config-vars.en.rst:174
+msgid "The value is read only."
+msgstr ""
+
+# f36c9d6d6f5342d589a6eb46ff850e2b
+#: ../../developer-guide/config-vars.en.rst:178
+msgid "``RECA_NO_ACCESS``"
+msgstr ""
+
+# 65e1c49286f64c94ac043f6ad5f1362c
+#: ../../developer-guide/config-vars.en.rst:177
+msgid ""
+"No access to the value; only privileged level parts of ATS can access the"
+" value."
+msgstr ""
+
+# 73b9128fdb6a4d419dcee36b3ff07b80
+#: ../../developer-guide/config-vars.en.rst:181
+msgid "Variable Infrastructure"
+msgstr ""
+
+# 7300c38315bf40e1a3cd1386c8b2e888
+#: ../../developer-guide/config-vars.en.rst:183
+msgid ""
+"The primary effort in defining a configuration variable is handling "
+"updates, generally via :option:`traffic_ctl config reload`. This is "
+"handled in a generic way, as described in the next section, or in a "
+":ref:`more specialized way <http-config-var-impl>` (built on top of the "
+"generic mechanism) for HTTP related configuration variables. This is only"
+" needed if the variable is marked as dynamically updateable "
+"(|RECU_DYNAMIC|_) although HTTP configuration variables should be dynamic"
+" if possible."
+msgstr ""
+
+# efa70ccbcb1643a4aa59143ccafaab37
+#: ../../developer-guide/config-vars.en.rst:192
+msgid "Documentation and Defaults"
+msgstr ""
+
+# 9831ea7627bf461cbcdc04921b79bf66
+#: ../../developer-guide/config-vars.en.rst:194
+msgid ""
+"A configuration variable should be documented in :file:`records.config`. "
+"There are many examples in the file already that can be used for "
+"guidance. The general format is to use the tag ::"
+msgstr ""
+
+# 7bdb14bc627c4e55ba2bb8865e4c092e
+#: ../../developer-guide/config-vars.en.rst:200
+msgid ""
+"The arguments to this are the same as for the configuration file. The "
+"documentation generator will pick out key bits and use them to decorate "
+"the entry. In particular if a value is present it will be removed and "
+"used as the default value. You can attach some additional options to the "
+"variable. These are:"
+msgstr ""
+
+# 1f8c13e4565a45b7abbd663cb4cb436b
+#: ../../developer-guide/config-vars.en.rst:207
+msgid "reloadable"
+msgstr ""
+
+# 6c782195e5554e618d98b419254f6d5b
+#: ../../developer-guide/config-vars.en.rst:207
+msgid "The variable can be reloaded via command line on a running Traffic Server."
+msgstr ""
+
+# 54aff43999c240609ae4602517ed2746
+#: ../../developer-guide/config-vars.en.rst:210
+msgid "metric"
+msgstr ""
+
+# ecba2ec3e5694d7a91806e3864f32e8e
+#: ../../developer-guide/config-vars.en.rst:210
+msgid ""
+"Specify the units for the value. This is critical for variables that use "
+"unexpected or non-obvious metrics, such as minutes instead of seconds, or"
+" disk sectors instead of bytes."
+msgstr ""
+
+# 744c5dba04b24686a8a41992ef94299d
+#: ../../developer-guide/config-vars.en.rst:213
+msgid "deprecated"
+msgstr ""
+
+# d56e7f23a650481983665ad9c980bf9d
+#: ../../developer-guide/config-vars.en.rst:213
+msgid "Mark a variable as deprecated."
+msgstr ""
+
+# de56e63fdcee468f8eb9434288915511
+#: ../../developer-guide/config-vars.en.rst:0
+msgid "Example"
+msgstr ""
+
+# 72edbaaa8cfb4f2ca13100db0702acd8
+#: ../../developer-guide/config-vars.en.rst:219
+msgid "\\:ts\\:cv\\:\\`custom.variable\\`"
+msgstr ""
+
+# b8af9bdbec454322849482d31acfcd91
+#: ../../developer-guide/config-vars.en.rst:219
+msgid "minutes"
+msgstr ""
+
+# 3b19a9471b5546119fdacb4204f7492a
+#: ../../developer-guide/config-vars.en.rst:222
+msgid ""
+"If you need to refer to another configuration variable in the "
+"documentation, you can use the form ::"
+msgstr ""
+
+# d78d27a73b3242dc86b33bdc1b2bc95b
+#: ../../developer-guide/config-vars.en.rst:227
+msgid "This will display the name as a link to the full definition."
+msgstr ""
+
+# eb001ac300ec42f59937ef70f6a4da9c
+#: ../../developer-guide/config-vars.en.rst:229
+msgid ""
+"In general, a new configuration variable should not be present in the "
+"default :file:`records.config`. If it is added, such defaults should be "
+"added to the file ``proxy/config/records.config.default.in``. This is "
+"used to generate the default :file:`records.config`. Just add the "
+"variable to the file in an appropriate place with a proper default as "
+"this will now override whatever default you put in the code for new "
+"installs."
+msgstr ""
+
+# 9249c29196f149d58eee367f310c8fa1
+#: ../../developer-guide/config-vars.en.rst:237
+msgid "Handling Updates"
+msgstr ""
+
+# 050e1459558740e48cf4d7fd89ee4895
+#: ../../developer-guide/config-vars.en.rst:239
+msgid ""
+"The simplest mechanism for handling updates is the "
+"``REC_EstablishStaticConfigXXX`` family of functions. This mechanism will"
+" cause the value in the indicated instance to be updated in place when an"
+" update to :file:`records.config` occurs. This is done asynchronously "
+"using atomic operations. Use of these variables must keep that in mind."
+msgstr ""
+
+# 3e2ab6adb7b14e35a174e08ee06e90e5
+#: ../../developer-guide/config-vars.en.rst:245
+msgid ""
+"If a variable requires additional handling when updated a callback can be"
+" registered which is called when the variable is updated. This is what "
+"the ``REC_EstablishStaticConfigXXX`` calls do internally with a callback "
+"that simply reads the new value and writes it to storage indicated by the"
+" call parameters. The functions used are the ``link_XXX`` static "
+"functions in |RecCore.cc|_."
+msgstr ""
+
+# a741aece415e4dafb1b992f6702866a2
+#: ../../developer-guide/config-vars.en.rst:251
+msgid ""
+"To register a configuration variable callback, call "
+"``RecRegisterConfigUpdateCb`` with the arguments:"
+msgstr ""
+
+# f8b11f923266463d9ef530ded4291eb3
+#: ../../developer-guide/config-vars.en.rst:255
+msgid "``char const*`` *name*"
+msgstr ""
+
+# e9de92af32ce4fbbb25aa8be45d13f9a
+#: ../../developer-guide/config-vars.en.rst:255
+msgid "The variable name."
+msgstr ""
+
+# 6364c8e08d434302b0eb3c715e274985
+#: ../../developer-guide/config-vars.en.rst:262
+msgid "*callback*"
+msgstr ""
+
+# 83958090c0604b6a9f83c40fbc52f25f
+#: ../../developer-guide/config-vars.en.rst:258
+msgid ""
+"A function with the signature ``<int (char const* name, RecDataT type, "
+"RecData data, void* cookie)>``. The :arg:`name` value passed is the same "
+"as the :arg:`name` passed to the registration function as is the "
+":arg:`cookie` argument. The :arg:`type` and :arg:`data` are the new value"
+" for the variable. The return value is currently ignored. For future "
+"compatibility return ``REC_ERR_OKAY``."
+msgstr ""
+
+# b7c4038aa72e45519037f0a9eaea7817
+#: ../../developer-guide/config-vars.en.rst:266
+msgid "``void*`` *cookie*"
+msgstr ""
+
+# ed491646e1d745baa2f5d8f38c5df565
+#: ../../developer-guide/config-vars.en.rst:265
+msgid ""
+"A value passed to the *callback*. This is only for the callback, the "
+"internals simply store it and pass it on."
+msgstr ""
+
+# cfa2ba6b53734abfb4c018b3f3f5a5b4
+#: ../../developer-guide/config-vars.en.rst:268
+msgid ""
+"*callback* is called under lock so it should be quick and not block. If "
+"that is necessary a :term:`continuation` should be scheduled to handle "
+"the required action."
+msgstr ""
+
+# 9184ba4ae7644132bca862d6fcad2494
+#: ../../developer-guide/config-vars.en.rst:274
+msgid ""
+"The callback occurs asynchronously. For HTTP variables as described in "
+"the next section, this is handled by the more specialized HTTP update "
+"mechanisms. Otherwise it is the implementor's responsibility to avoid "
+"race conditions."
+msgstr ""
+
+# 591d812a69604bb89e1f32e9511ee52f
+#: ../../developer-guide/config-vars.en.rst:281
+msgid "HTTP Configuation Values"
+msgstr ""
+
+# e19568b6cd4b402ab4d17df7e4244f2a
+#: ../../developer-guide/config-vars.en.rst:283
+msgid ""
+"Variables used for HTTP processing should be declared as members of the "
+"``HTTPConfigParams`` structure (but see :ref:`overridable-config-vars` "
+"for further details) and use the specialized HTTP update mechanisms which"
+" handle synchronization and initialization issues."
+msgstr ""
+
+# 755e5e9480fa46c6819eb7067f29fe3a
+#: ../../developer-guide/config-vars.en.rst:288
+msgid ""
+"The configuration logic maintains two copies of the ``HTTPConfigParams`` "
+"structure, the master copy and the current copy. The master copy is kept "
+"in the ``m_master`` member of the ``HttpConfig`` singleton. The current "
+"copy is kept in the ConfigProcessor. The goal is to provide a (somewhat) "
+"atomic update for configuration variables which are loaded individually "
+"in to the master copy as updates are received and then bulk copied to a "
+"new instance which is then swapped in as the current copy. The HTTP state"
+" machine interacts with this mechanism to avoid race conditions."
+msgstr ""
+
+# f5eb20271c9344798db5f4cf8bd30d59
+#: ../../developer-guide/config-vars.en.rst:297
+msgid ""
+"For each variable, a mapping between the variable name and the "
+"appropriate member in the master copy should be established between in "
+"the ``HTTPConfig::startup`` method. The ``HttpEstablishStaticConfigXXX`` "
+"functions should be used unless there is a strong, explicit reason to not"
+" do so."
+msgstr ""
+
+# e95388113971429896e3108f80bcc169
+#: ../../developer-guide/config-vars.en.rst:302
+msgid ""
+"The ``HTTPConfig::reconfigure`` method handles the current copy of the "
+"HTTP configuration variables. Logic should be added here to copy the "
+"value from the master copy to the current copy. Generally this will be a "
+"simple assignment. If there are dependencies between variables, those "
+"should be checked and enforced in this method."
+msgstr ""
+
+# adbe59db7ab94f898733844a0a53e48a
+#: ../../developer-guide/config-vars.en.rst:311
+msgid "Overridable Variables"
+msgstr ""
+
+# 3c937aaaced54a309bd5ab34dcbf1da3
+#: ../../developer-guide/config-vars.en.rst:313
+msgid ""
+"HTTP related variables that are changeable per transaction are stored in "
+"the ``OverridableHttpConfigParams`` structure, an instance of which is "
+"the ``oride`` member of ``HTTPConfigParams`` and therefore the points in "
+"the previous section still apply. The only difference for that is the "
+"further ``.oride`` member specifier in the structure references."
+msgstr ""
+
+# f8cb71d1f716492998bca7b9af997522
+#: ../../developer-guide/config-vars.en.rst:318
+msgid ""
+"The variable is required to be accessible from the transaction API. In "
+"addition to any custom API functions used to access the value, the "
+"following items are required for generic access:"
+msgstr ""
+
+# 75f9c90539264bf0affc3cccad9586c9
+#: ../../developer-guide/config-vars.en.rst:322
+msgid ""
+"Add a value to the ``TSOverridableConfigKey`` enumeration in "
+"|apidefs.h.in|_."
+msgstr ""
+
+# d2cf571940af4c6ea409e16887d7e907
+#: ../../developer-guide/config-vars.en.rst:324
+msgid ""
+"Augment the ``TSHttpTxnConfigFind`` function to return this enumeration "
+"value when given the name of the configuration variable. Be sure to count"
+" the charaters very carefully."
+msgstr ""
+
+# 9a6bf5c49a454571a7b3458983ef2603
+#: ../../developer-guide/config-vars.en.rst:328
+msgid ""
+"Augment the ``_conf_to_memberp`` function in |InkAPI.cc|_ to return a "
+"pointer to the appropriate member of ``OverridableHttpConfigParams`` and "
+"set the type if not a byte value."
+msgstr ""
+
+# a5e71ef937c240fb9ef0cc2728b60352
+#: ../../developer-guide/config-vars.en.rst:332
+msgid ""
+"Update the testing logic in |InkAPITest.cc|_ by adding the string name of"
+" the configuration variable to the ``SDK_Overridable_Configs`` array."
+msgstr ""
+
+# 8310638fcca94f199207b1d8d951cfc8
+#: ../../developer-guide/config-vars.en.rst:335
+msgid ""
+"Update the Lua plugin enumeration ``TSLuaOverridableConfigKey`` in "
+"|ts_lua_http_config.c|_."
+msgstr ""
+
+# a07168eb13ed406fa8113d444596e774
+#: ../../developer-guide/config-vars.en.rst:337
+msgid ""
+"Update the documentation of :ref:`ts-overridable-config` in "
+"|TSHttpOverridableConfig.en.rst|_."
+msgstr ""
+

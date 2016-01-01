@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 9ee473ede7b64f0aaecbcd41ebaf6cfb
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:23
+msgid "Hooks and Transactions"
+msgstr ""
+
+# db3a378fbaa24257893c73f91ac41618
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:25
+msgid ""
+"Hooks are points in Traffic Server transaction processing where plugins "
+"can step in and do some work. Registering a plugin function for callback "
+"amounts to \"adding\" the function to a hook. You can register your "
+"plugin to be called back for every single transaction or only for "
+"specific transactions."
+msgstr ""
+
+# 85eb32f8edca4686888d8c573d42197a
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:31
+msgid "This chapter contains the following sections:"
+msgstr ""
+
+# 8d9cbc89c2954ab38915b0dea9b213f9
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:46
+msgid "Hooks"
+msgstr ""
+
+# fe6a5e3c7f8640cb9bf0fd2a23bac991
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:48
+msgid ""
+"To understand hooks and transactions, you should be familiar with the "
+"following terminology:"
+msgstr ""
+
+# 97f6f933b3f94759965013ea8a902593
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:52
+msgid "HTTP Transaction"
+msgstr ""
+
+# 9804ea8c506243a8a3a0a85db4dc8901
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:54
+msgid ""
+"A **transaction** consists of a single HTTP request from a client and the"
+" response Traffic Server sends to that client. Thus, a transaction begins"
+" when Traffic Server receives a request and ends when Traffic Server "
+"sends the response."
+msgstr ""
+
+# d096266263b6440f8dc2f23243b93bd6
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:59
+msgid ""
+"Traffic Server uses **HTTP state machines** to process transactions. The "
+"state machines follow a complex set of states involved in sophisticated "
+"caching and document retrieval (taking into account, for example, "
+"alternate selection, freshness criteria, and hierarchical caching). The "
+"Traffic Server API provides hooks to a subset of these states, as "
+"illustrated in the :ref:`http-txn-state-diagram` below."
+msgstr ""
+
+# 428b7d1a03d04b1ca1f3e826e33560c1
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:67
+msgid "Transform Hooks"
+msgstr ""
+
+# 23cecc644bf74ac7ad32b8707588d471
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:69
+msgid ""
+"The two **transform hooks**, ``TS_HTTP_REQUEST_TRANSFORM_HOOK`` and "
+"``TS_HTTP_RESPONSE_TRANSFORM_HOOK``, are called in the course of an HTTP "
+"transform. To see where in the HTTP transaction they are called, look for"
+" the \"set up transform\" ovals in the :ref:`http-txn-state-diagram` "
+"below."
+msgstr ""
+
+# 595efe4c255b4e3ea28070111e12b8f4
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:75
+msgid "HTTP Session"
+msgstr ""
+
+# 1c72b80a160045769767b1209d004713
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:77
+msgid ""
+"A **session** consists of a single client connection to Traffic Server; "
+"it may consist of a single transaction or several transactions in "
+"succession. The session starts when the client connection opens and ends "
+"when the connection closes."
+msgstr ""
+
+# 38b0f47c569541f1ab229aa984005f76
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:85
+msgid "HTTP Transaction State Diagram"
+msgstr ""
+
+# 04e97acf1928489e91152a3ae9898fdb
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:152
+msgid "HTTP Transacation Timers"
+msgstr ""
+
+# 5246eef1847b45c4b4d86b065f88e131
+#: ../../developer-guide/plugins/hooks-and-transactions/index.en.rst:154
+msgid ""
+"For an overview of HTTP transaction timers, refer to the transaction "
+"timer diagram below."
+msgstr ""
+

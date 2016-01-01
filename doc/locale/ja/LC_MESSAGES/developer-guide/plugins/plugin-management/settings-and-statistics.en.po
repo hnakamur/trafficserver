@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# dc1bfe023af54e3e815f9bf6d1aa2fdd
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:23
+msgid "Settings and Statistics"
+msgstr ""
+
+# 8cdc1fcd0ddf423a945d6779328240cc
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:25
+msgid ""
+"Your plugin might need to know information about Traffic Server's current"
+" configuration and performance. The functions described in this section "
+"read this information from the Traffic Server :file:`records.config` "
+"file. Configuration settings are stored in ``CONFIG`` variables and "
+"statistics are stored in ``PROCESS`` variables."
+msgstr ""
+
+# ca9e64b666ae4812b419a52385052c88
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:33
+msgid ""
+"Not all ``CONFIG`` and ``PROCESS`` variables in :file:`records.config` "
+"are relevant to Traffic Server's configuration and statistics. Therefore,"
+" retrieve only the :file:`records.config` variables that are documented "
+"in the :ref:`admin-guide`."
+msgstr ""
+
+# 62a2a157526c4644af32667badf7239c
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:38
+msgid ""
+"To retrieve a variable, you need to know its type (``int``, ``counter``, "
+"``float``, or ``string``). Plugins store the :file:`records.config` "
+"values as an ``TSMgmtInt``, ``TSMgmtCounter``, ``TSMgmtFloat``, or "
+"``TSMgmtString``. You can look up :file:`records.config` variable types "
+"in the :ref:`admin-guide`."
+msgstr ""
+
+# 9e3a382a735c49698b32fcd4237b968e
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:44
+msgid ""
+"Depending on the result type, you'll use ``TSMgmtIntGet``, "
+"``TSMgmtCounterGet``, ``TSMgmtFloatGet``, or ``TSMgmtStringGet`` to "
+"obtain the variable value (see the example for :c:func:`TSMgmtIntGet`."
+msgstr ""
+
+# 1bdd487d09e54c509be5730701745b76
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:49
+msgid "The ``TSMgmt*Get`` functions are:"
+msgstr ""
+
+# 2a0f40ef465d4f40846311ca21cbf97a
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:51
+msgid ":c:func:`TSMgmtCounterGet`"
+msgstr ""
+
+# 044d4894dec24e4196551211babc1861
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:53
+msgid ":c:func:`TSMgmtFloatGet`"
+msgstr ""
+
+# ba46badc5cac48e58620116de4dc3d5b
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:55
+msgid ":c:func:`TSMgmtIntGet`"
+msgstr ""
+
+# c7f62f2e72c04516be80b9769a372265
+#: ../../developer-guide/plugins/plugin-management/settings-and-statistics.en.rst:57
+msgid ":c:func:`TSMgmtStringGet`"
+msgstr ""
+

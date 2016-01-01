@@ -1,0 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 42dd71998ceb4b85b034f7e32bf1727a
+#: ../../admin-guide/plugins/tcpinfo.en.rst:4
+msgid "TCPInfo Plugin"
+msgstr ""
+
+# 0a686674fd4e4e5bae208c08f19a5694
+#: ../../admin-guide/plugins/tcpinfo.en.rst:23
+msgid ""
+"This global plugin logs TCP metrics at various points in the HTTP "
+"processing pipeline. The TCP information is retrieved by the "
+":manpage:`getsockopt(2)` function using the ``TCP_INFO`` option. This is "
+"only supported on systems that support the ``TCP_INFO`` option, currently"
+" Linux and BSD."
+msgstr ""
+
+# 9e1a1830931741cf851eabe4a4d99a34
+#: ../../admin-guide/plugins/tcpinfo.en.rst:30
+msgid "Plugin Options"
+msgstr ""
+
+# 905315589ebe4648a69139701e6d21ba
+#: ../../admin-guide/plugins/tcpinfo.en.rst:32
+msgid "The following options may be specified in :file:`plugin.config`:"
+msgstr ""
+
+# 9382edf2034944b8820873692aa76358
+#: ../../admin-guide/plugins/tcpinfo.en.rst:39
+msgid ""
+"This option specifies when TCP information should be logged. The argument"
+" is a comma-separated list of the event names listed below. TCP "
+"information will be sampled and logged each time the specified set of "
+"events occurs."
+msgstr ""
+
+# 131b848f483a48ad93e553dc21b89fe9
+#: ../../admin-guide/plugins/tcpinfo.en.rst:45
+msgid "Event Name"
+msgstr ""
+
+# 1640bac592af4f01945a9ef18e703721
+#: ../../admin-guide/plugins/tcpinfo.en.rst:45
+msgid "Triggered when"
+msgstr ""
+
+# 633426096b184f608403a9b4b0394d30
+#: ../../admin-guide/plugins/tcpinfo.en.rst:47
+msgid "send_resp_hdr"
+msgstr ""
+
+# 6576b1b0849349b5a1456fce22990df7
+#: ../../admin-guide/plugins/tcpinfo.en.rst:47
+msgid "The server begins sending an HTTP response."
+msgstr ""
+
+# 3a84db811418461788a15224f160958a
+#: ../../admin-guide/plugins/tcpinfo.en.rst:48
+msgid "ssn_close"
+msgstr ""
+
+# de3c9058b4714bb198c0e360fc945ad8
+#: ../../admin-guide/plugins/tcpinfo.en.rst:48
+msgid "The TCP connection closes."
+msgstr ""
+
+# b8a222a97c8746e7a883bc02673b601c
+#: ../../admin-guide/plugins/tcpinfo.en.rst:49
+msgid "ssn_start"
+msgstr ""
+
+# f7f45e07ce34496b9e79257e097d151f
+#: ../../admin-guide/plugins/tcpinfo.en.rst:49
+msgid "A new TCP connection is accepted."
+msgstr ""
+
+# 4718f18422234ec7a1e9ac2fe8dce09e
+#: ../../admin-guide/plugins/tcpinfo.en.rst:50
+msgid "txn_close"
+msgstr ""
+
+# 0b5596008ec24c5f995f16bc58385188
+#: ../../admin-guide/plugins/tcpinfo.en.rst:50
+msgid "A HTTP transaction is completed."
+msgstr ""
+
+# d2513e02b7184f949a13a450d53c5ee3
+#: ../../admin-guide/plugins/tcpinfo.en.rst:51
+msgid "txn_start"
+msgstr ""
+
+# 0f895ca79d0a4e86bc1fde85918923c4
+#: ../../admin-guide/plugins/tcpinfo.en.rst:51
+msgid "A HTTP transaction is initiated."
+msgstr ""
+
+# aea91c7758ff48a795f4323d0b3eaf0d
+#: ../../admin-guide/plugins/tcpinfo.en.rst:55
+msgid ""
+"This specifies the base name of the file where TCP information should be "
+"logged. If this option is not specified, the name ``tcpinfo`` is used. "
+"Traffic Server will automatically append the ``.log`` suffix."
+msgstr ""
+
+# 6e3a8f435d2b4980b48988f2cb9d29b1
+#: ../../admin-guide/plugins/tcpinfo.en.rst:61
+msgid ""
+"The log level can be either ``1`` to log only the round trip time "
+"estimate, or ``2`` to log the complete set of TCP information."
+msgstr ""
+
+# 1ef9b7dbcb7a4d3b805441ee3f43ea99
+#: ../../admin-guide/plugins/tcpinfo.en.rst:64
+msgid "The following fields are logged when the log level is ``1``:"
+msgstr ""
+
+# 8a6da7276f4b41fe9249bdeb94b1a346
+# 833dc774f9eb41f0adcb037c52c78f8c
+#: ../../admin-guide/plugins/tcpinfo.en.rst:67
+#: ../../admin-guide/plugins/tcpinfo.en.rst:79
+msgid "Field Name"
+msgstr ""
+
+# a39282adae77463c93df0b1d0c1cc0f4
+# f8aced90b738418b9024a54692274e5d
+#: ../../admin-guide/plugins/tcpinfo.en.rst:67
+#: ../../admin-guide/plugins/tcpinfo.en.rst:79
+msgid "Description"
+msgstr ""
+
+# a15b645a65154884ad59d2e83cd1cb88
+# 5c6a062b625d47c9aae23b21962549f5
+#: ../../admin-guide/plugins/tcpinfo.en.rst:69
+#: ../../admin-guide/plugins/tcpinfo.en.rst:81
+msgid "timestamp"
+msgstr ""
+
+# 1a537cffa40840e2a91331dc6bb3c97c
+# 1e6897bcc32042aabaf5f0fce23182a7
+#: ../../admin-guide/plugins/tcpinfo.en.rst:69
+#: ../../admin-guide/plugins/tcpinfo.en.rst:81
+msgid "Event timestamp"
+msgstr ""
+
+# e3c98f473e2f48819efe9032ac7661d1
+# 29b9cb769d9f4bc0995bb62b492c1df1
+#: ../../admin-guide/plugins/tcpinfo.en.rst:70
+#: ../../admin-guide/plugins/tcpinfo.en.rst:82
+msgid "event"
+msgstr ""
+
+# dd21711979224109b802005cbd5df197
+# 76ec59049826468aa3c575b25aaae4b4
+#: ../../admin-guide/plugins/tcpinfo.en.rst:70
+#: ../../admin-guide/plugins/tcpinfo.en.rst:82
+msgid "Event name (one of the names listed above)"
+msgstr ""
+
+# 68f467913050455b9d70245d85ba6b08
+# a2aae214ea69456e9f85f0197d38e75d
+#: ../../admin-guide/plugins/tcpinfo.en.rst:71
+#: ../../admin-guide/plugins/tcpinfo.en.rst:83
+msgid "client"
+msgstr ""
+
+# 4dc30c54bc114fd5896cd902f66a2a26
+# c49cd1590f4448728022195b899a6714
+#: ../../admin-guide/plugins/tcpinfo.en.rst:71
+#: ../../admin-guide/plugins/tcpinfo.en.rst:83
+msgid "Client IP address"
+msgstr ""
+
+# 0d41322745aa42d998f788c5350a1eb2
+# b89c4595c1084e37a0ceef03296710ea
+#: ../../admin-guide/plugins/tcpinfo.en.rst:72
+#: ../../admin-guide/plugins/tcpinfo.en.rst:84
+msgid "server"
+msgstr ""
+
+# 283d778cf093460a807506b923cf95b2
+# 2ba7b901f2c8433b91b9953e5346a8df
+#: ../../admin-guide/plugins/tcpinfo.en.rst:72
+#: ../../admin-guide/plugins/tcpinfo.en.rst:84
+msgid "Server IP address"
+msgstr ""
+
+# d655a9ca465d452d952983b22c446ac1
+# 02acc6e6a5fc4bfeb84bd9d137036ab7
+#: ../../admin-guide/plugins/tcpinfo.en.rst:73
+#: ../../admin-guide/plugins/tcpinfo.en.rst:85
+msgid "rtt"
+msgstr ""
+
+# 1f649e85e10146f38a7744dd2078bd4b
+# 92c5efffd28c4cafa383229217f2e4b2
+#: ../../admin-guide/plugins/tcpinfo.en.rst:73
+#: ../../admin-guide/plugins/tcpinfo.en.rst:85
+msgid "Estimated round trip time"
+msgstr ""
+
+# b708d96f0f734ead86690f9faff84d04
+#: ../../admin-guide/plugins/tcpinfo.en.rst:76
+msgid "The following fields are logged when the log level is ``2``:"
+msgstr ""
+
+# b74a60e1297d4af6b3d0f099eee7ed29
+#: ../../admin-guide/plugins/tcpinfo.en.rst:86
+msgid "rttvar"
+msgstr ""
+
+# 61e74c3d7aa1449abf74d205b5fd2490
+#: ../../admin-guide/plugins/tcpinfo.en.rst:87
+msgid "last_sent"
+msgstr ""
+
+# db10001d56c64cfd9a2b8b8dea4b0716
+#: ../../admin-guide/plugins/tcpinfo.en.rst:88
+msgid "last_recv"
+msgstr ""
+
+# f21399b4ff1943eba4f0434f9998a695
+#: ../../admin-guide/plugins/tcpinfo.en.rst:89
+msgid "snd_cwnd"
+msgstr ""
+
+# 74e27887c5e24a249ac7f28c5b590d57
+#: ../../admin-guide/plugins/tcpinfo.en.rst:90
+msgid "snd_ssthresh"
+msgstr ""
+
+# 24ab7b16469d4f869ebe787ac34ea913
+#: ../../admin-guide/plugins/tcpinfo.en.rst:91
+msgid "rcv_ssthresh"
+msgstr ""
+
+# f97913e8b6264e0f84b4484a6640eb56
+#: ../../admin-guide/plugins/tcpinfo.en.rst:92
+msgid "unacked"
+msgstr ""
+
+# aecb898455a94d66b79ecf31f8f25068
+#: ../../admin-guide/plugins/tcpinfo.en.rst:93
+msgid "sacked"
+msgstr ""
+
+# 55235b7e0c9a4317ba78f20fb40fbc76
+#: ../../admin-guide/plugins/tcpinfo.en.rst:94
+msgid "lost"
+msgstr ""
+
+# 72b388dae11947398f5d7e64c2e2910b
+#: ../../admin-guide/plugins/tcpinfo.en.rst:95
+msgid "retrans"
+msgstr ""
+
+# abb8015048e04336a864c1b54900860b
+#: ../../admin-guide/plugins/tcpinfo.en.rst:96
+msgid "fackets"
+msgstr ""
+
+# b9e9572a42464d61857ef08453732204
+#: ../../admin-guide/plugins/tcpinfo.en.rst:100
+msgid ""
+"This is the number of times per 1000 requests that the data will be "
+"logged.  A pseudo-random number generator is used to determine if a "
+"request will be logged.  The default value is 1000 and this option is not"
+" required to be in the configuration file.  To achieve a log rate of 1% "
+"you would set this value to 10."
+msgstr ""
+
+# 336c9cb910794561ae327837a422d376
+#: ../../admin-guide/plugins/tcpinfo.en.rst:107
+msgid "Examples:"
+msgstr ""
+
+# 8a3041f0383e43089b5718256d76e9d0
+#: ../../admin-guide/plugins/tcpinfo.en.rst:109
+msgid ""
+"This example logs the simple TCP information to ``tcp-metrics.log`` at "
+"the start of a TCP connection and once for each HTTP transaction "
+"thereafter::"
+msgstr ""
+
+# b97153769e044eb3a323af445d637cb7
+#: ../../admin-guide/plugins/tcpinfo.en.rst:115
+msgid "The file ``tcp-metrics.log`` will contain the following log format::"
+msgstr ""
+

@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 15dad71b35d84275b9b33c0ce1dc4f49
+#: ../../developer-guide/api/functions/TSVConnIsSsl.en.rst:22
+msgid "TSVConnIsSsl"
+msgstr ""
+
+# 2a614e41ba80497faecee6eb6ed7c172
+#: ../../developer-guide/api/functions/TSVConnIsSsl.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# b05d1887dde84b96aa527d43cb4bacee
+#: ../../developer-guide/api/functions/TSVConnIsSsl.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 0ca26f92f75648b2b77db004df9f984d
+#: ../../developer-guide/api/functions/TSVConnIsSsl.en.rst:32
+msgid "Description"
+msgstr ""
+
+# c976fb15340d4e8cbe813276cff1bbdf
+#: ../../developer-guide/api/functions/TSVConnIsSsl.en.rst:34
+msgid ""
+"Determines whether the connection associated with :arg:`svc` is being "
+"processed as an SSL connection. Returns :literal:`1` if it is being "
+"processed as SSL and :literal:`0` otherwise."
+msgstr ""
+

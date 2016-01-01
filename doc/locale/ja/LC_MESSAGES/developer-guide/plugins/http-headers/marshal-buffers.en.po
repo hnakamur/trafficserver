@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 07a983fa40ea4819b60426b79d1fa31f
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:23
+msgid "Marshal Buffers"
+msgstr ""
+
+# 6519900372014f2da90a5561b3b9a6ef
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:25
+msgid ""
+"A *marshal buffer*, or ``TSMBuffer``, is a heap data structure that "
+"stores parsed URLs, MIME headers, and HTTP headers. You can allocate new "
+"objects out of marshal buffers and change the values within a marshal "
+"buffer. Whenever you manipulate an object, you require the handle to the "
+"object (``TSMLoc``) and the marshal buffer containing the object "
+"(``TSMBuffer``)."
+msgstr ""
+
+# ec8f9bdb6c76489680e81f20b983ef92
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:32
+msgid ""
+"Routines exist for manipulating the object based on these two pieces of "
+"information. For examples, see one of the following:"
+msgstr ""
+
+# 8f051c91a1124f32a5946cfcc16f10d6
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:35
+msgid ":ref:`developer-plugins-http-headers`"
+msgstr ""
+
+# dab6dc15cd43419cb8fb2e99c8177de0
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:36
+msgid ":ref:`developer-plugins-http-headers-urls`"
+msgstr ""
+
+# 5687154a17134d5094e3155539559611
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:37
+msgid ":ref:`developer-plugins-http-headers-mime-headers`"
+msgstr ""
+
+# 2bc4dd00a19048349fa7c73156c713cc
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:39
+msgid ""
+"The **marshal buffer functions** enable you to create and destroy Traffic"
+" Server's marshal buffers, which are the data structures that hold parsed"
+" URLs, MIME headers, and HTTP headers."
+msgstr ""
+
+# 472ecbdaa9394bf4ba3939e808b37d7f
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:44
+msgid ""
+"Any marshal buffer fetched by ``TSHttpTxn*Get`` will be used by other "
+"parts of the system. Be careful not to destroy these shared transaction "
+"marshal buffers in functions such as those below:"
+msgstr ""
+
+# 302562b080094b0ca055a476672162e9
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:48
+msgid ""
+"`TSHttpTxnCachedReqGet "
+"<http://people.apache.org/~amc/ats/doc/html/InkAPI_8cc.html#a889b626142157077f4f3cfe479e8b8e2>`_"
+msgstr ""
+
+# 516c19ea75454c1cb904776359a436c4
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:49
+msgid ""
+"`TSHttpTxnCachedRespGet "
+"<http://people.apache.org/~amc/ats/doc/html/InkAPI_8cc.html#ae8f24b8dabb5008ad11620a11682ffd6>`_"
+msgstr ""
+
+# 0381af7c701f4710a16a8bcb47b52a52
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:50
+msgid ""
+"`TSHttpTxnClientReqGet "
+"<http://people.apache.org/~amc/ats/doc/html/InkAPI_8cc.html#acca66f22d0f87bf8f08478ed926006a5>`_"
+msgstr ""
+
+# 17ea992825d142f3ba699c1bf72eaf13
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:51
+msgid ""
+"`TSHttpTxnClientRespGet "
+"<http://people.apache.org/~amc/ats/doc/html/InkAPI_8cc.html#a92349c8363f72b1f6dfed3ae80901fff>`_"
+msgstr ""
+
+# 5f839bbcc57848e189d2ee0da3d0ab6d
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:52
+msgid ""
+"`TSHttpTxnServerReqGet "
+"<http://people.apache.org/~amc/ats/doc/html/ts_8h.html#aac2343a8b47bf9150f3ff7cd4e692d57>`_"
+msgstr ""
+
+# f095e351e35c42b0965573e010607ffd
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:53
+msgid ""
+"`TSHttpTxnServerRespGet "
+"<http://people.apache.org/~amc/ats/doc/html/ts_8h.html#a39e8bfb199eadabb54c067ff25a9a400>`_"
+msgstr ""
+
+# 79dd4af205fe4b3a97ece7dfaa4449b6
+#: ../../developer-guide/plugins/http-headers/marshal-buffers.en.rst:54
+msgid ""
+"`TSHttpTxnTransformRespGet "
+"<http://people.apache.org/~amc/ats/doc/html/InkAPI_8cc.html#a20367f5469e8b7e73621c1316091d578>`_"
+msgstr ""
+

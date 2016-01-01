@@ -1,0 +1,1585 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# eabbd008c4ca4fed8d23de2be4893a29
+#: ../../admin-guide/configuration/cache-basics.en.rst:23
+msgid "HTTP Proxy Caching"
+msgstr ""
+
+# 592a7c289e294f22aaf2874d2842b374
+#: ../../admin-guide/configuration/cache-basics.en.rst:25
+msgid ""
+"HTTP proxy caching enables you to store copies of frequently-accessed web"
+" objects (such as documents, images, and articles) and then serve this "
+"information to users on demand. It improves performance and frees up "
+"Internet bandwidth for other tasks."
+msgstr ""
+
+# ab03136e2ae04623bd089ee34430f635
+#: ../../admin-guide/configuration/cache-basics.en.rst:34
+msgid "Understanding HTTP Web Proxy Caching"
+msgstr ""
+
+# 8463f9c3bbd14256bcf392d912fa83d0
+#: ../../admin-guide/configuration/cache-basics.en.rst:36
+msgid ""
+"Internet users direct their requests to web servers all over the "
+"Internet. A caching server must act as a *web proxy server* so it can "
+"serve those requests. After a web proxy server receives requests for web "
+"objects, it either serves the requests or forwards them to the *origin "
+"server* (the web server that contains the original copy of the requested "
+"information). The Traffic Server proxy supports *explicit proxy caching*,"
+" in which the user's client software must be configured to send requests "
+"directly to the Traffic Server proxy. The following overview illustrates "
+"how Traffic Server serves a request."
+msgstr ""
+
+# dc8eea9dcca0453e801fe2dda0afebce
+#: ../../admin-guide/configuration/cache-basics.en.rst:46
+msgid "Traffic Server receives a client request for a web object."
+msgstr ""
+
+# 5796e4cb5581499e8a938c6f7275c882
+#: ../../admin-guide/configuration/cache-basics.en.rst:48
+msgid ""
+"Using the object address, Traffic Server tries to locate the requested "
+"object in its object database (*cache*)."
+msgstr ""
+
+# e9346da535e048a8abe7ea4ba7636e9d
+#: ../../admin-guide/configuration/cache-basics.en.rst:51
+msgid ""
+"If the object is in the cache, then Traffic Server checks to see if the "
+"object is fresh enough to serve. If it is fresh, then Traffic Server "
+"serves it to the client as a *cache hit* (see the figure below)."
+msgstr ""
+
+# edfd8d4058534529ae3e698c4897f4d9
+#: ../../admin-guide/configuration/cache-basics.en.rst:60
+msgid "A cache hit"
+msgstr ""
+
+# e0724a94b04b4a2884a85b4faf6fb003
+#: ../../admin-guide/configuration/cache-basics.en.rst:62
+msgid ""
+"If the data in the cache is stale, then Traffic Server connects to the "
+"origin server and checks if the object is still fresh (a "
+":term:`revalidation`). If it is, then Traffic Server immediately sends "
+"the cached copy to the client."
+msgstr ""
+
+# ec693695b494478f9510f55507d246cc
+#: ../../admin-guide/configuration/cache-basics.en.rst:67
+msgid ""
+"If the object is not in the cache (a *cache miss*) or if the server "
+"indicates the cached copy is no longer valid, then Traffic Server obtains"
+" the object from the origin server. The object is then simultaneously "
+"streamed to the client and the Traffic Server local cache (see the figure"
+" below). Subsequent requests for the object can be served faster because "
+"the object is retrieved directly from cache."
+msgstr ""
+
+# ed93b8232ebc45b5a1244b3b4b4ca7cc
+#: ../../admin-guide/configuration/cache-basics.en.rst:78
+msgid "A cache miss"
+msgstr ""
+
+# 4188323d4de74444b179c57db1ca833e
+#: ../../admin-guide/configuration/cache-basics.en.rst:80
+msgid ""
+"Caching is typically more complex than the preceding overview suggests. "
+"In particular, the overview does not discuss how Traffic Server ensures "
+"freshness, serves correct HTTP alternates, and treats requests for "
+"objects that cannot or should not be cached. The following sections "
+"discuss these issues in greater detail."
+msgstr ""
+
+# 63e3feb617b848e6b927c67551b1378b
+#: ../../admin-guide/configuration/cache-basics.en.rst:89
+msgid "Ensuring Cached Object Freshness"
+msgstr ""
+
+# 8d3f008c08dd4ac08bd176990b391c28
+#: ../../admin-guide/configuration/cache-basics.en.rst:91
+msgid ""
+"When Traffic Server receives a request for a web object, it first tries "
+"to locate the requested object in its cache. If the object is in cache, "
+"then Traffic Server checks to see if the object is fresh enough to serve."
+" For HTTP objects, Traffic Server supports optional author-specified "
+"expiration dates. Traffic Server adheres to these expiration dates; "
+"otherwise, it picks an expiration date based on how frequently the object"
+" is changing and on administrator-chosen freshness guidelines. Objects "
+"can also be revalidated by checking with the origin server to see if an "
+"object is still fresh."
+msgstr ""
+
+# 91729e7b04474f259c27dc918529cfef
+#: ../../admin-guide/configuration/cache-basics.en.rst:102
+msgid "HTTP Object Freshness"
+msgstr ""
+
+# 5ae2b7cf0ef54547b7a7722252551fa9
+#: ../../admin-guide/configuration/cache-basics.en.rst:104
+msgid ""
+"Traffic Server determines whether an HTTP object in the cache is fresh by"
+" checking the following conditions in order:"
+msgstr ""
+
+# 2cd0fc1904394a8590aa03d4f9be4353
+#: ../../admin-guide/configuration/cache-basics.en.rst:107
+msgid "**Checking the** ``Expires`` **or** ``max-age`` **header**"
+msgstr ""
+
+# 56f549b82c5d40fdbff2d3ca42a3e475
+#: ../../admin-guide/configuration/cache-basics.en.rst:109
+msgid ""
+"Some HTTP objects contain ``Expires`` headers or ``max-age`` headers that"
+" explicitly define how long the object can be cached. Traffic Server "
+"compares the current time with the expiration time to determine if the "
+"object is still fresh."
+msgstr ""
+
+# 1dbac6a1621747da986659aca491e851
+#: ../../admin-guide/configuration/cache-basics.en.rst:114
+msgid "**Checking the** ``Last-Modified`` **/** ``Date`` **header**"
+msgstr ""
+
+# c12d222e1f6e428e85c0e76e812a7af2
+#: ../../admin-guide/configuration/cache-basics.en.rst:116
+msgid ""
+"If an HTTP object has no ``Expires`` header or ``max-age`` header, then "
+"Traffic Server can calculate a freshness limit using the following "
+"formula::"
+msgstr ""
+
+# 2a8115cd27f547f1bcff720bf97e3951
+#: ../../admin-guide/configuration/cache-basics.en.rst:122
+msgid ""
+"where *date* is the date in the object's server response header and "
+"*last_modified* is the date in the ``Last-Modified`` header. If there is "
+"no ``Last-Modified`` header, then Traffic Server uses the date the object"
+" was written to cache. The value ``0.10`` (10 percent) can be increased "
+"or reduced to better suit your needs. Refer to `Modifying Aging Factor "
+"for Freshness Computations`_."
+msgstr ""
+
+# 3b8e529b2b584d8a986a091a4ba3d4d4
+#: ../../admin-guide/configuration/cache-basics.en.rst:129
+msgid ""
+"The computed freshness limit is bound by a minimum and maximum value. "
+"Refer to `Setting Absolute Freshness Limits`_ for more information."
+msgstr ""
+
+# dcc2f85d31a84d5f84821a52cc6c56ee
+#: ../../admin-guide/configuration/cache-basics.en.rst:132
+msgid "**Checking the absolute freshness limit**"
+msgstr ""
+
+# e7f27870c89a474587fb6ec82f812d6a
+#: ../../admin-guide/configuration/cache-basics.en.rst:134
+msgid ""
+"For HTTP objects that do not have ``Expires`` headers or do not have both"
+" ``Last-Modified`` and ``Date`` headers, Traffic Server uses a maximum "
+"and minimum freshness limit. Refer to `Setting Absolute Freshness "
+"Limits`_."
+msgstr ""
+
+# 82ac2bdd5ee24ed3bdddc924ea8a1a3a
+#: ../../admin-guide/configuration/cache-basics.en.rst:139
+msgid "**Checking revalidate rules in** :file:`cache.config`"
+msgstr ""
+
+# ee551f6e64a941fb933e1c49e2490621
+#: ../../admin-guide/configuration/cache-basics.en.rst:141
+msgid ""
+"Revalidate rules apply freshness limits to specific HTTP objects. You can"
+" set freshness limits for objects originating from particular domains or "
+"IP addresses, objects with URLs that contain specified regular "
+"expressions, objects requested by particular clients, and so on. Refer to"
+" :file:`cache.config`."
+msgstr ""
+
+# 066f6c818f1145159afb49751dbfd319
+#: ../../admin-guide/configuration/cache-basics.en.rst:148
+msgid "Modifying Aging Factor for Freshness Computations"
+msgstr ""
+
+# 785a3eb3b0a1460daca7715dd88359d8
+#: ../../admin-guide/configuration/cache-basics.en.rst:150
+#, python-format
+msgid ""
+"If an object does not contain any expiration information, then Traffic "
+"Server can estimate its freshness from the ``Last-Modified`` and ``Date``"
+" headers. By default, Traffic Server stores an object for 10% of the time"
+" that elapsed since it last changed. You can increase or reduce the "
+"percentage according to your needs."
+msgstr ""
+
+# 1952284f0ceb4a619d455267bc9b7598
+#: ../../admin-guide/configuration/cache-basics.en.rst:156
+msgid "To modify the aging factor for freshness computations:"
+msgstr ""
+
+# 528e3579ad3b4245b155d7506a3a7443
+#: ../../admin-guide/configuration/cache-basics.en.rst:158
+msgid "Change the value for :ts:cv:`proxy.config.http.cache.heuristic_lm_factor`."
+msgstr ""
+
+# 4a39cacb1f474947846025b785a59a18
+# d4f728dd5a514250a6e4f541f670b206
+# b76f0b862bb847479c6817b97033b49e
+# 291e9ac8d6d343e3a8fc4767c7688223
+#: ../../admin-guide/configuration/cache-basics.en.rst:160
+#: ../../admin-guide/configuration/cache-basics.en.rst:176
+#: ../../admin-guide/configuration/cache-basics.en.rst:195
+#: ../../admin-guide/configuration/cache-basics.en.rst:281
+msgid ""
+"Run the :option:`traffic_ctl config reload` command to apply the "
+"configuration changes."
+msgstr ""
+
+# 12e58d3698a149fdbd9f2480b97d4e27
+#: ../../admin-guide/configuration/cache-basics.en.rst:163
+msgid "Setting Absolute Freshness Limits"
+msgstr ""
+
+# 0438eb29b65e4912b3f7a9bedc77e0a0
+#: ../../admin-guide/configuration/cache-basics.en.rst:165
+msgid ""
+"Some objects do not have ``Expires`` headers or do not have both ``Last-"
+"Modified`` and ``Date`` headers. To control how long these objects are "
+"considered fresh in the cache, specify an *absolute freshness limit*."
+msgstr ""
+
+# 01c8f8c58c5b4400b6ecb35d34394e08
+#: ../../admin-guide/configuration/cache-basics.en.rst:170
+msgid "To specify an absolute freshness limit:"
+msgstr ""
+
+# aad741ce20f7444ca9edac3134e9ded9
+#: ../../admin-guide/configuration/cache-basics.en.rst:172
+msgid ""
+"Edit the variables "
+":ts:cv:`proxy.config.http.cache.heuristic_min_lifetime` and "
+":ts:cv:`proxy.config.http.cache.heuristic_max_lifetime` in "
+":file:`records.config`."
+msgstr ""
+
+# 809150d5b9db4d9f98f75ceec0e607d9
+#: ../../admin-guide/configuration/cache-basics.en.rst:179
+msgid "Specifying Header Requirements"
+msgstr ""
+
+# b55d152224c7488cbf56fcc90abe1d69
+#: ../../admin-guide/configuration/cache-basics.en.rst:181
+msgid ""
+"To further ensure freshness of the objects in the cache, configure "
+"Traffic Server to cache only objects with specific headers. By default, "
+"Traffic Server caches all objects (including objects with no headers); "
+"you should change the default setting only for specialized proxy "
+"situations. If you configure Traffic Server to cache only HTTP objects "
+"with ``Expires`` or ``max-age`` headers, then the cache hit rate will be "
+"noticeably reduced (since very few objects will have explicit expiration "
+"information)."
+msgstr ""
+
+# d3900dc7df91424c8c9f81c210e8bfb1
+#: ../../admin-guide/configuration/cache-basics.en.rst:190
+msgid "To configure Traffic Server to cache objects with specific headers:"
+msgstr ""
+
+# ff636e7009f84be0927e8a3c16d36f30
+#: ../../admin-guide/configuration/cache-basics.en.rst:192
+msgid ""
+"Change the value for :ts:cv:`proxy.config.http.cache.required_headers` in"
+" :file:`records.config`."
+msgstr ""
+
+# b6b692d4742e4fadbc1503b4e7372ac0
+#: ../../admin-guide/configuration/cache-basics.en.rst:198
+msgid "Cache-Control Headers"
+msgstr ""
+
+# a0797dd1c27f4ebaa017052ca9f12ff7
+#: ../../admin-guide/configuration/cache-basics.en.rst:200
+msgid ""
+"Even though an object might be fresh in the cache, clients or servers "
+"often impose their own constraints that preclude retrieval of the object "
+"from the cache. For example, a client might request that a object not be "
+"retrieved from a cache, or if it does allow cache retrieval, then it "
+"cannot have been cached for more than 10 minutes."
+msgstr ""
+
+# 04d2b611e5b74357a3856abe87d120e6
+#: ../../admin-guide/configuration/cache-basics.en.rst:206
+msgid ""
+"Traffic Server bases the servability of a cached object on ``Cache-"
+"Control`` headers that appear in both client requests and server "
+"responses. The following ``Cache-Control`` headers affect whether objects"
+" are served from cache:"
+msgstr ""
+
+# 1cd84d4207954733ab6ac2a7942d6fd7
+#: ../../admin-guide/configuration/cache-basics.en.rst:210
+msgid ""
+"The ``no-cache`` header, sent by clients, tells Traffic Server that it "
+"should not serve any objects directly from the cache. When present in a "
+"client request, Traffic Server will always obtain the object from the "
+"origin server. You can configure Traffic Server to ignore client ``no-"
+"cache`` headers. Refer to `Configuring Traffic Server to Ignore Client "
+"no-cache Headers`_ for more information."
+msgstr ""
+
+# fb7f9fe137a7449d9d262042b77f5fae
+#: ../../admin-guide/configuration/cache-basics.en.rst:217
+msgid ""
+"The ``max-age`` header, sent by servers, is compared to the object age. "
+"If the age is less than ``max-age``, then the object is fresh and can be "
+"served from the Traffic Server cache."
+msgstr ""
+
+# 0357eb97b2bf496dbab91c0c1b9848ca
+#: ../../admin-guide/configuration/cache-basics.en.rst:221
+msgid ""
+"The ``min-fresh`` header, sent by clients, is an *acceptable freshness "
+"tolerance*. This means that the client wants the object to be at least "
+"this fresh. Unless a cached object remains fresh at least this long in "
+"the future, it is revalidated."
+msgstr ""
+
+# b1c6c7f94b5648f5b60db0cfbea74ca6
+#: ../../admin-guide/configuration/cache-basics.en.rst:226
+msgid ""
+"The ``max-stale`` header, sent by clients, permits Traffic Server to "
+"serve stale objects provided they are not too old. Some browsers might be"
+" willing to take slightly stale objects in exchange for improved "
+"performance, especially during periods of poor Internet availability."
+msgstr ""
+
+# a51d9439e3ad434e86ad8981c0930919
+#: ../../admin-guide/configuration/cache-basics.en.rst:232
+msgid ""
+"Traffic Server applies ``Cache-Control`` servability criteria after HTTP "
+"freshness criteria. For example, an object might be considered fresh but "
+"will not be served if its age is greater than its ``max-age``."
+msgstr ""
+
+# 13b049a40b094b2cbb19430a84a32d32
+#: ../../admin-guide/configuration/cache-basics.en.rst:237
+msgid "Revalidating HTTP Objects"
+msgstr ""
+
+# 3882e7d50bc7437289f9f8f64d1bb751
+#: ../../admin-guide/configuration/cache-basics.en.rst:239
+msgid ""
+"When a client requests an HTTP object that is stale in the cache, Traffic"
+" Server revalidates the object. A *revalidation* is a query to the origin"
+" server to check if the object is unchanged. The result of a revalidation"
+" is one of the following:"
+msgstr ""
+
+# 85a44c919d1545cb8f64b9041f71612b
+#: ../../admin-guide/configuration/cache-basics.en.rst:244
+msgid ""
+"If the object is still fresh, then Traffic Server resets its freshness "
+"limit and serves the object."
+msgstr ""
+
+# 01cd2ed88a9d4e08bc5a7a9926e70288
+#: ../../admin-guide/configuration/cache-basics.en.rst:247
+msgid ""
+"If a new copy of the object is available, then Traffic Server caches the "
+"new object (thereby replacing the stale copy) and simultaneously serves "
+"the object to the client."
+msgstr ""
+
+# f165b4677073458b9b0dff91d9c0de4c
+#: ../../admin-guide/configuration/cache-basics.en.rst:251
+msgid ""
+"If the object no longer exists on the origin server, then Traffic Server "
+"does not serve the cached copy."
+msgstr ""
+
+# d8bc819acb2144578986208e193e03b8
+#: ../../admin-guide/configuration/cache-basics.en.rst:254
+msgid ""
+"If the origin server does not respond to the revalidation query, then "
+"Traffic Server serves the stale object along with a ``111 Revalidation "
+"Failed`` warning."
+msgstr ""
+
+# 05a5a00699e14902a90fa891640ad16e
+#: ../../admin-guide/configuration/cache-basics.en.rst:258
+msgid ""
+"By default, Traffic Server revalidates a requested HTTP object in the "
+"cache if it considers the object to be stale. Traffic Server evaluates "
+"object freshness as described in `HTTP Object Freshness`_. You can "
+"reconfigure how Traffic Server evaluates freshness by selecting one of "
+"the following options:"
+msgstr ""
+
+# a14f7315332c41d79ecc81da59bf5c4e
+#: ../../admin-guide/configuration/cache-basics.en.rst:265
+msgid "*Traffic Server considers all HTTP objects in the cache to be stale:*"
+msgstr ""
+
+# 720757673a474860a0a14154ee254980
+#: ../../admin-guide/configuration/cache-basics.en.rst:265
+msgid "Always revalidate HTTP objects in the cache with the origin server."
+msgstr ""
+
+# 44e17991b43149cc83521d656b3a1a87
+#: ../../admin-guide/configuration/cache-basics.en.rst:268
+msgid "*Traffic Server considers all HTTP objects in the cache to be fresh:*"
+msgstr ""
+
+# dab6355a5d8743d8b1818ac78a77e997
+#: ../../admin-guide/configuration/cache-basics.en.rst:268
+msgid "Never revalidate HTTP objects in the cache with the origin server."
+msgstr ""
+
+# 20d79818162240aba1cb75276867987e
+#: ../../admin-guide/configuration/cache-basics.en.rst:271
+msgid ""
+"*Traffic Server considers all HTTP objects without* ``Expires`` *or* "
+"``Cache-control`` *headers to be stale:*"
+msgstr ""
+
+# 96fa781c7c774f94aad594c43414b5f2
+#: ../../admin-guide/configuration/cache-basics.en.rst:271
+msgid ""
+"Revalidate all HTTP objects without ``Expires`` or ``Cache-Control`` "
+"headers."
+msgstr ""
+
+# 908b13dfa7e84c89b932570fbd0bd3c5
+#: ../../admin-guide/configuration/cache-basics.en.rst:273
+msgid ""
+"To configure how Traffic Server revalidates objects in the cache, you can"
+" set specific revalidation rules in :file:`cache.config`."
+msgstr ""
+
+# e069a284b3e847a99a27746c9cce2098
+#: ../../admin-guide/configuration/cache-basics.en.rst:276
+msgid "To configure revalidation options"
+msgstr ""
+
+# 691ce6d6a850431b8a7586d40c80c20d
+#: ../../admin-guide/configuration/cache-basics.en.rst:278
+msgid ""
+"Edit the variable :ts:cv:`proxy.config.http.cache.when_to_revalidate` in "
+":file:`records.config`."
+msgstr ""
+
+# b6826416aaba4899a1173c97f876ca8e
+#: ../../admin-guide/configuration/cache-basics.en.rst:286
+msgid "Pushing Content into the Cache"
+msgstr ""
+
+# 7f0f4eb2601442dcb571102d2f52d90f
+#: ../../admin-guide/configuration/cache-basics.en.rst:288
+msgid ""
+"Traffic Server supports the HTTP ``PUSH`` method of content delivery. "
+"Using HTTP ``PUSH``, you can deliver content directly into the cache "
+"without client requests."
+msgstr ""
+
+# e7391c1cfdcf44c69380debb23aa0dc1
+#: ../../admin-guide/configuration/cache-basics.en.rst:293
+msgid "Configuring Traffic Server for PUSH Requests"
+msgstr ""
+
+# 80a3b5c8fe5543debf5efc47e140e312
+#: ../../admin-guide/configuration/cache-basics.en.rst:295
+msgid ""
+"Before you can deliver content into your cache using HTTP ``PUSH``, you "
+"must configure Traffic Server to accept ``PUSH`` requests."
+msgstr ""
+
+# 8162dc88139740238816df1586fea7f6
+#: ../../admin-guide/configuration/cache-basics.en.rst:298
+msgid ""
+"Edit :file:`ip_allow.config` to allow ``PUSH`` from the appropriate "
+"addresses."
+msgstr ""
+
+# c7ddcbdead844948bec0f059df99c983
+#: ../../admin-guide/configuration/cache-basics.en.rst:300
+msgid ""
+"Update :ts:cv:`proxy.config.http.push_method_enabled` in "
+":file:`records.config`::"
+msgstr ""
+
+# 03911d8b47bd47ab9239428c09aaedcc
+# 7024e9c61aeb405fabbb8f4d325c874b
+# 6d8b3dfe1e3044f2a1908c1e134e959a
+# bcc4ca9164e94c2dac4d0bec1db3fb08
+# 23271f87da3148a796bad1033f975862
+# e1b97418e82b4497924580bdd21d1325
+# 53682088c63349f29d801ac1deafe9e3
+# 444fb843452840ae974e8e607a937637
+# 5d6671cf48b04e9186a3b2c9698c897d
+# d63ac74ac7084837a03f0544830fa77d
+# 4332e40873134e4491d219efb90c4841
+# 98b2811a40664b17bfdf7dd73e0133ec
+#: ../../admin-guide/configuration/cache-basics.en.rst:305
+#: ../../admin-guide/configuration/cache-basics.en.rst:360
+#: ../../admin-guide/configuration/cache-basics.en.rst:413
+#: ../../admin-guide/configuration/cache-basics.en.rst:457
+#: ../../admin-guide/configuration/cache-basics.en.rst:483
+#: ../../admin-guide/configuration/cache-basics.en.rst:520
+#: ../../admin-guide/configuration/cache-basics.en.rst:541
+#: ../../admin-guide/configuration/cache-basics.en.rst:568
+#: ../../admin-guide/configuration/cache-basics.en.rst:584
+#: ../../admin-guide/configuration/cache-basics.en.rst:612
+#: ../../admin-guide/configuration/cache-basics.en.rst:640
+#: ../../admin-guide/configuration/cache-basics.en.rst:672
+msgid ""
+"Run the command :option:`traffic_ctl config reload` to apply the "
+"configuration changes."
+msgstr ""
+
+# b2213560fb0b43f59394e1e298a129b5
+#: ../../admin-guide/configuration/cache-basics.en.rst:308
+msgid "Understanding HTTP PUSH"
+msgstr ""
+
+# b13e10e5580345db8748e7efde63b51e
+#: ../../admin-guide/configuration/cache-basics.en.rst:310
+msgid ""
+"``PUSH`` uses the HTTP 1.1 message format. The body of a ``PUSH`` request"
+" contains the response header and response body that you want to place in"
+" the cache. The following is an example of a ``PUSH`` request::"
+msgstr ""
+
+# ec37cd4002924e45b9dcb29b361b4c0b
+#: ../../admin-guide/configuration/cache-basics.en.rst:327
+msgid ""
+"Your ``PUSH`` headers must include ``Content-length``, the value for "
+"which must include both headers and body byte counts. The value is not "
+"optional, and an improper (too large or too small) value will result in "
+"undesirable behavior."
+msgstr ""
+
+# 6f7086f6aff54519adede1cb20b16097
+#: ../../admin-guide/configuration/cache-basics.en.rst:333
+msgid "Tools that will help manage pushing"
+msgstr ""
+
+# ae9b361f1d8b426295f170bfc99205a9
+#: ../../admin-guide/configuration/cache-basics.en.rst:335
+msgid ""
+"Traffic Server comes with a Perl script for pushing, :program:`tspush`, "
+"which can assist with understanding how to write scripts for pushing "
+"content yourself."
+msgstr ""
+
+# 681d42a8588349c9b6ae039ced17864e
+#: ../../admin-guide/configuration/cache-basics.en.rst:340
+msgid "Pinning Content in the Cache"
+msgstr ""
+
+# 663981ca880a47b6a753adf9ad43fe7e
+#: ../../admin-guide/configuration/cache-basics.en.rst:342
+msgid ""
+"The *Cache Pinning Option* configures Traffic Server to keep certain HTTP"
+" objects in the cache for a specified time. You can use this option to "
+"ensure that the most popular objects are in cache when needed and to "
+"prevent Traffic Server from deleting important objects. Traffic Server "
+"observes ``Cache-Control`` headers and pins an object in the cache only "
+"if it is indeed cacheable."
+msgstr ""
+
+# 1fafe6fbc6684d73a4f30eacd8aead56
+#: ../../admin-guide/configuration/cache-basics.en.rst:349
+msgid "To set cache pinning rules:"
+msgstr ""
+
+# b37890c4283a4b9d884c196d85a935c9
+#: ../../admin-guide/configuration/cache-basics.en.rst:351
+msgid ""
+"Enable :ts:cv:`proxy.config.cache.permit.pinning` in "
+":file:`records.config`::"
+msgstr ""
+
+# 36376c64fe92469b849cfcb36112bd76
+#: ../../admin-guide/configuration/cache-basics.en.rst:355
+msgid ""
+"Add a rule in :file:`cache.config` for each URL you want Traffic Server "
+"to pin in the cache. For example::"
+msgstr ""
+
+# f1001f1d08cd4fc8b1aaa47aef16d3dd
+#: ../../admin-guide/configuration/cache-basics.en.rst:363
+msgid "Caching HTTP Objects"
+msgstr ""
+
+# dac5c7be72ef4a5bb2eacd662b80e9cf
+#: ../../admin-guide/configuration/cache-basics.en.rst:365
+msgid ""
+"When Traffic Server receives a request for a web object that is not in "
+"the cache, it retrieves the object from the origin server and serves it "
+"to the client. At the same time, Traffic Server checks if the object is "
+"cacheable before storing it in its cache to serve future requests."
+msgstr ""
+
+# 4fffe0fc6b78460aa415132321d04e49
+#: ../../admin-guide/configuration/cache-basics.en.rst:370
+msgid ""
+"Traffic Server responds to caching directives from clients and origin "
+"servers, as well as directives you specify through configuration options "
+"and files."
+msgstr ""
+
+# 4905137db8884e32b67a71f626bfc208
+#: ../../admin-guide/configuration/cache-basics.en.rst:375
+msgid "Client Directives"
+msgstr ""
+
+# f4e6d83d409f4064aef480f94cfdb3d3
+#: ../../admin-guide/configuration/cache-basics.en.rst:377
+msgid ""
+"By default, Traffic Server does not cache objects with the following "
+"request headers:"
+msgstr ""
+
+# c8ed9415220b492d8266f5d8ad0a8ff6
+#: ../../admin-guide/configuration/cache-basics.en.rst:380
+msgid "``Authorization``"
+msgstr ""
+
+# d94ed29d079545a2b33cafc2014f0741
+# 507b3e75d2594a0897346c3c9f1da783
+#: ../../admin-guide/configuration/cache-basics.en.rst:382
+#: ../../admin-guide/configuration/cache-basics.en.rst:421
+msgid "``Cache-Control: no-store``"
+msgstr ""
+
+# dedbc47b10c24eb680b4aebff517af2b
+# 0c0e3f9806e24a1eac98d6b74e84f8ca
+#: ../../admin-guide/configuration/cache-basics.en.rst:384
+#: ../../admin-guide/configuration/cache-basics.en.rst:432
+msgid "``Cache-Control: no-cache``"
+msgstr ""
+
+# 7e6c3e80038944e09abb94d218fa4e2a
+#: ../../admin-guide/configuration/cache-basics.en.rst:386
+msgid ""
+"To configure Traffic Server to ignore this request header, refer to "
+"`Configuring Traffic Server to Ignore Client no-cache Headers`_."
+msgstr ""
+
+# 2bfe61bf180749cc920ac716c5a78433
+#: ../../admin-guide/configuration/cache-basics.en.rst:389
+msgid "``Cookie`` (for text objects)"
+msgstr ""
+
+# 8a63f45058fb45a281e638196feee605
+#: ../../admin-guide/configuration/cache-basics.en.rst:391
+msgid ""
+"By default, Traffic Server caches objects served in response to requests "
+"that contain cookies (unless the object is text). You can configure "
+"Traffic Server to not cache cookied content of any type, cache all "
+"cookied content, or cache cookied content that is of image type only. For"
+" more information, refer to `Caching Cookied Objects`_."
+msgstr ""
+
+# e84c49ed7bf9439fa95943754c7a59f1
+#: ../../admin-guide/configuration/cache-basics.en.rst:398
+msgid "Configuring Traffic Server to Ignore Client no-cache Headers"
+msgstr ""
+
+# ca96c4d2d4284373bf38eaf368c74878
+#: ../../admin-guide/configuration/cache-basics.en.rst:400
+msgid ""
+"By default, Traffic Server strictly observes client ``Cache-Control: no-"
+"cache`` directives. If a requested object contains a ``no-cache`` header,"
+" then Traffic Server forwards the request to the origin server even if it"
+" has a fresh copy in cache. You can configure Traffic Server to ignore "
+"client ``no-cache`` directives such that it ignores ``no-cache`` headers "
+"from client requests and serves the object from its cache."
+msgstr ""
+
+# 88087c181e3941c2bba8189a27b06b6c
+#: ../../admin-guide/configuration/cache-basics.en.rst:408
+msgid ""
+"Edit :ts:cv:`proxy.config.http.cache.ignore_client_no_cache` in "
+":file:`records.config`. ::"
+msgstr ""
+
+# fced7b3991a74081a366de39b6b98f48
+#: ../../admin-guide/configuration/cache-basics.en.rst:416
+msgid "Origin Server Directives"
+msgstr ""
+
+# 031fe16141c94761b713238011ea620b
+#: ../../admin-guide/configuration/cache-basics.en.rst:418
+msgid ""
+"By default, Traffic Server does not cache objects with the following "
+"response headers:"
+msgstr ""
+
+# 16a5ef8b891c4646a8225352e93be7d2
+#: ../../admin-guide/configuration/cache-basics.en.rst:423
+msgid "``Cache-Control: private``"
+msgstr ""
+
+# 02f7b8db671f4899bd32562d857620eb
+#: ../../admin-guide/configuration/cache-basics.en.rst:425
+msgid "``WWW-Authenticate``"
+msgstr ""
+
+# a7718546c87b48049e8dda6394b7431b
+#: ../../admin-guide/configuration/cache-basics.en.rst:427
+msgid ""
+"To configure Traffic Server to ignore ``WWW-Authenticate`` headers, refer"
+" to `Configuring Traffic Server to Ignore WWW-Authenticate Headers`_."
+msgstr ""
+
+# 7ed39af28edc4679aa214e1132eb0b59
+#: ../../admin-guide/configuration/cache-basics.en.rst:430
+msgid "``Set-Cookie``"
+msgstr ""
+
+# ef195f281b5a4da89c8e241a500a07c0
+#: ../../admin-guide/configuration/cache-basics.en.rst:434
+msgid ""
+"To configure Traffic Server to ignore ``no-cache`` headers, refer to "
+"`Configuring Traffic Server to Ignore Server no-cache Headers`_."
+msgstr ""
+
+# f5956492006a436f87e31d00803b694c
+#: ../../admin-guide/configuration/cache-basics.en.rst:437
+msgid "``Expires`` header with a value of 0 (zero) or a past date."
+msgstr ""
+
+# 39031e5e3d27413f80a71cc44a7e6d69
+#: ../../admin-guide/configuration/cache-basics.en.rst:440
+msgid "Configuring Traffic Server to Ignore Server no-cache Headers"
+msgstr ""
+
+# 1e618c98276340dd9b147701b43bd639
+#: ../../admin-guide/configuration/cache-basics.en.rst:442
+msgid ""
+"By default, Traffic Server strictly observes ``Cache-Control: no-cache`` "
+"directives. A response from an origin server with a ``no-cache`` header "
+"is not stored in the cache and any previous copy of the object in the "
+"cache is removed. If you configure Traffic Server to ignore ``no-cache`` "
+"headers, then Traffic Server also ignores ``no-store`` headers. The "
+"default behavior of observing ``no-cache`` directives is appropriate in "
+"most cases."
+msgstr ""
+
+# 8d83fccf485c4c14b1989c347e7bbf11
+#: ../../admin-guide/configuration/cache-basics.en.rst:450
+msgid "To configure Traffic Server to ignore server ``no-cache`` headers:"
+msgstr ""
+
+# 183ca0c0d11b40d9a45ab1314706db10
+#: ../../admin-guide/configuration/cache-basics.en.rst:452
+msgid ""
+"Edit :ts:cv:`proxy.config.http.cache.ignore_server_no_cache` in "
+":file:`records.config`. ::"
+msgstr ""
+
+# 1801ff776f0c4ff3bfbbe2685fb22d86
+#: ../../admin-guide/configuration/cache-basics.en.rst:460
+msgid "Configuring Traffic Server to Ignore WWW-Authenticate Headers"
+msgstr ""
+
+# 2471c320245a4abd99d73e781bd42273
+#: ../../admin-guide/configuration/cache-basics.en.rst:462
+msgid ""
+"By default, Traffic Server does not cache objects that contain ``WWW-"
+"Authenticate`` response headers. The ``WWW-Authenticate`` header contains"
+" authentication parameters the client uses when preparing the "
+"authentication challenge response to an origin server."
+msgstr ""
+
+# 9fc627bd00684e04970b8bacca5cf675
+#: ../../admin-guide/configuration/cache-basics.en.rst:467
+msgid ""
+"When you configure Traffic Server to ignore origin server ``WWW-"
+"Authenticate`` headers, all objects with ``WWW-Authenticate`` headers are"
+" stored in the cache for future requests. However, the default behavior "
+"of not caching objects with ``WWW-Authenticate`` headers is appropriate "
+"in most cases. Only configure Traffic Server to ignore server ``WWW-"
+"Authenticate`` headers if you are knowledgeable about HTTP 1.1."
+msgstr ""
+
+# 0014c4e341dc463497738ad844b3f801
+#: ../../admin-guide/configuration/cache-basics.en.rst:475
+msgid "To configure Traffic Server to ignore server ``WWW-Authenticate`` headers:"
+msgstr ""
+
+# ca7cde74a502486c9b141ffba2d509fc
+#: ../../admin-guide/configuration/cache-basics.en.rst:478
+msgid ""
+"Edit :ts:cv:`proxy.config.http.cache.ignore_authentication` in "
+":file:`records.config`. ::"
+msgstr ""
+
+# 440bbebf20864fd7852ef3a696ece744
+#: ../../admin-guide/configuration/cache-basics.en.rst:486
+msgid "Configuration Directives"
+msgstr ""
+
+# bc21ab5350644c74a9fa51d50840d37d
+#: ../../admin-guide/configuration/cache-basics.en.rst:488
+msgid ""
+"In addition to client and origin server directives, Traffic Server "
+"responds to directives you specify through configuration options and "
+"files."
+msgstr ""
+
+# 3a12a8595fdd409580c774007954b677
+#: ../../admin-guide/configuration/cache-basics.en.rst:492
+msgid "You can configure Traffic Server to do the following:"
+msgstr ""
+
+# 43e9b70d5cbb43fcba90dbb37c591d8c
+#: ../../admin-guide/configuration/cache-basics.en.rst:494
+msgid "Not cache any HTTP objects. Refer to `Disabling HTTP Object Caching`_."
+msgstr ""
+
+# 5abbe54352534e78a7ff569d59fae7e9
+#: ../../admin-guide/configuration/cache-basics.en.rst:496
+msgid ""
+"Cache *dynamic content*. That is, objects with URLs that end in ``.asp`` "
+"or contain a question mark (``?``), semicolon (``;``), or ``cgi``. For "
+"more information, refer to `Caching Dynamic Content`_."
+msgstr ""
+
+# ca5b18dff98041bda9c49c429a008f31
+#: ../../admin-guide/configuration/cache-basics.en.rst:500
+msgid ""
+"Cache objects served in response to the ``Cookie:`` header. Refer to "
+"`Caching Cookied Objects`_."
+msgstr ""
+
+# 1e30e2e3543f472b9235bdcafa69bca9
+#: ../../admin-guide/configuration/cache-basics.en.rst:503
+msgid "Observe ``never-cache`` rules in :file:`cache.config`."
+msgstr ""
+
+# 49422ec680724b9687db89501cda102e
+#: ../../admin-guide/configuration/cache-basics.en.rst:506
+msgid "Disabling HTTP Object Caching"
+msgstr ""
+
+# d822a158670c4d41bc18531805fe7819
+#: ../../admin-guide/configuration/cache-basics.en.rst:508
+msgid ""
+"By default, Traffic Server caches all HTTP objects except those for which"
+" you have set ``never-cache`` as :ref:`action rules <cache-config-format-"
+"action>` in :file:`cache.config`. You can disable HTTP object caching so "
+"that all HTTP objects are served directly from the origin server and "
+"never cached, as detailed below."
+msgstr ""
+
+# 9c4418f807914832afb3d27557c1787e
+#: ../../admin-guide/configuration/cache-basics.en.rst:514
+msgid "To disable HTTP object caching manually:"
+msgstr ""
+
+# 1e3d5ad00c9746738296eee1acb900e2
+#: ../../admin-guide/configuration/cache-basics.en.rst:516
+msgid ""
+"Set :ts:cv:`proxy.config.http.enabled` to ``0`` in "
+":file:`records.config`. ::"
+msgstr ""
+
+# 7e5d03a9fc8d4e0a9d91a0a23e5e58bd
+#: ../../admin-guide/configuration/cache-basics.en.rst:523
+msgid "Caching Dynamic Content"
+msgstr ""
+
+# 37af2c9052e54aba98e7235a70a32f76
+#: ../../admin-guide/configuration/cache-basics.en.rst:525
+msgid ""
+"A URL is considered dynamic if it ends in ``.asp`` or contains a question"
+" mark (``?``), a semicolon (``;``), or ``cgi``. By default, Traffic "
+"Server caches dynamic content. You can configure the system to ignore "
+"dynamic looking content, although this is recommended only if the content"
+" is truly dynamic, but fails to advertise so with appropriate ``Cache-"
+"Control`` headers."
+msgstr ""
+
+# 93dd3df362194559a878ef337343bc8b
+#: ../../admin-guide/configuration/cache-basics.en.rst:532
+msgid ""
+"To configure Traffic Server's cache behaviour in regard to dynamic "
+"content:"
+msgstr ""
+
+# a15e5254b731426d8bc7dc9ccfacb6c5
+#: ../../admin-guide/configuration/cache-basics.en.rst:535
+msgid ""
+"Edit :ts:cv:`proxy.config.http.cache.cache_urls_that_look_dynamic` in "
+":file:`records.config`. To disable caching, set the variable to ``0``, "
+"and to explicitly permit caching use ``1``. ::"
+msgstr ""
+
+# c81a99c5a5ba4f528dc8fae56bdd59f9
+#: ../../admin-guide/configuration/cache-basics.en.rst:544
+msgid "Caching Cookied Objects"
+msgstr ""
+
+# ab8c4cbbf52541c2868056c724db187e
+#: ../../admin-guide/configuration/cache-basics.en.rst:548
+msgid ""
+"By default, Traffic Server caches objects served in response to requests "
+"that contain cookies. This is true for all types of objects except for "
+"text. Traffic Server does not cache cookied text content because object "
+"headers are stored along with the object, and personalized cookie header "
+"values could be saved with the object. With non-text objects, it is "
+"unlikely that personalized headers are delivered or used."
+msgstr ""
+
+# 11ab9c98d92e4e5b93b5137838b4a93d
+#: ../../admin-guide/configuration/cache-basics.en.rst:555
+msgid "You can reconfigure Traffic Server to:"
+msgstr ""
+
+# f6bb2aa609b042feaff28512c33cc231
+#: ../../admin-guide/configuration/cache-basics.en.rst:557
+msgid "Not cache cookied content of any type."
+msgstr ""
+
+# d656c3234e2c4890aa99141d25f45a67
+#: ../../admin-guide/configuration/cache-basics.en.rst:559
+msgid "Cache cookied content that is of image type only."
+msgstr ""
+
+# 87c369c2c76345a88fbe6a44bb506ba7
+#: ../../admin-guide/configuration/cache-basics.en.rst:561
+msgid "Cache all cookied content regardless of type."
+msgstr ""
+
+# 1e993d1b27ee4d98b2319a9be6e2a3e7
+#: ../../admin-guide/configuration/cache-basics.en.rst:563
+msgid "To configure how Traffic Server caches cookied content:"
+msgstr ""
+
+# 631bb782b1744ec19a27f2888e2c8d78
+#: ../../admin-guide/configuration/cache-basics.en.rst:565
+msgid ""
+"Edit :ts:cv:`proxy.config.http.cache.cache_responses_to_cookies` in "
+":file:`records.config`."
+msgstr ""
+
+# d2e3cc34e3fc481f88285f6a4e33c5e6
+#: ../../admin-guide/configuration/cache-basics.en.rst:571
+msgid "Forcing Object Caching"
+msgstr ""
+
+# f33f7a9077094706b66eeeae32e92e9b
+#: ../../admin-guide/configuration/cache-basics.en.rst:573
+msgid ""
+"You can force Traffic Server to cache specific URLs (including dynamic "
+"URLs) for a specified duration, regardless of ``Cache-Control`` response "
+"headers."
+msgstr ""
+
+# 2862b6ec4c3149e58a7c727536418f13
+#: ../../admin-guide/configuration/cache-basics.en.rst:577
+msgid "To force document caching:"
+msgstr ""
+
+# eae7cfd0f83149abb698faf3785956b6
+#: ../../admin-guide/configuration/cache-basics.en.rst:579
+msgid ""
+"Add a rule for each URL you want Traffic Server to pin to the cache "
+":file:`cache.config`::"
+msgstr ""
+
+# 7a18cc6c10414fcc986c8ef396e9fe5d
+#: ../../admin-guide/configuration/cache-basics.en.rst:587
+msgid "Caching HTTP Alternates"
+msgstr ""
+
+# 1ad837b0550a49639c3bbd6a966afd00
+#: ../../admin-guide/configuration/cache-basics.en.rst:589
+msgid ""
+"Some origin servers answer requests to the same URL with a variety of "
+"objects. The content of these objects can vary widely, according to "
+"whether a server delivers content for different languages, targets "
+"different browsers with different presentation styles, or provides "
+"different document formats (HTML, XML). Different versions of the same "
+"object are termed *alternates* and are cached by Traffic Server based on "
+"``Vary`` response headers. You can specify additional request and "
+"response headers for specific ``Content-Type`` values that Traffic Server"
+" will identify as alternates for caching. You can also limit the number "
+"of alternate versions of an object allowed in the cache."
+msgstr ""
+
+# 2e6bc1fc78b44feeb6a24b6485d34c3e
+#: ../../admin-guide/configuration/cache-basics.en.rst:601
+msgid "Configuring How Traffic Server Caches Alternates"
+msgstr ""
+
+# 67ba2f2198b546cba6080de06065d8ac
+#: ../../admin-guide/configuration/cache-basics.en.rst:603
+msgid "To configure how Traffic Server caches alternates:"
+msgstr ""
+
+# f16bc4402b504101b7b68a0ca170c620
+#: ../../admin-guide/configuration/cache-basics.en.rst:605
+msgid "Edit the following variables in :file:`records.config`:"
+msgstr ""
+
+# 748836d727874352877c23a4d0797ae7
+#: ../../admin-guide/configuration/cache-basics.en.rst:607
+msgid ":ts:cv:`proxy.config.http.cache.enable_default_vary_headers`"
+msgstr ""
+
+# ff6a5f3481774e90bdbe69c240bccda9
+#: ../../admin-guide/configuration/cache-basics.en.rst:608
+msgid ":ts:cv:`proxy.config.http.cache.vary_default_text`"
+msgstr ""
+
+# f1525f5cb63c4a5c82aae9b5ac0f0b82
+#: ../../admin-guide/configuration/cache-basics.en.rst:609
+msgid ":ts:cv:`proxy.config.http.cache.vary_default_images`"
+msgstr ""
+
+# 6e02e4c2309e491abe2f6514f3b53f5a
+#: ../../admin-guide/configuration/cache-basics.en.rst:610
+msgid ":ts:cv:`proxy.config.http.cache.vary_default_other`"
+msgstr ""
+
+# 54c3dec3ed9b4d0498a61cecee637b14
+#: ../../admin-guide/configuration/cache-basics.en.rst:616
+msgid ""
+"If you specify ``Cookie`` as the header field on which to vary in the "
+"above variables, make sure that the variable "
+":ts:cv:`proxy.config.http.cache.cache_responses_to_cookies` is set "
+"appropriately."
+msgstr ""
+
+# 43e75b0671654c54b92b01f0817d41a7
+#: ../../admin-guide/configuration/cache-basics.en.rst:622
+msgid "Limiting the Number of Alternates for an Object"
+msgstr ""
+
+# 1cb64c62e39e49b3a3b865c38da0e129
+#: ../../admin-guide/configuration/cache-basics.en.rst:624
+msgid ""
+"You can limit the number of alternates Traffic Server can cache per "
+"object (the default is 3)."
+msgstr ""
+
+# 1883bea9b75f4fc69abc64032ac91e96
+#: ../../admin-guide/configuration/cache-basics.en.rst:629
+msgid ""
+"Large numbers of alternates can affect Traffic Server cache performance "
+"because all alternates have the same URL. Although Traffic Server can "
+"look up the URL in the index very quickly, it must scan sequentially "
+"through available alternates in the object store."
+msgstr ""
+
+# 580afc6a21cd477195cb5314ffd6fadd
+#: ../../admin-guide/configuration/cache-basics.en.rst:634
+msgid "To alter the limit on the number of alternates:"
+msgstr ""
+
+# 3544c195a9c249bca4992055f4853be1
+#: ../../admin-guide/configuration/cache-basics.en.rst:636
+msgid ""
+"Edit :ts:cv:`proxy.config.cache.limits.http.max_alts` in "
+":file:`records.config`. ::"
+msgstr ""
+
+# 07bb427048cf4cfdb00a9fd9c1c39d21
+#: ../../admin-guide/configuration/cache-basics.en.rst:645
+msgid "Using Congestion Control"
+msgstr ""
+
+# a78a62855a614ed1a670c9dac27a0fdd
+#: ../../admin-guide/configuration/cache-basics.en.rst:647
+msgid ""
+"The *Congestion Control* option enables you to configure Traffic Server "
+"to stop forwarding HTTP requests to origin servers when they become "
+"congested. Traffic Server then sends the client a message to retry the "
+"congested origin server later."
+msgstr ""
+
+# 1b64656d34a74c1a8c6e5efa9be65c6d
+#: ../../admin-guide/configuration/cache-basics.en.rst:652
+msgid "To enable this option:"
+msgstr ""
+
+# 95806907423d427eb1fcaa70cb14baca
+#: ../../admin-guide/configuration/cache-basics.en.rst:654
+msgid ""
+"Set :ts:cv:`proxy.config.http.congestion_control.enabled` to ``1`` in "
+":file:`records.config`. ::"
+msgstr ""
+
+# 2c82abe58e4f42aca292938bbeac97a8
+#: ../../admin-guide/configuration/cache-basics.en.rst:659
+msgid "Create rules in :file:`congestion.config` to specify:"
+msgstr ""
+
+# 4bdd7510fa53405db60898908c20160a
+#: ../../admin-guide/configuration/cache-basics.en.rst:661
+msgid "Which origin servers Traffic Server tracks for congestion."
+msgstr ""
+
+# 73a82499d45c4cfc918e7461866925fb
+#: ../../admin-guide/configuration/cache-basics.en.rst:663
+msgid ""
+"The timeouts Traffic Server uses, depending on whether a server is "
+"congested."
+msgstr ""
+
+# 7307ffd893d5430db5b913638b54b9ca
+#: ../../admin-guide/configuration/cache-basics.en.rst:666
+msgid ""
+"The page Traffic Server sends to the client when a server becomes "
+"congested."
+msgstr ""
+
+# d1633e2409e3405aa4cf20ca1b804154
+#: ../../admin-guide/configuration/cache-basics.en.rst:669
+msgid ""
+"Whether Traffic Server tracks the origin servers by IP address or by "
+"hostname."
+msgstr ""
+
+# 687589c03b0d4696b7a10083874bd51c
+#: ../../admin-guide/configuration/cache-basics.en.rst:677
+msgid "Using Transaction Buffering Control"
+msgstr ""
+
+# 4f26666d840e49c880c5ebf9d2d00d7e
+#: ../../admin-guide/configuration/cache-basics.en.rst:679
+msgid ""
+"By default, I/O operations are run at full speed, as fast as either "
+"Traffic Server, the network, or the cache can support. This can be "
+"problematic for large objects if the client side connection is "
+"significantly slower. In such cases the content will be buffered in ram "
+"while waiting to be sent to the client. This could potentially also "
+"happen for ``POST`` requests if the client connection is fast and the "
+"origin server connection slow. If very large objects are being used this "
+"can cause the memory usage of Traffic Server to become `very large "
+"<https://issues.apache.org/jira/browse/TS-1496>`_."
+msgstr ""
+
+# de3e34fbdec64de18795ac26b7750019
+#: ../../admin-guide/configuration/cache-basics.en.rst:688
+msgid ""
+"This problem can be ameloriated by controlling the amount of buffer space"
+" used by a transaction. A high water and low water mark are set in terms "
+"of bytes used by the transaction. If the buffer space in use exceeds the "
+"high water mark, the connection is throttled to prevent additional "
+"external data from arriving. Internal operations continue to proceed at "
+"full speed until the buffer space in use drops below the low water mark "
+"and external data I/O is re-enabled."
+msgstr ""
+
+# 91cb8fa3b2ed47e9bcacb25842e46b12
+#: ../../admin-guide/configuration/cache-basics.en.rst:696
+msgid ""
+"Although this is intended primarily to limit the memory usage of Traffic "
+"Server it can also serve as a crude rate limiter by setting a buffer "
+"limit and then throttling the client side connection either externally or"
+" via a transform. This will cause the connection to the origin server to "
+"be limited to roughly the client side connection speed."
+msgstr ""
+
+# aa145c51195b45a5838bfa6b6fe19322
+#: ../../admin-guide/configuration/cache-basics.en.rst:702
+msgid ""
+"Traffic Server does network I/O in large chunks (32K or so) and therefore"
+" the granularity of transaction buffering control is limited to a similar"
+" precision."
+msgstr ""
+
+# 6cdb778657f24574924fd2c627e6a290
+#: ../../admin-guide/configuration/cache-basics.en.rst:705
+msgid ""
+"The buffer size calculations include all elements in the transaction, "
+"including any buffers associated with :ref:`transform plugins <developer-"
+"plugins-http-transformations>`."
+msgstr ""
+
+# 796ad1ccd85841828252d7adf3ef5eb4
+#: ../../admin-guide/configuration/cache-basics.en.rst:708
+msgid ""
+"Transaction buffering control can be enabled globally by using "
+"configuration variables or by :c:func:`TSHttpTxnConfigIntSet` in a "
+"plugin."
+msgstr ""
+
+# aa04ea5f817e497d8eade661850777c8
+#: ../../admin-guide/configuration/cache-basics.en.rst:712
+msgid "Value"
+msgstr ""
+
+# 479f2dae04f74771b7df71ac1604f3b3
+#: ../../admin-guide/configuration/cache-basics.en.rst:712
+msgid "Variable"
+msgstr ""
+
+# 7dfcf22b94064920913efd206ef0f241
+#: ../../admin-guide/configuration/cache-basics.en.rst:712
+msgid ":c:func:`TSHttpTxnConfigIntSet` key"
+msgstr ""
+
+# 08bfe1ba790a4a519bf43a5b27d8f8fa
+#: ../../admin-guide/configuration/cache-basics.en.rst:714
+msgid "Enable buffering"
+msgstr ""
+
+# e054b084d51e4fa7ac06d53bc568c51b
+#: ../../admin-guide/configuration/cache-basics.en.rst:714
+msgid ":ts:cv:`proxy.config.http.flow_control.enabled`"
+msgstr ""
+
+# 3bed9c542dd940ebaf9f88987cdc5952
+#: ../../admin-guide/configuration/cache-basics.en.rst:714
+msgid ":c:data:`TS_CONFIG_HTTP_FLOW_CONTROL_ENABLED`"
+msgstr ""
+
+# 491b5b5b698f4d11b848deaf7dae1784
+#: ../../admin-guide/configuration/cache-basics.en.rst:715
+msgid "Set high water"
+msgstr ""
+
+# fb56d11504124c41b6b662ef947849c0
+#: ../../admin-guide/configuration/cache-basics.en.rst:715
+msgid ":ts:cv:`proxy.config.http.flow_control.high_water`"
+msgstr ""
+
+# 53e59dc0b9de44c0aeccdacdc97349a1
+#: ../../admin-guide/configuration/cache-basics.en.rst:715
+msgid ":c:data:`TS_CONFIG_HTTP_FLOW_CONTROL_HIGH_WATER`"
+msgstr ""
+
+# 7b1ef3559d184125aa74fc649945ad10
+#: ../../admin-guide/configuration/cache-basics.en.rst:716
+msgid "Set low water"
+msgstr ""
+
+# f380d2f084624ada88d3d2674ea687d9
+#: ../../admin-guide/configuration/cache-basics.en.rst:716
+msgid ":ts:cv:`proxy.config.http.flow_control.low_water`"
+msgstr ""
+
+# 0176ae1f5beb466fad597a396291ca14
+#: ../../admin-guide/configuration/cache-basics.en.rst:716
+msgid ":c:data:`TS_CONFIG_HTTP_FLOW_CONTROL_LOW_WATER`"
+msgstr ""
+
+# 4bcdd7f039ce498cb98c7e1c0e591f97
+#: ../../admin-guide/configuration/cache-basics.en.rst:719
+msgid ""
+"Be careful to always have the low water mark equal or less than the high "
+"water mark. If you set only one, the other will be set to the same value."
+msgstr ""
+
+# c4cb19b83ea2423b8f641e4dabfb7ab1
+#: ../../admin-guide/configuration/cache-basics.en.rst:722
+msgid ""
+"If using :c:func:`TSHttpTxnConfigIntSet`, it must be called no later than"
+" :c:data:`TS_HTTP_READ_RESPONSE_HDR_HOOK`."
+msgstr ""
+
+# 7fb3e85bda254756b84c50ae9ba01623
+#: ../../admin-guide/configuration/cache-basics.en.rst:728
+msgid "Reducing Origin Server Requests (Avoiding the Thundering Herd)"
+msgstr ""
+
+# 83ac0a8958f64487bbe83d656b4cf805
+#: ../../admin-guide/configuration/cache-basics.en.rst:730
+msgid ""
+"When an object can not be served from cache, the request will be proxied "
+"to the origin server. For a popular object, this can result in many near "
+"simultaneous requests to the origin server, potentially overwhelming it "
+"or associated resources. There are several features in Traffic Server "
+"that can be used to avoid this scenario."
+msgstr ""
+
+# becd9a1df785418ab17f66c89095f3b2
+#: ../../admin-guide/configuration/cache-basics.en.rst:737
+msgid "Read While Writer"
+msgstr ""
+
+# b9893fe7fd4d47e39605db099dd1654b
+#: ../../admin-guide/configuration/cache-basics.en.rst:739
+#, python-format
+msgid ""
+"When Traffic Server goes to fetch something from origin, and upon "
+"receiving the response, any number of clients can be allowed to start "
+"serving the partially filled cache object once "
+"background_fill_completed_threshold % of the object has been received."
+msgstr ""
+
+# 35c95266ecd2496d8d4e758d11b73beb
+#: ../../admin-guide/configuration/cache-basics.en.rst:744
+msgid ""
+"While some other HTTP proxies permit clients to begin reading the "
+"response immediately upon the proxy receiving data from the origin "
+"server, ATS does not begin allowing clients to read until after the "
+"complete HTTP response headers have been read and processed. This is a "
+"side-effect of ATS making no distinction between a cache refresh and a "
+"cold cache, which prevents knowing whether a response is going to be "
+"cacheable."
+msgstr ""
+
+# b65481fec6df44eb92f43a19bafecb51
+#: ../../admin-guide/configuration/cache-basics.en.rst:751
+msgid ""
+"As non-cacheable responses from an origin server are generally due to "
+"that content being unique to different client requests, ATS will not "
+"enable read-while-writer functionality until it has determined that it "
+"will be able to cache the object."
+msgstr ""
+
+# aff341a5400b4c3088b376874ac90bbc
+#: ../../admin-guide/configuration/cache-basics.en.rst:756
+msgid ""
+"The following settings must be made in :file:`records.config` to enable "
+"read-while-writer functionality in ATS::"
+msgstr ""
+
+# 0e9a4423572341bcb5f1fcd95efceb50
+#: ../../admin-guide/configuration/cache-basics.en.rst:764
+msgid "All four configurations are required, for the following reasons:"
+msgstr ""
+
+# 59619589ce754316a2150649ddfca5ac
+#: ../../admin-guide/configuration/cache-basics.en.rst:766
+msgid ""
+":ts:cv:`proxy.config.cache.enable_read_while_writer` being set to ``1`` "
+"turns the feature on, as it is off (``0``) by default."
+msgstr ""
+
+# 826d5979af334dc4b4689c802d16fa18
+#: ../../admin-guide/configuration/cache-basics.en.rst:771
+msgid ""
+"The background fill feature (both "
+":ts:cv:`proxy.config.http.background_fill_active_timeout` and "
+":ts:cv:`proxy.config.http.background_fill_completed_threshold`) should be"
+" allowed to kick in for every possible request. This is necessary in the "
+"event the writer (the first client session to request the object, which "
+"triggered ATS to contact the origin server) goes away. Another client "
+"session needs to take over the writer."
+msgstr ""
+
+# 44076bd76cb9458aa5dfa88f48749169
+#: ../../admin-guide/configuration/cache-basics.en.rst:779
+msgid ""
+"As such, you should set the background fill timeouts and threshold to "
+"zero; this assures they never time out and are always allowed to kick in."
+msgstr ""
+
+# 8dc89bbf32894326a13edd15f035bae2
+#: ../../admin-guide/configuration/cache-basics.en.rst:782
+msgid ""
+"The :ts:cv:`proxy.config.cache.max_doc_size` should be unlimited (set to "
+"0), since the object size may be unknown, and going over this limit would"
+" cause a disconnect on the objects being served."
+msgstr ""
+
+# 0fd99b60b5334940af7f2df59a231bb2
+#: ../../admin-guide/configuration/cache-basics.en.rst:786
+msgid ""
+"Once these are enabled, you have something that is very close, but not "
+"quite the same, to Squid's Collapsed Forwarding."
+msgstr ""
+
+# 159591809f584de4903d6ad39b8908a9
+#: ../../admin-guide/configuration/cache-basics.en.rst:789
+msgid ""
+"In addition to the above settings, the settings "
+":ts:cv:`proxy.config.cache.read_while_writer.max_retries` and "
+":ts:cv:`proxy.config.cache.read_while_writer_retry.delay` allow to "
+"control the number of retries TS attempts to trigger read-while-writer "
+"until the download of first fragment of the object is completed::"
+msgstr ""
+
+# 70ca90aba7014608aef20073e3eef36b
+#: ../../admin-guide/configuration/cache-basics.en.rst:801
+msgid "Fuzzy Revalidation"
+msgstr ""
+
+# 7fd5d5b1109248528e6eb5cc03d8bbee
+#: ../../admin-guide/configuration/cache-basics.en.rst:803
+msgid ""
+"Traffic Server can be set to attempt to revalidate an object before it "
+"becomes stale in cache. :file:`records.config` contains the settings::"
+msgstr ""
+
+# a0f151f3734b42109c1184a69e631993
+#: ../../admin-guide/configuration/cache-basics.en.rst:810
+msgid ""
+"For every request for an object that occurs "
+":ts:cv:`proxy.config.http.cache.fuzz.time` before (in the example above, "
+"240 seconds) the object is set to become stale, there is a small chance "
+"(:ts:cv:`proxy.config.http.cache.fuzz.probability` == 0.5%) that the "
+"request will trigger a revalidation request to the origin."
+msgstr ""
+
+# 0b066b4df67e44f19ef205a33c79b03e
+#: ../../admin-guide/configuration/cache-basics.en.rst:818
+msgid ""
+"When revalidation occurs, the requested object is no longer available to "
+"be served from cache. Subsequent requests for that object will be proxied"
+" to the origin."
+msgstr ""
+
+# e71939281eb041edbd36a81890b8ddc8
+#: ../../admin-guide/configuration/cache-basics.en.rst:822
+msgid ""
+"For objects getting a few requests per second, these settings would offer"
+" a fairly low probability of revalidating the cached object before it "
+"becomes stale. This feature is not typically necessary at those rates, "
+"though, since odds are only one or a small number of connections would "
+"hit origin upon the objects going stale."
+msgstr ""
+
+# a8acfa4ca6c347dfa021190e28820a1b
+#: ../../admin-guide/configuration/cache-basics.en.rst:828
+msgid ""
+"Once request raise rise, the same ``fuzz.probability`` leads to a greater"
+" chance the object may be revalidated before becoming stale. This can "
+"prevent multiple clients simultaneously triggering contact with the "
+"origin server under higher loads, as they would do if no fuzziness was "
+"employed for revalidations."
+msgstr ""
+
+# b993980709c240a5b80182dd20a5875c
+#: ../../admin-guide/configuration/cache-basics.en.rst:834
+msgid ""
+"These settings are also overridable by remap rules and via plugins, so "
+"can be adjusted per request if necessary."
+msgstr ""
+
+# d90a162bcf9c4a448629250546fe7db9
+#: ../../admin-guide/configuration/cache-basics.en.rst:837
+msgid ""
+"Finally, :ts:cv:`proxy.config.http.cache.fuzz.min_time` allows for "
+"different time periods to evaluate the probability of revalidation for "
+"small TTLs and large TTLs. Objects with small TTLs will start \"rolling "
+"the revalidation dice\" near the ``fuzz.min_time``, while objects with "
+"large TTLs would start at ``fuzz.time``."
+msgstr ""
+
+# 8ed93d03532e4822af1e0673d9ce81f4
+#: ../../admin-guide/configuration/cache-basics.en.rst:843
+msgid ""
+"A logarithmic like function between determines the revalidation "
+"evaluation start time (which will be between ``fuzz.min_time`` and "
+"``fuzz.time``). As the object gets closer to expiring, the window start "
+"becomes more likely. By default this setting is not enabled, but should "
+"be enabled anytime you have objects with small TTLs. Note that this "
+"option predates overridable configurations, so you can achieve something "
+"similar with a plugin or :file:`remap.config` settings."
+msgstr ""
+
+# 8ec46aa7fa6046b79b8fc25278beb6e1
+#: ../../admin-guide/configuration/cache-basics.en.rst:851
+msgid ""
+"These configuration options are similar to Squid's refresh_stale_hit "
+"configuration option."
+msgstr ""
+
+# 76911b66bc5a46aeb7e7223892d81a03
+#: ../../admin-guide/configuration/cache-basics.en.rst:855
+msgid "Open Read Retry Timeout"
+msgstr ""
+
+# 2b6dd72cd9a54088a67f993cebf7c2aa
+#: ../../admin-guide/configuration/cache-basics.en.rst:857
+msgid ""
+"The open read retry configurations attempt to reduce the number of "
+"concurrent requests to the origin for a given object. While an object is "
+"being fetched from the origin server, subsequent requests would wait "
+":ts:cv:`proxy.config.http.cache.open_read_retry_time` milliseconds before"
+" checking if the object can be served from cache. If the object is still "
+"being fetched, the subsequent requests will retry "
+":ts:cv:`proxy.config.http.cache.max_open_read_retries` times. Thus, "
+"subsequent requests may wait a total of (``max_open_read_retries`` x "
+"``open_read_retry_time``) milliseconds before establishing an origin "
+"connection of its own. For instance, if they are set to ``5`` and ``10`` "
+"respectively, connections will wait up to 50ms for a response to come "
+"back from origin from a previous request, until this request is allowed "
+"through."
+msgstr ""
+
+# 378feb6e9f534fde861c38ee275a8f36
+#: ../../admin-guide/configuration/cache-basics.en.rst:872
+msgid ""
+"These settings are inappropriate when objects are uncacheable. In those "
+"cases, requests for an object effectively become serialized. The "
+"subsequent requests would await at least ``open_read_retry_time`` "
+"milliseconds before being proxied to the origin."
+msgstr ""
+
+# 6dbd14e564224a49a5b2bba1869b880f
+#: ../../admin-guide/configuration/cache-basics.en.rst:877
+msgid ""
+"It is advisable that this setting be used in conjunction with `Read While"
+" Writer`_ for big (those that take longer than (``max_open_read_retries``"
+" x ``open_read_retry_time``) milliseconds to transfer) cacheable objects."
+" Without the read-while-writer settings enabled, while the initial fetch "
+"is ongoing, not only would subsequent requests be delayed by the maximum "
+"time, but also, those requests would result in unnecessary requests to "
+"the origin server."
+msgstr ""
+
+# f6553b17124f4ac7b3b8f2365fcdae71
+#: ../../admin-guide/configuration/cache-basics.en.rst:884
+msgid ""
+"Since ATS now supports setting these settings per-request or remap rule, "
+"you can configure this to be suitable for your setup much more easily."
+msgstr ""
+
+# 4f797dbd83b649979d18a13bf95dff2b
+#: ../../admin-guide/configuration/cache-basics.en.rst:887
+msgid "The configurations are (with defaults)::"
+msgstr ""
+
+# 401808192f6944f6986021ab70285c28
+#: ../../admin-guide/configuration/cache-basics.en.rst:892
+msgid ""
+"The defaults are such that the feature is disabled and every connection "
+"is allowed to go to origin without artificial delay. When enabled, you "
+"will try ``max_open_read_retries`` times, each with an "
+"``open_read_retry_time`` timeout."
+msgstr ""
+
+# 13a5394d2999447eb6de232f5f6ff49e
+#: ../../admin-guide/configuration/cache-basics.en.rst:897
+msgid "Open Write Fail Action"
+msgstr ""
+
+# bea8e4fb0b2e47edaaa04dc668db0407
+#: ../../admin-guide/configuration/cache-basics.en.rst:899
+msgid ""
+"In addition to the open read retry settings TS supports a new setting "
+":ts:cv:`proxy.config.http.cache.open_write_fail_action` that allows to "
+"further reduce multiple concurrent requests hitting the origin for the "
+"same object by either returning a stale copy, in case of hit-stale or an "
+"error in case of cache miss for all but one of the requests."
+msgstr ""
+

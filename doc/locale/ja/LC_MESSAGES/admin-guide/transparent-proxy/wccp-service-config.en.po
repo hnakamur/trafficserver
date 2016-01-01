@@ -1,0 +1,235 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 25d8bb90b2c446878107538d435165b1
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:2
+msgid "WCCP Service Configuration"
+msgstr ""
+
+# 6f717619436a408385ab6629d3106173
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:23
+msgid ""
+"The service definition file is used by :ref:`traffic_wccp` and :ref"
+":`traffic-server` directly. The elements in the security definition file "
+"are inspired by the `WCCP RFC (8/2012) <http://tools.ietf.org/html/draft-"
+"mclaggan-wccp-v2rev1-00>`_.  There is also an older version of the RFC "
+"that shows up commonly in search results, `WCCP (4/2001) "
+"<https://tools.ietf.org/id/draft-wilson-wrec-wccp-v2-01.txt>`_, and was "
+"the RFC reference used in the original WCCP support for Traffic Server "
+"several years ago."
+msgstr ""
+
+# e98a8df14d5d44d8b92742caef07609f
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:27
+msgid ""
+"A sample service group file is included in the source tree under "
+"cmd/traffic_wccp."
+msgstr ""
+
+# e39c62d0ca6e4554839814bcd5a64c4e
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:30
+msgid "Security Section"
+msgstr ""
+
+# e75520f8e2234013abfbdd7c56561e6b
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:32
+msgid ""
+"In the security section, you can define a password shared between the "
+"WCCP Client and the WCCP router.  This password is used to encrypt the "
+"WCCP traffic.  It is optional, but highly recommended."
+msgstr ""
+
+# e36295e4cc89436cbc2edb987b33a0e8
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:34
+msgid "Attributes in this section"
+msgstr ""
+
+# 6da7ea71c2e748f1a4de41f19496e761
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:36
+msgid "option  - Must be set to MD5 if you want to encrypt your WCCP traffic"
+msgstr ""
+
+# 5ac5cb05a05c4604bb313728ddb7fa1a
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:38
+msgid "key – The same password that you set with the associated WCCP router."
+msgstr ""
+
+# 671d167b9cbb4f279f620f2b3adc2e28
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:41
+msgid "Services Section"
+msgstr ""
+
+# bdff9313860e43ecbf587e87cb282087
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:43
+msgid ""
+"In the services section you can define a list of service groups.  Each "
+"top level entry is a separate service group."
+msgstr ""
+
+# 53f93cc639f340eba7ec024f4e1b9293
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:45
+msgid "Service group attributes include"
+msgstr ""
+
+# ae4888d8aa5547acb6c66a8c06dcbd4d
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:47
+msgid ""
+"name – A name for the service.  Not used in the rest of the WCCP "
+"processing."
+msgstr ""
+
+# 797f53d76ba041de81a5e808b03678c0
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:49
+msgid ""
+"description – A description of the service.  Again, not used in the rest "
+"of the WCCP processing."
+msgstr ""
+
+# 28fc395dc06d4102b90b08cf2ac1c79b
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:51
+msgid ""
+"id - The security group ID.  It must match the service group ID that has "
+"been defined on the associated WCCP router.  This is the true service "
+"group identifier from the WCCP perspective."
+msgstr ""
+
+# efa9d5eec8254aeb9362b6cd637efaec
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:53
+msgid ""
+"type – This defines the type of service group either “STANDARD” or "
+"“DYNAMIC”.  There is one standard defined service group, HTTP with the id"
+" of 0.  The 4/2001 RFC indicates that id’s 0-50 are reserved for well "
+"known service groups.  But more recent 8/2012 RFC indicates that values 0"
+" through 254 are valid service id’s for dynamic services.  To avoid "
+"differences with older WCCP routers, you probably want to  avoid dynamic "
+"service ID’s 0 through 50."
+msgstr ""
+
+# 1bd5037dc859495fafb1cd7924fa147d
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:55
+msgid ""
+"priority – This is a value from 0 to 255.  The higher number is a higher "
+"priority.  Well known (STANDARD) services are set to a value of 240.  If "
+"there are multiple service groups that could match a given packet, the "
+"higher priority service group is applied. RFC  For example, you have "
+"service group 100 defined for packets with destination port 80, and "
+"service group 101 defined for packets with source port 1024.  For a "
+"packet with destination port set to 80 and source port set to 1024, the "
+"priorities of the service groups would need to be compared to determine "
+"which service group applies."
+msgstr ""
+
+# 876cc585f78047a3b006bea57d80d8bb
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:57
+msgid ""
+"protocol – This is IP protocol number that should match.  Generally this "
+"is set to 6 (TCP) or 17 (UDP)."
+msgstr ""
+
+# d1e0bf75cb2c4c40b46d6f33fdd5e5d5
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:59
+msgid ""
+"assignment – WCCP supports multiple WCCP clients supporting a single "
+"service group.  However, the current WCCP client implementation in "
+"Traffic Server assumes there is only a single WCCP client, and so creates"
+" assignment tables that will direct all traffic to that WCCP client.  The"
+" assignment type is either hash or mask, and if it is not set, it "
+"defaults to hash.  If Traffic Server ever supports more than one cache, "
+"it will likely only support a balanced hash assignment.  The mask/value "
+"assignment seems to be better suited to situations where the traffic "
+"needs to be more strongly controlled."
+msgstr ""
+
+# f6c520bdef4a491db0388f8be71e3445
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:61
+msgid ""
+"primary-hash – This is the element of the packet that is used to compute "
+"the primary key.  The value options are src_ip, dst_ip, src_port, or  "
+"dst_port. This entry is a list, so multiple values can be specified.  In "
+"that case, all the specified packet attributes will be used to compute "
+"the hash bucket.  In the current implementation, the primary hash value "
+"does not matter, since the client always generates a hash table that "
+"directs all matching traffic to it.  But if multiple clients are ever "
+"supported, knowledge of the local traffic distribution could be used to "
+"pick a packet attribute that will better spread traffic over the WCCP "
+"clients."
+msgstr ""
+
+# a89115ca73ca47b5aa7b9eadbe7aa9b6
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:62
+msgid ""
+"alt-hash – The protocol supports a two level hash.  This attribute is a "
+"list with the same value options as for primary-hash.  Again, since the "
+"current Traffic Server implementation only creates assignment tables to a"
+" single client, specifying the alt-hash values does nothing."
+msgstr ""
+
+# 37dd01212b424e97b90a066a333d6327
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:64
+msgid ""
+"ports – This is a list of port values.  Up to 8 port values may be "
+"included in a service group definition."
+msgstr ""
+
+# cc0305df2de24600bc441cad2477d53b
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:66
+msgid ""
+"port-type – This attribute can have the value of src or dst.  If not "
+"specified, it defaults to dst.  It indicates whether the port values "
+"should be interpreted as source ports or destination ports."
+msgstr ""
+
+# 979826773a684407af3007b0514e0ecc
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:68
+msgid ""
+"forward – This is a list.  The list of the values can be GRE or L2.  This"
+" advertises how the client wants to process WCCP packets.  GRE means that"
+" the packets will be delivered in a GRE tunnel.  This is the default.  L2"
+" means that the client is on the same network and can get traffic "
+"delivered to it from the router by L2 routing (MAC addresses)."
+msgstr ""
+
+# 76928fa46fbf4fbfb1fe53f5ee8356b9
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:70
+msgid ""
+"return – The WCCP protocol allows a WCCP client to decline a packet and "
+"return it back to the router.  The current WCCP client implementation "
+"never does this.  The value options are the same as for the forward "
+"attribute."
+msgstr ""
+
+# 1438bb01602a46f6a834a1f293da084a
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:72
+msgid ""
+"routers – This is the list of router addresses the WCCP client "
+"communicates with.  The WCCP protocols allows for multiple WCCP routers "
+"to be involved in a service group.  The multiple router scenario has at "
+"most been lightly tested in the Traffic Server implementation."
+msgstr ""
+
+# 690c9922241c4c888c49050ac72839f1
+#: ../../admin-guide/transparent-proxy/wccp-service-config.en.rst:74
+msgid ""
+"proc-name – This attribute is only used by traffic_wccp.  It is not used "
+"in the traffic_server WCCP support.  This is the path to a process’ PID "
+"file.  The service group is advertised to the WCCP router if the process "
+"identified in the PID file is currently operational."
+msgstr ""
+

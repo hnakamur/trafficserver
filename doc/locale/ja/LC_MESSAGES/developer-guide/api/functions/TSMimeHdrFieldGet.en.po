@@ -1,0 +1,57 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3e03542cb89842039257da1ea372b3b0
+#: ../../developer-guide/api/functions/TSMimeHdrFieldGet.en.rst:22
+msgid "TSMimeHdrFieldGet"
+msgstr ""
+
+# ea2e9815f2f44bcdae66544e3dd754d5
+#: ../../developer-guide/api/functions/TSMimeHdrFieldGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 2d8f743c14c2468a9386d95a55c0f415
+#: ../../developer-guide/api/functions/TSMimeHdrFieldGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 5a821e9243e042e6ac7c23ebbee58b43
+#: ../../developer-guide/api/functions/TSMimeHdrFieldGet.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 5decfa5081e248c6913897e00b291006
+#: ../../developer-guide/api/functions/TSMimeHdrFieldGet.en.rst:34
+msgid ""
+"Retrieves the location of a specified MIME field within the MIME header "
+"located at :arg:`hdr_loc` within :arg:`bufp`."
+msgstr ""
+
+# 5976cdca96e643469fcb7e71458baab5
+#: ../../developer-guide/api/functions/TSMimeHdrFieldGet.en.rst:37
+msgid ""
+"The :arg:`idx` parameter specifies which field to retrieve.  The fields "
+"are numbered from :literal:`0` to ``TSMimeHdrFieldsCount(bufp, hdr_loc)``"
+" - 1.  If :arg:`idx` does not lie within that range then "
+":c:type:`TSMimeHdrFieldGet` returns :literal:`0`.  Release the returned "
+"handle with a call to :c:type:`TSHandleMLocRelease`."
+msgstr ""
+

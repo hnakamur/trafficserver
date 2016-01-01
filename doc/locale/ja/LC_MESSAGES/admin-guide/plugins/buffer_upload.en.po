@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3070d25bf090472e99eeac550e691636
+#: ../../admin-guide/plugins/buffer_upload.en.rst:4
+msgid "Buffer Upload Plugin"
+msgstr ""
+
+# 61537bd85e3246c8b03953fe647b6afd
+#: ../../admin-guide/plugins/buffer_upload.en.rst:23
+msgid "The Buffer Upload plugin offers the following features"
+msgstr ""
+
+# 3a9a3be1ed6b4dc18bf1e6893215924e
+#: ../../admin-guide/plugins/buffer_upload.en.rst:26
+msgid "Installation"
+msgstr ""
+
+# fe4f5493810e4ad69b981c1fb10e1f13
+#: ../../admin-guide/plugins/buffer_upload.en.rst:28
+msgid ""
+"Configuration can be explicitly specified as a parameter in "
+"``plugin.config`` ::"
+msgstr ""
+
+# 300ea1d57a3f46f5a70e6a0007d72304
+#: ../../admin-guide/plugins/buffer_upload.en.rst:33
+msgid ""
+"Memory buffering (buffer the entire POST data in IOBuffer before "
+"connecting to OS)"
+msgstr ""
+
+# f0762679a32f4a3a88ef057b80faf9b8
+#: ../../admin-guide/plugins/buffer_upload.en.rst:35
+msgid ""
+"Memory buffer size is configured with \"mem_buffer_size\" in config file."
+" Default and minimum value is 32K. You can increase it in the config "
+"file. If the size of a request is larger than the \"mem_buffer_size\" "
+"value specifiied in the config file, then the upload proxy feature will "
+"be disabled for this particular request"
+msgstr ""
+
+# 3256fdfeaf8143e8aa3b24d9fe84a660
+#: ../../admin-guide/plugins/buffer_upload.en.rst:40
+msgid ""
+"Disk buffering (buffer the entire POST data on disk before connecting to "
+"OS)"
+msgstr ""
+
+# c0da1d53ecf44b89b34b79e48e5b9824
+#: ../../admin-guide/plugins/buffer_upload.en.rst:42
+msgid ""
+"1. Disk async IO is used. AIO api call only involves certain amount of "
+"threads. The number of threads is configurable in plugin's config file "
+"(default is 4)"
+msgstr ""
+
+# 0a70f8583f104887bdefb152d1965cca
+#: ../../admin-guide/plugins/buffer_upload.en.rst:45
+msgid ""
+"2. Directories and files are generated on disk . Base directory is "
+"/FOOBAR/var/buffer_upload_tmp/ (configurable in config file). Number of "
+"subdirectories is 64 (configurable in config file). Filename are randomly"
+" generated. Files will be removed when the entire data have been sent out"
+" to OS . At startup time, dangling files are removed (left on disk due to"
+" transaction interruption or traffic server crash)"
+msgstr ""
+
+# b15e04a563444a63bda527385179b08e
+#: ../../admin-guide/plugins/buffer_upload.en.rst:50
+msgid ""
+"Default chunk size when reading from disk is 16K, configurable in config "
+"file"
+msgstr ""
+
+# b210b189af16404db54af6deffe71af1
+#: ../../admin-guide/plugins/buffer_upload.en.rst:53
+msgid "Trigger POST buffering on certain URLs"
+msgstr ""
+
+# b686d2ecdf3e44b3a2a5d971aaedf726
+#: ../../admin-guide/plugins/buffer_upload.en.rst:55
+msgid "Certain URLs will be provided in a plain text file (one URL each line)"
+msgstr ""
+
+# 264f6c88f8804c0888fac188059c7207
+#: ../../admin-guide/plugins/buffer_upload.en.rst:56
+msgid "Specify filename in config file by \"url_list_file\""
+msgstr ""
+
+# 9510b23ef2104f85a5d22d271c924348
+#: ../../admin-guide/plugins/buffer_upload.en.rst:57
+msgid "max length of each URL is 4096 (configurable in config file)"
+msgstr ""
+
+# c3647fc71dd94f9a84c1b19a975cbbd4
+#: ../../admin-guide/plugins/buffer_upload.en.rst:58
+msgid "use exact match, don't support regex for now"
+msgstr ""
+
+# 5bdba38f86074c5ca6c5b3c6ce2e1cec
+#: ../../admin-guide/plugins/buffer_upload.en.rst:61
+msgid "Other Features"
+msgstr ""
+
+# 9b9ec42ef1dd4e9295cd5c86bf795596
+#: ../../admin-guide/plugins/buffer_upload.en.rst:63
+msgid ""
+"1. Default buffering mode is disk aio buffering mode. To turn off disk "
+"buffering, add a \"use_disk_buffer 0\" line in config file"
+msgstr ""
+
+# 239042bf64074ce88edd1b677de99a09
+#: ../../admin-guide/plugins/buffer_upload.en.rst:66
+msgid ""
+"All request headers inlcuding cookies plus the entire POST data will be "
+"buffered (either in memory or on disk)"
+msgstr ""
+
+# 1ba88f406e15455980153cafe28a45aa
+#: ../../admin-guide/plugins/buffer_upload.en.rst:69
+msgid "Configuration File"
+msgstr ""
+
+# 3262592debeb4f02adcb93f06ef4e27b
+#: ../../admin-guide/plugins/buffer_upload.en.rst:71
+msgid "sample config file ::"
+msgstr ""
+

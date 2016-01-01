@@ -1,0 +1,338 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 9c35db774fbc43da87313ffc2b9b2e71
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:20
+msgid "ssl_multicert.config"
+msgstr ""
+
+# 9c005cc5a2cb431dba16e1dc60af72f8
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:24
+msgid ""
+"The :file:`ssl_multicert.config` file lets you configure Traffic Server "
+"to use multiple SSL server certificates to terminate the SSL sessions. If"
+" you have a Traffic Server system with more than one IP address assigned "
+"to it, then you can assign a different SSL certificate to be served when "
+"a client requests a particular IP address or host name."
+msgstr ""
+
+# 228c6dfe4e1c4272a3ca9b6ab89b432e
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:31
+msgid ""
+"At configuration time, certificates are parsed to extract the certificate"
+" subject and all the DNS `subject alternative names "
+"<http://en.wikipedia.org/wiki/SubjectAltName>`_.  A certificate will be "
+"presented for connections requesting any of the hostnames found in the "
+"certificate. Wildcard names are supported, but only of the form "
+"`*.domain.com`, ie. where `*` is the leftmost domain component."
+msgstr ""
+
+# 6a00008ea37f427e8f95260e12710bf6
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:39
+msgid ""
+"Changes to :file:`ssl_multicert.config` can be applied to a running "
+"Traffic Server using :option:`traffic_ctl config reload`."
+msgstr ""
+
+# c596b061c3594c69b982c33ed2bb6836
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:43
+msgid "Format"
+msgstr ""
+
+# c6d7029321264cc4ae66f9293f04603c
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:45
+msgid ""
+"Each :file:`ssl_multicert.config` line consists of a sequence of "
+"`key=value` fields that specify how Traffic Server should use a "
+"particular SSL certificate."
+msgstr ""
+
+# dc71e9a143b443cf9dacc2656491b8e7
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:71
+msgid "ssl_cert_name=FILENAME[,FILENAME ...]"
+msgstr ""
+
+# eee0cbb52afd430d91295a85ee9e947a
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:50
+msgid ""
+"The name of the file containing the TLS certificate. *FILENAME* is "
+"located relative to the directory specified by the "
+":ts:cv:`proxy.config.ssl.server.cert.path` configuration variable. It may"
+" also include the intermediate CA certificates, sorted from leaf to root."
+"  At a minimum, the file must include a leaf certificate."
+msgstr ""
+
+# 34a22832ac064a15acd54223d16504cd
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:57
+msgid ""
+"When running with OpenSSL 1.0.2 or later, this directive can be used to "
+"configure the intermediate CA chain on a per-certificate basis.  Multiple"
+" chain files are separated by comma character. For example, it is "
+"possible able to configure a ECDSA certificate chain and a RSA "
+"certificate chain and serve them simultaneously, allowing OpenSSL to "
+"determine which certificate would be used when the TLS session cipher "
+"suites are negotiated.  Note that the leaf certs in `FILENAME1` and "
+"`FILENAME2` must have the same subjects and alternate names. The first "
+"certificate is used to to match the client's SNI request."
+msgstr ""
+
+# 3095affcf59b415fa0014c658ed71961
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:68
+msgid ""
+"You can also configure multiple leaf certificates in a same chain with "
+"OpenSSL 1.0.1."
+msgstr ""
+
+# 5dd2599517dd49bf85382593d2e04e70
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:71
+msgid "This is the only field that is required to be present."
+msgstr ""
+
+# d5ce2b524b704e3e99a1e30ad0d7d510
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:82
+msgid "dest_ip=ADDRESS (optional)"
+msgstr ""
+
+# 6dd55f438f2c467fb79c92dd6b2851aa
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:74
+msgid ""
+"The IP (v4 or v6) address that the certificate should be presented on. "
+"This is now only used as a fallback in the case that the TLS "
+"SubjectNameIndication extension is not supported. If *ADDRESS* is `*`, "
+"the corresponding certificate will be used as the global default fallback"
+" if no other match can be made. The address may contain a port specifier,"
+" in which case the corresponding certificate will only match for "
+"connections accepted on the specified port. IPv6 addresses must be "
+"enclosed by square brackets if they have a port, eg, [::1]:80. Care "
+"should be taken to make each ADDRESS unique."
+msgstr ""
+
+# baf14f5974dd4120be451b050bf37ff8
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:88
+msgid "ssl_key_name=FILENAME (optional)"
+msgstr ""
+
+# e4d215c99e9a4555a00d2d2e479af281
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:85
+msgid ""
+"The name of the file containing the private key for this certificate. If "
+"the key is contained in the certificate file, this field can be omitted, "
+"otherwise *FILENAME* is resolved relative to the "
+":ts:cv:`proxy.config.ssl.server.private_key.path` configuration variable."
+msgstr ""
+
+# 6227bbec1d584b9daec4df7c6d6d473a
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:94
+msgid "ssl_ca_name=FILENAME (optional)"
+msgstr ""
+
+# 57daadcc1c0b4779a1dd1108df81c8b4
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:91
+msgid ""
+"If the certificate is issued by an authority that is not in the system CA"
+" bundle, additional certificates may be needed to validate the "
+"certificate chain. *FILENAME* is resolved relative to the "
+":ts:cv:`proxy.config.ssl.CA.cert.path` configuration variable."
+msgstr ""
+
+# c2aa937384054b51b12ba95f3891b50a
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:99
+msgid "ssl_ticket_enabled=1|0 (optional)"
+msgstr ""
+
+# e0f613962881444c84683b823938aa81
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:97
+msgid ""
+"Enable RFC 5077 stateless TLS session tickets. To support this, OpenSSL "
+"should be upgraded to version 0.9.8f or higher. This option must be set "
+"to `0` to disable session ticket support."
+msgstr ""
+
+# bf404d0d6e9e48cc8929c89b07e91132
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:113
+msgid "ticket_key_name=FILENAME (optional)"
+msgstr ""
+
+# b68156d2d88a45d1bbdc9587be9b1b9a
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:102
+msgid ""
+"The name of session ticket key file which contains a secret for "
+"encrypting and decrypting TLS session tickets. If *FILENAME* is not an "
+"absolute path, it is resolved relative to the "
+":ts:cv:`proxy.config.ssl.server.cert.path` configuration variable. This "
+"option has no effect if session tickets are disabled by the "
+"``ssl_ticket_enabled`` option.  The contents of the key file should be 48"
+" random bytes."
+msgstr ""
+
+# 9b49800dd4474a0eaf98e72660874ac1
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:110
+msgid ""
+"Session ticket support is enabled by default. If neither of the "
+"``ssl_ticket_enabled`` and ``ticket_key_name`` options are specified, and"
+" internal session ticket key is generated. This key will be different "
+"each time Traffic Server is started."
+msgstr ""
+
+# 3c3472bf6b3d4b9f8f0d0da4b9c9be7e
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:131
+msgid "ssl_key_dialog=builtin|\"exec:/path/to/program [args]\" (optional)"
+msgstr ""
+
+# a856bacfc65e43c8a8d1aac9e6dac62a
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:116
+msgid ""
+"Method used to provide a pass phrase for encrypted private keys.  If the "
+"pass phrase is incorrect, SSL negotiation for this dest_ip will fail for "
+"clients who attempt to connect. Two options are supported: builtin and "
+"exec:"
+msgstr ""
+
+# 4b09b416ba6f4f029ee5dd42e8100ac5
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:123
+msgid "``builtin`` - Requests pass phrase via stdin/stdout. User will be"
+msgstr ""
+
+# 8fab5679f6be48bb8bb9a148415b09cb
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:122
+msgid ""
+"provided the ssl_cert_name and be prompted for the pass phrase. Useful "
+"for debugging."
+msgstr ""
+
+# 65006000d83340219d5b6227fda4c990
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:131
+msgid "``exec:`` - Executes program /path/to/program and passes args, if"
+msgstr ""
+
+# 4e81ff41ac7b4cbfa60063b08aded925
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:126
+msgid ""
+"specified, to the program and reads the output from stdout for the pass "
+"phrase.  If args are provided then the entire exec: string must be quoted"
+" with \"\" (see examples).  Arguments with white space are supported by "
+"single quoting (').  The intent is that this program runs a security "
+"check to ensure that the system is not compromised by an attacker before "
+"providing the pass phrase."
+msgstr ""
+
+# 6cfcddf026214f88ac4d45daa4f3f448
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:134
+msgid "Certificate Selection"
+msgstr ""
+
+# 03479398302b4428b19f760c01939a03
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:136
+msgid ""
+"Traffic Server attempts two certificate selections during SSL connection "
+"setup. An initial selection is made when a TCP connection is accepted. "
+"This selection examines the IP address and port that the client is "
+"connecting to and chooses the best certificate from the those that have a"
+" ``dest_ip`` specification. If no matching certificates are found, a "
+"default certificate is chosen.  The final certificate selection is made "
+"during the SSL handshake.  At this point, the client may use `Server Name"
+" Indication <http://en.wikipedia.org/wiki/Server_Name_Indication>`_ to "
+"request a specific hostname. Traffic Server will use this request to "
+"select a certificate with a matching subject or subject alternative name."
+" Failing that, a wildcard certificate match is attempted. If no match can"
+" be made, the initial certificate selection remains in force."
+msgstr ""
+
+# 5947bd4a85c54cfebc149b171d1c20b2
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:150
+msgid ""
+"In all cases, Traffic Server attempts to select the most specific match. "
+"An address specification that contains a port number will take precedence"
+" over a specification that does not contain a port number. A specific "
+"certificate subject will take precedence over a wildcard certificate. In "
+"the case of multiple matching certificates the first match will be "
+"returned to non-SNI capable clients."
+msgstr ""
+
+# b4ecb314e26c4f1cbec34846dee217f6
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:158
+msgid "Examples"
+msgstr ""
+
+# 76dc3af962f746bbb183a2f902f6a970
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:160
+msgid ""
+"The following example configures Traffic Server to use the SSL "
+"certificate ``server.pem`` for all requests to the IP address 111.11.11.1"
+" and the SSL certificate ``server1.pem`` for all requests to the IP "
+"address 11.1.1.1. Connections from all other IP addresses are terminated "
+"with the ``default.pem`` certificate. Since the private key is included "
+"in the certificate files, no private key name is specified."
+msgstr ""
+
+# 9734fc0cec1b4e8eba502f234e7e6396
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:174
+msgid ""
+"The following example configures Traffic Server to use the ECDSA "
+"certificate chain ``ecdsa.pem`` or RSA certificate chain ``rsa.pem`` for "
+"all requests."
+msgstr ""
+
+# 1e2e4553094e4f25b6b42b571f07e4f0
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:182
+msgid ""
+"The following example configures Traffic Server to use the ECDSA "
+"certificate chain ``ecdsa.pem`` or RSA certificate chain ``rsa.pem`` for "
+"all requests, the public key and private key are in separate PEM files. "
+"Note that the number of files in ssl_key_name must match the files in "
+"ssl_cert_name, and they should be presented in the same order."
+msgstr ""
+
+# 78ae60b3118c40f8b7f747d647dfc6ed
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:192
+msgid ""
+"The following example configures Traffic Server to use the SSL "
+"certificate ``server.pem`` and the private key ``serverKey.pem`` for all "
+"requests to port 8443 on IP address 111.11.11.1. The ``general.pem`` "
+"certificate is used for server name matches."
+msgstr ""
+
+# 45310563925549bca76cd9f876a8c958
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:201
+msgid ""
+"The following example configures Traffic Server to use the SSL "
+"certificate ``server.pem`` for all requests to the IP address "
+"111.11.11.1. Session tickets are enabled with a persistent ticket key."
+msgstr ""
+
+# 76a0d5e52ade47b2a0886adbf4c90389
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:210
+msgid ""
+"The following example configures Traffic Server to use the SSL "
+"certificate ``server.pem`` and disable session tickets for all requests "
+"to the IP address 111.11.11.1."
+msgstr ""
+
+# 6012be6d9eaa4749bb8f11d48b778f07
+#: ../../admin-guide/files/ssl_multicert.config.en.rst:218
+msgid ""
+"The following examples configure Traffic Server to use the SSL "
+"certificate ``server.pem`` which includes an encrypted private key. The "
+"external program /usr/bin/mypass will be called on startup with one "
+"parameter (foo) in the first example, and with two parameters (foo) and "
+"(ba r) in the second example, the program (mypass) will return the pass "
+"phrase to decrypt the keys."
+msgstr ""
+

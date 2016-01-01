@@ -1,0 +1,764 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 19640799ab984124b56235f41aa2e9ef
+#: ../../admin-guide/storage/index.en.rst:21
+msgid "Cache Storage"
+msgstr ""
+
+# 7e1fc4f332294f50a5e9a71568d9d956
+#: ../../admin-guide/storage/index.en.rst:23
+msgid ""
+"The Traffic Server cache consists of a high-speed object database called "
+"the :term:`object store` that indexes :term:`cache objects <cache "
+"object>` according to URLs and their associated headers."
+msgstr ""
+
+# 7909c0de0f794800a9f29a499149f3bc
+#: ../../admin-guide/storage/index.en.rst:31
+msgid "The Traffic Server Cache"
+msgstr ""
+
+# c45830719f4347ce9656a4966315e8f7
+#: ../../admin-guide/storage/index.en.rst:33
+msgid ""
+"The Traffic Server cache consists of a high-speed object database called "
+"the :term:`object store`. The object store indexes :term:`cache objects "
+"<cache object>` according to URLs and associated headers. This enables "
+"Traffic Server to store, retrieve, and serve not only web pages, but also"
+" parts of web pages - which provides optimum bandwidth savings. Using "
+"sophisticated object management, the object store can cache "
+":term:`alternate` versions of the same object (versions may differ "
+"because of dissimilar language or encoding types). It can also "
+"efficiently store very small and very large documents, thereby minimizing"
+" wasted space. When the cache is full, Traffic Server removes "
+":term:`stale` data to ensure the most requested objects are kept readily "
+"available and fresh."
+msgstr ""
+
+# a628b53f6a884c6686730041132954db
+#: ../../admin-guide/storage/index.en.rst:45
+msgid ""
+"Traffic Server is designed to tolerate total disk failures on any of the "
+"cache disks. If the disk fails completely, then Traffic Server marks the "
+"entire disk as corrupt and continues using the remaining disks. An alarm "
+"is then created to indicate which disk failed. If all of the cache disks "
+"fail, then Traffic Server goes into proxy-only mode."
+msgstr ""
+
+# 119324c5174945bfb8b964b55ad440f0
+#: ../../admin-guide/storage/index.en.rst:51
+msgid "You can perform the following cache configuration tasks:"
+msgstr ""
+
+# 1e24894ffca54de2b283d3c657fa99aa
+#: ../../admin-guide/storage/index.en.rst:53
+msgid ""
+"Change the total amount of disk space allocated to the cache; refer to "
+"`Changing Cache Capacity`_."
+msgstr ""
+
+# fdbaec3d37a643da83d2c757b6ca1120
+#: ../../admin-guide/storage/index.en.rst:56
+msgid ""
+"Partition the cache by reserving cache disk space for specific protocols "
+"and :term:`origin servers/domains <origin server>`; refer to "
+"`Partitioning the Cache`_."
+msgstr ""
+
+# aa1c7883e1754f99b226fc670fa849a0
+#: ../../admin-guide/storage/index.en.rst:60
+msgid "Delete all data in the cache; refer to `Clearing the Cache`_."
+msgstr ""
+
+# 1fdd74c7a9614c9ab00f3e741c59301b
+#: ../../admin-guide/storage/index.en.rst:62
+msgid ""
+"Override cache directives for a requested domain name, regex on a url, "
+"hostname or ip, with extra filters for time, port, method of the request,"
+" and more. ATS can be configured to never cache, always cache, ignore no-"
+"cache directives, etc. These are configured in :file:`cache.config`."
+msgstr ""
+
+# 492905576f3341f481d3c13f2b843589
+#: ../../admin-guide/storage/index.en.rst:68
+msgid "The RAM Cache"
+msgstr ""
+
+# 85fd7d76a8f54c9392001475a195ca25
+#: ../../admin-guide/storage/index.en.rst:70
+msgid ""
+"Traffic Server maintains a small RAM cache of extremely popular objects. "
+"This RAM cache serves the most popular objects as quickly as possible and"
+" reduces load on disks, especially during temporary traffic peaks. You "
+"can configure the RAM cache size to suit your needs, as described in :ref"
+":`changing-the-size-of-the-ram-cache` below."
+msgstr ""
+
+# 5524fdb2d43a47bcb5761248a3972aea
+#: ../../admin-guide/storage/index.en.rst:76
+msgid ""
+"The RAM cache supports two cache eviction algorithms, a regular *LRU* "
+"(Least Recently Used) and the more advanced *CLFUS* (Clocked Least "
+"Frequently Used by Size; which balances recentness, frequency, and size "
+"to maximize hit rate, similar to a most frequently used algorithm). The "
+"default is to use *CLFUS*, and this is controlled via "
+":ts:cv:`proxy.config.cache.ram_cache.algorithm`."
+msgstr ""
+
+# d31a0e1d9e1b422f9398efabe09fba99
+#: ../../admin-guide/storage/index.en.rst:83
+msgid ""
+"Both the *LRU* and *CLFUS* RAM caches support a configuration to increase"
+" scan resistance. In a typical *LRU*, if you request all possible objects"
+" in sequence, you will effectively churn the cache on every request. The "
+"option :ts:cv:`proxy.config.cache.ram_cache.use_seen_filter` can be set "
+"to add some resistance against this problem."
+msgstr ""
+
+# 7bd9683cda3e43ba97e53b9be04bfb1e
+#: ../../admin-guide/storage/index.en.rst:89
+msgid ""
+"In addition, *CLFUS* also supports compressing in the RAM cache itself. "
+"This can be useful for content which is not compressed by itself (e.g. "
+"images). This should not be confused with ``Content-Encoding: gzip``, "
+"this feature is only present to save space internally in the RAM cache "
+"itself. As such, it is completely transparent to the User-Agent. The RAM "
+"cache compression is enabled with the option "
+":ts:cv:`proxy.config.cache.ram_cache.compress`."
+msgstr ""
+
+# 6f1192c6e52147c8b43add723b038e3e
+#: ../../admin-guide/storage/index.en.rst:97
+msgid "Possible values are:"
+msgstr ""
+
+# 570cbcb8b26e45478e43dcbfbdb4a7e6
+#: ../../admin-guide/storage/index.en.rst:100
+msgid "Value"
+msgstr ""
+
+# 25a5bbd5983a4d3b9e32e0f74e58bf24
+#: ../../admin-guide/storage/index.en.rst:100
+msgid "Meaning"
+msgstr ""
+
+# f7f5e233f01f48b9beab85f2fd43a3ef
+#: ../../admin-guide/storage/index.en.rst:102
+msgid "0"
+msgstr ""
+
+# 73889756318044c38ed131fea63cf747
+#: ../../admin-guide/storage/index.en.rst:102
+msgid "No compression (*default*)"
+msgstr ""
+
+# c61c7c8e9e554f64bb464b832a370752
+#: ../../admin-guide/storage/index.en.rst:103
+msgid "1"
+msgstr ""
+
+# d8f527c8718c4f81b1fa5ba7b0f5a0b9
+#: ../../admin-guide/storage/index.en.rst:103
+msgid "*fastlz* compression"
+msgstr ""
+
+# 01f0fa4f978b49658f9fcf93ceb78fc9
+#: ../../admin-guide/storage/index.en.rst:104
+msgid "2"
+msgstr ""
+
+# 033376f48cee435d81ecec1e0bdc7b77
+#: ../../admin-guide/storage/index.en.rst:104
+msgid "*libz* compression"
+msgstr ""
+
+# e8189f8ff45549229e8c86af9b6fd52b
+#: ../../admin-guide/storage/index.en.rst:105
+msgid "3"
+msgstr ""
+
+# 353b1252ef754082af976f7376dbecb1
+#: ../../admin-guide/storage/index.en.rst:105
+msgid "*liblzma* compression"
+msgstr ""
+
+# 1e11ac22728d4b7583050f50faadb369
+#: ../../admin-guide/storage/index.en.rst:111
+msgid "Changing the Size of the RAM Cache"
+msgstr ""
+
+# a2100e52f0c44a1ea05ffbc9376af16a
+#: ../../admin-guide/storage/index.en.rst:113
+msgid ""
+"Traffic Server provides a dedicated RAM cache for fast retrieval of "
+"popular small objects. The default RAM cache size is automatically "
+"calculated based on the number and size of the :term:`cache partitions "
+"<cache partition>` you have configured. If you've partitioned your cache "
+"according to protocol and/or hosts, then the size of the RAM cache for "
+"each partition is proportional to the size of that partition."
+msgstr ""
+
+# 8c4d971c97a144c59d9b1343ab5ebfae
+#: ../../admin-guide/storage/index.en.rst:120
+msgid ""
+"You can increase the RAM cache size for better cache hit performance. "
+"However, if you increase the size of the RAM cache and observe a decrease"
+" in performance (such as increased latencies), then it's possible that "
+"the operating system requires more memory for network resources. In such "
+"instances, you should return the RAM cache size to its previous value."
+msgstr ""
+
+# 82e14fe18cef4722b4b2f12e6f93fe03
+#: ../../admin-guide/storage/index.en.rst:127
+msgid "To change the RAM cache size:"
+msgstr ""
+
+# 56de8b4c85f7458a860b6a7a5aead4fe
+# 64587da7a1ec4675b71d7de5bb7bce2d
+# 8cbd3c89d7e9495e89f46c708a3c6400
+#: ../../admin-guide/storage/index.en.rst:129
+#: ../../admin-guide/storage/index.en.rst:154
+#: ../../admin-guide/storage/index.en.rst:169
+msgid "Stop Traffic Server."
+msgstr ""
+
+# 345c0fdd5618485cbed861ef4219ed47
+#: ../../admin-guide/storage/index.en.rst:131
+msgid ""
+"Set the variable :ts:cv:`proxy.config.cache.ram_cache.size` to specify "
+"the size of the RAM cache. The default value of ``-1`` means that the RAM"
+" cache is automatically sized at approximately 1MB per gigabyte of disk."
+msgstr ""
+
+# b18338342943489a96e75848cba01eab
+#: ../../admin-guide/storage/index.en.rst:136
+msgid ""
+"Restart Traffic Server. If you increase the RAM cache to a size of 1GB or"
+" more, then restart with the :program:`trafficserver` command (refer to "
+":ref:`start-traffic-server`)."
+msgstr ""
+
+# 616b1f2ba6314f64b2eb0b1a3af2784c
+#: ../../admin-guide/storage/index.en.rst:141
+msgid "Changing Cache Capacity"
+msgstr ""
+
+# 715f4c4579c14cf4af79f3f7c47080a3
+#: ../../admin-guide/storage/index.en.rst:143
+msgid ""
+"You can increase or reduce the total amount of disk space allocated to "
+"the cache without clearing the content. To check the size of the cache "
+"(in bytes), enter the command :option:`traffic_ctl metric get` "
+"``proxy.process.cache.bytes_total``."
+msgstr ""
+
+# 1e6617651ecf4b85bd46b9c5e47beb74
+#: ../../admin-guide/storage/index.en.rst:149
+msgid "Increasing Cache Capacity"
+msgstr ""
+
+# c9e03a32731d441bb85029ced0e60dd3
+#: ../../admin-guide/storage/index.en.rst:151
+msgid ""
+"To increase the total amount of disk space allocated to the cache on "
+"existing disks, or to add new disks to a Traffic Server node:"
+msgstr ""
+
+# 13b8c7a601e140cf8bce53d985bc0ea5
+#: ../../admin-guide/storage/index.en.rst:156
+msgid "Add hardware, if necessary."
+msgstr ""
+
+# b735a3f0b18442d08c8ab185433159d2
+#: ../../admin-guide/storage/index.en.rst:158
+msgid ""
+"Edit :file:`storage.config` to increase the amount of disk space "
+"allocated to the cache on existing disks or describe the new hardware you"
+" are adding."
+msgstr ""
+
+# 55212764f2354dbbbd4ae0119a486c61
+# 1400ee37e7f14bcfa6eeffda2c0bdd5e
+# e7ff3834326d471fb0cc25959d9049a4
+#: ../../admin-guide/storage/index.en.rst:161
+#: ../../admin-guide/storage/index.en.rst:176
+#: ../../admin-guide/storage/index.en.rst:206
+msgid "Restart Traffic Server."
+msgstr ""
+
+# a1e0d5110c6448bd833ce3a4728621f3
+#: ../../admin-guide/storage/index.en.rst:164
+msgid "Reducing Cache Capacity"
+msgstr ""
+
+# 690df6fab5da441fa2b3a89e6ad236b0
+#: ../../admin-guide/storage/index.en.rst:166
+msgid ""
+"To reduce the total amount of disk space allocated to the cache on an "
+"existing disk, or to remove disks from a Traffic Server node:"
+msgstr ""
+
+# bdb068b8724c4e358b67a5122a8ca9f8
+#: ../../admin-guide/storage/index.en.rst:171
+msgid "Remove hardware, if necessary."
+msgstr ""
+
+# 985832a810654ba7aafa5df5db3542eb
+#: ../../admin-guide/storage/index.en.rst:173
+msgid ""
+"Edit :file:`storage.config` to reduce the amount of disk space allocated "
+"to the cache on existing disks or delete the reference to the hardware "
+"you're removing."
+msgstr ""
+
+# 565e6c2b21ce4f028a1076399fda4e64
+#: ../../admin-guide/storage/index.en.rst:178
+msgid ""
+"In :file:`storage.config`, a formatted or raw disk must be at least 128 "
+"MB."
+msgstr ""
+
+# 9d0d15939f074a9ca444e00d346eb8f2
+#: ../../admin-guide/storage/index.en.rst:183
+msgid "Partitioning the Cache"
+msgstr ""
+
+# 0ac9997a3a404051836b9bd1bc37d9ca
+#: ../../admin-guide/storage/index.en.rst:185
+msgid ""
+"You can manage your cache space more efficiently and restrict disk usage "
+"by creating :term:`cache volumes <cache volume>` with different sizes for"
+" specific protocols. You can further configure these volumes to store "
+"data from specific :term:`origin servers <origin server>` and/or domains."
+" The volume configuration must be the same on all nodes in a "
+":ref:`cluster <traffic-server-cluster>`."
+msgstr ""
+
+# 03895fc67e9a4fbb84e27154fb766b16
+#: ../../admin-guide/storage/index.en.rst:192
+msgid "Creating Cache Partitions for Specific Protocols"
+msgstr ""
+
+# 8d707f6a07d847a0822a65e67bcd040f
+#: ../../admin-guide/storage/index.en.rst:194
+msgid ""
+"You can create separate :term:`volumes <cache volume>` for your cache "
+"that vary in size to store content according to protocol. This ensures "
+"that a certain amount of disk space is always available for a particular "
+"protocol. Traffic Server currently supports only the ``http`` partition "
+"type."
+msgstr ""
+
+# 3e6d6d408f57406ea8844c1c761389a7
+#: ../../admin-guide/storage/index.en.rst:199
+msgid "To partition the cache according to protocol:"
+msgstr ""
+
+# e8a4fc74469143dcade2562cd7a3cdc4
+#: ../../admin-guide/storage/index.en.rst:201
+msgid ""
+"Enter a line in :file:`volume.config` for each volume you want to create."
+" ::"
+msgstr ""
+
+# 3ba3900f0376460ebfb16c24121d3919
+#: ../../admin-guide/storage/index.en.rst:210
+msgid "Volume definitions must be the same across all nodes in a cluster."
+msgstr ""
+
+# 8b7144374d0044eaa568cc66b33d3591
+#: ../../admin-guide/storage/index.en.rst:213
+msgid "Making Changes to Partition Sizes and Protocols"
+msgstr ""
+
+# e4f6b4bb766b4ca697b20839229c9653
+#: ../../admin-guide/storage/index.en.rst:215
+msgid ""
+"After you've configured your cache volumes based on protocol, you can "
+"make changes to the configuration at any time. Before making changes, "
+"note the following:"
+msgstr ""
+
+# dd699457b7314debb968c3df6748670e
+#: ../../admin-guide/storage/index.en.rst:219
+msgid ""
+"You must stop Traffic Server before you change the cache volume size and "
+"protocol assignment."
+msgstr ""
+
+# f8be54862c8840b4a041d610f32f64cb
+#: ../../admin-guide/storage/index.en.rst:222
+msgid ""
+"When you increase the size of a volume, the contents of the volume are "
+"*not* deleted. However, when you reduce the size of a volume, the "
+"contents of the volume *are* deleted."
+msgstr ""
+
+# fdb5e569a5824f0f9160666dbcbb55d0
+#: ../../admin-guide/storage/index.en.rst:226
+msgid ""
+"When you change the volume number, the volume is deleted and then "
+"recreated, even if the size and protocol type remain the same."
+msgstr ""
+
+# c4f30f67722949b58e055bd879ad1ab6
+#: ../../admin-guide/storage/index.en.rst:229
+msgid ""
+"When you add new disks to your Traffic Server node, volume sizes "
+"specified in percentages will increase proportionately."
+msgstr ""
+
+# b78647c2e32549f98206afa9a218d72d
+#: ../../admin-guide/storage/index.en.rst:232
+msgid ""
+"Substantial changes to volume sizes can result in disk fragmentation, "
+"which affects performance and cache hit rate. You should clear the cache "
+"before making many changes to cache volume sizes (refer to `Clearing the "
+"Cache`_)."
+msgstr ""
+
+# c5d8ef35122c4f5c908b818984241324
+#: ../../admin-guide/storage/index.en.rst:237
+msgid "Partitioning the Cache According to Origin Server or Domain"
+msgstr ""
+
+# c2f585f40571496aa32f571fa9d0b5cb
+#: ../../admin-guide/storage/index.en.rst:241
+msgid ""
+"After you have partitioned the cache according to size and protocol, you "
+"can assign the volumes you created to specific origin servers and/or "
+"domains. You can assign a volume to a single origin server or to multiple"
+" origin servers. However, if a volume is assigned to multiple origin "
+"servers, then there is no guarantee on the space available in the volumes"
+" for each origin server. Content is stored in the volumes according to "
+"popularity. In addition to assigning volumes to specific origin servers "
+"and domains, you must assign a generic volume to store content from all "
+"origin servers and domains that are not listed. This generic volume is "
+"also used if the partitions for a particular origin server or domain "
+"become corrupt. If you do not assign a generic volume, then Traffic "
+"Server will run in proxy-only mode."
+msgstr ""
+
+# 3f878b6c4e4e43a58ddb7d65f2d22651
+#: ../../admin-guide/storage/index.en.rst:256
+msgid ""
+"You do not need to stop Traffic Server before you assign volumes to "
+"particular hosts or domains. However, this type of configuration is time-"
+"consuming and can cause a spike in memory usage. Therefore, it's best to "
+"configure partition assignment during periods of low traffic."
+msgstr ""
+
+# ebf1f229871d41768346a73caa02f9fd
+#: ../../admin-guide/storage/index.en.rst:262
+msgid "To partition the cache according to hostname and domain:"
+msgstr ""
+
+# c46a7f071691422699aeea2f575ac6dd
+#: ../../admin-guide/storage/index.en.rst:264
+msgid ""
+"Configure the cache volumes according to size and protocol, as described "
+"in `Creating Cache Partitions for Specific Protocols`_."
+msgstr ""
+
+# 0baa8264c92e40788c6da6d583c4df04
+#: ../../admin-guide/storage/index.en.rst:266
+msgid ""
+"Create a separate volume based on protocol for each host and domain, as "
+"well as an additional generic partition to use for content that does not "
+"belong to these origin servers or domains. The volumes do not need to be "
+"the same size."
+msgstr ""
+
+# 34a572da3b8e477d89d376cc4d5d8821
+#: ../../admin-guide/storage/index.en.rst:270
+msgid ""
+"Enter a line in the :file:`hosting.config` file to allocate the volume(s)"
+" used for each origin server and/or domain."
+msgstr ""
+
+# 6d727c2fb78d4a5cb2ff22e23df01c0b
+#: ../../admin-guide/storage/index.en.rst:272
+msgid ""
+"Assign a generic volume to use for content that does not belong to any of"
+" the origin servers or domains listed in the file. If all volumes for a "
+"particular origin server become corrupt, then Traffic Server will also "
+"use the generic volume to store content for that origin server as per "
+":file:`hosting.config`."
+msgstr ""
+
+# 0c7dac462bcc44f9a407ebc8e29fdd6b
+# 1a285d18f5c04c459969ae1e1bd6ae14
+#: ../../admin-guide/storage/index.en.rst:277
+#: ../../admin-guide/storage/index.en.rst:290
+msgid ""
+"Run the command :option:`traffic_ctl config reload` to apply the "
+"configuration changes."
+msgstr ""
+
+# 97e1942eaa9c4ff1aecef99b9d51a977
+#: ../../admin-guide/storage/index.en.rst:281
+msgid "Configuring the Cache Object Size Limit"
+msgstr ""
+
+# 63e16e118d4d4fc4ba99a99dcbb95e46
+#: ../../admin-guide/storage/index.en.rst:283
+msgid ""
+"By default, Traffic Server allows objects of any size to be cached. You "
+"can change the default behavior and specify a size limit for objects in "
+"the cache via the steps below:"
+msgstr ""
+
+# 88c0863e210f4b11b4892dd0190bf417
+#: ../../admin-guide/storage/index.en.rst:287
+msgid ""
+"Set :ts:cv:`proxy.config.cache.max_doc_size` to specify the maximum size "
+"in bytes allowed for objects in the cache. A setting of ``0`` (zero) will"
+" permit cache objects to be unlimited in size."
+msgstr ""
+
+# 29f7a6a8c8cf4fc1ac87674d9bfb697e
+#: ../../admin-guide/storage/index.en.rst:296
+msgid "Clearing the Cache"
+msgstr ""
+
+# a44c3cc8b97a4974b4fccc062fd8bd11
+#: ../../admin-guide/storage/index.en.rst:298
+msgid ""
+"When you clear the cache, you remove all data from the entire cache - "
+"including data in the host database. You should clear the cache before "
+"performing certain cache configuration tasks such as partitioning. You "
+"cannot clear the cache when Traffic Server is running."
+msgstr ""
+
+# 2ea36d116b9b49959465bffa85d49a29
+#: ../../admin-guide/storage/index.en.rst:303
+msgid "To clear the cache:"
+msgstr ""
+
+# 1fd6aacce7ec44aa9d84b8e2f2397c3e
+#: ../../admin-guide/storage/index.en.rst:305
+msgid "Stop Traffic Server (see :ref:`stop-traffic-server`)"
+msgstr ""
+
+# 788c2cccd85a4ceeb8c56ac8c54d2233
+#: ../../admin-guide/storage/index.en.rst:306
+msgid "Enter the following command to clear the cache::"
+msgstr ""
+
+# 5d067d98dcab435597c0ab8d35cfb1c1
+#: ../../admin-guide/storage/index.en.rst:310
+msgid ""
+"The ``clear`` command deletes all data in the object store and the host "
+"database. Traffic Server does not prompt you to confirm the deletion."
+msgstr ""
+
+# 210935be480f4e398c3ea2d5aa4e75f0
+#: ../../admin-guide/storage/index.en.rst:314
+msgid "Restart Traffic Server (see :ref:`start-traffic-server`)."
+msgstr ""
+
+# b8118b222fa54c0c9c463cd1f1ddcc83
+#: ../../admin-guide/storage/index.en.rst:317
+msgid "Removing an Object From the Cache"
+msgstr ""
+
+# 98287b0a765c4e7f83d5b2e2b6e54a93
+#: ../../admin-guide/storage/index.en.rst:319
+msgid ""
+"Traffic Server accepts the custom HTTP request method ``PURGE`` when "
+"removing a specific object from cache. If the object is found in the "
+"cache and is successfully removed, then Traffic Server responds with a "
+"``200 OK`` HTTP message; otherwise, a ``404 File Not Found`` message is "
+"returned."
+msgstr ""
+
+# 3857f70701914800be47fea7bddfe754
+#: ../../admin-guide/storage/index.en.rst:327
+msgid ""
+"By default, the PURGE request method is only processed if received on the"
+" localhost interface."
+msgstr ""
+
+# da9c4e706ea947d394369d71e1713724
+#: ../../admin-guide/storage/index.en.rst:330
+msgid ""
+"In the following example, Traffic Server is running on the domain "
+"``example.com`` and you want to remove the image ``remove_me.jpg`` from "
+"cache. Because by default we do not permit ``PURGE`` requests from any "
+"other IP, we connect to the daemon via localhost: ::"
+msgstr ""
+
+# f8971bf1fdbe4781ace4d4c65979097d
+#: ../../admin-guide/storage/index.en.rst:349
+msgid ""
+"The next time Traffic Server receives a request for the removed object, "
+"it will contact the origin server to retrieve a new copy, which will "
+"replace the previously cached version in Traffic Server."
+msgstr ""
+
+# f39406638e8042cebc7db5c6d53ddfea
+#: ../../admin-guide/storage/index.en.rst:353
+msgid ""
+"This procedure only removes an object from a specific Traffic Server "
+"cache. Users may still see the old (removed) content if it was cached by "
+"intermediary caches or by the end-users' web browser."
+msgstr ""
+
+# ddd3de9066604aedb539fe07a02f8a13
+#: ../../admin-guide/storage/index.en.rst:360
+msgid "Inspecting the Cache"
+msgstr ""
+
+# bde53e8b79484eb98020cb480c383483
+#: ../../admin-guide/storage/index.en.rst:362
+msgid ""
+"Traffic Server provides a Cache Inspector utility that enables you to "
+"view, delete, and invalidate URLs in the cache (HTTP only). The Cache "
+"Inspector utility is a powerful tool that's capable of deleting all the "
+"objects in your cache. Therefore, make sure that only authorized "
+"administrators are allowed to access this utility through proper use of "
+"the ``@src_ip`` option in :file:`remap.config` and the instructions "
+"detailed in :ref:`controlling-client-access-to-cache`."
+msgstr ""
+
+# e8e926ae740e4d08ae9c47706175e417
+#: ../../admin-guide/storage/index.en.rst:371
+msgid "Accessing the Cache Inspector Utility"
+msgstr ""
+
+# c6288afdd4c84ec3a9d5a08bd0f2de44
+#: ../../admin-guide/storage/index.en.rst:373
+msgid "To access the Cache Inspector utility:"
+msgstr ""
+
+# 1ec0dd29a0e94e0881b645718773f064
+#: ../../admin-guide/storage/index.en.rst:375
+msgid "Set :ts:cv:`proxy.config.http_ui_enabled` to ``1``."
+msgstr ""
+
+# 59635ff3736947baa28194b74e84c028
+#: ../../admin-guide/storage/index.en.rst:376
+msgid ""
+"To access the cache inspector in reverse proxy mode, you must add a remap"
+" rule to :file:`remap.config` to expose the URL. This should be "
+"restricted to a limited set of hosts using the ``@src_ip`` option. To "
+"restrict access to the network 172.28.56.0/24, use ::"
+msgstr ""
+
+# abcdf86a157a4891982303f48402890e
+#: ../../admin-guide/storage/index.en.rst:383
+msgid ""
+"Reload the Traffic Server configuration by running :option:`traffic_ctl "
+"config reload`."
+msgstr ""
+
+# 8f85346c092943aba6948cfc72ce144c
+#: ../../admin-guide/storage/index.en.rst:384
+msgid "Open your web browser and go to the the following URL::"
+msgstr ""
+
+# 0c6995392a9c4873bd22be29880e36aa
+#: ../../admin-guide/storage/index.en.rst:388
+msgid "You will now be presented with the Cache Inspector interface."
+msgstr ""
+
+# fb24b32589ec444e8f26d75ba1e9d262
+#: ../../admin-guide/storage/index.en.rst:391
+msgid "Using the Cache Inspector Utility"
+msgstr ""
+
+# 0f860fe488654a2ca5b2d2d6b0901baa
+#: ../../admin-guide/storage/index.en.rst:393
+msgid ""
+"The Cache Inspector Utility provides several options that enable you to "
+"view and delete the contents of your cache."
+msgstr ""
+
+# 154da6bac1c84f03b44e780b07f0016d
+#: ../../admin-guide/storage/index.en.rst:400
+msgid "Lookup URL"
+msgstr ""
+
+# 4fdfdfee0c9a4e66aed4944b17a8f376
+#: ../../admin-guide/storage/index.en.rst:397
+msgid ""
+"Search for a particular URL in the cache. When Traffic Server finds the "
+"URL in the cache, it will display details of the object that corresponds "
+"to the URL (e.g. header length and number of alternates). The option to "
+"delete the URL from the cache will be presented."
+msgstr ""
+
+# a9238411d3a945d7a391af2f20d45c8f
+#: ../../admin-guide/storage/index.en.rst:404
+msgid "Delete URL"
+msgstr ""
+
+# 4fa61501fe45474c8532293ce7497b74
+#: ../../admin-guide/storage/index.en.rst:403
+msgid ""
+"Delete the object from the cache which corresponds to the given URL. "
+"Success or failure will be indicated after a delete has been attempted."
+msgstr ""
+
+# da92df76ebe142969973519601da6845
+#: ../../admin-guide/storage/index.en.rst:407
+msgid "Regex Lookup"
+msgstr ""
+
+# 8199fb92e34f4f7ca711fc0a927ae45f
+#: ../../admin-guide/storage/index.en.rst:407
+msgid "Search URLs within the cache using one or more regular expressions."
+msgstr ""
+
+# e453fafc5f2e4e7a9648d9cf70a2722a
+#: ../../admin-guide/storage/index.en.rst:411
+msgid "Regex Delete"
+msgstr ""
+
+# ab1a321f31474d678c7843e6f6964ce5
+#: ../../admin-guide/storage/index.en.rst:410
+msgid ""
+"Deletes all objects from the cache which match the provided regular "
+"expressions."
+msgstr ""
+
+# 89097a79da214effbcddeb18e0b81b94
+#: ../../admin-guide/storage/index.en.rst:417
+msgid "Regex Invalidate"
+msgstr ""
+
+# 202aab55c11849e699db2bc6a2c5d7bb
+#: ../../admin-guide/storage/index.en.rst:414
+msgid ""
+"Marks any objects in the cache which match the given regular expressions "
+"as stale. Traffic Server will contact the relevant origin server(s) to "
+"confirm the validity and freshness of the cached object, updating the "
+"cached object if necessary."
+msgstr ""
+
+# 62159e810f60490499e62279198ce68f
+#: ../../admin-guide/storage/index.en.rst:421
+msgid ""
+"Only one administrator should delete and invalidate cache entries from "
+"the Cache Inspector at any point in time. Changes made by multiple "
+"administrators at the same time can lead to unpredictable results."
+msgstr ""
+

@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 9da9ede3082f4b4bbc418e74c57a4371
+#: ../../developer-guide/api/functions/TSMimeHdrLengthGet.en.rst:22
+msgid "TSMimeHdrLengthGet"
+msgstr ""
+
+# d0eb6eff7d164dc6a623119c9c02e3ac
+#: ../../developer-guide/api/functions/TSMimeHdrLengthGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# a89445c3567541948a2fa961ea90dc47
+#: ../../developer-guide/api/functions/TSMimeHdrLengthGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 8de8d6a32ff24983a61cea19e70ad560
+#: ../../developer-guide/api/functions/TSMimeHdrLengthGet.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 882284a34f15483bb7359f0e35201749
+#: ../../developer-guide/api/functions/TSMimeHdrLengthGet.en.rst:34
+msgid ""
+"Calculates the length of the MIME header located at :arg:`hdr_loc` in "
+"buffer :arg:`bufp` if it were returned as a string, in its unparsed form."
+msgstr ""
+

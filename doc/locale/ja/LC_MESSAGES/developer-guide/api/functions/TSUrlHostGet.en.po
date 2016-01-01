@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# ce2f972055bf4057844c35195d8c1b57
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:23
+msgid "TSUrlHostGet"
+msgstr ""
+
+# cedd439dd3604b0ea6a3f6c7af6fb97a
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:25
+msgid "Traffic Server URL component retrieval API."
+msgstr ""
+
+# 2b13b49854484b2e942f4084a1201f19
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 3438438a58274cea9a0eb76260187bc3
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# d4b49b3b4f97493c9533e092f82d1cfd
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:43
+msgid "Description"
+msgstr ""
+
+# 51dc5f3ecc1d47e383a82d4b9f3c2036
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:45
+msgid ""
+"The URL data structure is a parsed version of a standard internet URL. "
+"The Traffic Server URL API provides access to URL data stored in marshal "
+"buffers. The URL functions can create, copy, retrieve or delete entire "
+"URLs, and retrieve or modify parts of URLs, such as their host, port or "
+"scheme information."
+msgstr ""
+
+# bb3084b99c6c4be4aa6d3b2323e4e477
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:51
+msgid ""
+":func:`TSUrlSchemeGet`, :func:`TSUrlUserGet`, :func:`TSUrlPasswordGet`, "
+":func:`TSUrlHostGet`, :func:`TSUrlHttpParamsGet`, "
+":func:`TSUrlHttpQueryGet` and :func:`TSUrlHttpFragmentGet` each retrieve "
+"an internal pointer to the specified portion of the URL from the marshall"
+" buffer :arg:`bufp`. The length of the returned string is placed in "
+":arg:`length` and a pointer to the URL portion is returned."
+msgstr ""
+
+# 04bc2c206714411d9f07e03c6ca43220
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:58
+msgid ""
+":func:`TSUrlPortGet` retrieves the port number portion of the URL located"
+" at :arg:`offset` within the marshal buffer :arg:`bufp`. If there is no "
+"explicit port number in the URL, a canonicalized valued is returned based"
+" on the URL scheme."
+msgstr ""
+
+# 50e2d75d47ea4ac7b9bb0f4d22a7bcd5
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:64
+msgid "Return Values"
+msgstr ""
+
+# 284b47bae4a543ac8b4e64246b616773
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:66
+msgid ""
+"All APIs except :func:`TSUrlPortGet` returns a string, which is not "
+"guaranteed to be NULL terminated. You must therefore always use the "
+":arg:`length` value to determine the actual length of the returned "
+"string."
+msgstr ""
+
+# e49a6f00248e4aed8e32903651a80f08
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:70
+msgid ""
+":func:`TSUrlPortGet` simply returns the port number as an integer, "
+"possibly canonicalized with :literal:`80` for HTTP and :literal:`443` for"
+" HTTPS schemes. If there is neither port nor scheme information available"
+" in the URL, :literal:`0` is returned."
+msgstr ""
+
+# 575339ad7545479890b8703fdf3edaeb
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:76
+msgid "See Also"
+msgstr ""
+
+# c5bb932f50cc47be8e0a1c5f1cdda1ee
+#: ../../developer-guide/api/functions/TSUrlHostGet.en.rst:78
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSUrlCreate(3ts)`, "
+":manpage:`TSUrlHostSet(3ts)`, :manpage:`TSUrlStringGet(3ts)`, "
+":manpage:`TSUrlPercentEncode(3ts)`"
+msgstr ""
+

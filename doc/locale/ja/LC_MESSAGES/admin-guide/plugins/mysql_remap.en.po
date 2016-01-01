@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 179214e5b393481e8d97eda65f2d99d9
+#: ../../admin-guide/plugins/mysql_remap.en.rst:4
+msgid "MySQL Remap Plugin"
+msgstr ""
+
+# bee4d206cfa445569f21aa68734316e7
+#: ../../admin-guide/plugins/mysql_remap.en.rst:24
+msgid ""
+"This is a basic plugin for doing dynamic \"remaps\" from a database. It "
+"essentially rewrites the incoming request's Host header / origin server "
+"connection to one retrieved from a database."
+msgstr ""
+
+# feaeabd372ff4e2592dccfb6e815f9b3
+#: ../../admin-guide/plugins/mysql_remap.en.rst:28
+msgid "The generic proxying setup is the following::"
+msgstr ""
+
+# f693d9078dda453190616a1eb56e5541
+#: ../../admin-guide/plugins/mysql_remap.en.rst:32
+msgid "Without the plugin a request like::"
+msgstr ""
+
+# eebbd15355394f4f87a899cdaf56aaba
+#: ../../admin-guide/plugins/mysql_remap.en.rst:37
+msgid "Ends up requesting ``http://original.host.com/path/to/something``"
+msgstr ""
+
+# 53d84c6dda9f4b41a078e3de81a6ea0c
+#: ../../admin-guide/plugins/mysql_remap.en.rst:39
+msgid ""
+"With this plugin enabled, you can easily change that to anywhere you "
+"desire. Imagine the many possibilities...."
+msgstr ""
+
+# b81205a66fa34567b87788d80924aed9
+#: ../../admin-guide/plugins/mysql_remap.en.rst:42
+msgid ""
+"We have benchmarked the plugin with ab at about 9200 requests/sec (1.7k "
+"object) on a commodity hardware with a local setup of both, MySQL and "
+"Traffic Server local. Real performance is likely to be substantially "
+"higher, up to the MySQL's max queries / second."
+msgstr ""
+
+# c36a698d923c4ef19436115c3322d840
+#: ../../admin-guide/plugins/mysql_remap.en.rst:48
+msgid "Installation"
+msgstr ""
+
+# 180b995ba38741029298cef08fe956b3
+#: ../../admin-guide/plugins/mysql_remap.en.rst:50
+msgid "This plugin is only built if the configure option ::"
+msgstr ""
+
+# 9c48fc804ded4fa0badc5d21834444a5
+#: ../../admin-guide/plugins/mysql_remap.en.rst:54
+msgid "is given at build time."
+msgstr ""
+
+# 9ced8dbfe2cc4f6dab72c43734699a46
+#: ../../admin-guide/plugins/mysql_remap.en.rst:57
+msgid "Configuration"
+msgstr ""
+
+# 4b6ab08d72c34892816781508b78934d
+#: ../../admin-guide/plugins/mysql_remap.en.rst:59
+msgid "Import the default schema to a database you create::"
+msgstr ""
+
+# a9e273f036084178ac291d814e5952bc
+#: ../../admin-guide/plugins/mysql_remap.en.rst:64
+msgid "insert some interesting values in mysql_remap.hostname & mysql_remap.map"
+msgstr ""
+
+# 524e68e645234ae7888deb6a1b4d6238
+#: ../../admin-guide/plugins/mysql_remap.en.rst:67
+msgid ""
+"Traffic Server plugin configuration is done inside a global configuration"
+" file: ``/etc/trafficserver/plugin.config``::"
+msgstr ""
+
+# b0c9240b8e7040138c9bcd097d82eaa2
+#: ../../admin-guide/plugins/mysql_remap.en.rst:72
+msgid "The INI file should contain the following values::"
+msgstr ""
+
+# 11f46f6c807c4b4da52e11b34e72aac7
+#: ../../admin-guide/plugins/mysql_remap.en.rst:81
+msgid "To debug errors, start trafficserver manually using::"
+msgstr ""
+
+# 8555d45698c84637bd897ceb86cfa4f7
+#: ../../admin-guide/plugins/mysql_remap.en.rst:85
+msgid "And resolve any errors or warnings displayed."
+msgstr ""
+

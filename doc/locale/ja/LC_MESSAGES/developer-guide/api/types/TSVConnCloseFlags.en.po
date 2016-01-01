@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 8b1c2bd9fa2346949ed09c138fdcb150
+#: ../../developer-guide/api/types/TSVConnCloseFlags.en.rst:20
+msgid "TSVConnCloseFlags"
+msgstr ""
+
+# 5463d596ecd34bf0808553a59d208b8f
+#: ../../developer-guide/api/types/TSVConnCloseFlags.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 7b8ce36964d44d52b60275213661de28
+#: ../../developer-guide/api/types/TSVConnCloseFlags.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# f66daf71d5964dfba950a3276a703567
+#: ../../developer-guide/api/types/TSVConnCloseFlags.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# badd8829ec57422193f43dfb55afa8c7
+#: ../../developer-guide/api/types/TSVConnCloseFlags.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# 3e957d6d1b864c808b05cee4b23c4d16
+#: ../../developer-guide/api/types/TSVConnCloseFlags.en.rst:39
+msgid "Description"
+msgstr ""
+

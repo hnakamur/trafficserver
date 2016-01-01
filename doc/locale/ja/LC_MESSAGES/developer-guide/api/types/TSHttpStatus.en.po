@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# dec5c73183cf4cb08c1cdc498f536097
+#: ../../developer-guide/api/types/TSHttpStatus.en.rst:20
+msgid "TSHttpStatus"
+msgstr ""
+
+# 68399d0047f94d01b342a615a56ad483
+#: ../../developer-guide/api/types/TSHttpStatus.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# d2f412b7f24c4dbbb9ce93e7f7d34899
+#: ../../developer-guide/api/types/TSHttpStatus.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# 0c1ac180346f4cc59cf60f3932cedcca
+#: ../../developer-guide/api/types/TSHttpStatus.en.rst:29
+msgid ""
+"Enum typedef which defines the possible return values from "
+":c:func:`TSHttpStatusGet`."
+msgstr ""
+
+# d61178bd4b2240c898c3cbab241a6e3d
+#: ../../developer-guide/api/types/TSHttpStatus.en.rst:33
+msgid "Enumeration Members"
+msgstr ""
+
+# f04acc21a8524ef88b1fe96baf15301a
+#: ../../developer-guide/api/types/TSHttpStatus.en.rst:150
+msgid "Description"
+msgstr ""
+

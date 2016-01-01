@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# a7da69e6e261424890b796eaf18f92e6
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:22
+msgid "TSHttpConnectWithPluginId"
+msgstr ""
+
+# 85a66f7af63b4aa99819b2d48301462b
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:24
+msgid ""
+"Allows the plugin to initiate an http connection. This will tag the HTTP "
+"state machine with extra data that can be accessed by the logging "
+"interface. The connection is treated as an HTTP transaction as if it came"
+" from a client."
+msgstr ""
+
+# c8f451fe32284eb983baba3f05206bea
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:30
+msgid "Synopsis"
+msgstr ""
+
+# 40946effcc8442a1af3469d6d54f93db
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:32
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 00619e4e6e014379b6d511a98ad9c47a
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:37
+msgid "Description"
+msgstr ""
+
+# 201104f9f80a4292b8188b3e17abe6af
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:39
+msgid ""
+"This call attempts to create an HTTP state machine and a virtual "
+"connection to that state machine. This is more efficient than using "
+":c:func:`TSNetConnect` because it avoids using the operating system stack"
+" via the loopback interface."
+msgstr ""
+
+# c67264eabd484a86afb1a64b21249ba4
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:47
+msgid ":arg:`addr`"
+msgstr ""
+
+# 95cf53b7b01848108ccc7708aa0a3d4b
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:45
+msgid ""
+"This is the network address of the target of the connection. This "
+"includes the port which should be stored in the :c:type:`sockaddr` "
+"structure pointed at by :arg:`addr`."
+msgstr ""
+
+# 766a7277c4bc4aa0a25fefc47032f5b7
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:55
+msgid ":arg:`tag`"
+msgstr ""
+
+# 79cad1a91dd14d3986f805b0da95df78
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:50
+msgid ""
+"This is a tag that is passed through to the HTTP state machine. It must "
+"be a persistent string that has a lifetime longer than the connection. It"
+" is accessible via the log field :ref:`pitag <pitag>`. This is intended "
+"as a class or type identifier that is consistent across all connections "
+"for this plugin. In effect, the name of the plugin. This can be "
+":literal:`NULL`."
+msgstr ""
+
+# 563b4e01e44744569217def84c9d515e
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:65
+msgid ":arg:`id`"
+msgstr ""
+
+# 719f13a21d9344e284d6b9546d16637d
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:58
+msgid ""
+"This is a numeric identifier that is passed through to the HTTP state "
+"machine. It is accessible via the log field :ref:`piid <piid>`. This is "
+"intended as a connection identifier and should be distinct for every call"
+" to :c:func:`TSHttpConnectWithPluginId`. The easiest mechanism is to "
+"define a plugin global value and increment it for each connection. The "
+"value :literal:`0` is reserved to mean \"not set\" and can be used as a "
+"default if this functionality is not needed."
+msgstr ""
+
+# d2c4dc6966414e50b0d866deae33ead9
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:67
+msgid ""
+"The virtual connection returned as the :c:type:`TSCVonn` is API "
+"equivalent to a network virtual connection both to the plugin and to "
+"internal mechanisms. Data is read and written to the connection (and "
+"thence to the target system) by reading and writing on this virtual "
+"connection."
+msgstr ""
+
+# 57c35f04e6e649f198e71370fa46295f
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:75
+msgid ""
+"This function only opens the connection. To drive the transaction an "
+"actual HTTP request must be sent and the HTTP response handled. The "
+"transaction is handled as a standard HTTP transaction and all of the "
+"standard configuration options and plugins will operate on it."
+msgstr ""
+
+# d401aa8fec90403096a265847c2344d8
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:80
+msgid ""
+"The combination of :arg:`tag` and :arg:`id` is intended to enable "
+"correlation in log post processing. The :arg:`tag` identifies the "
+"connection as related to the plugin and the :arg:`id` can be used in "
+"conjuction with plugin generated logs to correlate the log records."
+msgstr ""
+
+# 7e374a5bcb5a47d182b4aec805afd478
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:86
+msgid "Notes"
+msgstr ""
+
+# 9814bb8f84a94d389a9bc3bb3df85541
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:88
+msgid ""
+"The SPDY implementation uses this to correlate client sessions with SPDY "
+"streams. Each client connection is assigned a distinct numeric "
+"identifier. This is passed as the :arg:`id` to "
+":c:func:`TSHttpConnectWithPluginId`. The :arg:`tag` is selected to be the"
+" NPN string for the client session protocol, e.g. \"spdy/3\" or "
+"\"spdy/3.1\". Log post processing can then count the number of "
+"connections for the various supported protocols and the number of SPDY "
+"virtual streams for each real client connection to Traffic Server."
+msgstr ""
+
+# a28e661eead04511917d96dcc0813785
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:99
+msgid "See Also"
+msgstr ""
+
+# c9fc73d9808b4a9e8520018a16c244f9
+#: ../../developer-guide/api/functions/TSHttpConnectWithPluginId.en.rst:101
+msgid ""
+":manpage:`TSHttpConnect(3ts)`, :manpage:`TSNetConnect(3ts)`, "
+":manpage:`TSAPI(3ts)`"
+msgstr ""
+

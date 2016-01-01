@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 9443afaaf45548a4afd228d0ab95c765
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:23
+msgid "Cache"
+msgstr ""
+
+# 765899bef3614bd5bda00f956f4d8ad6
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:27
+msgid ""
+"The difference between :ts:stat:`proxy.process.cache.bytes_total` and "
+":ts:stat:`proxy.process.cache.bytes_used`."
+msgstr ""
+
+# 0848134e049244e1bb9c736f656f2b9c
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:30
+msgid ""
+"Represents the amount of space allocated to the cache which is not "
+"currently in use by objects."
+msgstr ""
+
+# b395aa4499d1408daf0c9327ecd02bd1
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:35
+msgid ""
+"The value of :ts:stat:`proxy.node.cache.bytes_free` expressed in "
+"megabytes."
+msgstr ""
+
+# 0a42c0c561be470eb14f0f7895baa685
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:39
+msgid "The total number of bytes allocated to the cache."
+msgstr ""
+
+# 5704b31d56de4ec1aad5b1ee14cf0758
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:43
+msgid ""
+"The value of :ts:stat:`proxy.node.cache.bytes_total` expressed in "
+"megabytes."
+msgstr ""
+
+# 9d5260c4edd64a9cab1960fbcff3feb2
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:48
+msgid "Represents the number of documents currently residing in the cache."
+msgstr ""
+
+# 892e1b3ed7404e0eb1af1c59e0d76a68
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:52
+msgid ""
+"Represents the ratio of cache lookups over the previous 10 seconds which "
+"have been satisfied by the in-memory cache, thus avoiding disk cache I/O."
+msgstr ""
+
+# 42060f74978845fabecb14b445b19839
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:58
+msgid ""
+"The value of :ts:stat:`proxy.node.cache_hit_mem_ratio_avg_10s` converted "
+"to an integer percent."
+msgstr ""
+
+# 1119bf557f5f4fff872c86c40c662a04
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:63
+msgid ""
+"Represents the ratio of cache lookups which have been satisfied by the "
+"in-memory cache since statistics collection began."
+msgstr ""
+
+# 513650b6148944159a06f5bc8a2be790
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:69
+msgid ""
+"The value of :ts:stat:`proxy.node.cache_hit_mem_ratio` converted to an "
+"integer percent."
+msgstr ""
+
+# e3b08567fd8343ad9697d88bc396b3f4
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:74
+msgid ""
+"Represents the ratio of cache lookups over the previous 10 seconds which "
+"have been satisfied by either the in-memory cache or the disk cache, thus"
+" avoiding revalidation or object retrieval from origin servers."
+msgstr ""
+
+# a0f4ae57900c4fedafd2c69b08d72d50
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:80
+msgid ""
+"The value of :ts:stat:`proxy.node.cache_hit_ratio_avg_10s` converted to "
+"an integer percent."
+msgstr ""
+
+# 4356992657534ddfa62cd2c8b03473d7
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:85
+msgid ""
+"Represents the ratio of cache lookups which have been satisfied by either"
+" the in-memory cache or the on-disk cache since statistics collection "
+"began."
+msgstr ""
+
+# ca229e473a1a4cf78d3f1ef6932f0907
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:90
+msgid ""
+"The value of :ts:stat:`proxy.node.cache_hit_ratio` converted to an "
+"integer percent."
+msgstr ""
+
+# 1229e21d71004e31aede6e893b03d5be
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:95
+msgid ""
+"Represents the percentage of allocated cache space which is not occupied "
+"by cache objects."
+msgstr ""
+
+# e839d94af4c44f92a1dccc384a47fd07
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:100
+msgid ""
+"The value of :ts:stat:`proxy.node.cache.percent_free` converted to an "
+"integer percent."
+msgstr ""
+
+# a49943d01bba4a8784750c32623ee26e
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:106
+msgid ""
+"Represents the total number of cache lookups which have been satisfied by"
+" either the in-memory cache or the on-disk cache, since statistics "
+"collection began."
+msgstr ""
+
+# 93d03e2d93e848479cd97d9e2d390a99
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:113
+msgid ""
+"Represents the total number of cache lookups which have been satisfied by"
+" the in-memory cache, since statistics collection began."
+msgstr ""
+
+# ec51f21182584b0bb209d047ad247d9a
+#: ../../admin-guide/monitoring/statistics/core/cache.en.rst:119
+msgid ""
+"Represents the total number of cache lookups which could not be satisfied"
+" by either the in-memory cache or the on-disk cache, and which required "
+"origin server revalidation or retrieval."
+msgstr ""
+

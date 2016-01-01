@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 68e9bfda277c4e4cbdad69210e3f1714
+#: ../../developer-guide/api/types/TSIOBuffersSizeIndex.en.rst:20
+msgid "TSIOBuffersSizeIndex"
+msgstr ""
+
+# b6d4176dfbaa4e94957668ad2807c962
+#: ../../developer-guide/api/types/TSIOBuffersSizeIndex.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# b02c41e6eb644094a16aee9b2465b401
+#: ../../developer-guide/api/types/TSIOBuffersSizeIndex.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# ca34fe643c0645728a47c28dd436268c
+#: ../../developer-guide/api/types/TSIOBuffersSizeIndex.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# aae3e71c2ba040a0945f2eb4c865d4e2
+#: ../../developer-guide/api/types/TSIOBuffersSizeIndex.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# 0c11eade43fb49269654ac9b1b06e054
+#: ../../developer-guide/api/types/TSIOBuffersSizeIndex.en.rst:65
+msgid "Description"
+msgstr ""
+

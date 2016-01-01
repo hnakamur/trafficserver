@@ -1,0 +1,100 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# cb642768e7fa463c9e2e826c7206d319
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:23
+msgid "TSUrlPercentEncode"
+msgstr ""
+
+# 7b62d00800c740f78756bfd65dfdda24
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:25
+msgid "Traffic Server URL percent encoding API."
+msgstr ""
+
+# 43458c0e3bc246a2bf6d9f1d2e717dda
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# dc29c7201bd74c96bdab0c2b6a20db13
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 85eead38c93c42edbe801757060f6f74
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:37
+msgid "Description"
+msgstr ""
+
+# ad61c1d4c0c54e9ebc6431db12e192f8
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:39
+msgid ""
+"The URL data structure is a parsed version of a standard internet URL. "
+"The Traffic Server URL API provides access to URL data stored in marshal "
+"buffers. The URL functions can create, copy, retrieve or delete entire "
+"URLs, and retrieve or modify parts of URLs, such as their host, port or "
+"scheme information."
+msgstr ""
+
+# 5a06857192f34d7cb92997a622d3f9aa
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:45
+msgid ""
+":func:`TSUrlPercentEncode` performs percent-encoding of the URL object, "
+"storing the new string in the :arg:`dst` buffer. The :arg:`length` "
+"parameter will be set to the new (encoded) string length, or :literal:`0`"
+" if the encoding failed.  :func:`TSStringPercentEncode` is similar but "
+"operates on a string. If the optional :arg:`map` parameter is provided "
+"(not :literal:`NULL`) , it should be a map of characters to encode."
+msgstr ""
+
+# 7fc5691bd93f49058392e78eb3da9bdf
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:52
+msgid ""
+":func:`TSStringPercentDecode` perform percent-decoding of the string in "
+"the :arg:`str` buffer, writing to the :arg:`dst` buffer. The source and "
+"destination can be the same, in which case they overwrite. The decoded "
+"string is always guaranteed to be no longer than the source string."
+msgstr ""
+
+# 60510af6376e4731ba257c9c8f074bd2
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:58
+msgid "Return Values"
+msgstr ""
+
+# b2ace58d35de47f7816357254c848988
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:60
+msgid ""
+"All these APIs returns a :type:`TSReturnCode`, indicating success "
+"(:data:`TS_SUCCESS`) or failure (:data:`TS_ERROR`) of the operation."
+msgstr ""
+
+# 60a4db4331204d2a90db735af18f4753
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:64
+msgid "See Also"
+msgstr ""
+
+# a31471e89d2145b2a7790dfc67f96c3f
+#: ../../developer-guide/api/functions/TSUrlPercentEncode.en.rst:66
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSUrlCreate(3ts)`, "
+":manpage:`TSUrlHostGet(3ts)`, :manpage:`TSUrlHostSet(3ts)`, "
+":manpage:`TSUrlStringGet(3ts)`"
+msgstr ""
+

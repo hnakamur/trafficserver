@@ -1,0 +1,568 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# d4953f47915d45c1b69e36a1a1f763e3
+#: ../../appendices/command-line/traffic_line.en.rst:23
+msgid "traffic_line"
+msgstr ""
+
+# 7940fcbe2b2549b1b83cc8d56ac8a613
+#: ../../appendices/command-line/traffic_line.en.rst:27
+msgid ""
+"This utility is deprecated as of v6.0.0, and replaced with "
+":program:`traffic_ctl`. You should change your tools / scripts to use "
+"this new application instead."
+msgstr ""
+
+# 0abd1318942a4d67b46c779316f65062
+#: ../../appendices/command-line/traffic_line.en.rst:32
+msgid "Synopsis"
+msgstr ""
+
+# f05ca9ef1cbc4e52af87359ae1b69530
+#: ../../appendices/command-line/traffic_line.en.rst:34
+msgid ":program:`traffic_line` [options]"
+msgstr ""
+
+# 078fb07846b44e2e965288d29eb7000f
+#: ../../appendices/command-line/traffic_line.en.rst:37
+msgid "Description"
+msgstr ""
+
+# ad74779b553d451298de268c1b74ef38
+#: ../../appendices/command-line/traffic_line.en.rst:39
+msgid ""
+":program:`traffic_line` is used to execute individual Traffic Server "
+"commands and to script multiple commands in a shell."
+msgstr ""
+
+# 42e29ddd6aba43e5b05417f43d4ebcf0
+#: ../../appendices/command-line/traffic_line.en.rst:43
+msgid "Options"
+msgstr ""
+
+# c34c9e98a5ad4ea395ddccfbbf769296
+#: ../../appendices/command-line/traffic_line.en.rst:49
+msgid ""
+"Bounce all Traffic Server nodes in the cluster. Bouncing Traffic Server "
+"shuts down and immediately restarts Traffic Server, node-by-node."
+msgstr ""
+
+# e5d3a4872eac40ffbc7f876292c0f565
+#: ../../appendices/command-line/traffic_line.en.rst:55
+msgid ""
+"Bounce Traffic Server on the local node. Bouncing Traffic Server shuts "
+"down and immediately restarts the Traffic Server node."
+msgstr ""
+
+# a3b08e1789d54ec1b1fc16b49ba252cc
+#: ../../appendices/command-line/traffic_line.en.rst:60
+msgid "Clears accumulated statistics on all nodes in the cluster."
+msgstr ""
+
+# ed29aeb9e0ef469195b48cefcff9a87d
+#: ../../appendices/command-line/traffic_line.en.rst:64
+msgid "Clears accumulated statistics on the local node."
+msgstr ""
+
+# 9fce2683b4154cb2918e9ed51630bc0e
+#: ../../appendices/command-line/traffic_line.en.rst:68
+msgid ""
+"This option modifies the behavior of :option:`traffic_line -b` and "
+":option:`traffic_line -L` such that :program:`traffic_server` is not shut"
+" down until the number of active client connections drops to the number "
+"given by the :ts:cv:`proxy.config.restart.active_client_threshold` "
+"configuration variable."
+msgstr ""
+
+# 015a3f4d1e024b7fae843759209e09a0
+#: ../../appendices/command-line/traffic_line.en.rst:77
+msgid "Print usage information and exit."
+msgstr ""
+
+# 8077223a0c744e9a8eedcbfa085c94b0
+#: ../../appendices/command-line/traffic_line.en.rst:81
+msgid ""
+"Restart the :program:`traffic_manager` and :program:`traffic_server` "
+"processes on the local node."
+msgstr ""
+
+# b964f4497abe45f19c0cfd557603ac6a
+#: ../../appendices/command-line/traffic_line.en.rst:86
+msgid ""
+"Restart the :program:`traffic_manager` process and the "
+":program:`traffic_server` process on all the nodes in a cluster."
+msgstr ""
+
+# 02252fcba76d45bda2d9ad90dfb0a954
+#: ../../appendices/command-line/traffic_line.en.rst:91
+msgid ""
+"Display the current values of all performance statistics or configuration"
+" variables whose names match the given regular expression."
+msgstr ""
+
+# a0c3bab7d90941c082a05e30b41fa1f9
+#: ../../appendices/command-line/traffic_line.en.rst:96
+msgid ""
+"Display specific performance statistics or a current configuration "
+"setting."
+msgstr ""
+
+# 68c91411638d4323af346a4cb8c8f3bc
+#: ../../appendices/command-line/traffic_line.en.rst:101
+msgid ""
+"Set the configuration variable named *VAR*. The value of the "
+"configuration variable is given by the :option:`traffic_line -v` option. "
+"Refer to the :file:`records.config` documentation for a list of the "
+"configuration variables you can specify."
+msgstr ""
+
+# f9dca24e06fe413fa27a401e506e2b33
+#: ../../appendices/command-line/traffic_line.en.rst:108
+msgid "Shut down Traffic Server on the local node."
+msgstr ""
+
+# fd5b30d92a3347da9fa6b568565fad02
+#: ../../appendices/command-line/traffic_line.en.rst:112
+msgid "Start Traffic Server on the local node."
+msgstr ""
+
+# 074dbc5490cf40b28c12bcae441e4cb5
+#: ../../appendices/command-line/traffic_line.en.rst:116
+msgid "Specify the value to set when setting a configuration variable."
+msgstr ""
+
+# 4ad2a17adf5e409599a41399b85a4835
+#: ../../appendices/command-line/traffic_line.en.rst:120
+msgid "Print version information and exit."
+msgstr ""
+
+# 10e1b5f8b79349649f140379bb47c4e5
+#: ../../appendices/command-line/traffic_line.en.rst:124
+msgid ""
+"Initiate a Traffic Server configuration file reread. Use this command to "
+"update the running configuration after any configuration file "
+"modification."
+msgstr ""
+
+# f7ba9b22962c497b93f712170c8d8d50
+#: ../../appendices/command-line/traffic_line.en.rst:128
+msgid ""
+"The timestamp of the last reconfiguration event (in seconds since epoch) "
+"is published in the `proxy.node.config.reconfigure_time` metric."
+msgstr ""
+
+# d52770c0cb8f467495ec97e270b9a970
+#: ../../appendices/command-line/traffic_line.en.rst:134
+msgid "Reset performance statistics to zero across the cluster."
+msgstr ""
+
+# c19b8b1353244d90a72cfc697463fac4
+#: ../../appendices/command-line/traffic_line.en.rst:138
+msgid "Reset performance statistics to zero on the local node."
+msgstr ""
+
+# 0ff424962c0c48ce8d10c5f34af463c4
+#: ../../appendices/command-line/traffic_line.en.rst:142
+msgid ""
+"Mark a cache storage device as offline. The storage is identified by a "
+"*path* which must match exactly a path specified in "
+":file:`storage.config`. This removes the storage from the cache and "
+"redirects requests that would have used this storage to other storage. "
+"This has exactly the same effect as a disk failure for that storage. This"
+" does not persist across restarts of the :program:`traffic_server` "
+"process."
+msgstr ""
+
+# 0b1f8d9080394fbfb0700f325bcec0ce
+#: ../../appendices/command-line/traffic_line.en.rst:149
+msgid "List all alarm events that have not been acknowledged (cleared)."
+msgstr ""
+
+# 4e664a7bc0cb4da7ae4e579af0d5e5dc
+#: ../../appendices/command-line/traffic_line.en.rst:153
+msgid ""
+"Clear (acknowledge) an alarm event. The arguments are \"all\" for all "
+"current alarms, a specific alarm number (e.g. ''1''), or an alarm string "
+"identifier (e.g. ''MGMT_ALARM_PROXY_CONFIG_ERROR'')."
+msgstr ""
+
+# af172c58693c4f6aa4bcaafb0f2ff740
+#: ../../appendices/command-line/traffic_line.en.rst:159
+msgid "Show the current proxy server status, indicating if we're running or not."
+msgstr ""
+
+# 7548fecac56c4b5ea0664f39ec6b50fb
+#: ../../appendices/command-line/traffic_line.en.rst:164
+msgid "Performance Statistics"
+msgstr ""
+
+# c0550fa29db644cf95f3eb95245219ee
+#: ../../appendices/command-line/traffic_line.en.rst:168
+msgid "proxy.process.ssl.user_agent_other_errors"
+msgstr ""
+
+# 8018a646d6e74019abdbc597f18c4871
+#: ../../appendices/command-line/traffic_line.en.rst:167
+msgid ""
+"Total number of *other* ssl client connection errors (counts ssl errors "
+"that are not captured in other user agent stats below)"
+msgstr ""
+
+# 1d708a157a5b451286f50edcba72af44
+#: ../../appendices/command-line/traffic_line.en.rst:172
+msgid "proxy.process.ssl.user_agent_expired_cert"
+msgstr ""
+
+# a9809ddc39f44109a2218084fc6f26c5
+#: ../../appendices/command-line/traffic_line.en.rst:171
+msgid "Total number of ssl client connection failures where the cert was expired."
+msgstr ""
+
+# 8c39b1f42de64d1b86c37f9c02139336
+#: ../../appendices/command-line/traffic_line.en.rst:176
+msgid "proxy.process.ssl.user_agent_revoked_cert"
+msgstr ""
+
+# 15b088e40aa44b74b63b076091abd922
+#: ../../appendices/command-line/traffic_line.en.rst:175
+msgid "Total number of ssl client connection failures where the cert was revoked."
+msgstr ""
+
+# bc54d7a8ebf2413d8e2b65e991274285
+#: ../../appendices/command-line/traffic_line.en.rst:180
+msgid "proxy.process.ssl.user_agent_unknown_cert"
+msgstr ""
+
+# 521ef73eebcb4f76aa47ee14b12a8d1f
+#: ../../appendices/command-line/traffic_line.en.rst:179
+msgid ""
+"Total number of ssl client connection failures related to the cert, but "
+"specific error was unknown."
+msgstr ""
+
+# c335c7c096084d81961c090e81848828
+#: ../../appendices/command-line/traffic_line.en.rst:184
+msgid "proxy.process.ssl.user_agent_cert_verify_failed"
+msgstr ""
+
+# df6e0d55bf3e4e378bd1eb535282d4ac
+#: ../../appendices/command-line/traffic_line.en.rst:183
+msgid ""
+"Total number of ssl client connection failures where cert verification "
+"failed."
+msgstr ""
+
+# 021aabec92414349a3d004dd2aeedfdb
+#: ../../appendices/command-line/traffic_line.en.rst:187
+msgid "proxy.process.ssl.user_agent_bad_cert"
+msgstr ""
+
+# a4fa6d423ad3468da8dbf7e9d000aba3
+#: ../../appendices/command-line/traffic_line.en.rst:187
+msgid "Total number of ssl client connection failures where the cert is bad."
+msgstr ""
+
+# de015dbc94164a9ab374226a69f45a55
+#: ../../appendices/command-line/traffic_line.en.rst:191
+msgid "proxy.process.ssl.user_agent_decryption_failed"
+msgstr ""
+
+# 60f86032261e466089495e0fb1e8e75e
+#: ../../appendices/command-line/traffic_line.en.rst:190
+msgid ""
+"Total number of ssl client connection decryption failures (during "
+"negotiation)."
+msgstr ""
+
+# 54f50e45c787473096067c8bfb8a04c5
+#: ../../appendices/command-line/traffic_line.en.rst:195
+msgid "proxy.process.ssl.user_agent_wrong_version"
+msgstr ""
+
+# 01cd1961149948d487e0d9da64a3fd78
+#: ../../appendices/command-line/traffic_line.en.rst:194
+msgid ""
+"Total number of ssl client connections that provided an invalid protocol "
+"version."
+msgstr ""
+
+# ea5334673dc04feb92e7bb22595a4d1d
+#: ../../appendices/command-line/traffic_line.en.rst:198
+msgid "proxy.process.ssl.user_agent_unknown_ca"
+msgstr ""
+
+# 2a339dd2ae3346c8ad1aa10815a3506b
+#: ../../appendices/command-line/traffic_line.en.rst:198
+msgid "Total number of ssl client connection that failed due to unknown ca."
+msgstr ""
+
+# fd2c499861d84fe89041d31a7990beeb
+#: ../../appendices/command-line/traffic_line.en.rst:202
+msgid "proxy.process.ssl.origin_server_other_errors"
+msgstr ""
+
+# 8b04b38be8b14b62a1a198608c185fc7
+#: ../../appendices/command-line/traffic_line.en.rst:201
+msgid ""
+"Total number of *other* ssl origin server connection errors (counts ssl "
+"errors that are not captured in other origin server stats below)."
+msgstr ""
+
+# 90c8ed4435d7408887115b923bc14d50
+#: ../../appendices/command-line/traffic_line.en.rst:206
+msgid "proxy.process.ssl.origin_server_expired_cert"
+msgstr ""
+
+# 0361d6b0e17a40b590ac4bafdf55ea7a
+#: ../../appendices/command-line/traffic_line.en.rst:205
+msgid ""
+"Total number of ssl origin server connection failures where the cert was "
+"expired."
+msgstr ""
+
+# 0fe621b9dc51443083455c37a37ad2e1
+#: ../../appendices/command-line/traffic_line.en.rst:210
+msgid "proxy.process.ssl.origin_server_revoked_cert"
+msgstr ""
+
+# ba00f4c1bde240d4bb1c5ac28a36168d
+#: ../../appendices/command-line/traffic_line.en.rst:209
+msgid ""
+"Total number of ssl origin server connection failures where the cert was "
+"revoked."
+msgstr ""
+
+# 7ed6df50b94947d689284b0829296bcf
+#: ../../appendices/command-line/traffic_line.en.rst:214
+msgid "proxy.process.ssl.origin_server_unknown_cert"
+msgstr ""
+
+# a2faf0e18dcf4b97b945f9b04870479b
+#: ../../appendices/command-line/traffic_line.en.rst:213
+msgid ""
+"Total number of ssl origin server connection failures related to the cert"
+" where specific error was unknown."
+msgstr ""
+
+# 0f3767ca159641c4b2aafae0ecfc6e30
+#: ../../appendices/command-line/traffic_line.en.rst:218
+msgid "proxy.process.ssl.origin_server_cert_verify_failed"
+msgstr ""
+
+# 3abc40619c324013a0d001af62a63acf
+#: ../../appendices/command-line/traffic_line.en.rst:217
+msgid ""
+"Total number of ssl origin server connection failures where cert "
+"verification failed."
+msgstr ""
+
+# 3248ff4e9b2d40a097b0350041617078
+#: ../../appendices/command-line/traffic_line.en.rst:222
+msgid "proxy.process.ssl.origin_server_bad_cert"
+msgstr ""
+
+# 562b1e1e03d248f2b8ec25e857d75f30
+#: ../../appendices/command-line/traffic_line.en.rst:221
+msgid ""
+"Total number of ssl origin server connection failures where the cert is "
+"bad."
+msgstr ""
+
+# b0a3881f41a24e429c8895a0960f347a
+#: ../../appendices/command-line/traffic_line.en.rst:226
+msgid "proxy.process.ssl.origin_server_decryption_failed"
+msgstr ""
+
+# e7973ab02e144ffcbda6da33714d8399
+#: ../../appendices/command-line/traffic_line.en.rst:225
+msgid ""
+"Total number of ssl origin server connection decryption failures (during "
+"negotiation)."
+msgstr ""
+
+# 22111890fedc44b38bc6d8f799ec4da5
+#: ../../appendices/command-line/traffic_line.en.rst:230
+msgid "proxy.process.ssl.origin_server_wrong_version"
+msgstr ""
+
+# 4cdd1ed9471f4e2fbc2ac3d1cee42d5d
+#: ../../appendices/command-line/traffic_line.en.rst:229
+msgid ""
+"Total number of ssl origin server connections that provided an invalid "
+"protocol version."
+msgstr ""
+
+# 81adbec068764056b1f7e838bb099b0c
+#: ../../appendices/command-line/traffic_line.en.rst:234
+msgid "proxy.process.ssl.origin_server_unknown_ca"
+msgstr ""
+
+# 4e74330efc8a482d8fd584d51058a84e
+#: ../../appendices/command-line/traffic_line.en.rst:233
+msgid ""
+"Total number of ssl origin server connection that failed due to unknown "
+"ca."
+msgstr ""
+
+# d7a9ba161f12451483a9c53e578ab42a
+#: ../../appendices/command-line/traffic_line.en.rst:237
+msgid "proxy.process.ssl.user_agent_sessions"
+msgstr ""
+
+# e333f76c78634203873eaa28d3a92a03
+#: ../../appendices/command-line/traffic_line.en.rst:237
+msgid "Total number of ssl/tls sessions created."
+msgstr ""
+
+# 379b0b3aa9584210b49f47bf082e232f
+#: ../../appendices/command-line/traffic_line.en.rst:241
+msgid "proxy.process.ssl.user_agent_session_hit"
+msgstr ""
+
+# b94b76569e5b4a5aac594328d77750e9
+#: ../../appendices/command-line/traffic_line.en.rst:240
+msgid ""
+"Total number of session hits.  A previous session was reused which "
+"resulted in an abbreviated ssl client negotiation."
+msgstr ""
+
+# 05e75b4c4c2e4e699dbe0e8c0d19e5ac
+#: ../../appendices/command-line/traffic_line.en.rst:245
+msgid "proxy.process.ssl.user_agent_session_miss"
+msgstr ""
+
+# 4af19769cfc84ab3b60074ada9bbb8a5
+#: ../../appendices/command-line/traffic_line.en.rst:244
+msgid ""
+"Total number of session misses.  The ssl client provided a session id "
+"that was not found in cache and, therefore, could not be used."
+msgstr ""
+
+# 164782c2c28c40eab961d663f7ea775c
+#: ../../appendices/command-line/traffic_line.en.rst:249
+msgid "proxy.process.ssl.user_agent_session_timeout"
+msgstr ""
+
+# 43b04fa2f3744a6692e75df1210e6f73
+#: ../../appendices/command-line/traffic_line.en.rst:248
+msgid ""
+"Total number of session timeouts.  The ssl client provided a session, but"
+" it could not be used because it was past the session timeout."
+msgstr ""
+
+# e2b1a9ed360b48f0a7af32d8b2ac338b
+#: ../../appendices/command-line/traffic_line.en.rst:263
+msgid "proxy.process.ssl.cipher.user_agent.{CIPHERNAME}"
+msgstr ""
+
+# 73361e4544844e7e8e715c58b309fade
+#: ../../appendices/command-line/traffic_line.en.rst:252
+msgid ""
+"Total number of ssl client connections that used cipherName.  The list of"
+" cipher statistics is dynamic and depends upon the installed ciphers and "
+"the :ts:cv:`proxy.config.ssl.server.cipher_suite` configuration. The set "
+"of cipher statistics can be discovered with :option:`traffic_line -m`. "
+"For example::"
+msgstr ""
+
+# bc7e97cdb3b54c279fb9098ba6a1fb2b
+#: ../../appendices/command-line/traffic_line.en.rst:266
+msgid "Cache Statistics"
+msgstr ""
+
+# 957f9d0113be4629be35e32692be91d9
+#: ../../appendices/command-line/traffic_line.en.rst:268
+msgid ""
+"Cache statistics come in two varieties, global and per cache volume. "
+"These will be listed here in the global form. To get a cache volume "
+"statistic add `.volume_#` to the name after `cache` where `#` is 1-based "
+"index of the volume in :file:`storage.config`. For example the statistic "
+"`proxy.process.cache.sync.bytes` is a global statistic. The value for the"
+" third cache volume is `proxy.process.cache.volume_3.sync.bytes`."
+msgstr ""
+
+# 216fd7194657484b82f8882840ab2ef2
+#: ../../appendices/command-line/traffic_line.en.rst:274
+msgid "proxy.process.cache.sync.bytes"
+msgstr ""
+
+# 841a5e0c8a3545e4837b8282ff7d8059
+#: ../../appendices/command-line/traffic_line.en.rst:274
+msgid ""
+"The total number of bytes written to disk to synchronize the cache "
+"directory."
+msgstr ""
+
+# ebd9c4a1b02349f8bf13ef08df45fa97
+#: ../../appendices/command-line/traffic_line.en.rst:277
+msgid "proxy.process.cache.sync.time"
+msgstr ""
+
+# 56f5b64fd12a400089bc8a7944f01ccc
+#: ../../appendices/command-line/traffic_line.en.rst:277
+msgid ""
+"The total time, in nanoseconds, during which the cache directory was "
+"being written to disk."
+msgstr ""
+
+# 0acc5134682947b7b0d1f93f45dcf987
+#: ../../appendices/command-line/traffic_line.en.rst:280
+msgid "proxy.process.cache.sync.count"
+msgstr ""
+
+# f5d9bf6aac704937b371ac0f733a1b25
+#: ../../appendices/command-line/traffic_line.en.rst:280
+msgid "The number of times a cache directory sync has been done."
+msgstr ""
+
+# 21e4da1e204a4052a6284ddaef0bd1f6
+#: ../../appendices/command-line/traffic_line.en.rst:284
+msgid "proxy.process.cache.wrap_count"
+msgstr ""
+
+# 87c080c8991b409e95c7c557ca53e6d2
+#: ../../appendices/command-line/traffic_line.en.rst:283
+msgid ""
+"The number of times a cache stripe has cycled. Each stripe is a circular "
+"buffer and this is incremented each time the write cursor is reset to the"
+" start of the stripe."
+msgstr ""
+
+# b7f232dcfc8e4a2e90892e0f65b7381c
+#: ../../appendices/command-line/traffic_line.en.rst:287
+msgid "Examples"
+msgstr ""
+
+# 49755fd53db44820929a57814289d8ce
+#: ../../appendices/command-line/traffic_line.en.rst:289
+msgid "Configure Traffic Server to log in Squid format::"
+msgstr ""
+
+# df1f8e28001142c985c3c296ea95588e
+#: ../../appendices/command-line/traffic_line.en.rst:296
+msgid "See also"
+msgstr ""
+
+# 489043e21818432382876cef55cc2943
+#: ../../appendices/command-line/traffic_line.en.rst:298
+msgid ":manpage:`records.config(5)`, :manpage:`storage.config(5)`"
+msgstr ""
+

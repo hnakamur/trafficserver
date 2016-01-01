@@ -1,0 +1,2690 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# f4a7145f4c3244b589505925a9e6be50
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:23
+msgid "Log Formats"
+msgstr ""
+
+# 1697dd24b45b40d7bc6a46ed8c2efeb5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:25
+msgid ""
+"This document provides a reference for all the different logging formats "
+"|TS| supports. Rather than just reading about those formats, you may also"
+" want to try our `online event log builder "
+"<http://trafficserver.apache.org/logbuilder/>`_ for an interactive way of"
+" building and understanding log formats."
+msgstr ""
+
+# 6866d559da6948dd9bf332e5b8aae22d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:31
+msgid "Binary or ASCII?"
+msgstr ""
+
+# 6bcc694cc46c48a992ca97d8d9dabd81
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:33
+msgid ""
+"You can configure |TS| to create event log files in either of the "
+"following:"
+msgstr ""
+
+# 0665e6861cac4751aea803f99a13f113
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:40
+msgid "ASCII"
+msgstr ""
+
+# 84e0b78867af40d2b8f3608e35893b5e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:36
+msgid ""
+"These files are human-readable and can be processed using standard, off-"
+"the-shelf log analysis tools. However, |TS| must perform additional "
+"processing to create the files in ASCII, which mildly impacts system "
+"overhead. ASCII files also tend to be larger than the equivalent binary "
+"files. By default, ASCII log files have a ``.log`` filename extension."
+msgstr ""
+
+# c7ffa4ac06a444b1b06d0e3f0fbcd9e0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:47
+msgid "Binary"
+msgstr ""
+
+# a7bfa73955a542f994f28fe2b5acbc76
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:43
+msgid ""
+"These files generate lower system overhead and generally occupy less "
+"space on the disk than ASCII files (depending on the type of information "
+"being logged). However, you must use a converter application before you "
+"can read or analyze binary files via standard tools. By default, binary "
+"log files use a ``.blog`` filename extension."
+msgstr ""
+
+# 70429f331cde460199eeb9a2606068ce
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:49
+msgid ""
+"While binary log files typically require less disk space, there are "
+"exceptions."
+msgstr ""
+
+# 02f969f07a6641cea7cf471d60649859
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:51
+msgid ""
+"For example, the value ``0`` (zero) requires only one byte to store in "
+"ASCII, but requires four bytes when stored as a binary integer.  "
+"Conversely, if you define a custom format that logs IP addresses, then a "
+"binary log file would only require four bytes of storage per 32-bit "
+"address. However, the same IP address stored in dot notation would "
+"require around 15 characters (bytes) in an ASCII log file."
+msgstr ""
+
+# 8bd532b5ea5a47378c7e8ce4d5b6dc08
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:58
+msgid ""
+"It is wise to consider the type of data that will be logged before you "
+"select ASCII or binary for your log files, if your decision is being "
+"driven by storage space concerns. For example, you might try logging for "
+"one day using ASCII and then another day using binary. If the number of "
+"requests is roughly the same for both days, then you can calculate a "
+"rough metric that compares the two formats."
+msgstr ""
+
+# 2cf35864eb864a669e0e09106443f5bd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:65
+msgid ""
+"For standard log formats, select Binary or ASCII (refer to `Using "
+"Standard Formats`_). For the custom log format, specify ASCII or Binary "
+"mode in the :ref:`LogObject` (refer to :ref:`using-custom-log-formats`). "
+"In addition to the ASCII and binary options, you can also write custom "
+"log entries to a UNIX-named pipe (a buffer in memory) with the "
+"`ASCII_PIPE File Mode`_ setting."
+msgstr ""
+
+# 9df69f72d4c34d5e9188dea19010e325
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:72
+msgid "Defining Log Objects"
+msgstr ""
+
+# 7c81341a15454e79aa75b8edf6aacdc7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:74
+msgid ""
+"To perform any logging at all on your |TS| nodes, you must have at least "
+"one :ref:`LogObject` defined in :file:`logs_xml.config`. These "
+"definitions configure what logs will be created, the format they will use"
+" (covered in the sections :ref:`admin-monitoring-logging-format-standard`"
+" and :ref:`admin-monitoring-logging-format-custom`), any filters which "
+"may be applied to events before logging them, and when or how the logs "
+"will be rolled."
+msgstr ""
+
+# 4d5975db9b8343598be324ae15d86317
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:82
+msgid "Log Filters"
+msgstr ""
+
+# bcb8672451804e8199a5ef357cfda959
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:84
+msgid ""
+":ref:`LogFilter` objects, configured in :file:`logs_xml.config` allow you"
+" to create filters, which may be applied to :ref:`LogObject` definitions,"
+" limiting the types of entries which will be included in the log output. "
+"This may be useful if your |TS| nodes receive many events which you have "
+"no need to log or analyze."
+msgstr ""
+
+# 2588044ab18c400a9f95043b6883d56c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:93
+msgid "Standard Formats"
+msgstr ""
+
+# 0f0614772d1e4e0ba4729272af436b3b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:95
+msgid ""
+"The standard log formats include Squid, Netscape Common, Netscape "
+"extended, and Netscape Extended-2. The standard log file formats can be "
+"analyzed with a wide variety of off-the-shelf log-analysis packages. You "
+"should use one of the standard event log formats unless you need "
+"information that these formats do not provide."
+msgstr ""
+
+# 87a554822d7c4d89b85e69fd3df4c900
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:101
+msgid "Set standard log file format options by following the steps below:"
+msgstr ""
+
+# 2d8eca238cd14744acae2d788a43da4b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:103
+msgid "In the :file:`records.config` file, edit the following variables"
+msgstr ""
+
+# 77c830d79f0f4fef8d26ddfd4387b4ea
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:105
+msgid "Edit the following variables to use the Squid format:"
+msgstr ""
+
+# 9f092cbe15554138a72f2bd230ba3ee0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:107
+msgid ":ts:cv:`proxy.config.log.squid_log_enabled`"
+msgstr ""
+
+# e7dcf8fa53c9452dbb9a66a0db07119d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:108
+msgid ":ts:cv:`proxy.config.log.squid_log_is_ascii`"
+msgstr ""
+
+# 2f5455b77ba440ce9deb24ba92f95aa5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:109
+msgid ":ts:cv:`proxy.config.log.squid_log_name`"
+msgstr ""
+
+# 8cca1129e4eb41c1961e7b2640f88555
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:110
+msgid ":ts:cv:`proxy.config.log.squid_log_header`"
+msgstr ""
+
+# 465114d0344e415b8f4b6078f544c711
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:112
+msgid "To use the Netscape Common format, edit the following variables:"
+msgstr ""
+
+# 20cb6e8fd7fd450a9e32b6638faff254
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:114
+msgid ":ts:cv:`proxy.config.log.common_log_enabled`"
+msgstr ""
+
+# 14b297e8993e4dfd8e12eefe1eca11cc
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:115
+msgid ":ts:cv:`proxy.config.log.common_log_is_ascii`"
+msgstr ""
+
+# 1c5d5e0233424188accc9283a18ffc16
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:116
+msgid ":ts:cv:`proxy.config.log.common_log_name`"
+msgstr ""
+
+# 45f1d0af61f248628bd3fa2fb957396f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:117
+msgid ":ts:cv:`proxy.config.log.common_log_header`"
+msgstr ""
+
+# 1bddb32a74fa412a9887eb1f607ba711
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:119
+msgid "To use the Netscape Extended format, edit the following variables:"
+msgstr ""
+
+# a162269f206f41cea93c67085faa03cc
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:121
+msgid ":ts:cv:`proxy.config.log.extended_log_enabled`"
+msgstr ""
+
+# 259ddddb57704459af6c832abb7f6036
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:122
+msgid ":ts:cv:`proxy.config.log.extended_log_is_ascii`"
+msgstr ""
+
+# ade26a6f9ac34e11b956bf9433d884a3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:123
+msgid ":ts:cv:`proxy.config.log.extended_log_name`"
+msgstr ""
+
+# 531fa80c36db4f7f898891a8b207776d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:124
+msgid ":ts:cv:`proxy.config.log.extended_log_header`"
+msgstr ""
+
+# e65f52bb56a44d19b4e6db1fdce8da3b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:126
+msgid "To use the Netscape Extended-2 format, edit the following variables:"
+msgstr ""
+
+# 6ad214e3b7e545a1afe45ae0755a67ae
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:128
+msgid ":ts:cv:`proxy.config.log.extended2_log_enabled`"
+msgstr ""
+
+# 33be522f84be46f588806e53815971c7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:129
+msgid ":ts:cv:`proxy.config.log.extended2_log_is_ascii`"
+msgstr ""
+
+# 5ef2a7c4be3b40c09b0819f9e80e765c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:130
+msgid ":ts:cv:`proxy.config.log.extended2_log_name`"
+msgstr ""
+
+# 5870fd60f1b0465fa92cfedd9091edac
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:131
+msgid ":ts:cv:`proxy.config.log.extended2_log_header`"
+msgstr ""
+
+# 248b43809b974992ad24b61efc0bdec2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:133
+msgid ""
+"Run the command :option:`traffic_line -x` to apply the configuration "
+"changes."
+msgstr ""
+
+# d8c19a1cfaab4351952a37f4dcf688ac
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:136
+msgid ""
+"You may enable as many of the formats as you wish, keeping in mind the "
+"additional overhead, both in processing time to create the individual "
+"formats and storage space to keep them."
+msgstr ""
+
+# 336bd95755d942f7953b37746ad4b754
+# 1977f52ef0d5477588d01eb1d1399837
+# 689a992a9c6d4af28c22ffdf545bc257
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:141
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:857
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:863
+msgid "Squid"
+msgstr ""
+
+# 4ace8468f7b94d82a45fe58ffeed7533
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:143
+msgid "The following figure shows a sample log entry in a Squid log file."
+msgstr ""
+
+# b8e922054fd04be2b53a7604124bce2e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:149
+msgid "Sample log entry in squid.log"
+msgstr ""
+
+# c49604ab004c40adacb57ea4f8c45e5f
+# 30753802045649678a38e2a211877f24
+# 657fe87398f7416689205b81a67e5b34
+# 79116ab6185e4de9ab72d1f8515fc011
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:152
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:194
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:221
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:259
+msgid "Field"
+msgstr ""
+
+# db43ce50769d4376bb5ac5f49e76c866
+# 08e0d94d23b14600b6c0a245790329db
+# f536664888144d36bbeaa16ae24c2eb7
+# ef9c10b327984ba98f0787a4991d5117
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:152
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:194
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:221
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:259
+msgid "Symbol"
+msgstr ""
+
+# 7d3803a212c24741b0a4a03a82cc7318
+# 7542e0b7699a4c23a89de0291ad96e98
+# 068ebf95a19d47b58162d7c2afae83e2
+# 492e13fb672a4f7bbb4b23586c47b927
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:152
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:194
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:221
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:259
+msgid "Description"
+msgstr ""
+
+# f90da51a6cc24d0b9e9eba64c14034f3
+# d6e6a311bded45f1812442b024c85bdf
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:154
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:196
+msgid "1"
+msgstr ""
+
+# a7b9c4492c3d4b4099e9ed6c3193373a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:154
+msgid "cqtq"
+msgstr ""
+
+# fa87a244f6a64b40804baf413179588d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:154
+msgid ""
+"The client request timestamp in Squid format. The time of the client "
+"request in seconds since January 1, 1970 UTC (with millisecond "
+"resolution)."
+msgstr ""
+
+# fb80b2a7364141228b30610f00edf03f
+# 4e74243b6a9a4278b0a252210d3a90b8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:157
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:197
+msgid "2"
+msgstr ""
+
+# 579f3ec57700428daf601a1449c64e3c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:157
+msgid "ttms"
+msgstr ""
+
+# 2bc6783f22d04a1daa5e4457e46e22c9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:157
+msgid ""
+"The time |TS| spent processing the client request. The number of "
+"milliseconds between the time the client established the connection with "
+"|TS| and the time |TS| sent the last byte of the response back to the "
+"client."
+msgstr ""
+
+# 4bc9da06fb964a0f994b3a1221d7f64e
+# 010abafdf5574e9da4d4a8a9f7d95765
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:161
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:198
+msgid "3"
+msgstr ""
+
+# 7181fe6d856d49ffacd687d40dcc3d17
+# 9bfd80da9c214dc5a626064fbe3ed9e7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:161
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:196
+msgid "chi"
+msgstr ""
+
+# e6456abe951d4084a79f54252a1be230
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:161
+msgid "The IP address of the client’s host machine."
+msgstr ""
+
+# 41c95f5c195141b2a38fa74c9c8fe43f
+# 1dbecd892f6142fdb375c8668090aeb2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:162
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:200
+msgid "4"
+msgstr ""
+
+# 027cd44e553045fc84817ace271ce121
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:162
+msgid "crc/pssc"
+msgstr ""
+
+# 1866b752bcc2445b84e1483a4c96e44c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:162
+msgid ""
+"The cache result code; how the cache responded to the request: ``HIT``, "
+"``MISS``, and so on. Cache result codes are described in :ref:`<squid-"
+"netscape-result-codes>`. The proxy response status code (HTTP response "
+"status code from |TS| to client)."
+msgstr ""
+
+# 75b1cfd9aeca47b9a32af1b6b2410adc
+# 6c1ea833d2fd4d4fb66789a805a795a8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:166
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:201
+msgid "5"
+msgstr ""
+
+# 820332d411c147ecac3d6d04ee499120
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:166
+msgid "psql"
+msgstr ""
+
+# 361f92337d1e492aa06120ab49a9a1b3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:166
+msgid ""
+"The length of the |TS| response to the client in bytes, including headers"
+" and content."
+msgstr ""
+
+# cd8d4e9cbb1547d1988a67f0bce35dcd
+# d8b537e5c68348b2a6230b248af22a55
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:168
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:202
+msgid "6"
+msgstr ""
+
+# b5b01ff75eb348288e96b899f1ee4ca5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:168
+msgid "cqhm"
+msgstr ""
+
+# fd44e8cba0cd468c9113e14b2d362a25
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:168
+msgid "The client request method: ``GET``, ``POST``, and so on."
+msgstr ""
+
+# ec85dd632e6f47dda43c85b27952eb1b
+# d10965123e9549bebfe1cfa6cb311ae2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:169
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:203
+msgid "7"
+msgstr ""
+
+# 59b4a6a27d174ee6bf9328d42764932e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:169
+msgid "cauc"
+msgstr ""
+
+# 42da50d0a0654ed8a315fe0c3650cdc7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:169
+msgid ""
+"The client request canonical URL; blanks and other characters that might "
+"not be parsed by log analysis tools are replaced by escape sequences. The"
+" escape sequence is a percentage sign followed by the ASCII code number "
+"of the replaced character in hex."
+msgstr ""
+
+# 878189de52074ef1ac553cbdecb6c4fa
+# f97557520803418e91a97cd5a4e04a77
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:174
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:223
+msgid "8"
+msgstr ""
+
+# cb7bc23faab0444b88b8dea6808eab7f
+# 7baf9a1e690b47f2bbacc087f29247f0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:174
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:198
+msgid "caun"
+msgstr ""
+
+# 9ace1b222e5c4d77b37a9454d5c6da2b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:174
+msgid ""
+"The username of the authenticated client. A hyphen (``-``) means that no "
+"authentication was required."
+msgstr ""
+
+# 3735ea576db746c98a73c4dc591f0183
+# 1856f0c7cd594e54bf3fa6604e70e7f4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:176
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:224
+msgid "9"
+msgstr ""
+
+# 90b30739eabe4672aab4c609d3f6c2a7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:176
+msgid "phr/pqsn"
+msgstr ""
+
+# 30c809f3ffd2435fa5739e72df2b5835
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:176
+msgid "The proxy hierarchy route. The route |TS| used to retrieve the object."
+msgstr ""
+
+# d0345a20b65342bb9055641c0cca00fe
+# 1b59b9861a6f41098ee15b4b1ba55d69
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:178
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:226
+msgid "10"
+msgstr ""
+
+# ee479804906a43b0ba8238517f234111
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:178
+msgid "psct"
+msgstr ""
+
+# a33d4bea0ad94f269bb124af50d748dd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:178
+msgid ""
+"The proxy response content type. The object content type taken from the "
+"|TS| response header."
+msgstr ""
+
+# 9f50f844bfd54161bf803938e0a74189
+# dfb9b6c4381b4692aac0f16f28b287eb
+# dc0b19b1317d425f9f8a291e010555da
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:183
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:888
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:894
+msgid "Netscape Common"
+msgstr ""
+
+# f3033ed1e030442f9f584c70c864ebf1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:185
+msgid ""
+"The following figure shows a sample log entry in a Netscape Common log "
+"file."
+msgstr ""
+
+# de3976f42514496b9b0f9bafacd920c5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:191
+msgid "Sample log entry in common.log"
+msgstr ""
+
+# abfc4eec4d27475a87a26d05d6568c94
+# 57a523c4d5094b8c82c9a7c446fa2187
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:196
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:391
+msgid "The IP address of the client's host machine."
+msgstr ""
+
+# 8341748e569c40479d2dcce36484d97e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:197
+msgid "--"
+msgstr ""
+
+# 288d9c6e10884b38954a13fdca4b1cb0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:197
+msgid "This hyphen (``-``) is always present in Netscape log entries."
+msgstr ""
+
+# f46086cdb4c84c67b41a1f7c3ea75da5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:198
+msgid ""
+"The authenticated client username. A hyphen (``-``) means no "
+"authentication was required."
+msgstr ""
+
+# 83e7181e04e44a9eb8fa814e0bde83b9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:200
+msgid "cqtd"
+msgstr ""
+
+# 546e1add91694089a72aea637b6d1ea6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:200
+msgid "The date and time of the client request, enclosed in brackets."
+msgstr ""
+
+# 08236fb709b8445096ff485393aa6c69
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:201
+msgid "cqtx"
+msgstr ""
+
+# d4f124ffbb8b4466a224dd2195eb3130
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:201
+msgid "The request line, enclosed in quotes."
+msgstr ""
+
+# 82dc86c71ea44bc7b23ed073a87f160c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:202
+msgid "pssc"
+msgstr ""
+
+# 887a651a4e14432784620afb48c14868
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:202
+msgid "The proxy response status code (HTTP reply code)."
+msgstr ""
+
+# 40cf5b18b1e144b28bec2356d9634b99
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:203
+msgid "pscl"
+msgstr ""
+
+# 07a396d54a0d49e49c72eb97e8a1a8c8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:203
+msgid "The length of the |TS| response to the client in bytes."
+msgstr ""
+
+# b73e9d35586349fe90c65bf384f4a0e1
+# 2eaccf2bce644d6a8276f276e91bb82a
+# 0d1c6b28f60a4d6eafdef2687d09d60a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:207
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:914
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:920
+msgid "Netscape Extended"
+msgstr ""
+
+# 4a63dcf2c80449058a64ab454cfae555
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:209
+msgid ""
+"The following figure shows a sample log entry in a Netscape Extended log "
+"file."
+msgstr ""
+
+# 3632c4d624df42a487b3ea3f11ddaf31
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:215
+msgid "Sample log entry in extended.log"
+msgstr ""
+
+# d7e6ee689b094c2fa6d6027c76d947a7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:217
+msgid ""
+"In addition to field 1-7 from the Netscape Common log format above, the "
+"Extended format also adds the following fields:"
+msgstr ""
+
+# 930f5e79ae2f4b05b169421f6fce3c98
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:223
+msgid "sssc"
+msgstr ""
+
+# 211ba9b811de4e5ca6612eca45a34977
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:223
+msgid "The origin server response status code."
+msgstr ""
+
+# 2870864bf7a348c9b5d00af3ac80f1bb
+# a034849048504f378f85f157dfa7bddd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:224
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:236
+msgid "sshl"
+msgstr ""
+
+# 87cb44e5c730493998a9d9e236840693
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:224
+msgid ""
+"The server response transfer length; the body length in the origin server"
+" response to |TS|, in bytes."
+msgstr ""
+
+# 325429b541bb4b1e9bfea3b3cf2776a0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:226
+msgid "cqbl"
+msgstr ""
+
+# 3b1921d04cf64de499f49d75596824e5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:226
+msgid ""
+"The client request transfer length; the body length in the client request"
+" to |TS|, in bytes."
+msgstr ""
+
+# 657911d30e6f4f039a1d7863cbc3510d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:228
+msgid "11"
+msgstr ""
+
+# bfc480ec58174d0fb1c71271b3428047
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:228
+msgid "pqbl"
+msgstr ""
+
+# ee423da11ff843de97e14c8c87b3ee64
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:228
+msgid ""
+"The proxy request transfer length; the body length in the |TS| request to"
+" the origin server."
+msgstr ""
+
+# 9a811760370c416595a35084973b7c31
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:230
+msgid "12"
+msgstr ""
+
+# 7c6f6b4ae2bf4334a520b5e6a2f10e4b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:230
+msgid "cqhl"
+msgstr ""
+
+# 3587d373ca1943babf4746de4e9f694b
+# 97d60f55d95143f983b0a46c0c5e741c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:230
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:423
+msgid ""
+"The client request header length; the header length in the client request"
+" to |TS|."
+msgstr ""
+
+# 72b504e79079482196ed7aee364ca45a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:232
+msgid "13"
+msgstr ""
+
+# 3ff660f6666d4ffb9b741428ee34269a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:232
+msgid "pshl"
+msgstr ""
+
+# 44d1d9da854f41a7a0d9f80012c16865
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:232
+msgid ""
+"The proxy response header length; the header length in the |TS| response "
+"to the client."
+msgstr ""
+
+# 65fe06e155424b1a92e9f0f814a2df54
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:234
+msgid "14"
+msgstr ""
+
+# c0d223c3391648f5a16d3c2ccd297d55
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:234
+msgid "pqhl"
+msgstr ""
+
+# c5bfde5ec4b84d039d7faff4000111cf
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:234
+msgid ""
+"The proxy request header length; the header length in |TS| request to the"
+" origin server."
+msgstr ""
+
+# b7af801a096b4250bdd6d7dd45bbd38a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:236
+msgid "15"
+msgstr ""
+
+# eba8c5ba1f3c4446bd2de5f5c2412fd7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:236
+msgid ""
+"The server response header length; the header length in the origin server"
+" response to |TS|."
+msgstr ""
+
+# 892cc34dd09f4b3596b904d036ed64ff
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:238
+msgid "16"
+msgstr ""
+
+# 9d404b1e0cb34b84ab61c41db2d1dd3a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:238
+msgid "tts"
+msgstr ""
+
+# fff06f9829464e5f867bff3ba78a6866
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:238
+msgid ""
+"The time |TS| spent processing the client request; the number of seconds "
+"between the time that the client established the connection with |TS| and"
+" the time that |TS| sent the last byte of the response back to the "
+"client."
+msgstr ""
+
+# 11fa5571f2874fbd8d8bb0c5445a548d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:245
+msgid "Netscape Extended2"
+msgstr ""
+
+# 5c078cbee76d40a79dd19cbed3195884
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:247
+msgid ""
+"The following figure shows a sample log entry in a Netscape Extended2 log"
+" file."
+msgstr ""
+
+# 78b661c4b9c9440da875c0c347311ded
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:253
+msgid "Sample log entry in extended2.log"
+msgstr ""
+
+# 12429e83ab074b1b96f9917bc2248d69
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:255
+msgid ""
+"In addition to field 1-16 from the log formats above, the Extended2 "
+"format also adds the following fields:"
+msgstr ""
+
+# 98ba0ea3b616424c87c5f738a30e24c8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:261
+msgid "17"
+msgstr ""
+
+# a6c79b8c620644a9b011e96c13142111
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:261
+msgid "phr"
+msgstr ""
+
+# 4f790ab2bbff49ea9b62d0bb2390cb6a
+# 9a08167c5a1e49a09e7c8a0acffb09e6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:261
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:665
+msgid "The proxy hierarchy route; the route |TS| used to retrieve the object."
+msgstr ""
+
+# 3cfe6555c99e496f8015705a6b7c26f2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:263
+msgid "18"
+msgstr ""
+
+# 50656e8a871f4723b7dfb64dc1bf517d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:263
+msgid "cfsc"
+msgstr ""
+
+# ce686c33684d4e36a03994bb274b89f1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:263
+msgid ""
+"The client finish status code: ``FIN`` if the client request completed "
+"successfully or ``INTR`` if the client request was interrupted."
+msgstr ""
+
+# a30ff25d0c4f45aa8ccd55eb983ca91d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:266
+msgid "19"
+msgstr ""
+
+# e4612741458746cea15d783e871fb4af
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:266
+msgid "pfsc"
+msgstr ""
+
+# 2a77b464732244a9895aeb34d4a230e6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:266
+msgid ""
+"The proxy finish status code: ``FIN`` if the |TS| request to the origin "
+"server completed successfully or ``INTR`` if the request was interrupted."
+msgstr ""
+
+# 556403a79f4c4725949390aa1e116033
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:269
+msgid "20"
+msgstr ""
+
+# 643b17de4aa34da885f3844189c85a64
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:269
+msgid "crc"
+msgstr ""
+
+# 26f62a67de5f4efc91377fa4f5c59458
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:269
+msgid ""
+"The cache result code; how the |TS| cache responded to the request: "
+"``HIT``, ``MISS``, and so on. Cache result codes are listed in :ref"
+":`<admin-monitoring-logging-cache-result-codes>`."
+msgstr ""
+
+# 149a55acb88644e8bac3da13c088210f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:277
+msgid "Custom Formats"
+msgstr ""
+
+# 6d20edef40bb44e38b28897ebd58dd96
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:280
+msgid "Defining a Format"
+msgstr ""
+
+# e3bf858124a2409fa9fb0946e89dba27
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:282
+msgid ""
+"Custom logging formats in |TS| are defined by editing "
+":file:`logs_xml.config` and adding new :ref:`LogFormat` entries for each "
+"format you wish to define. The syntax is fairly simple: every "
+":ref:`LogFormat` element should contain at least two child elements "
+"(additional elements are used for features such as log summarization and "
+"are covered elsewhere):"
+msgstr ""
+
+# f385df6cdb214b45b24822d7972bc29d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:288
+msgid ""
+"A ``<Name>`` which contains an arbitrary string (using only the allowed "
+"characters: ``[a-z0-9]``) naming your custom format."
+msgstr ""
+
+# a2ab41374dc343d4aee95991a9d5eed1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:291
+msgid ""
+"A ``<Format>`` which defines the fields that will populate each entry in "
+"the custom logs, as well as the order in which they appear."
+msgstr ""
+
+# 90baf878a74447ef8e0bbc364899a738
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:294
+msgid ""
+"A very simple example format, which contains only the timestamp of when "
+"the event began and the canonical URL of the request, and named "
+"*myformat* would be written as follows:"
+msgstr ""
+
+# 75080148ca8844bc8d0e651d95d11150
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:305
+msgid ""
+"You may include as many custom field codes as you wish. The full list of "
+"codes available can be found in :ref:`custom-logging-fields`. You may "
+"also include any literal characters in your format. For example, if we "
+"wished to separate the timestamp and canonical URL in our customer format"
+" above with a slash instead of a space, or even a slash surrounded by "
+"spaces, we could do so by just adding the desired characters to the "
+"format string::"
+msgstr ""
+
+# 6ac03c715620458c895c9c19c3eea33f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:314
+msgid ""
+"You may define as many custom formats as you wish. To apply changes to "
+"custom formats, you will need to run the command :option:`traffic_line "
+"-x` after saving your changes to :file:`logs_xml.config`."
+msgstr ""
+
+# 13932298725243f5aab9b0d7c2452b76
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:321
+msgid "Custom Logging Fields"
+msgstr ""
+
+# f626df62787b45779f3dea9fa188d0cd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:323
+msgid "The following list describes |TS| custom logging fields."
+msgstr ""
+
+# 42e3e214afa8463cb9e985fe1ed9504f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:333
+msgid "``{HTTP header field name}cqh``"
+msgstr ""
+
+# fe4942559f734fd6a435c13eebb58687
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:328
+msgid ""
+"Logs the information in the requested field of the client request HTTP "
+"header. For example, ``%<{Accept-Language}cqh>`` logs the ``Accept-"
+"Language:`` field in client request headers."
+msgstr ""
+
+# a9eac041e2ad454e914c14444174d024
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:333
+msgid "ecqh is the URL-encoded version of this map"
+msgstr ""
+
+# a76cf160c033475ca59eafaf865fe205
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:343
+msgid "``{HTTP header field name}pqh``"
+msgstr ""
+
+# 8eb9245f23844ea49c4c9b612c526ac7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:338
+msgid ""
+"Logs the information in the requested field of the proxy request HTTP "
+"header. For example, ``%<{Authorization}pqh>`` logs the "
+"``Authorization:`` field in proxy request headers."
+msgstr ""
+
+# 9fb5c215947145058a8b0a54396cb927
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:343
+msgid "epqh is the URL-encoded version of this map"
+msgstr ""
+
+# d500a7dd8df047cf919e741665c3e4a7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:353
+msgid "``{HTTP header field name}psh``"
+msgstr ""
+
+# dfe4f79541a545a488f90aa2a65344f8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:348
+msgid ""
+"Logs the information in the requested field of the proxy response HTTP "
+"header. For example, ``%<{Retry-After}psh>`` logs the ``Retry-After:`` "
+"field in proxy response headers."
+msgstr ""
+
+# 96cd2ee8aa6d441d9f0110aa3d7b8366
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:353
+msgid "epsh is the URL-encoded version of this map"
+msgstr ""
+
+# 1e02fb886cbf4903af366c675a967b01
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:363
+msgid "``{HTTP header field name}ssh``"
+msgstr ""
+
+# 69d56eb4df514fc6a95463ec203dccdb
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:358
+msgid ""
+"Logs the information in the requested field of the server response HTTP "
+"header. For example, ``%<{Age}ssh>`` logs the ``Age:`` field in server "
+"response headers."
+msgstr ""
+
+# d1f472db75684984a175295731f06222
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:363
+msgid "essh is the URL-encoded version of this map"
+msgstr ""
+
+# 278d057ad31e4e0a83355ddf9fb20c3e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:373
+msgid "``{HTTP header field name}cssh``"
+msgstr ""
+
+# 42a1d32e03804b3494e716205ded6d98
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:368
+msgid ""
+"Logs the information in the requested field of the cached server response"
+" HTTP header. For example, ``%<{Age}cssh>`` logs the ``Age:`` field in "
+"the cached server response headers."
+msgstr ""
+
+# 2b1f657fbcc24df1a9da7619e5aa2893
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:373
+msgid "ecssh is the URL-encoded version of this map"
+msgstr ""
+
+# 66104316b7a84b3e82db35fe7a648be3
+# d9a6e7bb4e1c47c6ab98ff103a87296b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:379
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:959
+msgid "``caun``"
+msgstr ""
+
+# 6803cf743d0c40e2b8cfd8b3cb5eda67
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:378
+msgid ""
+"The client authenticated username; result of the RFC931/ident lookup of "
+"the client username."
+msgstr ""
+
+# 60735dffaa9245079f2600a6caa3307c
+# 23778da1d83d483297cd3c694a162cfc
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:386
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:974
+msgid "``cfsc``"
+msgstr ""
+
+# ecab772a65e04d3a9e8a81fa872b16f0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:384
+msgid ""
+"The client finish status code; specifies whether the client request to "
+"|TS| was successfully completed (``FIN``) or interrupted (``INTR``)."
+msgstr ""
+
+# 2b7ca1d2e5074eb1b20eb4210bfbe99b
+# f021134327624edba927b4c401db4a51
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:391
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:958
+msgid "``chi``"
+msgstr ""
+
+# 1f45ce8d4d934703877b422dd882b644
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:396
+msgid "``chih``"
+msgstr ""
+
+# eed003e864be44cbabb9503ee52810f1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:396
+msgid "The IP address of the client's host machine in hexadecimal."
+msgstr ""
+
+# 5589e1a730ed4c66841721caff47f8f9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:402
+msgid "``hii``"
+msgstr ""
+
+# 12c3221e76014541b3474ec86a50dc02
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:401
+msgid ""
+"This is the incoming (interface) IP address for |TS|, in otherwords this "
+"is the IP address the client connected to."
+msgstr ""
+
+# beb02779243e474ea5ba3183fce9319d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:407
+msgid "``hiih``"
+msgstr ""
+
+# f9114fd0b4774691a11d20e41cf8c7d4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:407
+msgid "The the incoming (interface) IP address in hexadecimal."
+msgstr ""
+
+# f1230e64eee140b6b1bcb48fc311aa5e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:412
+msgid "``chp``"
+msgstr ""
+
+# 6569c8f6dab24083b6b8f1beaea7946c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:412
+msgid "The port number of the client's host machine."
+msgstr ""
+
+# 12671adfd7b74facb264df9c9f6404c4
+# 8098b652265646378569f42765bbbf39
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:418
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:966
+msgid "``cqbl``"
+msgstr ""
+
+# c084e0125fbb41b89c03613797f5ff08
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:417
+msgid ""
+"The client request transfer length; the body length in the client request"
+" to |TS| (in bytes)."
+msgstr ""
+
+# 5f7d45092a384ebea0399077a6112557
+# ff01fcd37d104ae0bdae7bc33f9ef1c4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:424
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:968
+msgid "``cqhl``"
+msgstr ""
+
+# c22474b6eea44d96945ca84092089bb3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:430
+msgid "``cqhm``"
+msgstr ""
+
+# fc8d242f20a9430198f21f229081ed89
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:429
+msgid ""
+"The HTTP method in the client request to |TS|: ``GET``, ``POST``, and so "
+"on (subset of ``cqtx``)."
+msgstr ""
+
+# a5b6c9c485b44d19897672529617b023
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:435
+msgid "``cqhv``"
+msgstr ""
+
+# 7117d8d476e8445aa08ff6cc35c1bf4a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:435
+msgid "The client request HTTP version."
+msgstr ""
+
+# b7786c05d23d44b28e271f9186ea28a9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:440
+msgid "``cqpv``"
+msgstr ""
+
+# efc8bf1060b84bb99120fbe2b58c45b1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:440
+msgid "The client request protocol and version."
+msgstr ""
+
+# 42cce12f174543af857d715855627aae
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:447
+msgid "``cqtd``"
+msgstr ""
+
+# abc1322fce45454d886db84d634713a3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:445
+msgid ""
+"The client request timestamp. Specifies the date of the client request in"
+" the format yyyy-mm-dd, where yyyy is the 4-digit year, mm is the 2-digit"
+" month, and dd is the 2-digit day."
+msgstr ""
+
+# db86e997927f48a28f5051ac634432a6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:453
+msgid "``cqtn``"
+msgstr ""
+
+# b3f1e3224fff45cdbf829619e9cff42f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:452
+msgid ""
+"The client request timestamp; date and time of the client's request (in "
+"the Netscape timestamp format)."
+msgstr ""
+
+# 61dc5e184396459f9d7af46906cb75e6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:459
+msgid "``cqtq``"
+msgstr ""
+
+# 2f3aa41c3df140619dfd61a902af4b0b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:458
+msgid ""
+"The time of the client request since January 1, 1970 UTC (epoch), with "
+"millisecond resolution."
+msgstr ""
+
+# c88164ea06304d68ac1ff761344238b0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:464
+msgid "``cqts``"
+msgstr ""
+
+# 2a4feeda524f47f2b119ccd1eb81203e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:464
+msgid ""
+"The time of the client request since January 1, 1970 UTC (EPOCH), with "
+"second resolution."
+msgstr ""
+
+# 761f84de258b4b7583435978847626ab
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:472
+msgid "``cqtt``"
+msgstr ""
+
+# d2b0b3db5ed64ccebb023e4a9662705f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:469
+msgid ""
+"The client request timestamp. The time of the client request in the "
+"format hh:mm:ss, where hh is the two-digit hour in 24-hour format, mm is "
+"the two-digit minutes value, and ss is the 2-digit seconds value (for "
+"example, 16:01:19)."
+msgstr ""
+
+# 2856ef2307e54d409d3c9fa27dc2b234
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:478
+msgid "``cqtr``"
+msgstr ""
+
+# fdfbd6c5fc62400899d2ae3f99ade229
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:477
+msgid ""
+"The TCP reused status; indicates if this client request went through an "
+"already established connection."
+msgstr ""
+
+# c593fc8452394cbeb12999775c83d023
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:484
+msgid "``cqssl``"
+msgstr ""
+
+# 6a06f35dec7f4b71911168e9102182ae
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:483
+msgid ""
+"The SSL client request status indicates if this client connection is over"
+" SSL."
+msgstr ""
+
+# 9befa721d7c14dd6829295d60a9e1262
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:490
+msgid "``cqssr``"
+msgstr ""
+
+# 56367cd089894088b65e2df7aba7e4b1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:489
+msgid ""
+"The SSL session ticket reused status; indicates if this request hit the "
+"SSL session ticket and avoided a full SSL handshake."
+msgstr ""
+
+# 629701302fac4a20b0b0403c25455628
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:495
+msgid "``cqssv``"
+msgstr ""
+
+# cb28f0e364dc42939d1b6aa3059d3ecb
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:495
+msgid "The SSL version used to communicate with the client."
+msgstr ""
+
+# 2edd408dca534cb183a30feceb7b04b2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:500
+msgid "``cqssc``"
+msgstr ""
+
+# a0d9f60851ce4c7b8453a56cf34f5f6e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:500
+msgid "The cipher used by |TS| to communicate with the client over SSL."
+msgstr ""
+
+# 9323519ec2934a9f9e5157d904a7bcb2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:511
+msgid "``cqtx``"
+msgstr ""
+
+# 03b48f16a01f415b87d97405f0f8ef2e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:505
+msgid "The full HTTP client request text, minus headers; for example, ::"
+msgstr ""
+
+# 80e1c5cc05f54847971159303ab4062f
+# 08d159b6825740a081c2a0be32ae5b3f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:509
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:519
+msgid ""
+"In reverse proxy mode, |TS| logs the rewritten/mapped URL (according to "
+"the rules in :file:`remap.config`), _not_ the pristine/unmapped URL."
+msgstr ""
+
+# ffaa2a82680545b1b96a0186225aa6b6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:521
+msgid "``cqu``"
+msgstr ""
+
+# 081e2981ce7548f1b6b6746b60ad6afe
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:516
+msgid ""
+"The universal resource identifier (URI) of the request from client to "
+"|TS| (subset of ``cqtx`` )."
+msgstr ""
+
+# 07900beabcb74e8d8bef847e3e0669d3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:532
+msgid "``cquc``"
+msgstr ""
+
+# daaf4b39404b42cdb7bc21aad8fe7a75
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:526
+msgid ""
+"The client request canonical URL. This differs from ``cqu`` in that "
+"blanks (and other characters that might not be parsed by log analysis "
+"tools) are replaced by escape sequences. The escape sequence is a "
+"percentage sign followed by the ASCII code number in hex."
+msgstr ""
+
+# c5670ad313fb4cba82d9eac4f7728b22
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:532
+msgid "See `cquuc`_."
+msgstr ""
+
+# 2ff6324267b44f37bf345243a9d935f0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:542
+msgid "``cqup``"
+msgstr ""
+
+# ea5d6b2eef9f417a9ccf30862fff5948
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:537
+msgid ""
+"The client request URL path; specifies the argument portion of the URL "
+"(everything after the host). For example, if the URL is "
+"``http://www.company.com/images/x.gif``, then this field displays "
+"``/images/x.gif``"
+msgstr ""
+
+# d81e84305c36471eb539f13fda14ce64
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:542
+msgid "See `cquup`_."
+msgstr ""
+
+# d722c5044ac943b08b7d263d369bdbb5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:547
+msgid "``cqus``"
+msgstr ""
+
+# 87c0b86477ca425fb84249645fa16540
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:547
+msgid "The client request URL scheme."
+msgstr ""
+
+# 4b91c872b9e449ada9f1a561cd1193da
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:553
+msgid "``cquuc``"
+msgstr ""
+
+# 6aa18c1974a04b919297f61ff0dc271c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:552
+msgid ""
+"The client request unmapped URL canonical. This field records a URL "
+"before it is remapped (reverse proxy mode)."
+msgstr ""
+
+# 1f0eefc5698e4fe69bf1ff5027b3acbf
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:559
+msgid "``cquup``"
+msgstr ""
+
+# 4b804e34fb084956afd94b9ced18e765
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:558
+msgid ""
+"The client request unmapped URL path. This field records a URL path "
+"before it is remapped (reverse proxy mode)."
+msgstr ""
+
+# 9e8dc20e9c994204b9a0a3977731e04b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:565
+msgid "``cquuh``"
+msgstr ""
+
+# 976b41d5ef984a6cbde5ccb1db6c38b6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:564
+msgid ""
+"The client request unmapped URL host. This field records a URL's host "
+"before it is remapped (reverse proxy mode)."
+msgstr ""
+
+# e94a954349f94373afd6fa782b5734ce
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:571
+msgid "``cluc``"
+msgstr ""
+
+# c45ba041ed95467cb0ff2a1f8a1cdeae
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:570
+msgid ""
+"The cache lookup URL, or cache key, for the client request. This URL is "
+"canonicalized as well."
+msgstr ""
+
+# 05170bbd762b4df5a0451474610fb174
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:576
+msgid "``crat``"
+msgstr ""
+
+# 9b3b74a7e6014d5695adf1c23414d953
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:576
+msgid "The Retry-After time in seconds, if specified by the origin server."
+msgstr ""
+
+# b9194d74f4fa423ea8cd527be821e5b2
+# dcabb4a80f504cd3a23c5f8e58c07f00
+# f50155a1b0a04e48b19933c8a7eabe60
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:582
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:976
+msgid "``crc``"
+msgstr ""
+
+# 4b6d628931a74d6da613ee62e1c31523
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:581
+msgid ""
+"The cache result code; specifies how the cache responded to the request "
+"(``HIT``, ``MISS``, and so on)."
+msgstr ""
+
+# a7e1ab1c0586400e953731d3cf53b660
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:591
+msgid "``chm``"
+msgstr ""
+
+# 3d67c1c914cf47e19dacbb998917737f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:587
+msgid ""
+"The cache hit-miss status, specifying which level of the cache this was "
+"served out of. This is useful for example to show whether it was a RAM "
+"cache vs disk cache hit. Future versions of the cache will support more "
+"levels, but right now it only supports RAM (``HIT_RAM``) vs rotational "
+"disk (``HIT_DISK``)."
+msgstr ""
+
+# 471daa531b30418d83e098e206a28072
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:597
+msgid "``csscl``"
+msgstr ""
+
+# f391064e2ef44c3c9c82fa4260575790
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:596
+msgid ""
+"The cached response length (in bytes) from origin server to Traffic "
+"Server."
+msgstr ""
+
+# 4f9fd0af2d47427dae5c138efb46ed4b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:603
+msgid "``csshl``"
+msgstr ""
+
+# 61d8bab0d79a418283d78baa98174385
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:602
+msgid ""
+"The cached header length in the origin server response to Traffic Server "
+"(in bytes)."
+msgstr ""
+
+# 163129f9e74940b49bcf171aff7af63c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:608
+msgid "``csshv``"
+msgstr ""
+
+# ded8aaa92e7444809ca270cd8eee3cd5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:608
+msgid "The cached server response HTTP version (1.0, 1.1, etc.)."
+msgstr ""
+
+# 23ffcd3d24ec4589a787c10a95bccdb1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:614
+msgid "``csssc``"
+msgstr ""
+
+# c73a7be571544e9ab615c246224b796e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:613
+msgid "The cached HTTP response status code from origin server to Traffic Server."
+msgstr ""
+
+# 656c26362e0748fb99b26285b2951816
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:619
+msgid "``cwr``"
+msgstr ""
+
+# fd4668475992402d9cf12b2988d38614
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:619
+msgid "The cache write result (``-``, ``WL_MISS``, ``INTR```, ``ERR`` or ``FIN``)"
+msgstr ""
+
+# 9fec1850be324f67a3570e15056dea97
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:624
+msgid "``cwtr``"
+msgstr ""
+
+# 93eddb40102544e5adeee06d8aea3eff
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:624
+msgid "The cache write transform result"
+msgstr ""
+
+# 4d880dcd937047fb996cdfe2d2c6f82d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:629
+msgid "``fsiz``"
+msgstr ""
+
+# fe5e96693cd1462e8c8387c098a65338
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:629
+msgid "The size of the file (*n* bytes) as seen by the origin server."
+msgstr ""
+
+# fb0c1dc00098434395f13a38f0a3cad9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:635
+msgid "``{Milestone field name}ms``"
+msgstr ""
+
+# 7538e4b9360548a2b9351e95872292d0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:634
+msgid ""
+"The timestamp in milliseconds of a specific milestone for this request. "
+"see :c:func:`TSHttpTxnMilestoneGet` for milestone names."
+msgstr ""
+
+# 2bf7edc6b9134d84b30126c9f7a1674d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:641
+msgid "``{Milestone field name1-Milestone field name2}msdms``"
+msgstr ""
+
+# 25f8cfcc815f4471b5fed93e60169907
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:640
+msgid ""
+"The difference in milliseconds of between two milestones. see "
+":c:func:`TSHttpTxnMilestoneGet` for milestone names."
+msgstr ""
+
+# c26b345ae5a34fba9fdbab3b228bc46c
+# 3f13e3c4bbbb41589af2e1215cef960c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:648
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:975
+msgid "``pfsc``"
+msgstr ""
+
+# 3afd00255b38452f8eb3b9ff5fe47219
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:646
+msgid ""
+"The proxy finish status code; specifies whether the |TS| request to the "
+"origin server was successfully completed (``FIN``), interrupted "
+"(``INTR``) or timed out (``TIMEOUT``)."
+msgstr ""
+
+# 5dff6caf15f24087b5f4b03ab72be24d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:654
+msgid "``phn``"
+msgstr ""
+
+# 14151a656fec4e219fd539dadc3f01ee
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:653
+msgid ""
+"The hostname of the |TS| that generated the log entry in collated log "
+"files."
+msgstr ""
+
+# c75732d5bd3a480eb72b7e8b76416889
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:660
+msgid "``phi``"
+msgstr ""
+
+# 5985e8150a4d4e6a916bb2a08189c8ff
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:659
+msgid "The IP of the |TS| that generated the log entry in collated log files."
+msgstr ""
+
+# 44c2e1c898f9480fa49a00e47f500261
+# ad5917fe94b9427096fe4ce632bf6ad6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:666
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:973
+msgid "``phr``"
+msgstr ""
+
+# 9e2f476278b14554b1eef20a13b919b0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:671
+msgid "``php``"
+msgstr ""
+
+# 080c90cec3db4585812c5b0792121b51
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:671
+msgid "The TCP port number that |TS| served this request from."
+msgstr ""
+
+# 0288101fd4fa42a29f58b8d9b8664eea
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:676
+msgid "``piid``"
+msgstr ""
+
+# 5294e6c24347410981bcaf74d21c3bf6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:676
+msgid ""
+"The plugin ID for the transaction. This is set for plugin driven "
+"transactions via :c:func:`TSHttpConnectWithPluginId`."
+msgstr ""
+
+# 403eced6d6d645089aaa4ec5a979b6a1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:682
+msgid "``pitag``"
+msgstr ""
+
+# ba02869874b942cbadc5d2608ea60dd7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:681
+msgid ""
+"The plugin tag for the transaction. This is set for plugin driven "
+"transactions via :c:func:`TSHttpConnectWithPluginId`."
+msgstr ""
+
+# af21c7f6adb948e7a9b7b24e96d2412f
+# 3f158ca310d843d6a21b71ac49bf5566
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:688
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:967
+msgid "``pqbl``"
+msgstr ""
+
+# 15316675814f437088ac8ecec0b7733a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:687
+msgid ""
+"The proxy request transfer length; the body length in Traffic Server's "
+"request to the origin server."
+msgstr ""
+
+# b22c5c44b140455fb09d8ab0ad7d9e98
+# 2130f8f843fd462dbf8cbb9dd4cfa20d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:694
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:970
+msgid "``pqhl``"
+msgstr ""
+
+# 5a14cb04b6d7490ab3020e2fd3380c69
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:693
+msgid ""
+"The proxy request header length; the header length in Traffic Server's "
+"request to the origin server."
+msgstr ""
+
+# c34a8939a39841a18960d66243e1b2db
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:700
+msgid "``pqsi``"
+msgstr ""
+
+# 38683157e14a46fab25056f5fc39f471
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:699
+msgid ""
+"The proxy request server IP address (0 on cache hits and parent-ip for "
+"requests to parent proxies)."
+msgstr ""
+
+# b315a41fedd24d72a504dcba12d72b37
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:706
+msgid "``pqsn``"
+msgstr ""
+
+# fb4357ab4d5b41b29a4046049a9bd3bf
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:705
+msgid ""
+"The proxy request server name; the name of the server that fulfilled the "
+"request."
+msgstr ""
+
+# e365bdc7e43d40f88b20867fc64924e1
+# 07c94c298d6a4672aef37b08f42d9a1e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:711
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:963
+msgid "``pscl``"
+msgstr ""
+
+# 05565b6c93d74a9383e08ed59320adbf
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:711
+msgid "The length of the |TS| response to the client (in bytes)."
+msgstr ""
+
+# 2d57db5cc320487bbaff5492798b6a9c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:717
+msgid "``psct``"
+msgstr ""
+
+# 8e082bc9bc4c49a2bc3db9ff8dc82e52
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:716
+msgid ""
+"The content type of the document from server response header: (for "
+"example, ``img/gif`` )."
+msgstr ""
+
+# 797c1f1f0d2742719e4facbbfa207d01
+# 830298e330bd481dae0edc0c0926794c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:722
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:969
+msgid "``pshl``"
+msgstr ""
+
+# 3512e5589ab2409a960239ddcb7adc7d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:722
+msgid "The header length in |TS|'s response to the client."
+msgstr ""
+
+# 5bfc8d102410433e86328e9860e48d86
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:728
+msgid "``psql``"
+msgstr ""
+
+# 27a6f11a69d44675b9e445f0245f196f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:727
+msgid ""
+"The proxy response transfer length in Squid format (includes header and "
+"content length)."
+msgstr ""
+
+# 268b11f08a6c40b8afd534a5637beaad
+# c2b55ea24a51489783e9c2a6f703a075
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:733
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:962
+msgid "``pssc``"
+msgstr ""
+
+# 43fb026a7ca341aca4dd4da47aa6fe69
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:733
+msgid "The HTTP response status code from |TS| to the client."
+msgstr ""
+
+# 06d3eaf84db145fab054f85e3d436390
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:739
+msgid "``pqssl``"
+msgstr ""
+
+# a255c2278d034f89a52b8478842d713a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:738
+msgid ""
+"Indicates whether the connection from |TS| to the origin was over SSL or "
+"not."
+msgstr ""
+
+# e307c5c17ce24aff818c431146a2279c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:752
+msgid "``shi``"
+msgstr ""
+
+# 4d3b700158b64d81850d7e8f4e43f562
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:744
+msgid ""
+"The IP address resolved from the DNS name lookup of the host in the "
+"request. For hosts with multiple IP addresses, this field records the IP "
+"address resolved from that particular DNS lookup."
+msgstr ""
+
+# af5d855523114025abd93f9aacf5c3ce
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:748
+msgid ""
+"This can be misleading for cached documents. For example: if the first "
+"request was a cache miss and came from *IP1* for server *S* and the "
+"second request for server *S* resolved to *IP2* but came from the cache, "
+"then the log entry for the second request will show *IP2*."
+msgstr ""
+
+# 1433c46a21dd4aec841a3d5d4c2c9049
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:757
+msgid "``shn``"
+msgstr ""
+
+# 9586a1a38c784b64919d36665d7590b7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:757
+msgid "The hostname of the origin server."
+msgstr ""
+
+# fdb320d755664d46a5e8e1e06f4c0ca5
+# 8102cc36a91d4adbaf4ac2c5670c5e63
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:762
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:965
+msgid "``sscl``"
+msgstr ""
+
+# b9f3c0cf2c8f4a5f9e39076f47a4ff21
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:762
+msgid "The response length (in bytes) from origin server to |TS|."
+msgstr ""
+
+# 235c59b49d0a4b5b964ae78da667dd10
+# 1f34d18352d64388b8fcb8eade84efe2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:767
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:971
+msgid "``sshl``"
+msgstr ""
+
+# f679b8e0d33b4b15a8274b24594713c4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:767
+msgid "The header length (in bytes) in the origin server response to |TS|."
+msgstr ""
+
+# 9acd51851489453988a8386b8fa442b0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:772
+msgid "``sshv``"
+msgstr ""
+
+# 0e41c8bc083c47a59ee26802527f9bfc
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:772
+msgid "The server response HTTP version (1.0, 1.1, etc.)."
+msgstr ""
+
+# 17355e8ee6dc4e4789cb4dc25e3523b5
+# 1099f70da7bf4230a9ff872eca787ba6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:777
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:964
+msgid "``sssc``"
+msgstr ""
+
+# c95014ef1bb9408e93190b6a38ce3e71
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:777
+msgid "The HTTP response status code from origin server to |TS|."
+msgstr ""
+
+# 844ac4f950e44907a55563481eb5e7a4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:784
+msgid "``stms``"
+msgstr ""
+
+# b5a00325b6294b58853c739687f628cd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:782
+msgid ""
+"The time spent accessing the origin (in milliseconds); the time is "
+"measured from the time the connection with the origin is established to "
+"the time the connection is closed."
+msgstr ""
+
+# 99e16641784c4db4a1d4fddcade3abce
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:789
+msgid "``stmsh``"
+msgstr ""
+
+# 5f193565958b4b4db86b897ee17c296c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:789
+msgid "Same as ``stms`` but in hexadecimal."
+msgstr ""
+
+# 302028ee74144ba38b5fa125c1000797
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:800
+msgid "``stmsf``"
+msgstr ""
+
+# c5abe8b869da4de094b3b5df679ecc58
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:794
+msgid ""
+"The time |TS| spends accessing the origin as a fractional number of "
+"seconds. That is, the time is formated as a floating-point number, "
+"instead of an integer as in ``stms``."
+msgstr ""
+
+# 3d1492d54cda48f48b4e50d9bd7b284a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:798
+msgid ""
+"For example: if the time is 1500 milliseconds, then this field displays "
+"1.5 while the ``stms`` field displays 1500 and the ``sts`` field displays"
+" 1."
+msgstr ""
+
+# d691d07487eb48bfa6d30cd7b3ffbde7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:805
+msgid "``sts``"
+msgstr ""
+
+# ff3a426b704a4ad584790c3eeceef6be
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:805
+msgid "The time |TS| spends accessing the origin, in seconds."
+msgstr ""
+
+# 0bf13440692e40bd97fdc0bad8c7e8f1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:812
+msgid "``sstc``"
+msgstr ""
+
+# 4ee6a5937655493384137c6ec7b8a50c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:810
+msgid ""
+"The number of transactions between |TS| and the origin server from a "
+"single server session. A value greater than 0 indicates connection reuse."
+msgstr ""
+
+# f554b8a3be394a05a7b45bc0f746c467
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:820
+msgid "``ttms``"
+msgstr ""
+
+# e7c8010d692d41e08fd1af83c878861e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:817
+msgid ""
+"The time |TS| spends processing the client request; the number of "
+"milliseconds between the time the client establishes the connection with "
+"|TS| and the time |TS| sends the last byte of the response back to the "
+"client."
+msgstr ""
+
+# 30ac1333b18648b2af4c959335872985
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:825
+msgid "``ttmsh``"
+msgstr ""
+
+# f86453ba524048a4b0c9967f82b62690
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:825
+msgid "Same as ``ttms`` but in hexadecimal."
+msgstr ""
+
+# 61d77f89241e4503be27cac1f7e96c9a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:838
+msgid "``ttmsf``"
+msgstr ""
+
+# d7a4f1dd8c2141a6b307c93c76eb22e5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:830
+msgid ""
+"The time |TS| spends processing the client request as a fractional number"
+" of seconds. Time is specified in millisecond resolution; however, "
+"instead of formatting the output as an integer (as with ``ttms``), the "
+"display is formatted as a floating-point number representing a fractional"
+" number of seconds."
+msgstr ""
+
+# fc866afa478e461ca172c8e60ecb0acd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:836
+msgid ""
+"For example: if the time is 1500 milliseconds, then this field displays "
+"1.5 while the ``ttms`` field displays 1500 and the ``tts`` field displays"
+" 1."
+msgstr ""
+
+# 0f537802b59c4a6e9ebdac503193078a
+# 1ff738b1ad2246d3a209199c570f68f0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:846
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:972
+msgid "``tts``"
+msgstr ""
+
+# cba591afe9004bfb876b2001e7094320
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:843
+msgid ""
+"The time |TS| spends processing the client request; the number of seconds"
+" between the time at which the client establishes the connection with "
+"|TS| and the time at which Traffic Server sends the last byte of the "
+"response back to the client."
+msgstr ""
+
+# f2d50f44e6054ff4b3757c5188b3cebe
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:851
+msgid "Custom Field Cross-Reference"
+msgstr ""
+
+# d21b1818b59b47a9bcce92f9c2c7e3ae
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:853
+msgid ""
+"The following sections illustrate the correspondence between |TS| custom "
+"logging fields and standard logging fields for the Squid and Netscape "
+"formats."
+msgstr ""
+
+# a16f26753c5e48a7b5e422ef0f4f861b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:859
+msgid ""
+"The following is a list of the Squid logging fields and the corresponding"
+" logging field symbols."
+msgstr ""
+
+# 9d7e3b8dfe084cecbcd19e1fcaa8e79f
+# 4c523760ac674941a3d4aeab2d74af78
+# 33f7c787d0ee4ab5a054b15ec0eb6f7e
+# 46a0b755c7bb4d31a505aed90722806c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:863
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:894
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:920
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:956
+msgid "Field Symbols"
+msgstr ""
+
+# 0144c8361b134b3cb43757adee932d47
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:865
+msgid "time"
+msgstr ""
+
+# 1b4d939b17c1400e93a0d17bb14ba57c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:865
+msgid "`cqts`_"
+msgstr ""
+
+# f5e4ff0cdc144901adf396b4552c1b9b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:866
+msgid "elapsed"
+msgstr ""
+
+# 9afe51b833d540959be54996cb18be7b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:866
+msgid "`ttms`_"
+msgstr ""
+
+# 480626edcb3b43c3acee0aab61d3a8db
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:867
+msgid "client"
+msgstr ""
+
+# 509204bf54af44b696c4be23c50cd8e8
+# 3177706cb12a494f865c4b2056592ea0
+# 62458fd2c9b547d4964df1d018d2ad63
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:867
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:896
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:922
+msgid "`chi`_"
+msgstr ""
+
+# d484b338502f40599627a1331b13742d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:868
+msgid "action/code"
+msgstr ""
+
+# 2d8c655a113f4cfabe94e2969478f83b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:868
+msgid "`crc`_/`pssc`_"
+msgstr ""
+
+# 04215353647445c084336538e73f4b50
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:869
+msgid "size"
+msgstr ""
+
+# 21b830001b0443a5a716fe750e1272a7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:869
+msgid "`psql`_"
+msgstr ""
+
+# bfd63a7fec754dffa4e16e6b596b30d1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:870
+msgid "method"
+msgstr ""
+
+# bddd6c8b4f75411b8538cb19ca5053d3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:870
+msgid "`cqhm`_"
+msgstr ""
+
+# 718ac3378bce42fbaa36eff14109f8c7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:871
+msgid "url"
+msgstr ""
+
+# 30298e39214a4011bdaa9f17ed237802
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:871
+msgid "`cquc`_"
+msgstr ""
+
+# eacf9afc583745c8951d785a16aa9b70
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:872
+msgid "ident"
+msgstr ""
+
+# 06bb136414d2427898e90600ae763c3d
+# cc3c841f790d4c2cb502eab4ad4b1107
+# 51c9551d2fdd4544a5fc98d910c9cfbe
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:872
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:897
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:923
+msgid "`caun`_"
+msgstr ""
+
+# ad65f0b567f04280b40c5dc1579e3fd8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:873
+msgid "hierarchy/from"
+msgstr ""
+
+# 3f538e6f5b254d36ae814036e71311ac
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:873
+msgid "`phr`_/`pqsn`_"
+msgstr ""
+
+# 06db5b0b2d27480386730d16ecd12839
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:874
+msgid "content"
+msgstr ""
+
+# 6730054bf6994c748590bdfd7a0db496
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:874
+msgid "`psct`_"
+msgstr ""
+
+# c1166d1b05114d70a41d93b4fb907129
+# bfddf07552eb4797a83c4cf3294f39b4
+# 8482654496fa4cc389025aa3ec723b34
+# aea90dfa5b37474f89b73eac8eaaccce
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:877
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:904
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:939
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:979
+msgid "This is the equivalent XML configuration for the log above::"
+msgstr ""
+
+# d974e53091f4492aa5a42d2c9a7f1fbf
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:890
+msgid ""
+"The following is a list of the Netscape Common logging fields and the "
+"corresponding |TS| logging field symbols."
+msgstr ""
+
+# d76500e4a14047dfbcd64fd1095e2b2f
+# bf2c73dbe6aa4f58bf5c94548ccaee8c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:896
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:922
+msgid "host"
+msgstr ""
+
+# ea7c961feacc452f9185d791767b89e9
+# 3c528b0cf8d6477a921d867cdca930c3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:897
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:923
+msgid "usr"
+msgstr ""
+
+# 44b29a5994714f829730d867eff49280
+# 6c9953897d744cb283877912ac1c2fe3
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:898
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:924
+msgid "[time]"
+msgstr ""
+
+# 3bc2428d33ff4f50abb5e55cbcb405a2
+# cc33ea6b213046478bce3c0684b984e9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:898
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:924
+msgid "[`cqtn`_]"
+msgstr ""
+
+# f7a9075ffa4146178b1da6354a93727d
+# 292a3f6d47704c28b9c1cdf9038121db
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:899
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:925
+msgid "\"req\""
+msgstr ""
+
+# 9bbca6e249a54d338ed121d19131b07f
+# 2c79c09bc98649ccbdf6a90ef58f98cb
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:899
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:925
+msgid "\"`cqtx`_\""
+msgstr ""
+
+# 79eced77461645f1b251fca8aaf9cfd4
+# a4830e1aa9034dcb995b659283ae7b7d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:900
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:926
+msgid "s1"
+msgstr ""
+
+# faa03edeb7a4425b83c2d1d2ed044039
+# 8b3eacb41052465d8f79a09c5328483f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:900
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:926
+msgid "`pssc`_"
+msgstr ""
+
+# 256a6a25bc674657b6b372724e70bf16
+# e7d9141b2032418aa9f94b89627487d6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:901
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:927
+msgid "c1"
+msgstr ""
+
+# baaf1fb64730409fb5d3448e9ea7bf72
+# f62c3a752e9a4dc095b9840858464301
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:901
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:927
+msgid "`pscl`_"
+msgstr ""
+
+# fe96f6c3427746c8be3e177fa6df0b7d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:916
+msgid ""
+"The following table lists the Netscape Extended logging fields and the "
+"corresponding |TS| logging field symbols."
+msgstr ""
+
+# f9fd99fb0fb0406a8834bb0a61fd9159
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:928
+msgid "s2"
+msgstr ""
+
+# 9242c3aa8b8e41f6ac31ea7baf51868f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:928
+msgid "`sssc`_"
+msgstr ""
+
+# 99970eee4c314954815257194cce30f1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:929
+msgid "c2"
+msgstr ""
+
+# 1f0fc45930c042cc9c35aaed03cceab4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:929
+msgid "`sscl`_"
+msgstr ""
+
+# f914f40f097f468b92f3b0594741267d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:930
+msgid "b1"
+msgstr ""
+
+# 542eefa5f1e2446ebedf1dafd1d729e0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:930
+msgid "`cqbl`_"
+msgstr ""
+
+# ffbf19a95be047f3b535c4cfdf66d13a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:931
+msgid "b2"
+msgstr ""
+
+# 5129e1d3376c4ab2b4bdc36b3306147a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:931
+msgid "`pqbl`_"
+msgstr ""
+
+# 4e4f9d1a0f424b0ab546ebbae18d78e7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:932
+msgid "h1"
+msgstr ""
+
+# 9467aa71a2c24a19b8154f1c6b723582
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:932
+msgid "`cqhl`_"
+msgstr ""
+
+# 103d2ad389664f429c957bb32d25aa93
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:933
+msgid "h2"
+msgstr ""
+
+# a71b1d7bd26844ea8caad06dc9d7c9bd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:933
+msgid "`pshl`_"
+msgstr ""
+
+# d63da989815441a587fcaf10284eeec6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:934
+msgid "h3"
+msgstr ""
+
+# 29f8242eb5e9402b8dc26bb0ad08fa58
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:934
+msgid "`pqhl`_"
+msgstr ""
+
+# 15bd323384934c2687f4934ef9bc0c70
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:935
+msgid "h4"
+msgstr ""
+
+# ee62abfd57cb4fd8aae29af7ad43e1b1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:935
+msgid "`sshl`_"
+msgstr ""
+
+# 31ae8bfa30fe463c8dda0a97d011845a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:936
+msgid "xt"
+msgstr ""
+
+# 17f03dff548a44c18f444538b579f8a8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:936
+msgid "`tts`_"
+msgstr ""
+
+# 1722bf1212074582af875baecf3fad66
+# 361281d42c63429d9e9db9de19cb22df
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:950
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:956
+msgid "Netscape Extended-2"
+msgstr ""
+
+# d387d9effad34311b6ea26ab1f2bd4a1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:952
+msgid ""
+"The following is a list of the Netscape Extended-2 logging fields and the"
+" corresponding |TS| logging field symbols."
+msgstr ""
+
+# ab0830a30660461aad448855ade46fdd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:958
+msgid "``host``"
+msgstr ""
+
+# 273665dd98ee48d78362797d987eddff
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:959
+msgid "``usr``"
+msgstr ""
+
+# a2b8909e62d24d049a9cf703f44821b9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:960
+msgid "``[time]``"
+msgstr ""
+
+# e295cfcfde61466bbdc5a379512dbb3a
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:960
+msgid "``[cqtn]``"
+msgstr ""
+
+# 42c05808b2ab4c6a86e404cf0a01bd12
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:961
+msgid "``\"req\"``"
+msgstr ""
+
+# 5fb4d68b9dfa4edf8283389d408a3805
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:961
+msgid "``\"cqtx\"``"
+msgstr ""
+
+# e2a5ed5b56dd41b1bc999817971c60cd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:962
+msgid "``s1``"
+msgstr ""
+
+# eeb7d15d69ce476894844b34dde99cec
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:963
+msgid "``c1``"
+msgstr ""
+
+# b3256588f71b42e9b36f8600d83d7531
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:964
+msgid "``s2``"
+msgstr ""
+
+# 3971cc6a69d74d708c99262c372587c2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:965
+msgid "``c2``"
+msgstr ""
+
+# 1081d2789af34ee4a27de3e7b28d2a48
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:966
+msgid "``b1``"
+msgstr ""
+
+# 15422e42e4a04b3489d1d9c645e9516d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:967
+msgid "``b2``"
+msgstr ""
+
+# b8caca2c219b4728a935172ab9583600
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:968
+msgid "``h1``"
+msgstr ""
+
+# 6ed1ebd9b6a742d883557d824236159c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:969
+msgid "``h2``"
+msgstr ""
+
+# ebcbad72963f4c2eba1abd44eca6b8d0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:970
+msgid "``h3``"
+msgstr ""
+
+# 1d611c128df643dd83c91d7434df1945
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:971
+msgid "``h4``"
+msgstr ""
+
+# 0d9a90d084794dc9a5646c665ead9195
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:972
+msgid "``xt``"
+msgstr ""
+
+# 5426618522b54c91a3929c0094bc871d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:973
+msgid "``route``"
+msgstr ""
+
+# 936a8b54fa3d40faab9f3a79a12d4ff8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:974
+msgid "``pfs``"
+msgstr ""
+
+# cca65540b3104da0a7edeb167fe06e65
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:975
+msgid "``ss``"
+msgstr ""
+
+# b832883b7ddf4e3b84bf524afdb6c454
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:990
+msgid "Log Field Slicing"
+msgstr ""
+
+# 268aeed1b8a349d0ad49216c4d088da5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:992
+msgid ""
+"It is sometimes desirable to slice a log field to limit the length of a "
+"given log field's output."
+msgstr ""
+
+# 62012fbb005040aeb8d8d0aa540dacdc
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:995
+msgid "Log Field slicing can be specified as below::"
+msgstr ""
+
+# a0dc48a6ce0b4b0f828a134165cd6950
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1000
+msgid "Omitting the slice notation defaults to the entire log field."
+msgstr ""
+
+# 7d648bd9f7914f35b75c16af38e7a21c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1002
+msgid ""
+"Slice notation only applies to a log field that is of type string and can"
+" not be applied to IPs or timestamp which are converted to string from "
+"integer."
+msgstr ""
+
+# 2f7ef3543db04a37bf92679b2d80b59c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1005
+msgid "The below slice specifiers are allowed."
+msgstr ""
+
+# 585d6ad7e58e4a2e823e50c016753014
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1007
+msgid "``[start:end]``"
+msgstr ""
+
+# a442ae71ea81446ab8bd4e5a167f60bd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1008
+msgid "Log field value from start through end-1"
+msgstr ""
+
+# b8aa3c90bdee47028faee7062fd27473
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1009
+msgid "``[start:]``"
+msgstr ""
+
+# 954a235fc39246d289b9c12673570312
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1010
+msgid "Log field value from start through the rest of the string"
+msgstr ""
+
+# 11fc946360fd42aa9c2a7e18e908800d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1011
+msgid "``[:end]``"
+msgstr ""
+
+# 4fb938be6fc6465dbc9e9b99334990ec
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1012
+msgid "Log field value from the beginning through end-1"
+msgstr ""
+
+# 2ac37297657740b2a8d057835b84dfb9
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1014
+msgid "``[:]``"
+msgstr ""
+
+# c5ff02ae849b494b839d3576c01562f8
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1014
+msgid "Default - entire Log field"
+msgstr ""
+
+# 26326e3138554765b1904fcdc2489c7b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1016
+msgid "Some examples below ::"
+msgstr ""
+
+# 465aa4f7cad04d28b0b4b70add39894c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1027
+msgid "Cache Result Codes"
+msgstr ""
+
+# 15b94033e301445e921234078f994f05
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1029
+msgid ""
+"The following table describes the cache result codes in Squid and "
+"Netscape log files."
+msgstr ""
+
+# ca0e0ab06240492b818a81c265ef3887
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1034
+msgid "``TCP_HIT``"
+msgstr ""
+
+# 8ef9ca402e3745a2b57b1d3151a2794d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1033
+msgid ""
+"A valid copy of the requested object was in the cache and Traffic Server "
+"sent the object to the client."
+msgstr ""
+
+# bef42ec49f0342f78694ab562d51cf53
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1039
+msgid "``TCP_MISS``"
+msgstr ""
+
+# 5945e25806ef4b109b79dbe516077079
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1037
+msgid ""
+"The requested object was not in cache, so |TS| retrieved the object from "
+"the origin server (or a parent proxy) and sent it to the client."
+msgstr ""
+
+# 8e2b4ff918554f32b063816500c8fc27
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1045
+msgid "``TCP_REFRESH_HIT``"
+msgstr ""
+
+# b7a613b6658a44f29abf602fc09d8765
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1042
+msgid ""
+"The object was in the cache, but it was stale. |TS| made an ``if-"
+"modified-since`` request to the origin server and the origin server sent "
+"a ``304`` not-modified response. Traffic Server sent the cached object to"
+" the client."
+msgstr ""
+
+# 06b93a668f9e4411a45324b90f414f65
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1051
+msgid "``TCP_REF_FAIL_HIT``"
+msgstr ""
+
+# dc18b155b24f40389a2674b8c27cbceb
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1048
+msgid ""
+"The object was in the cache but was stale. |TS| made an ``if-modified-"
+"since`` request to the origin server but the server did not respond. |TS|"
+" sent the cached object to the client."
+msgstr ""
+
+# 09d908f7cc1c4f41ad52fad4ff35370e
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1057
+msgid "``TCP_REFRESH_MISS``"
+msgstr ""
+
+# 5bf0a41ad6e94a4ba31d6b751e2ca738
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1054
+msgid ""
+"The object was in the cache but was stale. |TS| made an ``if-modified-"
+"since`` request to the origin server and the server returned a new "
+"object. |TS| served the new object to the client."
+msgstr ""
+
+# b4c353f6496447db9681da4698dc7d98
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1063
+msgid "``TCP_CLIENT_REFRESH``"
+msgstr ""
+
+# e88b0de0044c4d8ab33a1ba7c04c354f
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1060
+msgid ""
+"The client issued a request with a ``no-cache`` header. Traffic Server "
+"obtained the requested object from the origin server and sent a copy to "
+"the client. |TS| deleted the previous copy of the object from cache."
+msgstr ""
+
+# 336fd0a8f2a743d79817c1dc5128071d
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1070
+msgid "``TCP_IMS_HIT``"
+msgstr ""
+
+# d2bd1828903b404c9125f40311e8bde4
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1066
+msgid ""
+"The client issued an ``if-modified-since`` request and the object was in "
+"cache and fresher than the IMS date, or an ``if-modified-since`` request "
+"to the origin server revealed the cached object was fresh. |TS| served "
+"the cached object to the client."
+msgstr ""
+
+# 8abd4a3aaba44d43867bf73064dc868c
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1077
+msgid "``TCP_IMS_MISS``"
+msgstr ""
+
+# 0b04a63cad3d47d394a7c993a88619ac
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1073
+msgid ""
+"The client issued an ``if-modified-since request`` and the object was "
+"either not in cache or was stale in cache. |TS| sent an ``if-modified-"
+"since request`` to the origin server and received the new object. |TS| "
+"sent the updated object to the client."
+msgstr ""
+
+# 768be282abbb42f6a12e948706248816
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1081
+msgid "``TCP_SWAPFAIL``"
+msgstr ""
+
+# ff74b2e46fad44c5a1284115891b5aa1
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1080
+msgid ""
+"The object was in the cache but could not be accessed. The client did not"
+" receive the object."
+msgstr ""
+
+# 6f4cb87b9318494b916c65f2cc4dabe0
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1084
+msgid "``ERR_CLIENT_ABORT``"
+msgstr ""
+
+# a522505525ec4d579c5e8a612386bedd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1084
+msgid "The client disconnected before the complete object was sent."
+msgstr ""
+
+# ecb626500df74e43b5f7eabaac31d586
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1087
+msgid "``ERR_CONNECT_FAIL``"
+msgstr ""
+
+# c443c0f822ff45b7886968f2d1812dcd
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1087
+msgid "|TS| could not reach the origin server."
+msgstr ""
+
+# 8805af294889457a9a4eea79002131d5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1091
+msgid "``ERR_DNS_FAIL``"
+msgstr ""
+
+# cf9eef578a06490dbeb69d2293401bc7
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1090
+msgid ""
+"The Domain Name Server (DNS) could not resolve the origin server name, or"
+" no DNS could be reached."
+msgstr ""
+
+# 08d1ae8a36fe4d729e4932b1d3704597
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1095
+msgid "``ERR_INVALID_REQ``"
+msgstr ""
+
+# 668ecff2a1ac4c7fa0f7ed486c3b5948
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1094
+msgid ""
+"The client HTTP request was invalid. (|TS| forwards requests with unknown"
+" methods to the origin server.)"
+msgstr ""
+
+# db0f08d363f4441aa390596fe30519f6
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1099
+msgid "``ERR_READ_TIMEOUT``"
+msgstr ""
+
+# fb01e42f6a6e44ce9b6e985d2ec7ffff
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1098
+msgid ""
+"The origin server did not respond to |TS|'s request within the timeout "
+"interval."
+msgstr ""
+
+# 0a6e4d6a23304113bdb44d52dcf135af
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1102
+msgid "``ERR_PROXY_DENIED``"
+msgstr ""
+
+# 6417b61e31114e74823e2f1e68b9d8b5
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1102
+msgid "Client service was denied."
+msgstr ""
+
+# 0809e663ca8f40b791963e893a670a8b
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1105
+msgid "``ERR_UNKNOWN``"
+msgstr ""
+
+# 20eeb11b5c3d4220bef5c702f2bec2e2
+#: ../../admin-guide/monitoring/logging/log-formats.en.rst:1105
+msgid ""
+"The client connected, but subsequently disconnected without sending a "
+"request."
+msgstr ""
+

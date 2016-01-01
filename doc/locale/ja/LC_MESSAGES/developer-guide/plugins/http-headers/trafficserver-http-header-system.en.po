@@ -1,0 +1,212 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 996c815ba34b49d8a06c5ecf0eee0cad
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:23
+msgid "Traffic Server HTTP Header System"
+msgstr ""
+
+# a0340b98b9234c2288dee15947be7b66
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:29
+msgid "No Null-Terminated Strings"
+msgstr ""
+
+# 4bf87cdca52d4e5f9d0005b1da0a6f52
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:31
+msgid ""
+"It's not safe to assume that string data contained in marshal buffers "
+"(such as URLs and MIME fields) is stored in null-terminated string "
+"copies. Therefore, your plugins should always use the length parameter "
+"when retrieving or manipulating these strings. You **cannot** pass in "
+"``NULL`` for string-length return values; string values returned from "
+"marshall buffers are not null-terminated. If you need a null-terminated "
+"value, then use ``TSstrndup`` to automatically null-terminate a string. "
+"The strings that come back and are not null-terminated **cannot** be "
+"passed into the common ``str*()`` routines"
+msgstr ""
+
+# 72e7824d0c294a0ab0c22e0ec1bb0c3b
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:42
+msgid ""
+"Values returned from a marshall buffer can be ``NULL``, which means the "
+"field or object requested does not exist."
+msgstr ""
+
+# 9c495803cefb4142bcc25658fd90225a
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:45
+msgid "For example (from the ``blacklist-1`` sample)"
+msgstr ""
+
+# 44f66ed5c01f4e1393b9d726533b183d
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:57
+msgid "See the sample plugins for additional examples."
+msgstr ""
+
+# 5ce082bca5a14dd980a7d856af9c40f2
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:60
+msgid "Duplicate MIME Fields Are Not Coalesced"
+msgstr ""
+
+# 185fbdd2f1664ac8a98f46a53e11085f
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:62
+msgid ""
+"MIME headers can contain more than one MIME field with the same name. "
+"Earlier versions of Traffic Server joined multiple fields with the same "
+"name into one field with composite values. This behavior came at a "
+"performance cost and caused interoperability problems with older clients "
+"and servers. Therefore, this version of Traffic Server does not coalesce "
+"duplicate fields."
+msgstr ""
+
+# e9edefa9b843438aaf88e778d3370762
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:69
+msgid ""
+"Properly-behaving plugins should check for the presence of duplicate "
+"fields and then iterate over the duplicate fields via "
+":c:func:`TSMimeHdrFieldNextDup`."
+msgstr ""
+
+# a036aaec5ae84960974ef69bc571b639
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:74
+msgid "MIME Fields Always Belong to an Associated MIME Header"
+msgstr ""
+
+# 6fd6674dbeb34e5cbf49a19589d652fb
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:76
+msgid ""
+"When using Traffic Server, you cannot create a new MIME field without an "
+"associated MIME header or HTTP header; MIME fields are always seen as "
+"part of a MIME header or HTTP header."
+msgstr ""
+
+# aef1b0001e004611afeec47df4a505dc
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:80
+msgid ""
+"To use a MIME field, you must specify the MIME header or HTTP header to "
+"which it belongs - this is called the field's **parent header**. The "
+"``TSMimeField*`` functions in older versions of the SDK have been "
+"deprecated, as they do not require the parent header as inputs. The "
+"current version of Traffic Server uses new functions, the "
+"**``TSMimeHdrField``** series, which require you to specify the location "
+"of the parent header along with the location of the MIME field. For every"
+" deprecated *``TSMimeField``* function, there is a new, preferred "
+"``TSMimeHdrField*`` function. Therefore, you should use the "
+"**``TSMimeHdrField``** functions instead of the deprecated "
+"*``TSMimeField``* series. Examples are provided below."
+msgstr ""
+
+# 345677145ea147ebaf3b544e41591a9e
+# e872bed115b44cc1b353b872b577512c
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:92
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:104
+msgid "Instead of:"
+msgstr ""
+
+# ac968aa83acd4a338a401d595d426c3b
+# 2feb9397f5354490bed57296e10a98b5
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:98
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:111
+msgid "You should use:"
+msgstr ""
+
+# 589d76e30c7a4afa9240a3ebf915cd55
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:119
+msgid ""
+"In the ``TSMimeHdrField*`` function prototypes, the ``TSMLoc`` field "
+"corresponds to the ``TSMLoc`` offset used the deprecated ``TSMimeField*``"
+" functions (see the discussion of parent ``TSMLoc`` in the following "
+"section)."
+msgstr ""
+
+# d50d2a4c5f2d40c0adf73884ec254996
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:125
+msgid "Release Marshal Buffer Handles"
+msgstr ""
+
+# 5b0fbfc6abb747038e32cfadb76e4fcf
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:127
+msgid ""
+"When you fetch a component object or create a new object, you get back a "
+"handle to the object location. The handle is either an ``TSMLoc`` for an "
+"object location or ``char *`` for a string location. You can manipulate "
+"the object through these handles, but when you are finished you need to "
+"release the handle to free up system resources."
+msgstr ""
+
+# 7037af4aac5446e187b6f493d40683b4
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:133
+msgid ""
+"The general guideline is to release all ``TSMLoc`` and string handles you"
+" retrieve. The one exception is the string returned by "
+"``TSUrlStringGet``, which must be freed by a call to ``TSfree``."
+msgstr ""
+
+# 127dcf087f2046a19084d41a24a1d842
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:137
+msgid ""
+"The handle release functions expect three arguments: the marshal buffer "
+"containing the data, the location of the parent object, and the location "
+"of the object to be released. The parent location is usually clear from "
+"the creation of the ``TSMLoc`` or string. For example, if your plugin had"
+" the following calls:"
+msgstr ""
+
+# 5dbfbdffbe744abaa2fde26c47e25ab7
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:148
+msgid "then your plugin would have to call:"
+msgstr ""
+
+# f41bf1d647704977a94e2bafd186814a
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:154
+msgid ""
+"If an ``TSMLoc`` is obtained from a transaction, then it does not have a "
+"parent ``TSMLoc``. Use the null ``TSMLoc`` constant ``TS_NULL_MLOC`` as "
+"its parent. For example, if your plugin calls:"
+msgstr ""
+
+# 91086e9ea92242a68636797a54b22947
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:162
+msgid "then you must release ``hdr_loc`` with:"
+msgstr ""
+
+# b0bc142796944146888be3b92d4e4613
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:168
+msgid ""
+"You need to use ``TS_NULL_MLOC`` to release any ``TSMLoc`` handles "
+"retrieved by the ``TSHttpTxn*Get`` functions."
+msgstr ""
+
+# e8541c72e0714e30b8c584d983cab842
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:171
+msgid "Here's an example using a new ``TSMimeHdrField`` function:"
+msgstr ""
+
+# 2ef1c75c0d054a92aa210de6bbba94fe
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:180
+msgid "See the sample plugins for many more examples."
+msgstr ""
+
+# cf66041e3202446d839185a8695861f6
+#: ../../developer-guide/plugins/http-headers/trafficserver-http-header-system.en.rst:184
+msgid ""
+"You should release handles before reenabling the HTTP transaction. In "
+"other words, call ``TSHandleMLocRelease`` before ``TSHttpTxnReenable``."
+msgstr ""
+

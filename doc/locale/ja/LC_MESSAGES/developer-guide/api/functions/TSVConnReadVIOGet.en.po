@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# c0dd453e248c494986dc30109fd71b96
+#: ../../developer-guide/api/functions/TSVConnReadVIOGet.en.rst:22
+msgid "TSVConnReadVIOGet"
+msgstr ""
+
+# 6a2b5289dd454904873273c8f9ac3b8a
+#: ../../developer-guide/api/functions/TSVConnReadVIOGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 18cdb310baae4e82a5d85a7f53b3e5b5
+#: ../../developer-guide/api/functions/TSVConnReadVIOGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# de5dfd63e47c451eabc419bbe2855373
+#: ../../developer-guide/api/functions/TSVConnReadVIOGet.en.rst:32
+msgid "Description"
+msgstr ""
+

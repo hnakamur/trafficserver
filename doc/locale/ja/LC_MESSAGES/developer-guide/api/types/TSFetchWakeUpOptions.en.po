@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 5c0f13ad478044e2b5a4e2b47458f12c
+#: ../../developer-guide/api/types/TSFetchWakeUpOptions.en.rst:20
+msgid "TSFetchWakeUpOptions"
+msgstr ""
+
+# 957c3529dd444884a56140c964b7eb85
+#: ../../developer-guide/api/types/TSFetchWakeUpOptions.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# c09898f388b54e50aa8bae6d8c1fee4d
+#: ../../developer-guide/api/types/TSFetchWakeUpOptions.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# 1e12f2cebff845e28462960030e13d22
+#: ../../developer-guide/api/types/TSFetchWakeUpOptions.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# a1f1026e025c4be9ba8d01165be6cd28
+#: ../../developer-guide/api/types/TSFetchWakeUpOptions.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# 92cbbc9741214c829494f4e458f2fe3d
+#: ../../developer-guide/api/types/TSFetchWakeUpOptions.en.rst:41
+msgid "Description"
+msgstr ""
+

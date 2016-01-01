@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 79983e85ccfa415f9e17079e4139cfe7
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:22
+msgid "TSTrafficServerVersionGet"
+msgstr ""
+
+# 12e87d0d788f4719b7e3073b78329d01
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:24
+msgid "Return Traffic Server version information."
+msgstr ""
+
+# 832f3af4a9914e97828acf9e40726239
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:27
+msgid "Synopsis"
+msgstr ""
+
+# f5ab8d1e32ae4eccb11011c37ce54b02
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:29
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 475481115e5047b0ad8ea43add8fb36c
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:37
+msgid "Description"
+msgstr ""
+
+# 40fb7a60cff14d75846a5d2af554215b
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:39
+msgid ""
+":func:`TSTrafficServerVersionGet` returns a pointer to a string of "
+"characters that indicates the Traffic Server release version. This string"
+" must not be modified."
+msgstr ""
+
+# 4f1bb95a0f934bd0b182df7abad4d92c
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:43
+msgid ""
+"The other APIs return an integer from the relevant component of the "
+"version number string."
+msgstr ""
+
+# cdec9174816f45c79e683625aab42050
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:47
+msgid "Example"
+msgstr ""
+
+# 82318bf74b9f4145927ac8ececc5e9fa
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:100
+msgid "See Also"
+msgstr ""
+
+# 4541d766bedb4a568ab2be7d208313ed
+#: ../../developer-guide/api/functions/TSTrafficServerVersionGet.en.rst:102
+msgid ":manpage:`TSAPI(3ts)`"
+msgstr ""
+

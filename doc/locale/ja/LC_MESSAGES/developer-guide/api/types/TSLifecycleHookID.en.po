@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# ffda537ac1ed46a483c30e116b8ca817
+#: ../../developer-guide/api/types/TSLifecycleHookID.en.rst:20
+msgid "TSLifecycleHookID"
+msgstr ""
+
+# 1c8cd07ed6bb42c19141b4ede019e1c6
+#: ../../developer-guide/api/types/TSLifecycleHookID.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 9cb8feccdb9448d0a9a5cbeead838f45
+#: ../../developer-guide/api/types/TSLifecycleHookID.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# 2969171cdd064403b6336468565a1d10
+#: ../../developer-guide/api/types/TSLifecycleHookID.en.rst:29
+msgid ""
+"Enum typedef used to indicate the event hook being called during a "
+"continuation invocation."
+msgstr ""
+
+# c3f5ad0dafba4cd683b17b60ea749cff
+#: ../../developer-guide/api/types/TSLifecycleHookID.en.rst:33
+msgid "Enumeration Members"
+msgstr ""
+
+# 24f3dc3765d941f1adcc69b6824d4637
+#: ../../developer-guide/api/types/TSLifecycleHookID.en.rst:48
+msgid "Description"
+msgstr ""
+

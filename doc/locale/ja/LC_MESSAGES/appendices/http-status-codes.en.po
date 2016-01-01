@@ -1,0 +1,250 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 11fd87882fce4f21a3418f4c726bd656
+#: ../../appendices/http-status-codes.en.rst:23
+msgid "HTTP Status Codes"
+msgstr ""
+
+# 24708beb962448eba4aee74b2f2a927a
+#: ../../appendices/http-status-codes.en.rst:25
+msgid ""
+"The following standard HTTP response messages are provided for your "
+"information."
+msgstr ""
+
+# 486c730c66ee494e8ceb8217360bf655
+#: ../../appendices/http-status-codes.en.rst:29
+msgid "Code"
+msgstr ""
+
+# e748df75489e4c2d86a20023f7b03945
+#: ../../appendices/http-status-codes.en.rst:29
+msgid "Description"
+msgstr ""
+
+# c2d0c28a4a4549f884063b66c77bd9a9
+#: ../../appendices/http-status-codes.en.rst:31
+msgid "200"
+msgstr ""
+
+# bf76bfa677834ba899a632524ea826db
+#: ../../appendices/http-status-codes.en.rst:31
+msgid "OK"
+msgstr ""
+
+# 2a18c84ecbf14ea3bff7f345f2a78ebf
+#: ../../appendices/http-status-codes.en.rst:32
+msgid "202"
+msgstr ""
+
+# 779c8093ac684035bb4d285d0e7ec051
+#: ../../appendices/http-status-codes.en.rst:32
+msgid "Accepted"
+msgstr ""
+
+# 6f0720e7ff8d47f688be8e6e57cb615b
+#: ../../appendices/http-status-codes.en.rst:33
+msgid "204"
+msgstr ""
+
+# b88ac5efe1bf44349c7832aabf5b8a84
+#: ../../appendices/http-status-codes.en.rst:33
+msgid "No Content"
+msgstr ""
+
+# 42e5c53b1068430fb69f442639f4feec
+#: ../../appendices/http-status-codes.en.rst:34
+msgid "206"
+msgstr ""
+
+# b37621b998e64a9983312e0a724de2bb
+#: ../../appendices/http-status-codes.en.rst:34
+msgid "Partial Content"
+msgstr ""
+
+# 9f50c2470c6345619eb28d9c2829ade0
+#: ../../appendices/http-status-codes.en.rst:35
+msgid "300"
+msgstr ""
+
+# ee02e741e76d42b6a48a03e7e0bf57e4
+#: ../../appendices/http-status-codes.en.rst:35
+msgid "Multiple Choices"
+msgstr ""
+
+# 64c9802432a2429aa1038d0432b230d2
+#: ../../appendices/http-status-codes.en.rst:36
+msgid "301"
+msgstr ""
+
+# f20fb795233e4e1394235c338b2352ff
+#: ../../appendices/http-status-codes.en.rst:36
+msgid "Moved Permanently"
+msgstr ""
+
+# 9cb8810739324cd9a3a52629b373a09c
+#: ../../appendices/http-status-codes.en.rst:37
+msgid "302"
+msgstr ""
+
+# ca8987c943af4a4291bf057bf4768a47
+#: ../../appendices/http-status-codes.en.rst:37
+msgid "Found"
+msgstr ""
+
+# 4c5951a911604a9286be6a8888bb9ef8
+#: ../../appendices/http-status-codes.en.rst:38
+msgid "303"
+msgstr ""
+
+# 76737382a2f44db5859851f5ce09bb89
+#: ../../appendices/http-status-codes.en.rst:38
+msgid "See Other"
+msgstr ""
+
+# 4bf7795c7feb40908feb70e9379c1f55
+#: ../../appendices/http-status-codes.en.rst:39
+msgid "304"
+msgstr ""
+
+# afdef9d08e0b400c8856c1b9c3ee0f87
+#: ../../appendices/http-status-codes.en.rst:39
+msgid "Not Modified"
+msgstr ""
+
+# 57ac1a9dd048494ea0fe2b17daf46e6c
+#: ../../appendices/http-status-codes.en.rst:40
+msgid "400"
+msgstr ""
+
+# 8448aa2db2594e23bb9901d14b35f31d
+#: ../../appendices/http-status-codes.en.rst:40
+msgid "Bad Request"
+msgstr ""
+
+# 5c92cc4368d249288e6cd6d5cd5c162d
+#: ../../appendices/http-status-codes.en.rst:41
+msgid "401"
+msgstr ""
+
+# 89890123fd234a689de362bb18497bcb
+#: ../../appendices/http-status-codes.en.rst:41
+msgid "Unauthorized; retry"
+msgstr ""
+
+# 32328ea2220443f68deb32af8f5f77e1
+#: ../../appendices/http-status-codes.en.rst:42
+msgid "403"
+msgstr ""
+
+# 0cec01693df247ddbbf07062407044d2
+#: ../../appendices/http-status-codes.en.rst:42
+msgid "Forbidden"
+msgstr ""
+
+# 11e7850aa1194576b3a7a4429c8c00d2
+#: ../../appendices/http-status-codes.en.rst:43
+msgid "404"
+msgstr ""
+
+# 68324a3750b94552a2f50224dec20430
+#: ../../appendices/http-status-codes.en.rst:43
+msgid "Not Found"
+msgstr ""
+
+# 51bfba26faaf40e4ad13523af3fe9222
+#: ../../appendices/http-status-codes.en.rst:44
+msgid "405"
+msgstr ""
+
+# e95be14b7b7b4e6fb54603652cd74521
+#: ../../appendices/http-status-codes.en.rst:44
+msgid "Method Not Allowed"
+msgstr ""
+
+# 017c5c2ec61848eb8aeb2418eec4f3a5
+#: ../../appendices/http-status-codes.en.rst:45
+msgid "406"
+msgstr ""
+
+# 49bb161de5ab47e78ab519e802fbeafe
+#: ../../appendices/http-status-codes.en.rst:45
+msgid "Not Acceptable"
+msgstr ""
+
+# 2bfa4b8f2227461ca7d405862be13b09
+#: ../../appendices/http-status-codes.en.rst:46
+msgid "408"
+msgstr ""
+
+# 0b33e29dc95c4b778a05ecbb3ab328df
+#: ../../appendices/http-status-codes.en.rst:46
+msgid "Request Timeout"
+msgstr ""
+
+# 74a5f0f4971047b788442ebdb39c1a44
+#: ../../appendices/http-status-codes.en.rst:47
+msgid "500"
+msgstr ""
+
+# ed83ca665119471cac108f517bd73c2e
+#: ../../appendices/http-status-codes.en.rst:47
+msgid "Internal Server Error"
+msgstr ""
+
+# 01f9d662700c4502892e8b4acad35404
+#: ../../appendices/http-status-codes.en.rst:48
+msgid "501"
+msgstr ""
+
+# 41edab40c0744efdab8dba3aff566c17
+#: ../../appendices/http-status-codes.en.rst:48
+msgid "Not Implemented"
+msgstr ""
+
+# a18b83f01cca4c60b48a2e294a972e83
+#: ../../appendices/http-status-codes.en.rst:49
+msgid "502"
+msgstr ""
+
+# 90cf174bd9914675aef65cef0f123a6b
+#: ../../appendices/http-status-codes.en.rst:49
+msgid "Bad Gateway"
+msgstr ""
+
+# e87b4e4c53bb4001a598cb5f040bb654
+#: ../../appendices/http-status-codes.en.rst:50
+msgid "504"
+msgstr ""
+
+# d1e2992e566147b2ac4d35d1f508ee3c
+#: ../../appendices/http-status-codes.en.rst:50
+msgid "Gateway Timeout"
+msgstr ""
+
+# 861128421e664074bb5aa86aafd206db
+#: ../../appendices/http-status-codes.en.rst:53
+msgid ""
+"More detail can be found in `RFC2616 "
+"<http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html>`_ which defines "
+"the full range of standardized HTTP/1.1 response codes."
+msgstr ""
+

@@ -1,0 +1,1417 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3c5a9be2e812474c8548f4614307aaff
+#: ../../appendices/faq.en.rst:23
+msgid "Frequently Asked Questions"
+msgstr ""
+
+# ed8dad97720548af8c2368e899eae194
+#: ../../appendices/faq.en.rst:29
+msgid ""
+"How do you create a raw disk for the cache if all your disks have mounted"
+" file systems?"
+msgstr ""
+
+# 9d9ff0233b2e443fbc0486aae586748d
+#: ../../appendices/faq.en.rst:31
+msgid ""
+"Create a large file on filesystem (with :manpage:`dd(1)`) and mount it as"
+" loopback device. This is accomplished with :manpage:`losetup(8)` on "
+"Linux, :manpage:`lofiadm(1m)` on Solaris and Illumos, and "
+":manpage:`mdconfig(8)` on FreeBSD."
+msgstr ""
+
+# 398e49a5d36440a4b9f93d6791f9609e
+#: ../../appendices/faq.en.rst:36
+msgid ""
+"How do disk I/O errors affect the cache and what does Traffic Server do "
+"when a cache disk fails?"
+msgstr ""
+
+# 9121d2efad164689b01e38fc6ec3f827
+#: ../../appendices/faq.en.rst:38
+msgid ""
+"If a disk drive fails five successive I/O operations, then Traffic Server"
+" considers the drive inaccessible and removes the entire disk from the "
+"cache. Normal cache operations continue for all other Traffic Server disk"
+" drives."
+msgstr ""
+
+# f9aeed7e00e44c50bb6d4ec96162817d
+#: ../../appendices/faq.en.rst:44
+msgid ""
+"If a client disconnects during the time that Traffic Server is "
+"downloading a large object, is any of the object saved in the cache?"
+msgstr ""
+
+# 221315d8aa884e07898094fa93178938
+#: ../../appendices/faq.en.rst:46
+msgid ""
+"When a client disconnects during an HTTP operation, Traffic Server can "
+"continue to download the object from the origin server, using the "
+":ref:`background fill feature <background_fill>`. It will continue "
+"downloading based on the "
+":ts:cv:`proxy.config.http.background_fill_active_timeout` and "
+":ts:cv:`proxy.config.http.background_fill_completed_threshold` settings."
+msgstr ""
+
+# 484cd696ef79440db19490040dbe8d6f
+#: ../../appendices/faq.en.rst:51
+msgid ""
+"Can Traffic Server cache Java applets, JavaScript programs, or other "
+"application files like VBScript?"
+msgstr ""
+
+# 1aadb66b5ff542a69624493325817afb
+#: ../../appendices/faq.en.rst:53
+msgid ""
+"Yes, Traffic Server can store and serve Java applets, JavaScript "
+"programs, VBScripts, and other executable objects from its cache "
+"according to the freshness and cacheability rules for HTTP objects. "
+"Traffic Server does not execute the applets, scripts, or programs. These "
+"objects run entirely client-side (the system which originated the request"
+" for the objects), and do not execute on the server."
+msgstr ""
+
+# 2ee59b1497aa4a1d9b9e6e7376b67234
+#: ../../appendices/faq.en.rst:61
+msgid ""
+"In Squid- and Netscape-format log files, what do the cache result codes "
+"mean?"
+msgstr ""
+
+# 7590f10c1c4d46a9ba0cba521e4335dd
+#: ../../appendices/faq.en.rst:63
+msgid ""
+"This is described in detail in the :ref:`log-formats-squid-format` "
+"documentation."
+msgstr ""
+
+# ceaab1ba890e47dbb61a8a861d4e19fb
+#: ../../appendices/faq.en.rst:66
+msgid "What is recorded by the ``cqtx`` field in a custom log file?"
+msgstr ""
+
+# 5880516639954a94a5b423a92af13709
+#: ../../appendices/faq.en.rst:68
+msgid ""
+"In *forward proxy mode*, the ``cqtx`` field records the complete client "
+"request in the log file (for example, ``GET http://www.company.com "
+"HTTP/1.0``)."
+msgstr ""
+
+# c2b80812aac042b59f40fb2ff7ddc7ff
+#: ../../appendices/faq.en.rst:70
+msgid ""
+"In *reverse proxy mode*, the ``cqtx`` field records the hostname or IP "
+"address of the origin server because Traffic Server first remaps the "
+"request as per map rules in the :file:`remap.config` file."
+msgstr ""
+
+# a55340230eac468bad40282131ceb9d7
+#: ../../appendices/faq.en.rst:75
+msgid ""
+"Does Traffic Server refresh entries in its host database after a certain "
+"period of time if they have not been used?"
+msgstr ""
+
+# 72b7db9959634b34954af35be95b7f5b
+#: ../../appendices/faq.en.rst:77
+msgid ""
+"By default, the Traffic Server host database observes the time-to-live "
+"(``ttl``) values set by name servers. You can reconfigure Traffic Server "
+"to ignore the ``ttl`` set by name servers and use a specific Traffic "
+"Server setting instead. Alternatively, you can configure Traffic Server "
+"to compare the ``ttl`` value set by the name server with the ``ttl`` "
+"value set by Traffic Server, and then use either the lower or the higher "
+"value."
+msgstr ""
+
+# 6abb740451364168a9c76f571d577e65
+#: ../../appendices/faq.en.rst:85
+msgid "Refer to :ts:cv:`proxy.config.hostdb.ttl_mode` for more info."
+msgstr ""
+
+# 2429636e20b1456b8f14812acf4c236f
+#: ../../appendices/faq.en.rst:88
+msgid ""
+"Can you improve the look of your custom response pages by using images, "
+"animated .gifs, and Java applets?"
+msgstr ""
+
+# a3bf9d23e6e743ac9ab80e817b947b9e
+#: ../../appendices/faq.en.rst:90
+msgid ""
+"No, because Traffic Server can only respond to clients with a single text"
+" or HTML document. As a workaround, however, you can provide references "
+"on your custom response pages to images, animated .gifs, Java applets, or"
+" objects other than text which are located on a web server. Add links in "
+"the body_factory template files in the same way you would for any image "
+"in an HTML document (i.e., with the full URL in the ``SRC`` attribute)."
+msgstr ""
+
+# df276889594b4113a49c193d0be42356
+#: ../../appendices/faq.en.rst:99
+msgid ""
+"Can Traffic Server run in forward proxy and reverse proxy modes at the "
+"same time?"
+msgstr ""
+
+# a6b6a959741345bc806eecbc51ae2a9b
+#: ../../appendices/faq.en.rst:101
+msgid ""
+"Yes. When you enable reverse proxy mode, Traffic Server remaps incoming "
+"requests according to the map rules in :file:`remap.config`. All other "
+"requests that do not match a map rule are served in forward proxy mode."
+msgstr ""
+
+# 6ac4d23dcce44a5f9be0ff5b4d7e63b9
+#: ../../appendices/faq.en.rst:106
+msgid ""
+"If you want to run in reverse proxy only mode (wherein Traffic Server "
+"does not serve requests that fail to match a map rule), then you must set"
+" the configuration variable "
+":ts:cv:`proxy.config.url_remap.remap_required` to ``1`` in "
+":file:`records.config`."
+msgstr ""
+
+# d2fa0e62ef914833a9694383ee6a1a53
+#: ../../appendices/faq.en.rst:112
+msgid "How do I enable forward proxy mode"
+msgstr ""
+
+# cc5d2c82bbd44e49800c2ddc7b16ecc1
+#: ../../appendices/faq.en.rst:114
+msgid "Please refer to the :ref:`forward-proxy` documentation."
+msgstr ""
+
+# 7a111a93dacb46ac9761898ef9168943
+#: ../../appendices/faq.en.rst:117
+msgid "How do I interpret the Via: header code?"
+msgstr ""
+
+# 2b1ec760c4914e1d99df7d983b37a199
+#: ../../appendices/faq.en.rst:119
+msgid ""
+"The ``Via`` header string can be decoded with the `Via Decoder Ring "
+"<http://trafficserver.apache.org/tools/via>`_."
+msgstr ""
+
+# 55e18f5149924c7fa4930286054765bc
+#: ../../appendices/faq.en.rst:121
+msgid ""
+"The Via header is an optional HTTP header added by Traffic Server and "
+"other HTTP proxies. If a request goes through multiple proxies, each one "
+"appends its Via header content to the end of the existing Via header. Via"
+" header content is for general information and diagnostic use only and "
+"should not be used as a programmatic interface to Traffic Server."
+msgstr ""
+
+# 56bf4c7b211c4ead8bbfe27fabceff1c
+#: ../../appendices/faq.en.rst:123
+msgid "The form of the Via header is"
+msgstr ""
+
+# bd9f61ddd56040f2ad7f848a01cf8c09
+#: ../../appendices/faq.en.rst:125
+msgid "Via: <protocol> <proxyname> (<product/version> [<via-codes>])"
+msgstr ""
+
+# 09de4085c1874ea285059dead8f4309e
+# 839c49cd3ca840d09bc02c327f4cb321
+# b8881d241aa448b78e0a8ee2e2ed4195
+# 373af43a82764dc8a9f0f4d02ef8791e
+# ca15d86c40be424da8013b17761d001f
+# 5564a7c51cea42049ed633a3eaadb809
+# fa7ef0f47f9c4ef3969be0ddf4ecb5fb
+# 4e6ce10daf01469c94145d0178af3dfe
+# 0b9422e36a9140c99c51f3f92739722d
+# f54649b432e94b10b3534c05a269d47a
+# 788f26a993a14b4a9d6c0574119f47f4
+# ec753c4644de46eaa83bc341c436cda9
+# 6ce6df7b13f04c6d94189eb5db37ec03
+#: ../../appendices/faq.en.rst:128 ../../appendices/faq.en.rst:155
+#: ../../appendices/faq.en.rst:169 ../../appendices/faq.en.rst:184
+#: ../../appendices/faq.en.rst:197 ../../appendices/faq.en.rst:210
+#: ../../appendices/faq.en.rst:223 ../../appendices/faq.en.rst:243
+#: ../../appendices/faq.en.rst:261 ../../appendices/faq.en.rst:274
+#: ../../appendices/faq.en.rst:294 ../../appendices/faq.en.rst:306
+#: ../../appendices/faq.en.rst:318
+msgid "Value"
+msgstr ""
+
+# 11f1a9b4639242efb71d300b842317aa
+# f864c2a0d223439cb83d7aa3f31f281b
+# aa834bf375a64c27b49d2100c2a8debb
+# a30972963d9c4240bc4865bc081772f6
+# 0e8e93f3de17479f85039536427bf989
+# 4586e8b70c1b464898955bd5381d93c5
+# 577a31f3a8344571814aec5b2f85d946
+# ca63642b690e4e72ac9350bd4b429ed4
+# f07f4967d6684b45a9185e6f432ed90c
+# ff4fc88d6e094e18811b0d11190e06c6
+# 9ee0dffe5de8441eb5b073f2a5b547d8
+# b9c5487867ed47f29631f9018727e779
+# 83f1b2f362254090a3c2ef68f96f48a3
+#: ../../appendices/faq.en.rst:128 ../../appendices/faq.en.rst:155
+#: ../../appendices/faq.en.rst:169 ../../appendices/faq.en.rst:184
+#: ../../appendices/faq.en.rst:197 ../../appendices/faq.en.rst:210
+#: ../../appendices/faq.en.rst:223 ../../appendices/faq.en.rst:243
+#: ../../appendices/faq.en.rst:261 ../../appendices/faq.en.rst:274
+#: ../../appendices/faq.en.rst:294 ../../appendices/faq.en.rst:306
+#: ../../appendices/faq.en.rst:318
+msgid "Meaning"
+msgstr ""
+
+# 3279f3e9a84f46edbf202affd45a5527
+#: ../../appendices/faq.en.rst:130
+msgid "<protocol>"
+msgstr ""
+
+# 55ebf2387f264288bf2df5203f74b665
+#: ../../appendices/faq.en.rst:130
+msgid "the scheme and version of the HTTP request"
+msgstr ""
+
+# a8af9c49a3b54da68cb7b881f22c0308
+#: ../../appendices/faq.en.rst:131
+msgid "<proxyname>"
+msgstr ""
+
+# f30225a6b8384125a2558f8119da89e7
+#: ../../appendices/faq.en.rst:131
+msgid "the configured name of the proxy server"
+msgstr ""
+
+# 010debbb52ac49e9a12647830d9979a2
+#: ../../appendices/faq.en.rst:132
+msgid "<product/version>"
+msgstr ""
+
+# 8ba2bdeb886c4473a3dd6b447804c7db
+#: ../../appendices/faq.en.rst:132
+msgid "the Traffic Server product name and version"
+msgstr ""
+
+# 2c04fcf28d0f4dbb8c2d21aa1494e621
+#: ../../appendices/faq.en.rst:133
+msgid "<via-codes>"
+msgstr ""
+
+# fa4ac522fab84f9894e7611846fb4b88
+#: ../../appendices/faq.en.rst:133
+msgid ""
+"a string of alphabetic codes presenting status information about the "
+"proxy handling of the HTTP request"
+msgstr ""
+
+# daf46f8923e745059667e15ae77406ea
+#: ../../appendices/faq.en.rst:136
+msgid "For example: Via: HTTP/1.0 storm (Traffic-Server/4.0.0   [cMs f ])"
+msgstr ""
+
+# e355e69a8ffc49bc9510b07e5e919408
+#: ../../appendices/faq.en.rst:139
+msgid "[u lH o  f  pS eN]     cache hit"
+msgstr ""
+
+# 280c5aa3fe5f4aff9766ca12abcb3878
+#: ../../appendices/faq.en.rst:140
+msgid "[u lM oS fF pS eN]     cache miss"
+msgstr ""
+
+# 56de202a107f4246b82c5e76973470da
+#: ../../appendices/faq.en.rst:141
+msgid "[uN l oS f  pS eN]     no-cache origin server fetch"
+msgstr ""
+
+# 73c0ff5c24ba453e876a0db19a154a70
+#: ../../appendices/faq.en.rst:143
+msgid ""
+"The short status code shows the cache-lookup, server-info and cache-fill "
+"information as listed in the full status code description below. The long"
+" status code list provided in older, commercial versions of Traffic "
+"Server can be restored by setting the verbose_via_str config variable. "
+"The character strings in the via-code show [<request results>:<proxy op>]"
+" where <request results> represents status information about the results "
+"of the client request and <proxy op> represent some information about the"
+" proxy operations performed during request processing. The full via-code "
+"status format is"
+msgstr ""
+
+# 5d427ea3d943461daffaef84a67aa2dd
+#: ../../appendices/faq.en.rst:146
+msgid ""
+"[u<client-info> c<cache-lookup> s<server-info> f<cache-fill> p<proxy-"
+"info> e<error-codes> : t<tunnel-info>c<cache-type><cache-lookup-result> i"
+"<icp-conn-info> p<parent-proxy> s<server-conn-info>]"
+msgstr ""
+
+# 34508d8cbdbf41e2910bb81183eeefc0
+#: ../../appendices/faq.en.rst:150
+msgid "u client-info"
+msgstr ""
+
+# db0770b73c91499080307827faf27844
+#: ../../appendices/faq.en.rst:152
+msgid "Request headers received from client. Value is one of:"
+msgstr ""
+
+# 538448428f984b849979043cf675dbb4
+# 1cd9bcca68f849ebaf3af637f3a217d6
+# aed1f24b878f4d17a0ae371663f565e3
+# 288d1b6080434f6aa85aec5e1fc5c304
+#: ../../appendices/faq.en.rst:157 ../../appendices/faq.en.rst:226
+#: ../../appendices/faq.en.rst:263 ../../appendices/faq.en.rst:276
+msgid "C"
+msgstr ""
+
+# 367d3431ab8b46ec8664e7ceb17cc310
+#: ../../appendices/faq.en.rst:157
+msgid "cookie"
+msgstr ""
+
+# 2680132a96994e22b06c3fbef10af1bf
+# 8780f43a18ba4e65bb439a5bcaa01657
+#: ../../appendices/faq.en.rst:158 ../../appendices/faq.en.rst:186
+msgid "E"
+msgstr ""
+
+# 313af835880d4b97b0d13fd00c7cb14d
+#: ../../appendices/faq.en.rst:158
+msgid "error in request"
+msgstr ""
+
+# ee3a57945a11481f859d7dcfb3a56fba
+# 2b6b7c3594044fe18ab5f64ab1318236
+# fc50665b592d426a840088e71e3949eb
+#: ../../appendices/faq.en.rst:159 ../../appendices/faq.en.rst:264
+#: ../../appendices/faq.en.rst:279
+msgid "I"
+msgstr ""
+
+# 127e78baa57b419ba273736d5cb4902a
+#: ../../appendices/faq.en.rst:159
+msgid "If Modified Since (IMS)"
+msgstr ""
+
+# 7503f012693f4996a63502029bd146a3
+# ec465433231f4a7b8ae3431ae41a05d4
+# 8023d141d95a4d5a8fa8c4ad50116390
+# 98135e16f7e946eabb08638016a58637
+# 53f2b16a98e44e92b7f22a422c219dbd
+# 099fb944e60b4930a02f7a1af794d638
+#: ../../appendices/faq.en.rst:160 ../../appendices/faq.en.rst:187
+#: ../../appendices/faq.en.rst:212 ../../appendices/faq.en.rst:230
+#: ../../appendices/faq.en.rst:248 ../../appendices/faq.en.rst:282
+msgid "N"
+msgstr ""
+
+# 20c8b4810c014f0abade5478dc7cc528
+#: ../../appendices/faq.en.rst:160
+msgid "no-cache"
+msgstr ""
+
+# d64161520db74faf9b21aff5fcec674d
+# bf22772c5b1f4c51b9b5d7fd7585c5fe
+# b045113b99884115959ab9e2c903324a
+# 546e69e6a48d4ecdab5cba2dfcf1d3d7
+# a796f71fbe0c4f47bfb1fff617f5dd94
+# d1974b0e37aa47d7ab5bf5c38769ff61
+# 82bfcea0e50d48d9a52966504ece829f
+# f2864d08c4f5409ab83be2acedef3128
+# a7ab5c9d9d694d858325471fa5829bb6
+# 389a8d6cc2b248dbbc34f1bfd8c11007
+#: ../../appendices/faq.en.rst:161 ../../appendices/faq.en.rst:175
+#: ../../appendices/faq.en.rst:188 ../../appendices/faq.en.rst:214
+#: ../../appendices/faq.en.rst:232 ../../appendices/faq.en.rst:267
+#: ../../appendices/faq.en.rst:283 ../../appendices/faq.en.rst:297
+#: ../../appendices/faq.en.rst:309 ../../appendices/faq.en.rst:321
+msgid "S"
+msgstr ""
+
+# 483d9beacbb14c4b81965e4c3427f07e
+#: ../../appendices/faq.en.rst:161
+msgid "simple request (not conditional)"
+msgstr ""
+
+# 0cba37ba7f464b229c48414f20d7e413
+#: ../../appendices/faq.en.rst:165
+msgid "c cache-lookup"
+msgstr ""
+
+# d922f0d3494a43d9a1fa8cfee5214acc
+#: ../../appendices/faq.en.rst:166
+msgid "Result of Traffic Server cache lookup for URL. Value is one of:"
+msgstr ""
+
+# 386aff81b42943eaa2e51c6728c9049a
+# 2c8042fdbf3643faac26d4679581e63b
+# 587dde3c25b945228947e52089db65e1
+#: ../../appendices/faq.en.rst:171 ../../appendices/faq.en.rst:225
+#: ../../appendices/faq.en.rst:245
+msgid "A"
+msgstr ""
+
+# c6974cf3eeea42378c5a8a3ecb66ac96
+#: ../../appendices/faq.en.rst:171
+msgid "in cache, not acceptable (a cache \"MISS\")"
+msgstr ""
+
+# 0e0c84ae9c554611a9276d1f22d9da48
+# c7ec22118c0941d59365a362da55ba9c
+# 43d839b875214f6a8939cbad13595fa3
+#: ../../appendices/faq.en.rst:172 ../../appendices/faq.en.rst:229
+#: ../../appendices/faq.en.rst:278
+msgid "H"
+msgstr ""
+
+# b6749840a8ea4fff976ee00b8374bb5b
+#: ../../appendices/faq.en.rst:172
+msgid "in cache, fresh (a cache \"HIT\")"
+msgstr ""
+
+# e971a257a6284846a6d2d77a6b374086
+# 09b02b79c3de4da3b21d3a627710fb59
+# bbdbdcc83b44493d90d58a86db8abd1d
+#: ../../appendices/faq.en.rst:173 ../../appendices/faq.en.rst:247
+#: ../../appendices/faq.en.rst:281
+msgid "M"
+msgstr ""
+
+# 3cb7d841fda94c699ba8bdffe6240b41
+#: ../../appendices/faq.en.rst:173
+msgid "miss (a cache \"MISS\")"
+msgstr ""
+
+# 3bafb91922044c66ab9944fefbf8c841
+# 298ab3f322dd413897e0eb0f3978c1db
+# 7c6cf8e72e8f4647b3549a6b56fc1f5a
+#: ../../appendices/faq.en.rst:174 ../../appendices/faq.en.rst:213
+#: ../../appendices/faq.en.rst:231
+msgid "R"
+msgstr ""
+
+# a50daa2f18a04ebf94fb5e8c65bd5e27
+#: ../../appendices/faq.en.rst:174
+msgid "in cache, fresh RAM hit (a cache \"HIT\")"
+msgstr ""
+
+# 7770d60dd4564747b430a3d3733cbde3
+#: ../../appendices/faq.en.rst:175
+msgid "in cache, stale (a cache \"MISS\")"
+msgstr ""
+
+# 69ca6b731cdf4ca9b587764224b1198e
+# 8d824f0e68054a33ae8245b91c91dc4e
+# 4aa8c7335b4445769bacedd96cfa93a9
+# 997e557381f149aca8366d259b1ad358
+# 394b64fdf7904f6181b4df144099609a
+# e99202c4cd434fc5a45ed3a86d442bd1
+# 5f0a599023bb4d0e835d48afcebbc739
+# 43a5581fc6a645129c889997bad77329
+# e11b3e20c664462fb16645234ea28f86
+#: ../../appendices/faq.en.rst:176 ../../appendices/faq.en.rst:189
+#: ../../appendices/faq.en.rst:202 ../../appendices/faq.en.rst:251
+#: ../../appendices/faq.en.rst:268 ../../appendices/faq.en.rst:285
+#: ../../appendices/faq.en.rst:298 ../../appendices/faq.en.rst:310
+#: ../../appendices/faq.en.rst:322
+msgid "blank"
+msgstr ""
+
+# ca855f9e09284b399510298b0ff86c7e
+#: ../../appendices/faq.en.rst:176
+msgid "no cache lookup performed"
+msgstr ""
+
+# 391496174c924b5d9994c1afa4f6aeeb
+#: ../../appendices/faq.en.rst:180
+msgid "s server-info"
+msgstr ""
+
+# 1e8548207de746fbad25668601d6ddbe
+#: ../../appendices/faq.en.rst:181
+msgid "Response information received from origin server. Value is one of:"
+msgstr ""
+
+# 6697fd6b684e4fd185953b8696e12824
+#: ../../appendices/faq.en.rst:186
+msgid "error in response"
+msgstr ""
+
+# e93b24f2785f450785edaf2b8e560f91
+# a70f8bcdd63e49d1ad12e8fee8ae9bf1
+#: ../../appendices/faq.en.rst:187 ../../appendices/faq.en.rst:212
+msgid "not-modified"
+msgstr ""
+
+# b516ba1d6a234895b0dc933ebee47b6e
+# 3c4bee604c584810b95b8f70a6d21eb8
+#: ../../appendices/faq.en.rst:188 ../../appendices/faq.en.rst:214
+msgid "served"
+msgstr ""
+
+# 6b92151a48dd42668804925a84899308
+#: ../../appendices/faq.en.rst:189
+msgid "no server connection needed"
+msgstr ""
+
+# 71017ac51d3048248399381672583157
+#: ../../appendices/faq.en.rst:193
+msgid "f cache-fill"
+msgstr ""
+
+# b127b41868e94079a71bb8d147079e83
+#: ../../appendices/faq.en.rst:194
+msgid "Result of document write to cache. Value is one of:"
+msgstr ""
+
+# 78e481df4d3c4f3d98e730eaa810793f
+# 3bb22077d56845df8e598a9744d7146d
+# c71d418d0b974326a85e65523ffbd32a
+#: ../../appendices/faq.en.rst:199 ../../appendices/faq.en.rst:227
+#: ../../appendices/faq.en.rst:277
+msgid "D"
+msgstr ""
+
+# efed0921f724433aa17407cb9b3e2f34
+#: ../../appendices/faq.en.rst:199
+msgid "cached copy deleted"
+msgstr ""
+
+# 8266f071279245e29162b2776bdc61ae
+# 0cc77a46c33140cfafaeacc0b3b573ac
+# eaa97f767c6d4d9fa03163d16042b6cf
+#: ../../appendices/faq.en.rst:200 ../../appendices/faq.en.rst:250
+#: ../../appendices/faq.en.rst:284
+msgid "U"
+msgstr ""
+
+# 0c0e8d1340f44a8e819428b95a665dbb
+#: ../../appendices/faq.en.rst:200
+msgid "updated old cache copy"
+msgstr ""
+
+# 3f57ac7f34ec40d2a413f71a9bb918b1
+#: ../../appendices/faq.en.rst:201
+msgid "W"
+msgstr ""
+
+# de7b883a06094145bb0458c55d45d3d3
+#: ../../appendices/faq.en.rst:201
+msgid "written into cache (new copy)"
+msgstr ""
+
+# d9ed711968ea4fe28f113c8ffacb553f
+#: ../../appendices/faq.en.rst:202
+msgid "no cache write performed"
+msgstr ""
+
+# d93c124320234c85939d104e22bd481d
+#: ../../appendices/faq.en.rst:206
+msgid "p proxy-info"
+msgstr ""
+
+# 1993f6b7911744e592ba26f7259df076
+#: ../../appendices/faq.en.rst:207
+msgid "Proxy operation result. Value is one of:"
+msgstr ""
+
+# f075b6ffef784c86a7d0689dc8516679
+#: ../../appendices/faq.en.rst:213
+msgid "origin server revalidated"
+msgstr ""
+
+# 425219b17be044719a60663edf07b6ed
+#: ../../appendices/faq.en.rst:218
+msgid "e error-codes"
+msgstr ""
+
+# 7c39d91159ac475aaae5ef28be899f19
+#: ../../appendices/faq.en.rst:220
+msgid "Value is one of:"
+msgstr ""
+
+# 5709312e022a4438b1e6cf53b2b51cb2
+#: ../../appendices/faq.en.rst:225
+msgid "authorization failure"
+msgstr ""
+
+# 7e836e7668c54d628fe4be046071c0bd
+#: ../../appendices/faq.en.rst:226
+msgid "connection to server failed"
+msgstr ""
+
+# ee5205a5be9c4f6ea5f13559945e0ffd
+#: ../../appendices/faq.en.rst:227
+msgid "dns failure"
+msgstr ""
+
+# 7f81949df3cd4402b9673885a4cccef1
+# 748a967292394276a25625e0d0e2c392
+# d8bc8f0599c44303afd9391969e588be
+# 158677b62ce343f2a48a2518dda056f4
+# 7227cd94b9d44c88837c32a72114c253
+#: ../../appendices/faq.en.rst:228 ../../appendices/faq.en.rst:246
+#: ../../appendices/faq.en.rst:296 ../../appendices/faq.en.rst:308
+#: ../../appendices/faq.en.rst:320
+msgid "F"
+msgstr ""
+
+# d60461d1689549608589a9b358d93392
+#: ../../appendices/faq.en.rst:228
+msgid "request forbidden"
+msgstr ""
+
+# 6134001b538f4714b76357ce0d143902
+#: ../../appendices/faq.en.rst:229
+msgid "header syntax unacceptable"
+msgstr ""
+
+# e5105442663f4da59edffe65bc01af1e
+#: ../../appendices/faq.en.rst:230
+msgid "no error"
+msgstr ""
+
+# 3de1f12eb1bd45d9bb396ad53bf6fa77
+#: ../../appendices/faq.en.rst:231
+msgid "cache read error"
+msgstr ""
+
+# a43ae2887f044626bcf6a30eaa634a8b
+#: ../../appendices/faq.en.rst:232
+msgid "server related error"
+msgstr ""
+
+# 0b33367b04ad4e6ea4ac58b93809625c
+#: ../../appendices/faq.en.rst:233
+msgid "T"
+msgstr ""
+
+# 60b9df6eade5480ea908b16e7ad4e8d1
+#: ../../appendices/faq.en.rst:233
+msgid "connection timed out"
+msgstr ""
+
+# 523f50ea8be741d0bca877d774c5b5cd
+#: ../../appendices/faq.en.rst:236
+msgid ": = Separates proxy request result information from operation detail codes"
+msgstr ""
+
+# f89f093c013845e982152fb6b7ddd4dd
+#: ../../appendices/faq.en.rst:239
+msgid "t tunnel-info"
+msgstr ""
+
+# ca5e56f9fa4a4ecb80f8c5cba6c17d31
+#: ../../appendices/faq.en.rst:240
+msgid "Proxy-only service operation. Value is one of:"
+msgstr ""
+
+# be6b1a8e6dc44259918bca97d14217d9
+#: ../../appendices/faq.en.rst:245
+msgid "tunnel authorization"
+msgstr ""
+
+# e0d9f4c1f7444dfba23545cc06213bbc
+#: ../../appendices/faq.en.rst:246
+msgid "tunneling due to a header field (such as presence of If-Range header)"
+msgstr ""
+
+# 38d5bdf9e3dd4051a5366a3406102086
+#: ../../appendices/faq.en.rst:247
+msgid "tunneling due to a method (e.g. CONNECT)"
+msgstr ""
+
+# 4646a3f6e6b3436fa40846c22490c11c
+#: ../../appendices/faq.en.rst:248
+msgid "tunneling due to no forward"
+msgstr ""
+
+# c723fb2d607b4450a447d986f4c42ba4
+#: ../../appendices/faq.en.rst:249
+msgid "O"
+msgstr ""
+
+# 3542b343cc6a4d33ad11056fc06d0fce
+#: ../../appendices/faq.en.rst:249
+msgid "tunneling because cache is turned off"
+msgstr ""
+
+# 62c1fb40e2bf464693b1ad8fe1f4dc02
+#: ../../appendices/faq.en.rst:250
+msgid "tunneling because of url (url suggests dynamic content)"
+msgstr ""
+
+# 88031dd5110e4004a0590f5700bc9c87
+#: ../../appendices/faq.en.rst:251
+msgid "no tunneling"
+msgstr ""
+
+# 5a53d0c8b624453588cf56c8df9ce229
+#: ../../appendices/faq.en.rst:255
+msgid "c cache-type and cache-lookup"
+msgstr ""
+
+# 1f16ad0ae4fa4f129a41e872f3579622
+#: ../../appendices/faq.en.rst:256
+msgid "cache result values (2 characters)"
+msgstr ""
+
+# 97d178b649014e8983b54f843b4f2bdc
+#: ../../appendices/faq.en.rst:258
+msgid "cache-type character value is one of"
+msgstr ""
+
+# d44857040ace4204a89e98e3dd5c700a
+#: ../../appendices/faq.en.rst:263
+msgid "cache"
+msgstr ""
+
+# 28f4c431a9074d06ae5b66846cde0f29
+#: ../../appendices/faq.en.rst:264
+msgid "icp"
+msgstr ""
+
+# aae5c02f0a0e491d8b8f939b131a4e81
+#: ../../appendices/faq.en.rst:265
+msgid "L"
+msgstr ""
+
+# 2b7334cfc9da454a85ea010f49ad9ed9
+#: ../../appendices/faq.en.rst:265
+msgid "cluster, (not used)"
+msgstr ""
+
+# 2fbd19e7452d438eb1282ce80120facf
+#: ../../appendices/faq.en.rst:266
+msgid "P"
+msgstr ""
+
+# 52d5e57dcb724455908d1d945f53c13f
+#: ../../appendices/faq.en.rst:266
+msgid "parent"
+msgstr ""
+
+# 457351b9aca4455bbdf6940368701629
+#: ../../appendices/faq.en.rst:267
+msgid "server"
+msgstr ""
+
+# a8ba2788cea543779c9bb06a290edcfc
+#: ../../appendices/faq.en.rst:268
+msgid "cache miss or no cache lookup"
+msgstr ""
+
+# 3cf2133ab047445fac2b70242e00c131
+#: ../../appendices/faq.en.rst:271
+msgid "cache-lookup-result character value is one of:"
+msgstr ""
+
+# 60ad89c5dc624b7ea53f5d2319d8072d
+#: ../../appendices/faq.en.rst:276
+msgid "cache hit, but config forces revalidate"
+msgstr ""
+
+# c6133e7c80374e03ab5d77e469f26adb
+#: ../../appendices/faq.en.rst:277
+msgid "cache hit, but method forces revalidated (e.g. ftp, not anonymous)"
+msgstr ""
+
+# 300eadc7a167413a8af7f0c06db31ab3
+#: ../../appendices/faq.en.rst:278
+msgid "cache hit"
+msgstr ""
+
+# 2bab4dcce859414f84598533e14d9211
+#: ../../appendices/faq.en.rst:279
+msgid "conditional miss (client sent conditional, fresh in cache, returned 412)"
+msgstr ""
+
+# 20d42f08f6214580ab6ca84b13dad0e7
+#: ../../appendices/faq.en.rst:280
+msgid "K"
+msgstr ""
+
+# 3fd1a32d4c794656b0797d6d74b87ca7
+#: ../../appendices/faq.en.rst:280
+msgid "cookie miss"
+msgstr ""
+
+# b69ac80f4ca2459ab0ad1734904f4a3a
+#: ../../appendices/faq.en.rst:281
+msgid "cache miss (url not in cache)"
+msgstr ""
+
+# 841d712330c1477ea5689dcfa733c4c4
+#: ../../appendices/faq.en.rst:282
+msgid ""
+"conditional hit (client sent conditional, doc fresh in cache, returned "
+"304)"
+msgstr ""
+
+# e4cca631bf9846c99926797dc4c5421e
+#: ../../appendices/faq.en.rst:283
+msgid "cache hit, but expired"
+msgstr ""
+
+# 70777dcd6479463eb4ad095d6d807ea5
+#: ../../appendices/faq.en.rst:284
+msgid "cache hit, but client forces revalidate (e.g. Pragma: no-cache)"
+msgstr ""
+
+# 5e53b155bd2342b38ac8ab41a395574f
+#: ../../appendices/faq.en.rst:285
+msgid "no cache lookup"
+msgstr ""
+
+# 569eaf7a555d47baad95ff5ac0fd4a40
+#: ../../appendices/faq.en.rst:289
+msgid "i icp-conn-info"
+msgstr ""
+
+# 26a15ca28a294d119a2e94a738234f2d
+#: ../../appendices/faq.en.rst:291
+msgid "ICP status"
+msgstr ""
+
+# cd2e49e7d0344a6ab82eb97158e6c494
+# 0121e3bebf8f4ab59c68ae39d9390f52
+# 24b2947d2fe04acba61fa3753480898f
+#: ../../appendices/faq.en.rst:296 ../../appendices/faq.en.rst:308
+#: ../../appendices/faq.en.rst:320
+msgid "connection open failed"
+msgstr ""
+
+# 20689bc2464b42efbf27e13a10497273
+# 776706a1ada342a09ebc1ee76d62766e
+# 046a2153fc4e439a8a9c5f2d982eebfd
+#: ../../appendices/faq.en.rst:297 ../../appendices/faq.en.rst:309
+#: ../../appendices/faq.en.rst:321
+msgid "connection opened successfully"
+msgstr ""
+
+# 4a6b5ffac47a474b8e427b8667e6b38f
+#: ../../appendices/faq.en.rst:298
+msgid "no icp"
+msgstr ""
+
+# 6dac9a19916d403a88e90642628538cc
+#: ../../appendices/faq.en.rst:302
+msgid "p parent-proxy"
+msgstr ""
+
+# f69b8dce8b684330bdb4e3584eab2517
+#: ../../appendices/faq.en.rst:303
+msgid "parent proxy connection status"
+msgstr ""
+
+# 22db3f466e1c467d97479b2ef18fa8dc
+#: ../../appendices/faq.en.rst:310
+msgid "no parent proxy"
+msgstr ""
+
+# 674f6360fe224fac984ebdbc26ed7dee
+#: ../../appendices/faq.en.rst:314
+msgid "s server-conn-info"
+msgstr ""
+
+# 603d3f48335f4b94b57fa10c893a8f82
+#: ../../appendices/faq.en.rst:315
+msgid "origin server connection status"
+msgstr ""
+
+# bc9e99ad76e84ed29d4f55166a8488df
+#: ../../appendices/faq.en.rst:322
+msgid "no server connection"
+msgstr ""
+
+# ff1aaa69814842aba3606491459043c6
+#: ../../appendices/faq.en.rst:328
+msgid "Support for HTTP Expect: Header"
+msgstr ""
+
+# 193c8e16e99e4b3e988dfe253950ff9a
+#: ../../appendices/faq.en.rst:330
+msgid ""
+"Traffic Server currently does not handle Expect: request headers "
+"according to the HTTP/1.1 spec."
+msgstr ""
+
+# dde086b2770a4d5f98d46605440e4b88
+#: ../../appendices/faq.en.rst:333
+msgid ""
+"Clients such as cURL automatically send Expect: for POST requests with "
+"large POST bodies, with a 1 second timeout if a 100 Continue response is "
+"not received. To avoid the timeout when using cURL as a client to Traffic"
+" Server, you can turn off the Expect: header::"
+msgstr ""
+
+# 22cf7be7f646452d9c157afed8ac46e7
+#: ../../appendices/faq.en.rst:340
+msgid "Or with the C (libcurl) library from within your own applications::"
+msgstr ""
+
+# 93605e5f8c5a44a9964cca5a8f352288
+#: ../../appendices/faq.en.rst:346
+msgid "Or with the PHP cURL library::"
+msgstr ""
+
+# b8e4c56097834375890af10afd80eb2c
+#: ../../appendices/faq.en.rst:351
+msgid "Troubleshooting Tips"
+msgstr ""
+
+# 4535e0755591474184f50078cf6e2fc5
+#: ../../appendices/faq.en.rst:354
+msgid "The throughput statistic is inaccurate"
+msgstr ""
+
+# f51d96f3e91a42d1835c1a08a85a3117
+#: ../../appendices/faq.en.rst:356
+msgid ""
+"Traffic Server updates the throughput statistic after it has transferred "
+"an entire object. For larger files, the byte count increases sharply at "
+"the end of a transfer. The complete number of bytes transferred is "
+"attributed to the last 10-second interval, although it can take several "
+"minutes to transfer the object. This inaccuracy is more noticeable with a"
+" light load. A heavier load yields a more accurate statistic."
+msgstr ""
+
+# 128f458422a94b2aa5d0d9a7e2d27178
+#: ../../appendices/faq.en.rst:364
+msgid "You are unable to execute Traffic Line commands"
+msgstr ""
+
+# 266e25fe673942689b97f8c85cc641b6
+#: ../../appendices/faq.en.rst:366
+msgid "Traffic Line commands do not execute under the following conditions:"
+msgstr ""
+
+# f48ace7fcf244cc7a96406696fdbd57b
+#: ../../appendices/faq.en.rst:377
+msgid "**When the traffic_manager process is not running**"
+msgstr ""
+
+# 4bf8a1f71fdd490895524b4d18b56e52
+#: ../../appendices/faq.en.rst:369
+msgid ""
+"Check to see if the :program:`traffic_manager` process is running by "
+"entering the following command::"
+msgstr ""
+
+# add7ce520670498b960638bc20a19ff2
+#: ../../appendices/faq.en.rst:374
+msgid ""
+"If the :program:`traffic_manager` process is not running, then enter the "
+"following command from the Traffic Server ``bin`` directory to start it::"
+msgstr ""
+
+# c872b6a44ee14be097ba8083feeae01c
+#: ../../appendices/faq.en.rst:388
+msgid "**When you are not executing the command from $TSHome/bin**"
+msgstr ""
+
+# ee641350ef204e7991f90217bd566d0a
+#: ../../appendices/faq.en.rst:387
+msgid ""
+"If the Traffic Server ``bin`` directory is not in your path, then prepend"
+" the Traffic Line commands with ``./`` (for example, ``./traffic_ctl "
+"-h``)."
+msgstr ""
+
+# ffacd57c3fe943c9a4717339137ccdb8
+#: ../../appendices/faq.en.rst:390
+msgid ""
+"**When multiple Traffic Server installations are present and you are not "
+"executing the Traffic Line command from the active Traffic Server path "
+"specified in ``/etc/trafficserver``**"
+msgstr ""
+
+# c5dd4e6f67644a0a8045f705e827e862
+#: ../../appendices/faq.en.rst:396
+msgid ""
+"You observe inconsistent behavior when one node obtains an object from "
+"another node in the cluster"
+msgstr ""
+
+# 0c86be96201e4609ba474665b49aed9a
+#: ../../appendices/faq.en.rst:398
+msgid ""
+"As part of the initial system preparation, you must synchronize the "
+"clocks on all nodes in your cluster. Minor time differences do not cause "
+"problems, but differences of more than a few minutes can affect Traffic "
+"Server operation."
+msgstr ""
+
+# 705a80ed24c44708bafac6f1cbdc188b
+#: ../../appendices/faq.en.rst:403
+msgid ""
+"You should run a clock synchronization daemon such as xntpd. To obtain "
+"the latest version of xntpd, go to `<http://www.eecis.udel.edu/~ntp/>`_."
+msgstr ""
+
+# 927f4c80737a4f84948d3101890e2163
+#: ../../appendices/faq.en.rst:407
+msgid "Web browsers display an error document with a 'data missing' message"
+msgstr ""
+
+# 239276c4541a4b0791011784b9bc8f73
+#: ../../appendices/faq.en.rst:409
+msgid "A message similar to the following might display in web browsers: ::"
+msgstr ""
+
+# 8ba8bf0d6e654fd09bd6fd24c37829a2
+#: ../../appendices/faq.en.rst:415
+msgid ""
+"This is a Web browser issue and not a problem specific to (or caused by) "
+"Traffic Server. Because Web browsers maintain a separate local cache in "
+"memory and/or disk on the client system, messages about documents that "
+"have expired from cache refer to the browser's local cache and not to the"
+" Traffic Server cache. There is no Traffic Server message or condition "
+"that can cause such messages to appear in a web browser."
+msgstr ""
+
+# 967901e1976a4ffda860155f4f0eb0c4
+#: ../../appendices/faq.en.rst:423
+msgid "Traffic Server does not resolve any websites"
+msgstr ""
+
+# 6e4a2bb663c64fbeab208aaf34fdb1d0
+#: ../../appendices/faq.en.rst:425
+msgid ""
+"The browser indicates that it is contacting the host and then times out "
+"with the following message: ::"
+msgstr ""
+
+# f1ca82adeabf47ecae28f4173e858e9f
+#: ../../appendices/faq.en.rst:430
+msgid ""
+"Make sure the system is configured correctly and that Traffic Server can "
+"read the name resolution file:"
+msgstr ""
+
+# c29f1118b0c140b68bd9dada8fbf844f
+#: ../../appendices/faq.en.rst:433
+msgid ""
+"Check if the server can resolve DNS lookups by issuing the nslookup "
+"command (for example, ``nslookup www.myhost.com``)."
+msgstr ""
+
+# 4c535b309b4d40d193cf5d2bfe2dbabc
+#: ../../appendices/faq.en.rst:435
+msgid ""
+"Check if the :manpage:`resolv.conf(5)` file contains valid IP addresses "
+"for your DNS servers."
+msgstr ""
+
+# aadbf1caef7c49698765271a131c58cb
+#: ../../appendices/faq.en.rst:437
+msgid ""
+"On some systems, if the :manpage:`resolv.conf(5)` file is unreadable or "
+"has no name server entry, then the operating system uses ``localhost`` as"
+" a name server. Traffic Server, however, does not use this convention. If"
+" you want to use ``localhost`` as a name server, then you must add a name"
+" server entry for ``127.0.0.1`` or ``0.0.0.0`` in the "
+":manpage:`resolv.conf(5)` file."
+msgstr ""
+
+# b350e45a11e846e5966887b22bb72fa7
+#: ../../appendices/faq.en.rst:443
+msgid ""
+"Check that the Traffic Server user account has permission to read the "
+":manpage:`resolv.conf(5)` file. If it does not, then change the file "
+"permissions to ``rw-r--r--`` (``644``)."
+msgstr ""
+
+# da456c4f134246adaad24b7872116e66
+#: ../../appendices/faq.en.rst:448
+msgid "'Maximum document size exceeded' message in the system log file"
+msgstr ""
+
+# 22ed6588749b4976ac848d9ae5024d56
+#: ../../appendices/faq.en.rst:450
+msgid "The following message appears in the system log file: ::"
+msgstr ""
+
+# 5f472846a224434ebe1077882bbc82d3
+#: ../../appendices/faq.en.rst:454
+msgid ""
+"A requested object was larger than the maximum size allowed in the "
+"Traffic Server cache, so Traffic Server provided proxy service for the "
+"oversized object but did not cache it. To set the object size limit for "
+"the cache, modify the :ts:cv:`proxy.config.cache.max_doc_size` variable "
+"in the records.config file. If you do not want to limit the size of "
+"objects in the cache, then set the document size to ``0`` (zero)."
+msgstr ""
+
+# 6a92fe1bffd24d6a8ac3c2c7a87215f7
+#: ../../appendices/faq.en.rst:463
+msgid "'DrainIncomingChannel' message in the system log file"
+msgstr ""
+
+# 3865b08cc2e244b69ccc6503a7ec91e7
+#: ../../appendices/faq.en.rst:465
+msgid "The following messages may appear in the system log file: ::"
+msgstr ""
+
+# 3c87fe85ec6c49ca8c28442c11c49177
+#: ../../appendices/faq.en.rst:471
+msgid ""
+"These error messages indicate that a browser is sending HTTP requests to "
+"one of the Traffic Server cluster ports, either ``rsport`` (default port "
+"8088) or ``mcport`` (default port 8089). Traffic Server discards these "
+"requests. This error does not cause any Traffic Server problems. The "
+"misconfigured browser must be reconfigured to use the correct proxy port."
+" Traffic Server clusters should ideally be configured to use a separate "
+"network interface and cluster on a private subnet, so that client "
+"machines have no access to the cluster ports."
+msgstr ""
+
+# caa73a092843498abbaec8383fda6f4b
+#: ../../appendices/faq.en.rst:481
+msgid "'No cop file' message in the system log file"
+msgstr ""
+
+# b70136b5fd8c4ad1adf56d716488fe75
+#: ../../appendices/faq.en.rst:483
+msgid "The following message appears repeatedly in the system log file: ::"
+msgstr ""
+
+# f0f792608e634d48b1afd3316f35e929
+#: ../../appendices/faq.en.rst:487
+msgid ""
+"The file ``var/trafficserver/no_cop`` acts as an administrative control "
+"that instructs the :program:`traffic_cop` process to exit immediately "
+"without starting :program:`traffic_manager` or performing any health "
+"checks. The ``no_cop`` file prevents Traffic Server from starting "
+"automatically when it has been stopped with the option:`trafficserver "
+"stop` command. Without this static control, Traffic Server would restart "
+"automatically upon system reboot. The ``no_cop`` control keeps Traffic "
+"Server off until it is explicitly restarted with: ::"
+msgstr ""
+
+# b68f1ec48c17492e8bab7d776ed6a50b
+#: ../../appendices/faq.en.rst:499
+msgid "Warning in the system log file when manually editing vaddrs.config"
+msgstr ""
+
+# 54b716d89ee145e9aba2a0eff4f3b63f
+#: ../../appendices/faq.en.rst:501
+msgid ""
+"If you manually edit :file:`vaddrs.config` as a non-root user, then "
+"Traffic Server issues a warning message in the system log file similar to"
+" the following::"
+msgstr ""
+
+# ddec9a372dbd4f74a43e7e02eebedf64
+#: ../../appendices/faq.en.rst:507
+msgid ""
+"You can safely ignore this message as Traffic Server will still apply "
+"your configuration edits."
+msgstr ""
+
+# cdd224161d284b5f9719de2364b16cb5
+#: ../../appendices/faq.en.rst:511
+msgid "Traffic Server is running but no log files are created"
+msgstr ""
+
+# 980ff04de99b4fc3a1687cebbd61542f
+#: ../../appendices/faq.en.rst:513
+msgid ""
+"Traffic Server only writes event log files when there is information to "
+"record. If Traffic Server is idle, then it's possible that no log files "
+"exist."
+msgstr ""
+
+# 126265fba8c1442e8c78a6239aba357d
+#: ../../appendices/faq.en.rst:517
+msgid ""
+"If Traffic Server is not idle, and you still do not see log files being "
+"generated, verify the following:"
+msgstr ""
+
+# abf81352c47f4f759667c92de4a8621d
+#: ../../appendices/faq.en.rst:520
+msgid ""
+"Make sure you're looking in the correct directory. By default, Traffic "
+"Server creates log files in the ``logs`` directory. This can be modified "
+"by changing :ts:cv:`proxy.config.log.logfile_dir` in "
+":file:`records.config`."
+msgstr ""
+
+# ca3094aa9f5c40b7b5e1f3e7d0d967ce
+#: ../../appendices/faq.en.rst:524
+msgid ""
+"Check that the log directory has read/write permissions for the Traffic "
+"Server user account. If the log directory does not have the correct "
+"permissions, then the :program:`traffic_server` process will be unable to"
+" open or create log files."
+msgstr ""
+
+# b8f5749673f44099be0d44abf21b916f
+#: ../../appendices/faq.en.rst:529
+msgid ""
+"Check that logging is enabled by checking the value of the "
+":ts:cv:`proxy.config.log.logging_enabled` variable in "
+":file:`records.config`."
+msgstr ""
+
+# 8b78989d3301409bad17d97525fc7148
+#: ../../appendices/faq.en.rst:532
+msgid ""
+"Check that a log format is enabled. In :file:`records.config`, select the"
+" standard or custom format by editing variables in the Logging Config "
+"section."
+msgstr ""
+
+# 508a21449ee4488cab8b01c600e4406c
+#: ../../appendices/faq.en.rst:537
+msgid "Traffic Server shows an error indicating too many network connections"
+msgstr ""
+
+# 19550345c12c47eebd0b3a79b85f6c3c
+#: ../../appendices/faq.en.rst:539
+#, python-format
+msgid ""
+"By default, Traffic Server supports 8000 network connections. Half of "
+"this number is allocated for client connections and the remaining half is"
+" for origin server connections. A *connection throttle event* occurs when"
+" either client or origin server connections reach 90% of half the "
+"configured total limit (3600 by default). When a connection throttle "
+"event occurs, Traffic Server continues processing all existing "
+"connections but will not accept new client connection requests until the "
+"connection count falls below the limit."
+msgstr ""
+
+# 1d46dde512754a65a9761b018851fc67
+#: ../../appendices/faq.en.rst:548
+msgid "Connection throttle events can occur under the following conditions:"
+msgstr ""
+
+# 975c18b802594620b451ce70c3e4e80e
+#: ../../appendices/faq.en.rst:554
+msgid "Connection Spike"
+msgstr ""
+
+# 0e21abb59adc4167b8c17d8153223996
+#: ../../appendices/faq.en.rst:551
+msgid ""
+"Too many client requests (enough to exceed your configured maximum "
+"connections) all reach Traffic Server at the same time. Such events are "
+"typically transient and require no corrective action if your connection "
+"limits are already configured appropriately for your Traffic Server and "
+"origin resources."
+msgstr ""
+
+# 7cb042385b504656aca89c39088e6b84
+#: ../../appendices/faq.en.rst:560
+msgid "Service Overload"
+msgstr ""
+
+# 7c8860199f444b0da3f449b4c953e143
+#: ../../appendices/faq.en.rst:557
+msgid ""
+"Client requests are arriving at a rate faster than that which Traffic "
+"Server can service them. This may indicate network problems between "
+"Traffic Server and origin servers or that Traffic Server may require more"
+" memory, CPU, cache disks, or other resources to handle the client load."
+msgstr ""
+
+# e4e29b58001e4f8e8f3ecb387a1a1523
+#: ../../appendices/faq.en.rst:562
+msgid ""
+"If necessary, you can adjust the maximum number of connections supported "
+"by Traffic Server by editing "
+":ts:cv:`proxy.config.net.connections_throttle` in :file:`records.config`."
+msgstr ""
+
+# 71a00fa644ec44e3bab69107a00cde65
+#: ../../appendices/faq.en.rst:568
+msgid ""
+"Do not increase the connection throttle limit unless the system has "
+"adequate memory to handle the client connections required. A system with "
+"limited RAM might need a throttle limit lower than the default value. Do "
+"not set this variable below the minimum value of ``100``."
+msgstr ""
+
+# b284577e3f4c423792faad0a322ebd4a
+#: ../../appendices/faq.en.rst:574
+msgid "Low memory symptoms"
+msgstr ""
+
+# f2ab53bb82184f288841df5a5c3e9d46
+#: ../../appendices/faq.en.rst:576
+msgid ""
+"Under heavy load, the Linux kernel can run out of RAM. This low memory "
+"condition can cause slow performance and a variety of other system "
+"problems. In fact, RAM exhaustion can occur even if the system has plenty"
+" of free swap space."
+msgstr ""
+
+# a0abb56456d34f49b495da0f467d36eb
+#: ../../appendices/faq.en.rst:581
+msgid ""
+"Symptoms of extreme memory exhaustion include the following messages in "
+"the system log files (``/var/log/messages``)::"
+msgstr ""
+
+# 110c77ad7eb540a388baf52f4dc74ec3
+#: ../../appendices/faq.en.rst:590
+msgid ""
+"To avoid memory exhaustion, add more RAM to the system or reduce the load"
+" on Traffic Server."
+msgstr ""
+
+# 1471fdeaef1b49a4be5fbb86ba2936a2
+#: ../../appendices/faq.en.rst:594
+msgid "Config checker"
+msgstr ""
+
+# fea3e1a9118247b2a5efa476a643fb5e
+#: ../../appendices/faq.en.rst:596
+msgid ""
+"Traffic Server supports the below command to validate the config offline,"
+" inorder to allow the config to be pre-checked for possible service "
+"disruptions due to synatx errors::"
+msgstr ""
+
+# fcb46c0e16b540dbac0aff78d7bc2eb1
+#: ../../appendices/faq.en.rst:601
+msgid "<config_dir> is the location of the config files to be validated."
+msgstr ""
+
+# f5c9b2f4c45349b19bb642e17f77df6a
+#: ../../appendices/faq.en.rst:604
+msgid "Connection timeouts with the origin server"
+msgstr ""
+
+# 4a06e462ba1a49d1a05afda7fc30a23f
+#: ../../appendices/faq.en.rst:606
+msgid ""
+"By default, Traffic Server will timeout after 30 seconds when contacting "
+"origin servers. If you cannot avoid such timeouts by otherwise addressing"
+" the performance on your origin servers, you may adjust the origin "
+"connection timeout in Traffic Server by changing "
+":ts:cv:`proxy.config.http.connect_attempts_timeout` in "
+":file:`records.config` to a larger value."
+msgstr ""
+

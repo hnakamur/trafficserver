@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# eaf870d89e6444aa99fcf1674b9513b8
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:23
+msgid "TSUrlHostSet"
+msgstr ""
+
+# 568734a74c9e4a95ad438b5047ea4a67
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:25
+msgid "Traffic Server URL component manipulation API."
+msgstr ""
+
+# c2271dd6385e4f999f4f060b5e971648
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 37e64857cb054d5c9f612d0379d7227b
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 8f0b3adf22b44be8be2946a6c07c27ba
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:43
+msgid "Description"
+msgstr ""
+
+# fa29730f769b42e28448f27396b6bd48
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:45
+msgid ""
+"The URL data structure is a parsed version of a standard internet URL. "
+"The Traffic Server URL API provides access to URL data stored in marshal "
+"buffers. The URL functions can create, copy, retrieve or delete entire "
+"URLs, and retrieve or modify parts of URLs, such as their host, port or "
+"scheme information."
+msgstr ""
+
+# 85b3e1470b9b416b98483fd2ac6f3e94
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:51
+msgid ""
+":func:`TSUrlSchemeSet`, :func:`TSUrlUserSet`, :func:`TSUrlPasswordSet`, "
+":func:`TSUrlHostSet`, :func:`TSUrlHttpParamsSet`, "
+":func:`TSUrlHttpQuerySet` and :func:`TSUrlHttpFragmentSet` each set the "
+"specified portion of the URL located at offset within the marshal buffer "
+":arg:`bufp` to the string value. If :arg:`length` is :literal:`-1` then "
+"these functions assume that value is NULL-terminated. Otherwise, the "
+"length of the :arg:`string` value is taken to be the value of "
+":arg:`length`. These functions copy the string to within :arg:`bufp`, so "
+"it can be subsequently modified or deleted."
+msgstr ""
+
+# 03db5139f70a424a9bac1acf420d7651
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:60
+msgid ""
+":func:`TSUrlPortSet` sets the port number portion of the URL located at "
+":arg:`offset` within the marshal buffer :arg:`bufp` to the value port. "
+"Normal canonicalization based on the URL scheme still applies."
+msgstr ""
+
+# a1f380ae74c14a548ad926e3451af327
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:65
+msgid "Return Values"
+msgstr ""
+
+# 135cdd102a174e04b53993565faba8f3
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:67
+msgid ""
+"All these APIs returns a :type:`TSReturnCode`, indicating success "
+"(:data:`TS_SUCCESS`) or failure (:data:`TS_ERROR`) of the operation."
+msgstr ""
+
+# 5cacd26635c54aa7947e3001885a2dab
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:71
+msgid "See Also"
+msgstr ""
+
+# 833522fa382c4f98b8481d617d7752a8
+#: ../../developer-guide/api/functions/TSUrlHostSet.en.rst:73
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSUrlCreate(3ts)`, "
+":manpage:`TSUrlHostGet(3ts)`, :manpage:`TSUrlStringGet(3ts)`, "
+":manpage:`TSUrlPercentEncode(3ts)`"
+msgstr ""
+

@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# a2c9e6996f5946759513621f0da8159a
+#: ../../developer-guide/api/functions/TSfwrite.en.rst:22
+msgid "TSfwrite"
+msgstr ""
+
+# f88ab932040f47f6a41739453d593ee2
+#: ../../developer-guide/api/functions/TSfwrite.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 005b22df44b943f49e1c08743a22dfc3
+#: ../../developer-guide/api/functions/TSfwrite.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 0d342049ab5844eeb082b07dca0d08fe
+#: ../../developer-guide/api/functions/TSfwrite.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 86905231800640aa8255e4987a1aaff1
+#: ../../developer-guide/api/functions/TSfwrite.en.rst:34
+msgid ""
+"Attempts to write :arg:`length` bytes of data from the buffer :arg:`buf` "
+"to the file :arg:`filep`."
+msgstr ""
+
+# c731f7e51c534cb682ee6d04a355fc08
+#: ../../developer-guide/api/functions/TSfwrite.en.rst:37
+msgid ""
+"Make sure that :arg:`filep` is open for writing.  You might want to check"
+" the number of bytes written (:c:func:`TSfwrite` returns this value) "
+"against the value of :arg:`length`.  If it is less, there might be "
+"insufficient space on disk, for example."
+msgstr ""
+

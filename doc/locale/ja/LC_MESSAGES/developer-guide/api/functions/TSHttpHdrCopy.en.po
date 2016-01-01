@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 53f4bbc57df94d5a8158c4bde84d3629
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:22
+msgid "TSHttpHdrCopy"
+msgstr ""
+
+# cc4643fe46f0489fb5c7bd997694323a
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:24
+msgid ""
+"Copies the contents of the HTTP header located at src_loc within src_bufp"
+" to the HTTP header located at dest_loc within dest_bufp."
+msgstr ""
+
+# d03b7267a21b4f708354fc81bb58647e
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 9c80a40490b948658daf9d09e318fde8
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 06151d56c4a941a08d573224e362f625
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:35
+msgid "Description"
+msgstr ""
+
+# 62b24685159b4110bc898fb6f8f9307c
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:37
+msgid ""
+":c:func:`TSHttpHdrCopy` works correctly even if :arg:`src_bufp` and "
+":arg:`dest_bufp` point to different :ref:`developer-plugins-marshal-"
+"buffers`. Make sure that you create the destination HTTP header before "
+"copying into it."
+msgstr ""
+
+# a317338994774414a58f455d6d0d93be
+#: ../../developer-guide/api/functions/TSHttpHdrCopy.en.rst:43
+msgid ""
+":c:func:`TSHttpHdrCopy` appends the port number to the domain of the URL "
+"portion of the header. For example, a copy of http://www.example.com "
+"appears as http://www.example.com:80 in the destination buffer."
+msgstr ""
+

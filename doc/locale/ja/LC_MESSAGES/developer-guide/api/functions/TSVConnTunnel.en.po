@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 443e92a131044db9a0f134cfdadd9ceb
+#: ../../developer-guide/api/functions/TSVConnTunnel.en.rst:22
+msgid "TSVConnTunnel"
+msgstr ""
+
+# ccf26da5c42d4c3e8d0645270849198c
+#: ../../developer-guide/api/functions/TSVConnTunnel.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 99d51eee09444aef8265ccf58495743b
+#: ../../developer-guide/api/functions/TSVConnTunnel.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 303a5b24c43440dcac0875ee895b1dee
+#: ../../developer-guide/api/functions/TSVConnTunnel.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 43ec7915e5a1407f899db468a4be54cd
+#: ../../developer-guide/api/functions/TSVConnTunnel.en.rst:34
+msgid ""
+"Set the SSL connection :arg:`svc` to convert to a blind tunnel. Can be "
+"called from :data:`TS_VCONN_PRE_ACCEPT_HOOK` or "
+":data:`TS_SSL_SNI_HOOK/TS_SSL_CERT_HOOK`."
+msgstr ""
+
+# 7d0ea59e9a564bcabfd86da705a754b1
+#: ../../developer-guide/api/functions/TSVConnTunnel.en.rst:37
+msgid ""
+"For this to work from the :data:`TS_SSL_SNI_HOOK` or "
+":data:`TS_SSL_CERT_HOOK`, either the server must be running OpenSSL 1.0.2"
+" or a version of OpenSSL 1.0.1 with the appropriate patch installed."
+msgstr ""
+

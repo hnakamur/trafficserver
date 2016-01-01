@@ -1,0 +1,246 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 7b35d6ca01734f51ab82d9841c3c2c0e
+#: ../../developer-guide/architecture/tiered-storage.en.rst:23
+msgid "Tiered Storage"
+msgstr ""
+
+# cf8d17ea70f642dc846ff0fb924bff7b
+#: ../../developer-guide/architecture/tiered-storage.en.rst:25
+msgid ""
+"Tiered storage is an attempt to allow |TS| to take advantage of physical "
+"storage with different properties. This design concerns only mechanism. "
+"Policies to take advantage of these are outside of the scope of this "
+"document. Instead we will presume an *oracle* which implements this "
+"policy and describe the queries that must be answered by the oracle and "
+"the effects of the answers."
+msgstr ""
+
+# 90a3f3b1beea4b2e80ef61b2549327de
+#: ../../developer-guide/architecture/tiered-storage.en.rst:31
+msgid ""
+"Beyond avoiding question of tier policy, the design is also intended to "
+"be effectively identical to current operations for the case where there "
+"is only one tier."
+msgstr ""
+
+# 211d552201924056b08ae3b3006c66e2
+#: ../../developer-guide/architecture/tiered-storage.en.rst:35
+msgid ""
+"The most common case for tiers is an ordered list of tiers, where higher "
+"tiers are presumed faster but more expensive (or more limited in "
+"capacity). This is not required. It might be that different tiers are "
+"differentiated by other properties (such as expected persistence). The "
+"design here is intended to handle both cases."
+msgstr ""
+
+# 2237c2d092ed4e9f825bbeea8ccd1adc
+#: ../../developer-guide/architecture/tiered-storage.en.rst:41
+msgid ""
+"The design presumes that if a user has multiple tiers of storage and an "
+"ordering for those tiers, they will usually want content stored at one "
+"tier level to also be stored at every other lower level as well, so that "
+"it does not have to be copied if evicted from a higher tier."
+msgstr ""
+
+# 9577857fb2d14421bb7ce602cbd27e63
+#: ../../developer-guide/architecture/tiered-storage.en.rst:47
+msgid "Configuration"
+msgstr ""
+
+# 98d54b4262414420a05670c555ac0101
+#: ../../developer-guide/architecture/tiered-storage.en.rst:49
+msgid ""
+"Each :term:`storage unit` in :file:`storage.config` can be marked with a "
+"*quality* value which is 32 bit number. Storage units that are not marked"
+" are all assigned the same value which is guaranteed to be distinct from "
+"all explicit values. The quality value is arbitrary from the point of "
+"view of this design, serving as a tag rather than a numeric value. The "
+"user (via the oracle) can impose what ever additional meaning is useful "
+"on this value (rating, bit slicing, etc.)."
+msgstr ""
+
+# 47339108861b4590a12f07f100c321de
+#: ../../developer-guide/architecture/tiered-storage.en.rst:57
+msgid ""
+"In such cases, all :term:`volumes <cache volume>` should be explicitly "
+"assigned a value, as the default (unmarked) value is not guaranteed to "
+"have any relationship to explicit values. The unmarked value is intended "
+"to be useful in situations where the user has no interest in tiered "
+"storage and so wants to let |TS| automatically handle all volumes as a "
+"single tier."
+msgstr ""
+
+# 646c27027dcf4d88b99e9079fa85c8e1
+#: ../../developer-guide/architecture/tiered-storage.en.rst:64
+msgid "Operations"
+msgstr ""
+
+# 7c10ce5b63444db1a620a4aae7b9240b
+#: ../../developer-guide/architecture/tiered-storage.en.rst:66
+msgid ""
+"After a client request is received and processed, volume assignment is "
+"done. For each tier, the oracle would return one of four values along "
+"with a volume pointer:"
+msgstr ""
+
+# b0de8c3c29f44009b18298f5d3864f7a
+#: ../../developer-guide/architecture/tiered-storage.en.rst:71
+msgid "``READ``"
+msgstr ""
+
+# d1980077bcc2467dae0974d3b6acb03d
+#: ../../developer-guide/architecture/tiered-storage.en.rst:71
+msgid "The tier appears to have the object and can serve it."
+msgstr ""
+
+# 2a8f5a58a3f14e7f90fa50875356129d
+#: ../../developer-guide/architecture/tiered-storage.en.rst:75
+msgid "``WRITE``"
+msgstr ""
+
+# 804ff78897ec456dbb8589aaf40fe545
+#: ../../developer-guide/architecture/tiered-storage.en.rst:74
+msgid ""
+"The object is not in this tier and should be written to this tier if "
+"possible."
+msgstr ""
+
+# 1eef65dc77e944a9a42f58131e2a103c
+#: ../../developer-guide/architecture/tiered-storage.en.rst:79
+msgid "``RW``"
+msgstr ""
+
+# a304dd7b1d62438e97d325e24882ebc4
+#: ../../developer-guide/architecture/tiered-storage.en.rst:78
+msgid ""
+"Treat as ``READ`` if possible, but if the object turns out to not in the "
+"cache treat as ``WRITE``."
+msgstr ""
+
+# 2bbc77301952470a9f0708bbe571a3e1
+#: ../../developer-guide/architecture/tiered-storage.en.rst:82
+msgid "``NO_SALE``"
+msgstr ""
+
+# a619e0a99b814ebcb83e4d935a781652
+#: ../../developer-guide/architecture/tiered-storage.en.rst:82
+msgid "Do not interact with this tier for this object."
+msgstr ""
+
+# c17fcee343bc4cd0b892aa7ed6ffbf40
+#: ../../developer-guide/architecture/tiered-storage.en.rst:84
+msgid ""
+"The :term:`volume <cache volume>` returned for the tier must be a volume "
+"with the corresponding tier quality value. In effect, the current style "
+"of volume assignment is done for each tier, by assigning one volume out "
+"of all of the volumes of the same quality and returning one of ``RW`` or "
+"``WRITE``, depending on whether the initial volume directory lookup "
+"succeeds. Note that as with current volume assignment, it is presumed "
+"this can be done from in memory structures (no disk I/O required)."
+msgstr ""
+
+# a7c02498f70e4eb68e9c181893b72b57
+#: ../../developer-guide/architecture/tiered-storage.en.rst:92
+msgid ""
+"If the oracle returns ``READ`` or ``RW`` for more than one tier, it must "
+"also return an ordering for those tiers (it may return an ordering for "
+"all tiers, ones that are not readable will be ignored). For each tier, in"
+" that order, a read of cache storage is attempted for the object. A "
+"successful read locks that tier as the provider of cached content. If no "
+"tier has a successful read, or no tier is marked ``READ`` or ``RW`` then "
+"it is a cache miss. Any tier marked ``RW`` that fails the read test is "
+"demoted to ``WRITE``."
+msgstr ""
+
+# d1406bf1460a4d4586891e34b3f08d8f
+#: ../../developer-guide/architecture/tiered-storage.en.rst:100
+msgid ""
+"If the object is cached, every tier that returns ``WRITE`` receives the "
+"object to store in the selected volume (this includes ``RW`` returns that"
+" are demoted to ``WRITE``). This is a cache to cache copy, not from the "
+":term:`origin server`. In this case, tiers marked ``RW`` that are not "
+"tested for read will not receive any data and will not be further "
+"involved in the request processing."
+msgstr ""
+
+# 43237da62414439ca19a1b702d71ce0c
+#: ../../developer-guide/architecture/tiered-storage.en.rst:106
+msgid ""
+"For a cache miss, all tiers marked ``WRITE`` will receive data from the "
+"origin server connection (if successful)."
+msgstr ""
+
+# 213ab0adeb214a3d9b33d6903b6d5dae
+#: ../../developer-guide/architecture/tiered-storage.en.rst:109
+msgid ""
+"This means, among other things, that if there is a tier with the object "
+"all other tiers that are written will get a local copy of the object, and"
+" the origin server will not be used. In terms of implementation, "
+"currently a cache write to a volume is done via the construction of an "
+"instance of :cpp:class:`CacheVC` which recieves the object stream. For "
+"tiered storage, the same thing is done for each target volume."
+msgstr ""
+
+# b25b63c63c4f4686bd328bb782617831
+#: ../../developer-guide/architecture/tiered-storage.en.rst:116
+msgid ""
+"For cache volume overrides (via :file:`hosting.config`) this same process"
+" is used except with only the volumes stripes contained within the "
+"specified cache volume."
+msgstr ""
+
+# dcfd55ee64634699a8a209ad8a6229dc
+#: ../../developer-guide/architecture/tiered-storage.en.rst:121
+msgid "Copying"
+msgstr ""
+
+# f1ae86010b71471fb9a44290757b9457
+#: ../../developer-guide/architecture/tiered-storage.en.rst:123
+msgid ""
+"It may be necessary to provide a mechanism to copy objects between tiers "
+"outside of a client originated transaction. In terms of implementation, "
+"this is straight forward using :cpp:class:`HttpTunnel` as if in a "
+"transaction, only using a :cpp:class:`CacheVC` instance for both the "
+"producer and consumer. The more difficult question is what event would "
+"trigger a possible copy. A signal could be provided whenever a volume "
+"directory entry is deleted, although it should be noted that the object "
+"in question may have already been evicted when this event happens."
+msgstr ""
+
+# 85d131d23a9a4b178868d4f5cacf57c1
+#: ../../developer-guide/architecture/tiered-storage.en.rst:133
+msgid "Additional Notes"
+msgstr ""
+
+# b869ca02a58a47d4ad034ed7ad38af2e
+#: ../../developer-guide/architecture/tiered-storage.en.rst:135
+msgid ""
+"As an example use, it would be possible to have only one cache volume "
+"that uses tiered storage for a particular set of domains using volume "
+"tagging. :file:`hosting.config` would be used to direct those domains to "
+"the selected cache volume. The oracle would check the URL in parallel and"
+" return ``NO_SALE`` for the tiers in the target cache volume for other "
+"domains. For the other tier (that of the unmarked storage units), the "
+"oracle would return ``RW`` for the tier in all cases as that tier would "
+"not be queried for the target domains."
+msgstr ""
+

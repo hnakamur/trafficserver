@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 599c746e0b1e4e2fa7230546daa93940
+#: ../../developer-guide/api/functions/TSMimeHdrFieldNext.en.rst:22
+msgid "TSMimeHdrFieldNext"
+msgstr ""
+
+# 0b6f9ded689d4e3a9c028559df55918d
+#: ../../developer-guide/api/functions/TSMimeHdrFieldNext.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 3dba74e41e5647d28168b8ef101b7831
+#: ../../developer-guide/api/functions/TSMimeHdrFieldNext.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 9695bd2a2dbf4c84bcdc16752cab2882
+#: ../../developer-guide/api/functions/TSMimeHdrFieldNext.en.rst:32
+msgid "Description"
+msgstr ""
+

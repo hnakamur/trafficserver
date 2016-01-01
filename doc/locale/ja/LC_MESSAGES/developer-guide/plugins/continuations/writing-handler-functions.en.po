@@ -1,0 +1,515 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# f5853088ce7f4e8aaf2d1bbddd570f78
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:23
+msgid "Writing Handler Functions"
+msgstr ""
+
+# 327f979a6ef84db6a2348898bb208530
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:27
+msgid ""
+"The handler function is the key component of a continuation. It is "
+"supposed to examine the event and event data, and then do something "
+"appropriate. The probable action might be to schedule another event for "
+"the continuation to received, to open up a connection to a server, or "
+"simply to destroy itself."
+msgstr ""
+
+# c720aad939c44fe385519e1cd330e5f9
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:33
+msgid ""
+"The continuation's handler function is a function of type "
+":type:`TSEventFunc`. Its arguments are a continuation, an event, and a "
+"pointer to some data (this data is passed to the continuation by the "
+"caller - do not confuse this data with the continuation's own data, "
+"associated by :func:`TSContDataSet`). When the continuation is called "
+"back, the continuation and an event are passed to the handler function. "
+"The continuation is a handle to the same continuation that is invoked. "
+"The handler function typically has a switch statement to handle the "
+"events it receives:"
+msgstr ""
+
+# 18b48d785cac4896baf5fae0123c39d7
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:65
+msgid ""
+"You might notice that a continuation cannot determine if more events are "
+"\"in flight\" toward it. Do not use :func:`TSContDestroy` to delete a "
+"continuation before you make sure that all incoming events, such as those"
+" sent because of :func:`TSHttpTxnHookAdd`, have been handled."
+msgstr ""
+
+# 825319a8fce146f5a4cd6bbf785c8635
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:70
+msgid ""
+"The following table lists events and the corresponding type of `void* "
+"data` passed to handler functions:"
+msgstr ""
+
+# 361ef2aa1479469ea5c2e4361f81a2bf
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:74
+msgid "Event"
+msgstr ""
+
+# 967e0b01acc840b0b4412a654fedabc1
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:74
+msgid "Event Sender"
+msgstr ""
+
+# cb5e652169d548e4b86ac2783a11756f
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:74
+msgid "Data Type"
+msgstr ""
+
+# 16e44a0436be47b8bcf95195a3cbc9e8
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:76
+msgid ":data:`TS_EVENT_HTTP_READ_REQUEST_HDR`"
+msgstr ""
+
+# 3180091e46ac4ab4b6624ac542484c2f
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:76
+msgid ":data:`TS_HTTP_READ_REQUEST_HDR_HOOK`"
+msgstr ""
+
+# 623c17411aec4c858b5eb2fcfaed1405
+# eb2e7bce684b4d81b4220a358a938d8b
+# 13a50bb82725436aac66d8be790abea1
+# 84a4424252624b1b93b73fc305df7140
+# ae5a8612d4b34003b9d512204e6d0a6f
+# 064cfa0d2b12443582c8af9173fd62de
+# d23fc90c297641d38ec7dca6b99e479a
+# 4759f368994e4291b22824a774de09d4
+# ca4f1e3f7fff48998d2e841ca73aa8f1
+# 9c2eb65c051c49c783980e0529c2f5fd
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:76
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:77
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:78
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:79
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:80
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:81
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:82
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:83
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:84
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:88
+msgid ":type:`TSHttpTxn`"
+msgstr ""
+
+# 452a4431609c47a8af6085cd72bf4126
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:77
+msgid ":data:`TS_EVENT_HTTP_OS_DNS`"
+msgstr ""
+
+# 063b6068676f485abb2462794d5651ed
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:77
+msgid ":data:`TS_HTTP_OS_DNS_HOOK`"
+msgstr ""
+
+# 8ae0b3f9d5d34b379fb8ef28359de2e6
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:78
+msgid ":data:`TS_EVENT_HTTP_SEND_REQUEST_HDR`"
+msgstr ""
+
+# 3d16938a4730422aa457127408f4f62d
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:78
+msgid ":data:`TS_HTTP_SEND_REQUEST_HDR_HOOK`"
+msgstr ""
+
+# b29b92bc221c4a39a121f2b3c57cb1e8
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:79
+msgid ":data:`TS_EVENT_HTTP_READ_CACHE_HDR`"
+msgstr ""
+
+# 31c52d90055044ca9c3d42d4a9869b81
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:79
+msgid ":data:`TS_HTTP_READ_CACHE_HDR_HOOK`"
+msgstr ""
+
+# 0989f54da4aa46c7a3bd1c80a43340ae
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:80
+msgid ":data:`TS_EVENT_HTTP_READ_RESPONSE_HDR`"
+msgstr ""
+
+# 07908fbea86f4696ba1adadd51b74f59
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:80
+msgid ":data:`TS_HTTP_READ_RESPONSE_HDR_HOOK`"
+msgstr ""
+
+# ce5e95bec7934984a7338f4839b69fd0
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:81
+msgid ":data:`TS_EVENT_HTTP_SEND_RESPONSE_HDR`"
+msgstr ""
+
+# 8c95c95bf50e4e509c4882f644c7a622
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:81
+msgid ":data:`TS_HTTP_SEND_RESPONSE_HDR_HOOK`"
+msgstr ""
+
+# 0a830c181ec24e4caabf50d157ea168f
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:82
+msgid ":data:`TS_EVENT_HTTP_SELECT_ALT`"
+msgstr ""
+
+# 952903c2b34b4b4485a6589c5cdf51cd
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:82
+msgid ":data:`TS_HTTP_SELECT_ALT_HOOK`"
+msgstr ""
+
+# 0f807bdc8a314ab78b58583360f9964b
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:83
+msgid ":data:`TS_EVENT_HTTP_TXN_START`"
+msgstr ""
+
+# 735f61ffb0aa4bf1856bb00fdb2fee44
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:83
+msgid ":data:`TS_HTTP_TXN_START_HOOK`"
+msgstr ""
+
+# abfe1c5638244843b897249076d4a16b
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:84
+msgid ":data:`TS_EVENT_HTTP_TXN_CLOSE`"
+msgstr ""
+
+# d3d49a2e1ac247dfaf402ada78f1352f
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:84
+msgid ":data:`TS_HTTP_TXN_CLOSE_HOOK`"
+msgstr ""
+
+# 72090b46c17b4f4cbc8dbde81c21b049
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:85
+msgid ":data:`TS_EVENT_HTTP_SSN_START`"
+msgstr ""
+
+# 68fed7b7cd9d44e6b6a9fa5a7c57a510
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:85
+msgid ":data:`TS_HTTP_SSN_START_HOOK`"
+msgstr ""
+
+# 7ee48fa6fcbc46b99e268aae4b56accd
+# 45ed3f38041e4926893407812a01cffd
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:85
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:86
+msgid ":type:`TSHttpSsn`"
+msgstr ""
+
+# 6ed72f4c14cb4e18b3ee22259116694d
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:86
+msgid ":data:`TS_EVENT_HTTP_SSN_CLOSE`"
+msgstr ""
+
+# afb4ea32d7a0486ca95fe3652c352363
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:86
+msgid ":data:`TS_HTTP_SSN_CLOSE_HOOK`"
+msgstr ""
+
+# 7366220b097d4dbc83a8f49e3be6ccdc
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:87
+msgid ":data:`TS_EVENT_NONE`"
+msgstr ""
+
+# df755d7a351c4726bd7975a9e5369490
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:88
+msgid ":data:`TS_EVENT_CACHE_LOOKUP_COMPLETE`"
+msgstr ""
+
+# 332374c67b554df299eabe47da7f6f30
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:88
+msgid ":data:`TS_HTTP_CACHE_LOOKUP_COMPLETE_HOOK`"
+msgstr ""
+
+# cd8136c814d346cd8cf915a15d29e2ad
+# d46ed08e2bad4808b2caa6844abeebbc
+# 01f902cbf873480e8bfb340f7214405e
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:89
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:92
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:93
+msgid ":data:`TS_EVENT_IMMEDIATE`"
+msgstr ""
+
+# 9e09b3bcb3a94bb6ac1b4ed3ae88fb1c
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:89
+msgid ":func:`TSVConnClose` :func:`TSVIOReenable` :func:`TSContSchedule`"
+msgstr ""
+
+# 6d1aa25bd8db48fc8e4455f5c1734871
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:92
+msgid ":data:`TS_HTTP_REQUEST_TRANSFORM_HOOK`"
+msgstr ""
+
+# c9606b96cc5142b89cb48a0e9e71597c
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:93
+msgid ":data:`TS_HTTP_RESPONSE_TRANSFORM_HOOK`"
+msgstr ""
+
+# ce17de325f9c45e9b3f639726f6c96dc
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:94
+msgid ":data:`TS_EVENT_CACHE_OPEN_READ`"
+msgstr ""
+
+# 5a9db22a19f04029844656ebac00f59a
+# 9a505eba153c44bd907f193793ac271c
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:94
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:95
+msgid ":func:`TSCacheRead`"
+msgstr ""
+
+# 55f9dfc5e8904459871c0140a1fe0b43
+# 995fbd2b616f469db78023c60a2df45f
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:94
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:96
+msgid "Cache VC"
+msgstr ""
+
+# 99c6241453f64829bf79e63778e7ede3
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:95
+msgid ":data:`TS_EVENT_CACHE_OPEN_READ_FAILED`"
+msgstr ""
+
+# 13ebf21a086b49d48836924f6311349c
+# f7f525346e074669996e301228e0d557
+# edac5f29bff541b4a1b1994e1b5ce48f
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:95
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:97
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:99
+msgid "TS_CACHE_ERROR code"
+msgstr ""
+
+# 5865e799490c48c793836d153e1a600e
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:96
+msgid ":data:`TS_EVENT_CACHE_OPEN_WRITE`"
+msgstr ""
+
+# 26f43a9afe4e48e8beaf7df836c03bcc
+# 07cd9d47c91c4f179bfba4d13bd3106b
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:96
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:97
+msgid ":func:`TSCacheWrite`"
+msgstr ""
+
+# 0bd87d069bc24c42abfc5cb911de61ad
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:97
+msgid ":data:`TS_EVENT_CACHE_OPEN_WRITE_FAILED`"
+msgstr ""
+
+# 51919835082c4d6fb374d5c01d0fe1a8
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:98
+msgid ":data:`TS_EVENT_CACHE_REMOVE`"
+msgstr ""
+
+# eaa5be3405cb4fdea9559ada7f79409f
+# e45975f8331c4d449b0341bc928c5995
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:98
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:99
+msgid ":func:`TSCacheRemove`"
+msgstr ""
+
+# 80607471092a4d13a7c731333eb05505
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:99
+msgid ":data:`TS_EVENT_CACHE_REMOVE_FAILED`"
+msgstr ""
+
+# 636e332a1f1244a08d3d30183d66a986
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:100
+msgid ":data:`TS_EVENT_NET_ACCEPT`"
+msgstr ""
+
+# a38a5f71750b4551adcf83df852cfd7c
+# b9f937be109b4e399bdb214fd779da2c
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:100
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:103
+msgid ""
+":func:`TSNetAccept` :func:`TSHttpTxnServerIntercept` "
+":func:`TSHttpTxnIntercept`"
+msgstr ""
+
+# bc2c76561c044713ba443ae8739f8907
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:100
+msgid ":type:`TSNetVConnection`"
+msgstr ""
+
+# d7c4c9eea1594ef8b133611a2aa877b1
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:103
+msgid ":data:`TS_EVENT_NET_ACCEPT_FAILED`"
+msgstr ""
+
+# 721423e357c44f72a25709c728be0862
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:106
+msgid ":data:`TS_EVENT_HOST_LOOKUP`"
+msgstr ""
+
+# ab45f0f284d744df8e150300ea20db66
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:106
+msgid ":func:`TSHostLookup`"
+msgstr ""
+
+# 975deef81b6340f087269b47d94cd7c7
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:106
+msgid ":type:`TSHostLookupResult`"
+msgstr ""
+
+# c330437cb4e8483391444835aac9af87
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:107
+msgid ":data:`TS_EVENT_TIMEOUT`"
+msgstr ""
+
+# bc6a1f94843d4e05a510e2f8abb341e8
+# 0aa4f04487f64c88860f67e28a432644
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:107
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:129
+msgid ":func:`TSContSchedule`"
+msgstr ""
+
+# 43d7c79796e947f8b022759ecd84da80
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:108
+msgid ":data:`TS_EVENT_ERROR`"
+msgstr ""
+
+# 73563330402d4a7bb6886a538e18a227
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:109
+msgid ":data:`TS_EVENT_VCONN_READ_READY`"
+msgstr ""
+
+# 43ffd6001b3f4c08b2a2cd12af396a33
+# 37a1a819fe47471fadebde75245a9de8
+# 5cc76728412146acafb6df5126677860
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:109
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:111
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:113
+msgid ":func:`TSVConnRead`"
+msgstr ""
+
+# 4b53553bb3b74685a2e0d90039c8af5d
+# d51e9409f902464fbe301008457c663d
+# c9611c8f02e143bc8a83ee10abf29edb
+# 497a0fe40a3643e38936c1811312fbd0
+# 316a284d2b204df289a4ac28c626b162
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:109
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:110
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:111
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:112
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:113
+msgid ":type:`TSVIO`"
+msgstr ""
+
+# 128e27ce517d430d97fa4abf35179770
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:110
+msgid ":data:`TS_EVENT_VCONN_WRITE_READY`"
+msgstr ""
+
+# 70d0f2aa3edf41a5be807c844a95d7ca
+# e783cec0ed07457f862e6855979d36f9
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:110
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:112
+msgid ":func:`TSVConnWrite`"
+msgstr ""
+
+# b6da656268054d688e9341b506e33f01
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:111
+msgid ":data:`TS_EVENT_VCONN_READ_COMPLETE`"
+msgstr ""
+
+# 97960a2d639048f799941f759b5511ac
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:112
+msgid ":data:`TS_EVENT_VCONN_WRITE_COMPLETE`"
+msgstr ""
+
+# 530b7b0e7a844ddaa34c62e129beaa62
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:113
+msgid ":data:`TS_EVENT_VCONN_EOS`"
+msgstr ""
+
+# 80840ad5bf014e5495e8a51032000eaa
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:114
+msgid ":data:`TS_EVENT_NET_CONNECT`"
+msgstr ""
+
+# ab140439d7304a19a54d9bfd8e3e0ba4
+# 48cf3336f815477db7f90da369ef361e
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:114
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:115
+msgid ":func:`TSNetConnect`"
+msgstr ""
+
+# d585ec03554e47779d5d89d88380e0ed
+# c10f1671ff5847059fe260426c1349f5
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:114
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:115
+msgid ":type:`TSVConn`"
+msgstr ""
+
+# 7b8a04c6c1d2417cb3ca6fbf9d2d95af
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:115
+msgid ":data:`TS_EVENT_NET_CONNECT_FAILED`"
+msgstr ""
+
+# b99d82a5e1ee4ae790bf77feb3da3434
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:116
+msgid ":data:`TS_EVENT_HTTP_CONTINUE`"
+msgstr ""
+
+# 11d484ee5e18462d9639b46dd59fb589
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:117
+msgid ":data:`TS_EVENT_HTTP_ERROR`"
+msgstr ""
+
+# 4e5b314394dc41d4bc430b6e043b7bd8
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:118
+msgid ":data:`TS_EVENT_MGMT_UPDATE`"
+msgstr ""
+
+# 9ce3eba82dec47b090c4f7d071017377
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:118
+msgid ":func:`TSMgmtUpdateRegister`"
+msgstr ""
+
+# 6e556a809c6f4ba9a055ba131b4a5ca4
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:121
+msgid "The continuation functions are listed below:"
+msgstr ""
+
+# 0366186d9b95425ba4b5e3d351acd149
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:123
+msgid ":func:`TSContCall`"
+msgstr ""
+
+# 01e3a19ba8794361ab6768b580b85bbc
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:124
+msgid ":func:`TSContCreate`"
+msgstr ""
+
+# fd4973ee0673443399173505ef818e05
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:125
+msgid ":func:`TSContDataGet`"
+msgstr ""
+
+# 79be31ef07b942c0b1d6731cdfeede3e
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:126
+msgid ":func:`TSContDataSet`"
+msgstr ""
+
+# 25d53c0fdd384017b78680e30f4fa4b3
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:127
+msgid ":func:`TSContDestroy`"
+msgstr ""
+
+# bfd362d0aed44e2d8b10e27b2025c113
+#: ../../developer-guide/plugins/continuations/writing-handler-functions.en.rst:128
+msgid ":func:`TSContMutexGet`"
+msgstr ""
+

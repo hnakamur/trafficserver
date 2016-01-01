@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3df565e6bb7e4dd890f5ad89e1d4beea
+#: ../../developer-guide/api/types/TSReturnCode.en.rst:20
+msgid "TSReturnCode"
+msgstr ""
+
+# cc68f328cd5445e5aad9b81b8665bbfb
+#: ../../developer-guide/api/types/TSReturnCode.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 8a0b4818128441d99138c0763b13c2cb
+#: ../../developer-guide/api/types/TSReturnCode.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# cb29b36e6a744c90b8677e3b67bfd572
+#: ../../developer-guide/api/types/TSReturnCode.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# 139122da00f445dc8d07cf8984a6be9b
+#: ../../developer-guide/api/types/TSReturnCode.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# 0af42b8ab9554a47a875dc9581d6d837
+#: ../../developer-guide/api/types/TSReturnCode.en.rst:39
+msgid "Description"
+msgstr ""
+

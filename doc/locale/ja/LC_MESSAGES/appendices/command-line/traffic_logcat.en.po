@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 88adef440ba8412ea4ba014f1f8b2509
+#: ../../appendices/command-line/traffic_logcat.en.rst:23
+msgid "traffic_logcat"
+msgstr ""
+
+# 42041d1fd7e44b079f361237636c71c4
+#: ../../appendices/command-line/traffic_logcat.en.rst:26
+msgid "Synopsis"
+msgstr ""
+
+# 1f6062fcf1ef4d9998f1470e838d266d
+#: ../../appendices/command-line/traffic_logcat.en.rst:28
+msgid ""
+":program:`traffic_logcat` [-o output-file | -a] [-CEhSVw2] [input-file "
+"...]"
+msgstr ""
+
+# 50c2494e2857466b8b56a96b51ef3776
+#: ../../appendices/command-line/traffic_logcat.en.rst:31
+msgid "Description"
+msgstr ""
+
+# f83d16a3010d479fa93cfb2d033c69b7
+#: ../../appendices/command-line/traffic_logcat.en.rst:33
+msgid ""
+"To analyse a binary log file using standard tools, you must first convert"
+" it to ASCII. :program:`traffic_logcat` does exactly that."
+msgstr ""
+
+# 6b5f4e9cd53f48c388d63032f8ee8712
+#: ../../appendices/command-line/traffic_logcat.en.rst:37
+msgid "Options"
+msgstr ""
+
+# 9562c9367fcc49b498b4f813fc684fc2
+#: ../../appendices/command-line/traffic_logcat.en.rst:43
+msgid "Specifies where the command output is directed."
+msgstr ""
+
+# b944e955b3b2489a8455a4fa45eaffb9
+#: ../../appendices/command-line/traffic_logcat.en.rst:47
+msgid ""
+"Automatically generates the output filename based on the input filename. "
+"If the input is from stdin, then this option is ignored. For example::"
+msgstr ""
+
+# a00188347cd24617a260879f6a225024
+#: ../../appendices/command-line/traffic_logcat.en.rst:53
+msgid "generates::"
+msgstr ""
+
+# d7ac71be52bc4b028f7628ee7a97de91
+#: ../../appendices/command-line/traffic_logcat.en.rst:59
+msgid "Follows the file, like :manpage:`tail(1)` ``-f``"
+msgstr ""
+
+# 80edc9bd924f41c7a417f144eff11e08
+#: ../../appendices/command-line/traffic_logcat.en.rst:63
+msgid "Attempts to transform the input to Netscape Common format, if possible."
+msgstr ""
+
+# 7f7fcba7eb844c079b3924176b6fce14
+#: ../../appendices/command-line/traffic_logcat.en.rst:67
+msgid "Attempts to transform the input to Netscape Extended format, if possible."
+msgstr ""
+
+# 61629ce7e326470a827415e72a7b42aa
+#: ../../appendices/command-line/traffic_logcat.en.rst:71
+msgid "Attempts to transform the input to Squid format, if possible."
+msgstr ""
+
+# e7266efd89ef4c499ae48b3796390826
+#: ../../appendices/command-line/traffic_logcat.en.rst:75
+msgid "Attempt to transform the input to Netscape Extended-2 format, if possible."
+msgstr ""
+
+# 5b0fd6480cc64d9ab655fa6277d8b5c6
+#: ../../appendices/command-line/traffic_logcat.en.rst:83
+msgid "Print usage information and exit."
+msgstr ""
+
+# 8cf5e6ecdb0747e290a5e6797fcb4afa
+#: ../../appendices/command-line/traffic_logcat.en.rst:87
+msgid "Print version information and exit."
+msgstr ""
+
+# 6f1fac5133d243268407787f72148713
+#: ../../appendices/command-line/traffic_logcat.en.rst:90
+msgid ""
+"Use only one of the following options at any given time: ``-S``, ``-C``, "
+"``-E``, or ``-2``."
+msgstr ""
+
+# 99c01229c4744973b6b8b1aede81d335
+#: ../../appendices/command-line/traffic_logcat.en.rst:92
+msgid ""
+"If no input files are specified, then :program:`traffic_logcat` reads "
+"from the standard input (``stdin``). If you do not specify an output "
+"file, then :program:`traffic_logcat` writes to the standard output "
+"(``stdout``)."
+msgstr ""
+
+# b8ea9a8385aa4f0fb708c8cb5c29cd8b
+#: ../../appendices/command-line/traffic_logcat.en.rst:96
+msgid ""
+"For example, to convert a binary log file to an ASCII file, you can use "
+"the :program:`traffic_logcat` command with either of the following "
+"options below::"
+msgstr ""
+
+# 6b327b730af244faa323b782c8ed8a36
+#: ../../appendices/command-line/traffic_logcat.en.rst:103
+msgid "The binary log file is not modified by this command."
+msgstr ""
+
+# 475c088cd67341e1a346e95ef63185a8
+#: ../../appendices/command-line/traffic_logcat.en.rst:106
+msgid "See Also"
+msgstr ""
+
+# 8a97a3db8fc648fd868047f4aa5b7619
+#: ../../appendices/command-line/traffic_logcat.en.rst:108
+msgid ":manpage:`tail(1)`"
+msgstr ""
+

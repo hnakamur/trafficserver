@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3ed43304d39a4794a1cdf6e9be845b8e
+#: ../../developer-guide/api/functions/TSHttpTxnServerFdGet.en.rst:19
+msgid "TSHttpTxnServerFdGet"
+msgstr ""
+
+# 1e4d013101834209872e4481d1c0d8e6
+#: ../../developer-guide/api/functions/TSHttpTxnServerFdGet.en.rst:22
+msgid "Synopsis"
+msgstr ""
+
+# 145b7454a3734d7b8e73e4006ee67dc3
+#: ../../developer-guide/api/functions/TSHttpTxnServerFdGet.en.rst:24
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# cec02864b6434342a4021070b0e3748e
+#: ../../developer-guide/api/functions/TSHttpTxnServerFdGet.en.rst:30
+msgid "Description"
+msgstr ""
+
+# d417af7ef8be4310910dcc48d65ad422
+#: ../../developer-guide/api/functions/TSHttpTxnServerFdGet.en.rst:31
+msgid ""
+"Get the socket descriptor for the server socket in :arg:`fdp` for the "
+"transaction :arg:`txnp`."
+msgstr ""
+

@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# aa00f2ed666349dcb9f0b9927673c05d
+#: ../../admin-guide/plugins/gzip.en.rst:4
+msgid "gzip / deflate Plugin"
+msgstr ""
+
+# b9394882a35d4782b829d7e060f00359
+#: ../../admin-guide/plugins/gzip.en.rst:24
+msgid ""
+"This plugin gzips or deflates responses, whichever is applicable. It can "
+"compress origin respones as well as cached responses. The plugin is built"
+" and installed as part of the normal Apache Traffic Server installation "
+"process."
+msgstr ""
+
+# 49c317f515664c348e1514583353abdc
+#: ../../admin-guide/plugins/gzip.en.rst:30
+msgid "Installation"
+msgstr ""
+
+# 3d7e9fabc381403fbc469cba1bc9fa9e
+#: ../../admin-guide/plugins/gzip.en.rst:32
+msgid "Add the following line to :file:`plugin.config`::"
+msgstr ""
+
+# a9e84a88c43a4039bf85fba1b416b183
+#: ../../admin-guide/plugins/gzip.en.rst:36
+msgid "In this case, the plugin will use the default behaviour:"
+msgstr ""
+
+# 32b5d1bc6fb64b388764cff1ff98f370
+#: ../../admin-guide/plugins/gzip.en.rst:38
+msgid "Enable caching"
+msgstr ""
+
+# 6e826948548d4517bf2c2de8a8fd218f
+#: ../../admin-guide/plugins/gzip.en.rst:39
+msgid "Compress text/\\* for every origin"
+msgstr ""
+
+# ed0a416710664527be8001003a345f09
+#: ../../admin-guide/plugins/gzip.en.rst:40
+msgid ""
+"Don't hide accept encoding from origin servers (for an offloading reverse"
+" proxy)"
+msgstr ""
+
+# 6eda10df87fd42c6857221f184ae426e
+#: ../../admin-guide/plugins/gzip.en.rst:42
+msgid "No urls are disallowed from compression"
+msgstr ""
+
+# 07b422b3a3e442c0b1f2dfd0ce59dd92
+#: ../../admin-guide/plugins/gzip.en.rst:43
+msgid "Disable flush (flush gzipped content to client)"
+msgstr ""
+
+# c0e62c2d4cab4c4aad6159bdb8227fbc
+#: ../../admin-guide/plugins/gzip.en.rst:46
+msgid "Configuration"
+msgstr ""
+
+# 272fe7cd046349c89e5955169a1d6e1f
+#: ../../admin-guide/plugins/gzip.en.rst:48
+msgid "Alternatively, a configuration can also be specified::"
+msgstr ""
+
+# cf62f65e79b34fcc83ee9e93fa1adf77
+#: ../../admin-guide/plugins/gzip.en.rst:52
+msgid ""
+"After modifying plugin.config, restart traffic server (sudo traffic_ctl "
+"server restart) the configuration is also re-read when a management "
+"update is given (sudo traffic_ctl config reload)"
+msgstr ""
+
+# f4983c4ed22c434fa563606215fbd76a
+#: ../../admin-guide/plugins/gzip.en.rst:57
+msgid "Options"
+msgstr ""
+
+# 1ea7e55516ee44bc9fe83fd3f184983d
+#: ../../admin-guide/plugins/gzip.en.rst:59
+msgid "Flags and options are:"
+msgstr ""
+
+# 4a3d49c5566d47cf91fe391b6fc7fb62
+#: ../../admin-guide/plugins/gzip.en.rst:61
+msgid ""
+"``enabled``: (``true`` or ``false``) Enable or disable compression for a "
+"host."
+msgstr ""
+
+# 646c2bff1e6642bea7efc20ba225f503
+#: ../../admin-guide/plugins/gzip.en.rst:64
+msgid ""
+"``remove-accept-encoding``: (``true`` or ``false``) Sets whether the "
+"plugin should hide the accept encoding from origin servers:"
+msgstr ""
+
+# 8955c8ac15a14334a9fe8a9097ac45fc
+#: ../../admin-guide/plugins/gzip.en.rst:67
+msgid "To ease the load on the origins."
+msgstr ""
+
+# 1b15e4ed6fe243f3a585cb1b72fe0760
+#: ../../admin-guide/plugins/gzip.en.rst:68
+msgid ""
+"For when the proxy parses responses, and the resulting "
+"compression/decompression is wasteful."
+msgstr ""
+
+# 8bb17fa1a9174be7b300fce01d2ade3b
+#: ../../admin-guide/plugins/gzip.en.rst:71
+msgid ""
+"``cache``: (``true`` or ``false``) When set, the plugin stores the "
+"uncompressed and compressed response as alternates."
+msgstr ""
+
+# 05211d79043d446799916ccc83c978cd
+#: ../../admin-guide/plugins/gzip.en.rst:74
+msgid ""
+"``compressible-content-type``: Wildcard pattern for matching compressible"
+" content types."
+msgstr ""
+
+# c9ddaf458edb47a48595c2f94e6aabe7
+#: ../../admin-guide/plugins/gzip.en.rst:77
+msgid "``disallow``: Wildcard pattern for disabling compression on urls."
+msgstr ""
+
+# b1f772fe8c1248e1bf4014ee7302f7e4
+#: ../../admin-guide/plugins/gzip.en.rst:79
+msgid ""
+"``flush``: (``true`` or ``false``) Enable or disable flushing of gzipped "
+"content."
+msgstr ""
+
+# fb62cfa85d9642f8862b6a7fe03c118e
+#: ../../admin-guide/plugins/gzip.en.rst:81
+msgid "Options can be set globally or on a per-site basis, as such::"
+msgstr ""
+
+# f1c66711952040fa89da62019249b502
+#: ../../admin-guide/plugins/gzip.en.rst:97
+msgid "See example.gzip.config for example configurations."
+msgstr ""
+

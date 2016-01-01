@@ -1,0 +1,219 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 244be76de47c4bf8aee5ae386c52d996
+#: ../../admin-guide/plugins/esi.en.rst:4
+msgid "ESI Plugin"
+msgstr ""
+
+# c26028cec07f4f1fafee49be9cecff2a
+#: ../../admin-guide/plugins/esi.en.rst:24
+msgid "This plugin implements the ESI specification."
+msgstr ""
+
+# 7c238cc9045241b3b88c132483803876
+#: ../../admin-guide/plugins/esi.en.rst:27
+msgid "Specification"
+msgstr ""
+
+# 3e3256f839644b199901159e1b118474
+#: ../../admin-guide/plugins/esi.en.rst:29
+msgid "Supportted ESI tags:"
+msgstr ""
+
+# c4980c56eb1247c28d0209fc6ae6c0a8
+#: ../../admin-guide/plugins/esi.en.rst:45
+msgid "extended ESI tags: *esi:special-include*"
+msgstr ""
+
+# a7a7dacb822c4d93b270e53c7354c9fe
+#: ../../admin-guide/plugins/esi.en.rst:47
+msgid "Supported variables:"
+msgstr ""
+
+# 7448e66b496943c3a0d62aa18521b342
+#: ../../admin-guide/plugins/esi.en.rst:58
+msgid ""
+"Note: the name is the key name such as \"username\", \"id\" etc. For "
+"cookie support sub-name or sub-key, the format is: name;subkey, such as "
+"\"l;u\", \"l;t\" etc. e.g. such cookie string: l=u=test&t=1350952328, the"
+" value of $(HTTP_COOKIE{\"l;u\"}) is test and the value of "
+"$(HTTP_COOKIE{\"l;t\"}) is 1350952328"
+msgstr ""
+
+# b9a6d96910c3486a9f4c20051b847aba
+#: ../../admin-guide/plugins/esi.en.rst:63
+msgid "Compile and Installation"
+msgstr ""
+
+# f58b8e8877224b71938d861db10ea5f8
+#: ../../admin-guide/plugins/esi.en.rst:65
+msgid "This plugin is only built if the configure option ::"
+msgstr ""
+
+# 34bde9b930d6457f9db7cddab8e42b49
+#: ../../admin-guide/plugins/esi.en.rst:69
+msgid ""
+"is given at build time. Note that this plugin is built and installed in "
+"combination with the combo handler module, since they share common code."
+msgstr ""
+
+# 0124020c325f4807a093f7d17044ed8c
+#: ../../admin-guide/plugins/esi.en.rst:73
+msgid "Enabling ESI"
+msgstr ""
+
+# c1b3c80d35cc4ea5803d389b26d644ef
+#: ../../admin-guide/plugins/esi.en.rst:75
+msgid ""
+"First we need to set up /usr/local/etc/trafficserver/plugin.config and "
+"make sure the following line is present."
+msgstr ""
+
+# a31ff67b0dea46f29c76351dd63c4b0a
+#: ../../admin-guide/plugins/esi.en.rst:81
+msgid "There are four options you can add to the above."
+msgstr ""
+
+# cdb7ce8d867d485d9a740c96366b6a07
+#: ../../admin-guide/plugins/esi.en.rst:83
+msgid ""
+"\"--private-response\" will add private cache control and expires header "
+"to the processed ESI document."
+msgstr ""
+
+# efa9a4752c0445a5adcf84837bd7c1fa
+#: ../../admin-guide/plugins/esi.en.rst:84
+msgid ""
+"\"--packed-node-support\" will enable the support for using packed node, "
+"which will improve the performance of parsing cached ESI document."
+msgstr ""
+
+# e860eff67da0442098d7a90059944810
+#: ../../admin-guide/plugins/esi.en.rst:86
+msgid ""
+"\"--disable-gzip-output\" will disable gzipped output, which will NOT "
+"gzip the output anyway."
+msgstr ""
+
+# a86c270039f44c7ca084731963d246b5
+#: ../../admin-guide/plugins/esi.en.rst:87
+msgid ""
+"\"--first-byte-flush\" will enable the first byte flush feature, which "
+"will flush content to users as soon as the entire ESI document is "
+"received and parsed without all ESI includes fetched (the flushing will "
+"stop at the ESI include markup till that include is fetched)."
+msgstr ""
+
+# 4c7751be08364bc18e09477420cc2dca
+#: ../../admin-guide/plugins/esi.en.rst:91
+msgid ""
+"We need a mapping for origin server response that contains the ESI "
+"markup. Assume that the ATS server is abc.com. And your origin server is "
+"xyz.com and the response containing ESI markup is http://xyz.com/esi.php."
+" We will need the following line in "
+"/usr/local/etc/trafficserver/remap.config"
+msgstr ""
+
+# 8d974bc17583478db1dc295501d7b56a
+#: ../../admin-guide/plugins/esi.en.rst:98
+msgid ""
+"Your response should contain ESI markup and a response header of 'X-Esi: "
+"1'. e.g. using PHP,"
+msgstr ""
+
+# 5f030bdfa14c42b19df9d1def8c29a0d
+#: ../../admin-guide/plugins/esi.en.rst:109
+msgid ""
+"You will need a mapping for the src of the ESI include in remap.config if"
+" it is not already present."
+msgstr ""
+
+# 610b6344e1704e8cae3e0d33d30294ff
+#: ../../admin-guide/plugins/esi.en.rst:115
+msgid ""
+"Or if both your ESI response and the ESI include comes from the same "
+"origin server, you can have the following line in remap.config instead to"
+" replace separate map rules for date.php and esi.php"
+msgstr ""
+
+# 29c854488afd4c008aeca3b206e02699
+#: ../../admin-guide/plugins/esi.en.rst:122
+msgid "Here is a sample PHP for date.php"
+msgstr ""
+
+# 2be337eda66d4f108816d774f948e4f7
+#: ../../admin-guide/plugins/esi.en.rst:132
+msgid "Useful Note"
+msgstr ""
+
+# db0a2531855e48bbb92c176e1f7d4b62
+#: ../../admin-guide/plugins/esi.en.rst:134
+msgid ""
+"You can provide proper cache control header and the ESI response and ESI "
+"include response can be cached separately. It is extremely useful for "
+"rendering page with multiple modules. The page layout can be a ESI "
+"response with multiple ESI include include, each for different module. "
+"The page layour ESI response can be cached and each individual ESI "
+"include can also be cached with different duration."
+msgstr ""
+
+# ad429f2cbe8041a5a11b273df4eac8f2
+#: ../../admin-guide/plugins/esi.en.rst:139
+msgid ""
+"You might want to compile the code without using ESI_PACKED_NODE_SUPPORT "
+"because it may not work in some corner cases"
+msgstr ""
+
+# 617ff0494a9842268539cc9ef8ba6ce4
+#: ../../admin-guide/plugins/esi.en.rst:142
+msgid "Differences from Spec - http://www.w3.org/TR/esi-lang"
+msgstr ""
+
+# fc54814720704f6a92cb56a96b7366b3
+#: ../../admin-guide/plugins/esi.en.rst:144
+msgid "<esi:include> does not support \"alt\" and \"onerror\" attributes"
+msgstr ""
+
+# 9d2e0a6c90c340c6bf3fcaf97fae3528
+#: ../../admin-guide/plugins/esi.en.rst:146
+msgid "<esi:inline> is not supported"
+msgstr ""
+
+# eea4e8cb784c4779b6aba2dd4d05e767
+#: ../../admin-guide/plugins/esi.en.rst:148
+msgid "You cannot have <esi:try> inside another <esi:try>"
+msgstr ""
+
+# b8a8cc941ef3452ebaa027e8da4c18ff
+#: ../../admin-guide/plugins/esi.en.rst:150
+msgid "HTTP_USER_AGENT variable is not supported"
+msgstr ""
+
+# 16c37497a393468ebc99f23595ab277e
+#: ../../admin-guide/plugins/esi.en.rst:152
+msgid "HTTP_COOKIE supports fetching for sub-key"
+msgstr ""
+
+# c38c13be92444d78963ed01ca54b2512
+#: ../../admin-guide/plugins/esi.en.rst:154
+msgid "HTTP_HEADER supports accessing request headers as variables"
+msgstr ""
+

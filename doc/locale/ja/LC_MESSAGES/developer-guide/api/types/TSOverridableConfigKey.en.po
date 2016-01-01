@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# b5640b2a326f498c938df33b883e582b
+#: ../../developer-guide/api/types/TSOverridableConfigKey.en.rst:20
+msgid "TSOverridableConfigKey"
+msgstr ""
+
+# 9ce65043c36a442c897ec281221da763
+#: ../../developer-guide/api/types/TSOverridableConfigKey.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 748efbae6d054a4895e2c8adde60d64b
+#: ../../developer-guide/api/types/TSOverridableConfigKey.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# 514639cbaa1e4840b406448ea3d8ec58
+#: ../../developer-guide/api/types/TSOverridableConfigKey.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# 90d1dcb4871c4a9b93575d8864cd07eb
+#: ../../developer-guide/api/types/TSOverridableConfigKey.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# cc43b080124240278d65f7e742c1075f
+#: ../../developer-guide/api/types/TSOverridableConfigKey.en.rst:211
+msgid "Description"
+msgstr ""
+

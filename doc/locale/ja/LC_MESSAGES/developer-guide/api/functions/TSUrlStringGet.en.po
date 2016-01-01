@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 661d34245de14a68a611faa4f55da0ca
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:23
+msgid "TSUrlStringGet"
+msgstr ""
+
+# c4421891897c4f65b48a529dd3207d4f
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:25
+msgid "Traffic Server URL string representations API."
+msgstr ""
+
+# 7f0637e30a4c4affa8b92d3ab108d273
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 0b498e72cb6949c48167cb94ac25292c
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# c7525dc1bbf24c8d8dfd3ad521f3136b
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:37
+msgid "Description"
+msgstr ""
+
+# fdd254245ee2403db5fac1f9dc3059c3
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:39
+msgid ""
+"The URL data structure is a parsed version of a standard internet URL. "
+"The Traffic Server URL API provides access to URL data stored in marshal "
+"buffers. The URL functions can create, copy, retrieve or delete entire "
+"URLs, and retrieve or modify parts of URLs, such as their host, port or "
+"scheme information."
+msgstr ""
+
+# 2957c0b122b94002bd626827dd9397ba
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:45
+msgid ""
+":func:`TSUrlStringGet` constructs a string representation of the URL "
+"located at :arg:`offset` within the marshal buffer :arg:`bufp`. "
+":func:`TSUrlStringGet` stores the length of the allocated string in the "
+"parameter :arg:`length`. This is the same length that "
+":func:`TSUrlLengthGet` returns. The returned string is allocated by a "
+"call to :func:`TSmalloc` and must be freed by a call to :func:`TSfree`. "
+"If length is :literal:`NULL` then no attempt is made to de-reference it."
+msgstr ""
+
+# fb6f33dad01248ccb7bea0261ac42f62
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:53
+msgid ""
+":func:`TSUrlLengthGet` calculates the length of the URL located at "
+":arg:`offset` within the marshal buffer bufp as if it were returned as a "
+"string. This length will be the same as the length returned by "
+":func:`TSUrlStringGet`."
+msgstr ""
+
+# 124bd3f4e51c4eec94192145571ae53f
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:58
+msgid ""
+":func:`TSUrlPrint` formats a URL stored in an :type:`TSMBuffer` to an "
+":type:`TSIOBuffer`."
+msgstr ""
+
+# b6e5396bc4204be49cfa61316727b972
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:62
+msgid "See Also"
+msgstr ""
+
+# 5ace623ffbb049a5ab96ce4aba9b1436
+#: ../../developer-guide/api/functions/TSUrlStringGet.en.rst:64
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSmalloc(3ts)`, "
+":manpage:`TSUrlCreate(3ts)`, :manpage:`TSUrlHostGet(3ts)`, "
+":manpage:`TSUrlHostSet(3ts)`, :manpage:`TSUrlPercentEncode(3ts)`"
+msgstr ""
+

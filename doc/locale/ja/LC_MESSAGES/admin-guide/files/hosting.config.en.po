@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 33ebe0e39d9546aa93de6c3cd5d85b9a
+#: ../../admin-guide/files/hosting.config.en.rst:20
+msgid "hosting.config"
+msgstr ""
+
+# e1dcc3909c8742698c4a98e9d5dec023
+#: ../../admin-guide/files/hosting.config.en.rst:24
+msgid ""
+"The :file:`hosting.config` file (by default, located in "
+"``/usr/local/etc/trafficserver/``) you to assign cache volumes to "
+"specific origin servers and/or domains so that you can manage cache space"
+" efficiently and restrict disk usage. For step-by-step instructions on "
+"partitioning the cache according to origin servers and/or domains, refer "
+"to :ref:`partitioning-the-cache`."
+msgstr ""
+
+# 277265a864954daf87799d0b7f614578
+#: ../../admin-guide/files/hosting.config.en.rst:31
+msgid ""
+"Before you can assign cache volumes to specific origin servers and/or "
+"domains, you must first partition your cache according to size and "
+"protocol in the :file:`volume.config` file."
+msgstr ""
+
+# ef90f8a97ef441d5a2e49ead49ae0e8d
+#: ../../admin-guide/files/hosting.config.en.rst:36
+msgid ""
+"After you modify hosting.config, navigate to the Traffic Server bin "
+"directory and run :option:`traffic_ctl config reload` to apply your "
+"changes."
+msgstr ""
+
+# 62f15dc2a24d4c5281f33bfd004c3d59
+#: ../../admin-guide/files/hosting.config.en.rst:39
+msgid ""
+"When you apply the changes to a node in a cluster, Traffic Server "
+"automatically applies the changes to all other nodes in the cluster."
+msgstr ""
+
+# 33656c79b73d4e10800608174101fc59
+#: ../../admin-guide/files/hosting.config.en.rst:44
+msgid ""
+"The :file:`volume.config` configuration must be the same on all nodes in "
+"a cluster."
+msgstr ""
+
+# 2cddb8c392784ea084f856631c6fea44
+#: ../../admin-guide/files/hosting.config.en.rst:47
+msgid "Format"
+msgstr ""
+
+# a8a942cbe6414dd7b9aa6e6b786f9a07
+#: ../../admin-guide/files/hosting.config.en.rst:49
+msgid ""
+"Each line in the :file:`hosting.config` file must have one of the "
+"following formats::"
+msgstr ""
+
+# f2567c05e9bb4143ac8183601c802bfd
+#: ../../admin-guide/files/hosting.config.en.rst:55
+msgid ""
+"where ``HOST`` is the fully-qualified hostname of the origin server whose"
+" content you want to store on a particular volume (for example, "
+"``www.myhost.com``); ``DOMAIN`` is the domain whose content you want to "
+"store on a particular partition(for example, ``mydomain.com``); and "
+"``NUMBERS`` is a comma-separated list of the partitions on which you want"
+" to store the content that belongs to the origin server or domain listed."
+" The partition numbers must be valid numbers listed in the "
+"file:`volume.config`."
+msgstr ""
+
+# 3127fc7d61a84470800ea92ec51c0779
+#: ../../admin-guide/files/hosting.config.en.rst:64
+msgid ""
+"**Note:** To allocate more than one partition to an origin server or "
+"domain, you must enter the partitions in a comma-separated list on one "
+"line, as shown in the example below. The :file:`hosting.config`  file "
+"cannot contain multiple entries for the same origin server or domain."
+msgstr ""
+
+# d4903b1b146343939e40ba5fe45243e7
+#: ../../admin-guide/files/hosting.config.en.rst:71
+msgid "Generic Partition"
+msgstr ""
+
+# ce2868f1a37e4df08b6a726082c4ee15
+#: ../../admin-guide/files/hosting.config.en.rst:73
+msgid ""
+"When configuring the :file:`hosting.config` file, you must assign a "
+"generic volume to use for content that does not belong to any of the "
+"origin servers or domains listed. If all volumes for a particular origin "
+"server become corrupt, Traffic Server will also use the generic volume to"
+" store content for that origin server."
+msgstr ""
+
+# 0d6a8ac16e7b4a25bcbfc19cda60a3ac
+#: ../../admin-guide/files/hosting.config.en.rst:79
+msgid "The generic volume must have the following format::"
+msgstr ""
+
+# 90c0526c06294699a4645a57c7b2fac3
+#: ../../admin-guide/files/hosting.config.en.rst:83
+msgid "where ``NUMBERS`` is a comma-separated list of generic volumes."
+msgstr ""
+
+# 1f5e9df145b443eda1f4d8f25fddcb11
+#: ../../admin-guide/files/hosting.config.en.rst:87
+msgid "Examples"
+msgstr ""
+
+# 5a2d8003b1714dc6aa0f25d5a5137cb8
+#: ../../admin-guide/files/hosting.config.en.rst:89
+msgid ""
+"The following example configures Traffic Server to store content from the"
+" domain ``mydomain.com`` in volume 1 and content from ``www.myhost.com`` "
+"in volume 2. Traffic Server stores content from all other origin servers "
+"in volumes 3 and 4."
+msgstr ""
+

@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 59326f7adc884f029ea49a565def9320
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:22
+msgid "TSPluginInit"
+msgstr ""
+
+# b3df68e7e8f348569e70ee933ebe0a67
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:24
+msgid "Traffic Server plugin loading and registration."
+msgstr ""
+
+# e894ffc9069043fd982369818db8d085
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:27
+msgid "Synopsis"
+msgstr ""
+
+# 976415be76254d5aa428c204e4bde2a8
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:29
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 1ab82cf18f314267980fd390cb72aaa6
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:35
+msgid "Description"
+msgstr ""
+
+# 626708d561754470afb948ea8483f521
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:37
+msgid ""
+":func:`TSPluginInit` must be defined by all plugins. Traffic Server calls"
+" this initialization routine when it loads the plugin and sets "
+":arg:`argc` and :arg:`argv` appropriately based on the values in "
+":file:`plugin.config`."
+msgstr ""
+
+# ea57f58651f943f3834b368792f9f0f8
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:42
+msgid ""
+":arg:`argc` is a count of the number of arguments in the argument vector,"
+" :arg:`argv`. The count is at least one because the first argument in the"
+" argument vector is the plugins name, which must exist in order for the "
+"plugin to be loaded."
+msgstr ""
+
+# 140dbee0068044cdbd7efdeb4fd37954
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:47
+msgid ""
+":func:`TSPluginRegister` registers the appropriate SDK version specific "
+"in :arg:`sdk_version` for your plugin. Use this function to make sure "
+"that the version of Traffic Server on which your plugin is running "
+"supports the plugin."
+msgstr ""
+
+# 1f3debe84ed740f8a783cef8a7c5c4c3
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:52
+msgid "Return Values"
+msgstr ""
+
+# a877807c2c5b4dafaa902c76a3202df7
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:54
+msgid ""
+":func:`TSPluginRegister` returns :const:`TS_ERROR` if the plugin "
+"registration failed."
+msgstr ""
+
+# 618e28f3e5ac46519d6a23db1602218c
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:58
+msgid "Examples"
+msgstr ""
+
+# 9382add417ab4a91909af702159be542
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:78
+msgid "See Also"
+msgstr ""
+
+# ae422bd163cf48f8a76f4f7a304d8bbc
+#: ../../developer-guide/api/functions/TSPluginInit.en.rst:80
+msgid ":manpage:`TSAPI(3ts)`, :manpage:`TSInstallDirGet(3ts)`"
+msgstr ""
+

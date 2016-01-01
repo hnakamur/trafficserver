@@ -1,0 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 420bb10e14074c07accc8ecd815d6edf
+#: ../../developer-guide/api/functions/TSMimeParserDestroy.en.rst:22
+msgid "TSMimeParserDestroy"
+msgstr ""
+
+# 60cf04564bd541d39fb7198cb61e70cd
+#: ../../developer-guide/api/functions/TSMimeParserDestroy.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 32609930441a4aa6b4a6d0af2c8f1dbb
+#: ../../developer-guide/api/functions/TSMimeParserDestroy.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# b6e67462df32478c8503ab073c50d72c
+#: ../../developer-guide/api/functions/TSMimeParserDestroy.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 087e5e4912c24f86a72a500f06fcc9bf
+#: ../../developer-guide/api/functions/TSMimeParserDestroy.en.rst:34
+msgid "Destroys the specified MIME :arg:`parser` and frees the associated memory."
+msgstr ""
+

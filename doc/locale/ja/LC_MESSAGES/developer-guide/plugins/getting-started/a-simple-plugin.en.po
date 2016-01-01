@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 48d2fe2abe23410884f21ed08b0e7c09
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:23
+msgid "A Simple Plugin"
+msgstr ""
+
+# 468dbde6cdb843b0a94df1ae71f2db4f
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:25
+msgid ""
+"This section describes how to write, compile, configure, and run a simple"
+" Traffic Server plugin. You'll follow the steps below:"
+msgstr ""
+
+# ce93b855b994447ca880c72531c3c6f0
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:28
+msgid ""
+"Make sure that your plugin source code contains an ``TSPluginInit`` "
+"initialization function."
+msgstr ""
+
+# 75e171206fc84184afaecec68ae7f83f
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:31
+msgid "Compile your plugin source code, creating a shared library."
+msgstr ""
+
+# 2839c0e4776741c1b91d27dd85d77309
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:33
+msgid "Add an entry to your plugin's ``plugin.config`` file."
+msgstr ""
+
+# 767c37418dc94c94a4ff3a3d74502a81
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:35
+msgid ""
+"Add the path to your plugin shared library into the "
+":file:`records.config` file."
+msgstr ""
+
+# 48a4ef796ff34ca2ad668e7da993ce29
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:38
+msgid "Restart Traffic Server."
+msgstr ""
+
+# 87860fd57b81412b98f9ff6609b2a45b
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:41
+msgid "Compile Your Plugin"
+msgstr ""
+
+# 1ae741a1b1c745ad9fc0eaa8c614a9fb
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:43
+msgid ""
+"The process for compiling a shared library varies with the platform used,"
+" so the Traffic Server API provides the tsxs tool which you can use to "
+"create shared libraries on all the supported Traffic Server platforms."
+msgstr ""
+
+# b7dfd91630164e69a32b0075a58f15b8
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:49
+msgid "Example"
+msgstr ""
+
+# 0dea774e1ba142c8949e5bcf78b8a751
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:51
+msgid ""
+"Assuming the sample program is stored in the file ``hello-world.c``, you "
+"could use the following commands to build a shared library"
+msgstr ""
+
+# 5fcdab2c3e204442a8ec8c8d3c8adc0b
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:58
+msgid "tsxs can be found in ``trafficserver-dev`` package."
+msgstr ""
+
+# 2ee100fbcf354ee79b31ccdf864257e0
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:60
+msgid "This shared library will be your plugin. In order to install it, run"
+msgstr ""
+
+# ff2fc6def50b4a76b0a0179aa1807e55
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:66
+msgid "or the equivalent to ``sudo`` on your platform."
+msgstr ""
+
+# 2fee62bbd597402cb3b81002acefcc3a
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:69
+msgid "Update the ``plugin.config`` File"
+msgstr ""
+
+# bf4514f0a00842118251189d62d28295
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:71
+msgid ""
+"Your next step is to tell Traffic Server about the plugin by adding the "
+"following line to the ``plugin.config`` file. Since our simple plugin "
+"does not require any arguments, the following ``plugin.config`` will "
+"work:"
+msgstr ""
+
+# 858669a1bf6040e082153bc9ac804878
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:81
+msgid ""
+"Traffic Server can accommodate multiple plugins. If several plugin "
+"functions are triggered by the same event, then Traffic Server invokes "
+"each plugin's function in the order each was defined in the "
+"``plugin.config`` file."
+msgstr ""
+
+# 294cbfe379794350aab5d5f24eb89d83
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:89
+msgid "Specify the Plugin's Location"
+msgstr ""
+
+# 385ffd16469a4e508c6e3e6b2c83f97f
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:91
+msgid ""
+"All plugins must be located in the directory specified by the "
+"configuration variable ``proxy.config.plugin.plugin_dir``, which is "
+"located in the :file:`records.config` file. The directory can be "
+"specified as an absolute or relative path."
+msgstr ""
+
+# 9b959b3bc438439ab3644fbdc8c56527
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:96
+msgid ""
+"If a relative path is used, then the starting directory will be the "
+"Traffic Server installation directory as specified in "
+"``/etc/traffic_server``. The default value is ``libexec/trafficserver``, "
+"but this can vary based on how the software was configured and built. It "
+"is common to use the default directory. Be sure to place the shared "
+"library ``hello-world.so`` inside the directory you've configured."
+msgstr ""
+
+# 6c5f69e63cdc4406ae3633bc43027dc3
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:104
+msgid "Restart Traffic Server"
+msgstr ""
+
+# 5be96017b4a24e5da47c714daecc90fb
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:106
+msgid ""
+"The last step is to start/restart Traffic Server. Shown below is the "
+"output displayed after you've created and loaded your ``hello-world`` "
+"plugin."
+msgstr ""
+
+# 228d0fa54e3a41628b2c83821b9a75d3
+#: ../../developer-guide/plugins/getting-started/a-simple-plugin.en.rst:122
+msgid ""
+"**Note:** in the example above, Traffic Server notes are directed to the "
+"console by specifying ``E`` for ``proxy.config.diags.output.note`` in "
+":file:`records.config`. The second note shows Traffic Server attempting "
+"to load the ``hello-world`` plugin. The third line of Traffic Server "
+"output is from your plugin."
+msgstr ""
+

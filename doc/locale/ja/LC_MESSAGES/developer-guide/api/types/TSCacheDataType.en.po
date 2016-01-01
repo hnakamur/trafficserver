@@ -1,0 +1,50 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 88839077d45f4095a6cb415ce23b5542
+#: ../../developer-guide/api/types/TSCacheDataType.en.rst:20
+msgid "TSCacheDataType"
+msgstr ""
+
+# 639c2722b39b472db5d836997a6fd51f
+#: ../../developer-guide/api/types/TSCacheDataType.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# e66b68c4385341b39d5b6de91054db43
+#: ../../developer-guide/api/types/TSCacheDataType.en.rst:25
+msgid "`#include <ts/apidefs.h>`"
+msgstr ""
+
+# 03710a760771477ab3df3118b2fa992a
+#: ../../developer-guide/api/types/TSCacheDataType.en.rst:29
+msgid "Enum typedef."
+msgstr ""
+
+# 4053ac7fbedf41dea8ba5aebd5793d0b
+#: ../../developer-guide/api/types/TSCacheDataType.en.rst:32
+msgid "Enumeration Members"
+msgstr ""
+
+# 138c075795c54afaa2290e83ee15b001
+#: ../../developer-guide/api/types/TSCacheDataType.en.rst:41
+msgid "Description"
+msgstr ""
+

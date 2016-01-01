@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 746e6d91d0944019b4e0a4062d3f7b69
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:21
+msgid "TSHttpTxnServerPacketMarkSet"
+msgstr ""
+
+# 9417c68d44d7402385758e2499205a2a
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:23
+msgid "Change packet firewall mark for the server side connection."
+msgstr ""
+
+# 2b7afac79ecf4724a0fffbedefc0c15c
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:26
+msgid "Synopsis"
+msgstr ""
+
+# 40b37430059248ddb4ba871ab7079b9a
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:28
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 4de9df78731242e298800ed7df396d73
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:33
+msgid "Description"
+msgstr ""
+
+# 40eccf07fb104276ab8efbc0248d3e90
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:37
+msgid ""
+"The change takes effect immediately. If no OS connection has been made, "
+"then this sets the mark that will be used. If an OS connection is "
+"established"
+msgstr ""
+
+# 763b1c5721e6452abae531e9f046173c
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketMarkSet.en.rst:44
+msgid "See Also"
+msgstr ""
+

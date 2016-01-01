@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 3edc205b9de74de0b102d71ace38450f
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:23
+msgid "Summary Logs"
+msgstr ""
+
+# c246566e07fa476191938c1416d59b4c
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:25
+msgid ""
+"Due to the speed and efficiency of |TS|, a heavily-loaded node will "
+"generate many events and the event logs can quickly grow to very large "
+"sizes.  Using SQL-like aggregate operators, you can configure |TS| to "
+"create summary log files that summarize a set of log entries over a "
+"specified period of time. This can significantly reduce the size of the "
+"log files generated."
+msgstr ""
+
+# d6b4538554e141dd8eb7cc6081a0dfe1
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:31
+msgid ""
+"To generate a summary log file, create a :ref:`LogFormat` object in the "
+"XML-based logging configuration :file:`logs_xml.config` using the SQL-"
+"like aggregate operators below. You can apply each of these operators to "
+"specific fields, over a specified interval."
+msgstr ""
+
+# 065d198a809843978d81e5f98eeb0199
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:36
+msgid "``COUNT``"
+msgstr ""
+
+# 63d0e1c3d3064831aee8ccffd8c8a23c
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:37
+msgid "``SUM``"
+msgstr ""
+
+# a00017b093ef4b3daf1e2204cbcffc5c
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:38
+msgid "``AVERAGE``"
+msgstr ""
+
+# 5ea0c79f5d0249d1acf45ea07717331b
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:39
+msgid "``FIRST``"
+msgstr ""
+
+# e164372a3bf34ec2852b225621903c53
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:40
+msgid "``LAST``"
+msgstr ""
+
+# 7e176b27491b497f82585f73b7cf6651
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:42
+msgid "To create a summary log file format:"
+msgstr ""
+
+# f99581f76711485bb16f62040272dc37
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:44
+msgid "Define the format of the log file in :file:`logs_xml.config` as follows:"
+msgstr ""
+
+# 42c3c090be4342058c01461d668d1417
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:54
+msgid ""
+"Where ``operator`` is one of the five aggregate operators (``COUNT``, "
+"``SUM``, ``AVERAGE``, ``FIRST``, ``LAST``); ``field`` is the logging "
+"field you want to aggregate; and ``n`` is the interval (in seconds) "
+"between summary log entries."
+msgstr ""
+
+# 428048511792436a80299c3844f32493
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:59
+msgid ""
+"You can specify more than one ``operator`` in the format line. For more "
+"information, refer to :file:`logs_xml.config`."
+msgstr ""
+
+# c401fd67950340d19df1e994349550db
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:62
+msgid "Run the command :option:`traffic_line -x` to apply configuration changes ."
+msgstr ""
+
+# 019f25d49655403da6b7e02ae20e6171
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:64
+msgid ""
+"The following example format generates one entry every 10 seconds. Each "
+"entry contains the timestamp of the last entry of the interval, a count "
+"of the number of entries seen within that 10-second interval, and the sum"
+" of all bytes sent to the client:"
+msgstr ""
+
+# 0588760816a14e23a2afae640eb963c0
+#: ../../admin-guide/monitoring/logging/summary-logs.en.rst:79
+msgid ""
+"You cannot create a format specification that contains both aggregate "
+"operators and regular fields. For example, the following specification "
+"would be invalid: ::"
+msgstr ""
+

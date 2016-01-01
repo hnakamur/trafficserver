@@ -1,0 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# fd2e65efb94b48b7b45a4979a5ae40a8
+#: ../../appendices/command-line/traffic_logstats.en.rst:23
+msgid "traffic_logstats"
+msgstr ""
+
+# f747089e90fc475db857be6aad49effe
+#: ../../appendices/command-line/traffic_logstats.en.rst:26
+msgid "Description"
+msgstr ""
+
+# c7f22bd947a34c9287644aba3ad28482
+#: ../../appendices/command-line/traffic_logstats.en.rst:29
+msgid "Options"
+msgstr ""
+
+# e24867aea4e74775b6672e5b0c7903ce
+#: ../../appendices/command-line/traffic_logstats.en.rst:69
+msgid "Print usage information and exit."
+msgstr ""
+
+# 29b4dba1555d4de18ca7b8301c560fdc
+#: ../../appendices/command-line/traffic_logstats.en.rst:73
+msgid "Print version information and exit."
+msgstr ""
+

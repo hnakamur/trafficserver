@@ -1,0 +1,356 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# dc89771131f24778b7ea8c4dfe336cad
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:23
+msgid "TSHttpTxnMilestoneGet"
+msgstr ""
+
+# 4fc34adf0f56432c898981f64a66cf77
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:25
+msgid "Get a specified :arg:`milestone` timer value for the current transaction."
+msgstr ""
+
+# 42f74983ba734d1ab4a7e83e6c786cd0
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 5796993b74e74d17a173c90d034fe35e
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# e8fd445aa73e4c71b350b61a5afa6941
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:35
+msgid "Description"
+msgstr ""
+
+# d2c74383fde448caaa82ad487ab325be
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:37
+msgid ""
+":func:`TSHttpTxnMilestoneGet` will fetch a specific :arg:`milestone` "
+"timer value for the transaction :arg:`txnp`. These timers are calculated "
+"during the lifetime of a transaction and are measured in nanoseconds from"
+" the beginning of the transaction. :arg:`time` is used a pointer to "
+"storage to update if the call is successful."
+msgstr ""
+
+# 4b5df38c89b14f2880c994505ff2cd87
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:46
+msgid "Value"
+msgstr ""
+
+# e7b2e0031b4b49a4b21c3aeb53bb0442
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:46
+msgid "Milestone"
+msgstr ""
+
+# 3e686106effe4de3847c363dedfa399e
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:48
+msgid ":const:`TS_MILESTONE_UA_BEGIN`"
+msgstr ""
+
+# 1678c90b440943c1885fb02a1214be02
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:48
+msgid "The client connection is accepted."
+msgstr ""
+
+# 7461d60e70e34bdbb8ae56c6dbcc2937
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:49
+msgid ":const:`TS_MILESTONE_UA_READ_HEADER_DONE`"
+msgstr ""
+
+# 41c3b4d895ce4f4990de27c8d11d52ad
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:49
+msgid "The request header from the client has been read and parsed."
+msgstr ""
+
+# 038b32465bbe49698c8f6858b2ae7e08
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:50
+msgid ":const:`TS_MILESTONE_UA_BEGIN_WRITE`"
+msgstr ""
+
+# cb48e6bff2c74a8483e40effb22a42ae
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:50
+msgid "The response header write to the client starts."
+msgstr ""
+
+# d53a6a26f4984b6eaf7deeeec15ff3bc
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:51
+msgid ":const:`TS_MILESTONE_UA_CLOSE`"
+msgstr ""
+
+# 31fdc7863b8b4611a792e25353015a92
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:51
+msgid "Last I/O activity on the client socket, or connection abort."
+msgstr ""
+
+# e7569a12d58342f1b795c5abf99c0f82
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:52
+msgid ":const:`TS_MILESTONE_SERVER_FIRST_CONNECT`"
+msgstr ""
+
+# 0ae18947854f44ab864b497a10ad3343
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:52
+msgid ""
+"First time origin server connect attempted or shared shared session "
+"attached."
+msgstr ""
+
+# e4075d43c7b147bcaeab414beb4ac341
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:53
+msgid ":const:`TS_MILESTONE_SERVER_CONNECT`"
+msgstr ""
+
+# 9b8883cd291742bcae1feb7abb485d78
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:53
+msgid ""
+"Most recent time origin server connect attempted or shared session "
+"attached."
+msgstr ""
+
+# fbc37773ca4145fe8d12bd6a627f3f89
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:54
+msgid ":const:`TS_MILESTONE_SERVER_CONNECT_END`"
+msgstr ""
+
+# a31ba384ca63413baf7831f936cce562
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:54
+msgid "More recent time a connection attempt was resolved."
+msgstr ""
+
+# 401cab12f2934762b003611f422d1772
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:55
+msgid ":const:`TS_MILESTONE_SERVER_BEGIN_WRITE`"
+msgstr ""
+
+# 72e11ae108784ac9807628a53aa1ebfb
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:55
+msgid "First byte is written to the origin server connection."
+msgstr ""
+
+# 5859d95aeb2f4435b47ff7e77ff2a7fd
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:56
+msgid ":const:`TS_MILESTONE_SERVER_FIRST_READ`"
+msgstr ""
+
+# e2b79311e1984e21b7d1043055ad6bec
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:56
+msgid "First byte is read from connection to origin server."
+msgstr ""
+
+# a6ff717b93834fd7b9f95586c4eee4d0
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:57
+msgid ":const:`TS_MILESTONE_SERVER_READ_HEADER_DONE`"
+msgstr ""
+
+# d353dbfc756f48828428085693f12121
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:57
+msgid "Origin server response has been read and parsed."
+msgstr ""
+
+# 5a3f0053060946a59e2484a05067642d
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:58
+msgid ":const:`TS_MILESTONE_SERVER_CLOSE`"
+msgstr ""
+
+# b778983c687e4f6297791ac367f3f0d4
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:58
+msgid "Last I/O activity on origin server connection."
+msgstr ""
+
+# 42887b6a3696486ca4e6ac51feeaddbd
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:59
+msgid ":const:`TS_MILESTONE_CACHE_OPEN_READ_BEGIN`"
+msgstr ""
+
+# d22db30eddbe49ebb8fa1c9cc0fe834b
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:59
+msgid "Initiate read of the cache."
+msgstr ""
+
+# 38157cafcafe49a19830ad3d4e399834
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:60
+msgid ":const:`TS_MILESTONE_CACHE_OPEN_READ_END`"
+msgstr ""
+
+# 860841bf7a6f47738b9b40ff7b0bbddb
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:60
+msgid "Initial cache read has resolved."
+msgstr ""
+
+# 3f2ed52ac1c3450faa16a20928dc03b2
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:61
+msgid ":const:`TS_MILESTONE_CACHE_OPEN_WRITE_BEGIN`"
+msgstr ""
+
+# 32321c497fa84e40bf686ecb0cb193e4
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:61
+msgid "Start open for cache write."
+msgstr ""
+
+# a845834ac74d4f3aa5496270c0581fda
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:62
+msgid ":const:`TS_MILESTONE_CACHE_OPEN_WRITE_END`"
+msgstr ""
+
+# fbfbf97a5873412c8f59edbe2436fa6a
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:62
+msgid "Cache has been opened for write."
+msgstr ""
+
+# 126bdf9be42e45339d0f67da39aea6a8
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:63
+msgid ":const:`TS_MILESTONE_DNS_LOOKUP_BEGIN`"
+msgstr ""
+
+# 2026e6f1826848cfb50d0d12374d36ab
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:63
+msgid "Initiate host resolution in HostDB"
+msgstr ""
+
+# 16c5458dd3594b0eb715ff32c4a7af00
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:64
+msgid ":const:`TS_MILESTONE_DNS_LOOKUP_END`"
+msgstr ""
+
+# df1fea8c65864de89e8b9ec33fc006d7
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:64
+msgid "Host resolution resolves."
+msgstr ""
+
+# 5d6172ff8ddf44999317ed7e89d0c06b
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:65
+msgid ":const:`TS_MILESTONE_SM_START`"
+msgstr ""
+
+# 8907b391bec2490c8d1ac69b549ea953
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:65
+msgid "Transaction state machine is initialized."
+msgstr ""
+
+# 3e138dcb88334b738a8e321f266c323e
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:66
+msgid ":const:`TS_MILESTONE_SM_FINISH`"
+msgstr ""
+
+# a07d23860a7d4466b3322eb5d9c63f44
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:66
+msgid "Transaction has finished, state machine final logging has started."
+msgstr ""
+
+# 38febece9842446b81b6d49cc0d2985b
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:67
+msgid ":const:`TS_MILESTONE_PLUGIN_ACTIVE`"
+msgstr ""
+
+# c9dceededfe440b6bed0348d10f846cb
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:67
+msgid "Amount of time plugins were active plus start time."
+msgstr ""
+
+# 252d2a8861d24ec5934f99373c6a2823
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:68
+msgid ":const:`TS_MILESTONE_PLUGIN_TOTAL`"
+msgstr ""
+
+# 01a80d1c39d74b629bfee37ebb5ff606
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:68
+msgid "Wall time while plugins were active plus start time."
+msgstr ""
+
+# 2c2d8cdefe0b4133bebd2bb8000f3d53
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:71
+msgid ""
+"The server connect times predate the transmission of the `:literal:`SYN` "
+"packet. That is, before a connection to the origin server is completed."
+msgstr ""
+
+# 10c1e3682163460abbfb0872c13793b8
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:74
+msgid ""
+"A connection attempt is resolved when no more connection related activity"
+" remains to be done, and the connection is either established or has "
+"failed."
+msgstr ""
+
+# ca736c14608d40c29247153b50b1e6f4
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:77
+msgid ""
+":const:`TS_MILESTONE_UA_CLOSE` and :const:`TS_MILESTONE_SERVER_CLOSE` are"
+" updated continuously during the life of the transaction, every time "
+"there is I/O activity. The updating stops when the corresponding "
+"connection is closed, leaving the last I/O time as the final value."
+msgstr ""
+
+# 4028c7cee8054d1197cba86000f84292
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:82
+msgid ""
+"The cache :literal:`OPEN` milestones time only the initial setup, the "
+"*open*, not the full read or write."
+msgstr ""
+
+# 58a942f0eaf44f59b87c2dc7b96c93f3
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:85
+msgid ""
+":const:`TS_MILESTONE_PLUGIN_ACTIVE` and "
+":const:`TS_MILESTONE_PLUGIN_TOTAL` are different from the other "
+"milestones as they measure elapsed time, not event time. The value is the"
+" elapsed time *plus* :const:`TS_MILESTONE_SM_START`. This was decided to "
+"be more convenient because then these milestones can be handled / "
+"displayed in the same way as the other milestones, as offsets from "
+":const:`TS_MILESTONE_SM_START`."
+msgstr ""
+
+# d0849992b24641d99efb0ae24cdcf533
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:90
+msgid ""
+":const:`TS_MILESTONE_PLUGIN_ACTIVE` value is the amount of time the "
+"plugin was active, that is performing computation. "
+":const:`TS_MILESTONE_PLUGIN_TOTAL` is the wall time which includes any "
+"time the transaction was blocked while a plugin was active. For instance "
+"if a plugin waits on an external event, that waiting time will be in "
+":const:`TS_MILESTONE_PLUGIN_TOTAL` but not in "
+":const:`TS_MILESTONE_PLUGIN_ACTIVE`."
+msgstr ""
+
+# 2e2d500275a34830819e9ebd2be9909f
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:96
+msgid "Return Values"
+msgstr ""
+
+# 4672a4e86720480eb17b354ec630affc
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:98
+msgid ""
+":const:`TS_SUCCESS` if successful and :arg:`time` was updated, otherwise "
+":const:`TS_ERROR`."
+msgstr ""
+
+# 78456a70afe644daacec3ae638c70138
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:102
+msgid "See Also"
+msgstr ""
+
+# a4efa3396d844e0b94239985488fe025
+#: ../../developer-guide/api/functions/TSHttpTxnMilestoneGet.en.rst:104
+msgid ":manpage:`TSAPI(3ts)`"
+msgstr ""
+

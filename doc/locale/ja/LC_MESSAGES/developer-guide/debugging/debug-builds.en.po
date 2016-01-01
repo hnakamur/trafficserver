@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 8f40965098ec4995958cc791caca60fc
+#: ../../developer-guide/debugging/debug-builds.en.rst:23
+msgid "Debug Builds"
+msgstr ""
+
+# e47afc05e5034894964b80a44a8684f3
+#: ../../developer-guide/debugging/debug-builds.en.rst:25
+msgid ""
+"A debugger can set breakpoints in a plugin. Use a Traffic Server debug "
+"build and compile the plugin with the ``-g`` option. A debugger can also "
+"be used to analyze a core dump. To generate core, set the size limit of "
+"the core files in the :file:`records.config` file to -1 as follows:"
+msgstr ""
+
+# e52b8c06507d47f18e03f4468cb5d449
+#: ../../developer-guide/debugging/debug-builds.en.rst:34
+msgid "This is the equivalent of setting ``ulimit -c unlimited``"
+msgstr ""
+
+# 4d9844a732984f8fbe0e3e971e5879d4
+#: ../../developer-guide/debugging/debug-builds.en.rst:37
+msgid "Debugging Tips:"
+msgstr ""
+
+# cd843408ee2e47ce955f6a9c62eac9f0
+#: ../../developer-guide/debugging/debug-builds.en.rst:39
+msgid "Use a Traffic Server debug version."
+msgstr ""
+
+# 859ab15604dd46ddbf9977bf7e4eeb68
+#: ../../developer-guide/debugging/debug-builds.en.rst:41
+msgid ""
+"Use assertions in your plugin (:c:func:`TSAssert` and "
+":c:func:`TSReleaseAssert`)."
+msgstr ""
+

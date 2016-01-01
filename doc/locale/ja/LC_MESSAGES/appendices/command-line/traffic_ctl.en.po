@@ -1,0 +1,355 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 7300fe4c98274b8fb5f7f460aa070ab6
+#: ../../appendices/command-line/traffic_ctl.en.rst:20
+msgid "traffic_ctl"
+msgstr ""
+
+# c5b00b5e4798497cbdd5d8c609d382cf
+#: ../../appendices/command-line/traffic_ctl.en.rst:23
+msgid "Synopsis"
+msgstr ""
+
+# 8919db5b464244c48bb914a1599a0a35
+#: ../../appendices/command-line/traffic_ctl.en.rst:25
+msgid ":program:`traffic_ctl` [OPTIONS] SUBCOMMAND [OPTIONS]"
+msgstr ""
+
+# ccc68aa6b938494db92b1c09ac0b9daa
+#: ../../appendices/command-line/traffic_ctl.en.rst:30
+msgid "Description"
+msgstr ""
+
+# cf3a7fc4d33d4d908bbb33d11038ebb7
+#: ../../appendices/command-line/traffic_ctl.en.rst:32
+msgid ""
+":program:`traffic_ctl` is used to display and manipulate configure a "
+"running Traffic Server. :program:`traffic_ctl` includes a number of "
+"subcommands that control different aspects of Traffic Server:"
+msgstr ""
+
+# b03475f4eb74463ea235ef7df4bd3856
+#: ../../appendices/command-line/traffic_ctl.en.rst:36
+msgid ":program:`traffic_ctl alarm`"
+msgstr ""
+
+# 54a6213ae2524a7a9f5ced7ec4e7cd7b
+#: ../../appendices/command-line/traffic_ctl.en.rst:37
+msgid "Display and manipulate Traffic Server alarms"
+msgstr ""
+
+# 3dd1bd7c67c843648fd8e80fb6a732c3
+#: ../../appendices/command-line/traffic_ctl.en.rst:38
+msgid ":program:`traffic_ctl cluster`"
+msgstr ""
+
+# 575488ef22924c90bc5177f5b3c84659
+#: ../../appendices/command-line/traffic_ctl.en.rst:39
+msgid "Stop, restart and examine the cluster"
+msgstr ""
+
+# f2a22cf99d804229afd9a07a52d6fd25
+#: ../../appendices/command-line/traffic_ctl.en.rst:40
+msgid ":program:`traffic_ctl config`"
+msgstr ""
+
+# 6dbe8075315347da8746348ddd52d519
+#: ../../appendices/command-line/traffic_ctl.en.rst:41
+msgid "Manipulate and display configuration records"
+msgstr ""
+
+# 52e5c78e78a54e73a70b138140b85190
+#: ../../appendices/command-line/traffic_ctl.en.rst:42
+msgid ":program:`traffic_ctl metric`"
+msgstr ""
+
+# a00bfbd33ce44b5597455e185f2afac0
+#: ../../appendices/command-line/traffic_ctl.en.rst:43
+msgid "Manipulate performance and status metrics"
+msgstr ""
+
+# 71520aceb3f041d480b9abcda578bed2
+#: ../../appendices/command-line/traffic_ctl.en.rst:44
+msgid ":program:`traffic_ctl server`"
+msgstr ""
+
+# c90796f3d12c4529b880306b683919dd
+#: ../../appendices/command-line/traffic_ctl.en.rst:45
+msgid "Stop, restart and examine the server"
+msgstr ""
+
+# 5613f8efebb94437befbea898d9f845e
+#: ../../appendices/command-line/traffic_ctl.en.rst:47
+msgid ":program:`traffic_ctl storage`"
+msgstr ""
+
+# 2b13f3a2ab284ae5be92bbbfcf0a4a26
+#: ../../appendices/command-line/traffic_ctl.en.rst:47
+msgid "Manipulate cache storage"
+msgstr ""
+
+# 5dd6fa0f34874c289de88ced3d6598b9
+#: ../../appendices/command-line/traffic_ctl.en.rst:50
+msgid "Options"
+msgstr ""
+
+# 6b48ee83fc2d480a9fd70a3f8f8f8721
+#: ../../appendices/command-line/traffic_ctl.en.rst:55
+msgid "Enable debugging output."
+msgstr ""
+
+# ab6aaac7eb874108bc3a9d6d4a5d4f58
+#: ../../appendices/command-line/traffic_ctl.en.rst:59
+msgid "Print version information and exit."
+msgstr ""
+
+# abbbe491d43747109e36179183eca2e9
+#: ../../appendices/command-line/traffic_ctl.en.rst:62
+msgid "Subcommands"
+msgstr ""
+
+# 149c7d52fc5245ebbf0e3e6d783441e2
+#: ../../appendices/command-line/traffic_ctl.en.rst:65
+msgid "traffic_ctl alarm"
+msgstr ""
+
+# 974a7e988a31407eb6b3a31691f33a1a
+#: ../../appendices/command-line/traffic_ctl.en.rst:69
+msgid "List all alarm events that have not been acknowledged (cleared)."
+msgstr ""
+
+# d2bbddfd940b4e0fb0fbfb1017c1e19e
+#: ../../appendices/command-line/traffic_ctl.en.rst:74
+msgid "Clear (acknowledge) all current alarms."
+msgstr ""
+
+# f9db6238c4f94a1998a183a2e5be1d92
+#: ../../appendices/command-line/traffic_ctl.en.rst:79
+msgid ""
+"Clear (acknowledge) an alarm event. The arguments are a specific alarm "
+"number (e.g. ''1''), or an alarm string identifier (e.g. "
+"''MGMT_ALARM_PROXY_CONFIG_ERROR'')."
+msgstr ""
+
+# bd2456722514445a8a5809c623330531
+#: ../../appendices/command-line/traffic_ctl.en.rst:84
+msgid "traffic_ctl cluster"
+msgstr ""
+
+# ffa1c754a1a9421b9a6d9e14a57e531b
+#: ../../appendices/command-line/traffic_ctl.en.rst:88
+msgid ""
+"Shut down and immediately restart Traffic Server, node by node across the"
+" cluster. The *--drain* and *--manager* options have the same behavior as"
+" for the :option:`traffic_ctl server restart` subcommand."
+msgstr ""
+
+# 871add51257341bf8eafe31e09d79723
+#: ../../appendices/command-line/traffic_ctl.en.rst:95
+msgid "Show the current cluster status."
+msgstr ""
+
+# bee68da687664a99967d3e3c737e7d84
+#: ../../appendices/command-line/traffic_ctl.en.rst:98
+msgid "traffic_ctl config"
+msgstr ""
+
+# 6755084b3977457f8b69a1729eec8d08
+#: ../../appendices/command-line/traffic_ctl.en.rst:102
+msgid ""
+"Display the default values for all configuration records. The *--records*"
+" flag has the same behavior as :option:`traffic_ctl config get "
+"--records`."
+msgstr ""
+
+# 6e850117e644401aa2b2cd40f0b48460
+#: ../../appendices/command-line/traffic_ctl.en.rst:109
+msgid ""
+"Display all the known information about a configuration record. This "
+"includes the current and default values, the data type, the record class "
+"and syntax checking expression."
+msgstr ""
+
+# 0ebfae453de64ea98b3c5b93fa1a22ce
+#: ../../appendices/command-line/traffic_ctl.en.rst:116
+msgid ""
+"Display configuration records that have non-default values. The "
+"*--records* flag has the same behavior as :option:`traffic_ctl config get"
+" --records`."
+msgstr ""
+
+# 8ffc52412397482abeb73ab6f29fa2ef
+#: ../../appendices/command-line/traffic_ctl.en.rst:123
+msgid "Display the current value of a configuration record."
+msgstr ""
+
+# 2506a0ffd1e143459fda04dc8cb537c1
+#: ../../appendices/command-line/traffic_ctl.en.rst:128
+msgid ""
+"If this flag is provided, :option:`traffic_ctl config get` will emit "
+"results in :file:`records.config` format."
+msgstr ""
+
+# 947b85caf9034ec98aab7d2a249a9a7e
+#: ../../appendices/command-line/traffic_ctl.en.rst:134
+msgid ""
+"Display the current values of all configuration variables whose names "
+"match the given regular expression. The *--records* flag has the same "
+"behavior as :option:`traffic_ctl config get --records`."
+msgstr ""
+
+# 0bf9dd36b0854fa786fafbbeb47a6c09
+#: ../../appendices/command-line/traffic_ctl.en.rst:141
+msgid ""
+"Initiate a Traffic Server configuration reload. Use this command to "
+"update the running configuration after any configuration file "
+"modification."
+msgstr ""
+
+# bee0db05fa144f219c6c871934e0ae73
+#: ../../appendices/command-line/traffic_ctl.en.rst:145
+msgid ""
+"The timestamp of the last reconfiguration event (in seconds since epoch) "
+"is published in the `proxy.node.config.reconfigure_time` metric."
+msgstr ""
+
+# cc2898ec5f5543669340da0da83b33dd
+#: ../../appendices/command-line/traffic_ctl.en.rst:152
+msgid ""
+"Set the named configuration record to the specified value. Refer to the "
+":file:`records.config` documentation for a list of the configuration "
+"variables you can specify. Note that this is not a synchronous operation."
+msgstr ""
+
+# a56eceecd16d48ca80e21d92f3212e46
+#: ../../appendices/command-line/traffic_ctl.en.rst:160
+msgid ""
+"Display detailed status about the Traffic Server configuration system. "
+"This includes version information, whether the internal configuration "
+"store is current and whether any daemon processes should be restarted."
+msgstr ""
+
+# bdc4eedf632a44dd8173c94cf4203c2f
+#: ../../appendices/command-line/traffic_ctl.en.rst:166
+msgid "traffic_ctl metric"
+msgstr ""
+
+# 0e8486d766b2487284475579961eefa4
+#: ../../appendices/command-line/traffic_ctl.en.rst:170
+msgid ""
+"Reset all statistics to zero. The *--cluster* option applies this across "
+"all cluster nodes."
+msgstr ""
+
+# 7eb4594827d34337bcd04da35b69e824
+#: ../../appendices/command-line/traffic_ctl.en.rst:176
+msgid "Display the current value of the specifies statistics."
+msgstr ""
+
+# 53433d63de7645349a31b6a9125e799b
+#: ../../appendices/command-line/traffic_ctl.en.rst:181
+msgid ""
+"Display the current values of all statistics whose names match the given "
+"regular expression."
+msgstr ""
+
+# 806bdadc5dbf4fed96b7bc92edbf49d1
+#: ../../appendices/command-line/traffic_ctl.en.rst:187
+msgid ""
+"Reset the named statistics to zero. The *--cluster* option applies this "
+"across all cluster nodes."
+msgstr ""
+
+# 386a731fd436495997dd609050651323
+#: ../../appendices/command-line/traffic_ctl.en.rst:191
+msgid "traffic_ctl server"
+msgstr ""
+
+# 3fa1e3add2fd42c6b85b969e52d19340
+#: ../../appendices/command-line/traffic_ctl.en.rst:195
+msgid "Shut down and immediately restart Traffic Server"
+msgstr ""
+
+# 925e3a4d58eb4e518c09e0d748265194
+#: ../../appendices/command-line/traffic_ctl.en.rst:200
+msgid ""
+"This option modifies the behavior of :option:`traffic_ctl server restart`"
+" such that :program:`traffic_server` is not shut down until the number of"
+" active client connections drops to the number given by the "
+":ts:cv:`proxy.config.restart.active_client_threshold` configuration "
+"variable."
+msgstr ""
+
+# 2d56dd753bf843a28d4ed6612500faa6
+#: ../../appendices/command-line/traffic_ctl.en.rst:208
+msgid ""
+"The default behavior of :option:`traffic_ctl server restart` is to "
+"restart :program:`traffic_server`. If this option is specified, "
+":program:`traffic_manager` is also restarted."
+msgstr ""
+
+# 0f90b545b7284e0caf82eb29f75996d1
+#: ../../appendices/command-line/traffic_ctl.en.rst:215
+msgid "Show the current proxy server status, indicating if we're running or not."
+msgstr ""
+
+# cdbc8bf48284403cb5a1c6b279ed7043
+#: ../../appendices/command-line/traffic_ctl.en.rst:220
+msgid "Show a full stack trace of all the :program:`traffic_server` threads."
+msgstr ""
+
+# 1ad600c31b5b4f728c07240daeaf4afa
+#: ../../appendices/command-line/traffic_ctl.en.rst:223
+msgid "traffic_ctl storage"
+msgstr ""
+
+# 69844f7e352c49ea8c813d0622e4dbea
+#: ../../appendices/command-line/traffic_ctl.en.rst:227
+msgid ""
+"Mark a cache storage device as offline. The storage is identified by a "
+"*path* which must match exactly a path specified in "
+":file:`storage.config`. This removes the storage from the cache and "
+"redirects requests that would have used this storage to other storage. "
+"This has exactly the same effect as a disk failure for that storage. This"
+" does not persist across restarts of the :program:`traffic_server` "
+"process."
+msgstr ""
+
+# ebe62ba935334609863b068ad808b623
+#: ../../appendices/command-line/traffic_ctl.en.rst:236
+msgid "Examples"
+msgstr ""
+
+# 1016c174e8124df483639ba2ebf066ad
+#: ../../appendices/command-line/traffic_ctl.en.rst:238
+msgid "Configure Traffic Server to log in Squid format::"
+msgstr ""
+
+# 9d32b5bc837e49849e1b2a2aebb4f359
+#: ../../appendices/command-line/traffic_ctl.en.rst:245
+msgid "See also"
+msgstr ""
+
+# f1a05d2bbe7f42429c005bf87677cedc
+#: ../../appendices/command-line/traffic_ctl.en.rst:247
+msgid ":manpage:`records.config(5)`, :manpage:`storage.config(5)`"
+msgstr ""
+

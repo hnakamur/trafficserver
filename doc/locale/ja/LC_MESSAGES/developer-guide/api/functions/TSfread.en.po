@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 9dddc94e8d0947c0840ca938c384567d
+#: ../../developer-guide/api/functions/TSfread.en.rst:22
+msgid "TSfread"
+msgstr ""
+
+# 1b6ae4bc300544cb900fb1eaa116003f
+#: ../../developer-guide/api/functions/TSfread.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 054f222f67ba4becb4c874218a8d8669
+#: ../../developer-guide/api/functions/TSfread.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 2e4c7c938a5a4a54923c6469e67c09d3
+#: ../../developer-guide/api/functions/TSfread.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 4876bec6253b4ea7b2022431e7c6831a
+#: ../../developer-guide/api/functions/TSfread.en.rst:34
+msgid ""
+"Attempts to read :arg:`length` bytes of data from the file pointed to by "
+":arg:`filep` into the buffer :arg:`buf`."
+msgstr ""
+

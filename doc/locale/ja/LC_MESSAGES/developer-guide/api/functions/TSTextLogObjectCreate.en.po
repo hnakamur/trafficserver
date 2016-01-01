@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 59b43aef4f4a4e90ac1ce7773071909a
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:23
+msgid "TSTextLogObjectCreate"
+msgstr ""
+
+# 11de64d54c894eb690845add8897d150
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:25
+msgid "Traffic Server text logging API."
+msgstr ""
+
+# 0d11e596f2d2410594d7092454dc764e
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 23994854fcef4964a5a6a1fa8ab0e2e2
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 5828acb491f94f6bb9a1b0b77c792403
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:43
+msgid "Description"
+msgstr ""
+
+# d3875485c2d747139d356f4ec3ef2c48
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:45
+msgid ""
+":func:`TSTextLogObjectRollingEnabledSet` sets the log rolling mode for "
+"the given object. This API must be used once the object is created and "
+"before writing into logs. The :arg:`rolling_enabled` argument must be a "
+"valid :ts:cv:`proxy.config.log.rolling_enabled` values. If "
+":func:`TSTextLogObjectRollingEnabledSet` is never called, the log object "
+"takes it's log rolling mode from the global "
+":ts:cv:`proxy.config.log.rolling_enabled` setting."
+msgstr ""
+
+# 7472065c9c1146b3b5e8a4780ea7eb33
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:53
+msgid ""
+"It's also important to call :func:`TSTextLogObjectRollingEnabledSet` "
+"before any of the other APIs that modifies the rolling object. This is "
+"due to the fact that this API dictates which rolling mode should be used,"
+" and therefore affects further modifications of the logging object."
+msgstr ""
+
+# 157de26524ea4124923ab9a8a6442629
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:59
+msgid "See Also"
+msgstr ""
+
+# 380d6ab6a20143ba935766bd1ff13577
+#: ../../developer-guide/api/functions/TSTextLogObjectCreate.en.rst:61
+msgid ":manpage:`TSAPI(3ts)`"
+msgstr ""
+

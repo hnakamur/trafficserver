@@ -1,0 +1,100 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 72ecdaa389b9449ead86fddeab4b87c8
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:22
+msgid "TSHttpIsInternalRequest"
+msgstr ""
+
+# b93963cf5dcb445d9bb7a0d21ed9b09b
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:24
+msgid "Test whether a request is internally-generated."
+msgstr ""
+
+# 70ff6e6622e64e5f9562b213456a9042
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:27
+msgid "Synopsis"
+msgstr ""
+
+# 207033f6940d40c4be85d61bc4be3199
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:29
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# b26a4ba58f5b40d1b3aee0fb48ff19a0
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:35
+msgid "Description"
+msgstr ""
+
+# 4319ccf16cc44c499d59a896edc5ebe9
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:37
+msgid ""
+":func:`TSHttpIsInternalRequest` tests whether a HTTP transaction was "
+"originated within Traffic Server."
+msgstr ""
+
+# 6068d4b5520c47348428c503b64e2094
+# c508d94d842142d3a8d53aa60e92fe16
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:40
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:47
+msgid "Deprecated"
+msgstr ""
+
+# 089d766f50d948ce99f58ae2e7890062
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:42
+msgid "Deprecated in favor of :func:`TSHttpTxnIsInternal`."
+msgstr ""
+
+# a0c8645752684d5a8810cea008efde64
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:44
+msgid ""
+":func:`TSHttpIsInternalSession` tests whether a HTTP session was "
+"originated within Traffic Server."
+msgstr ""
+
+# f45848c94ad84d8491c6f6eef03bbc98
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:49
+msgid "Deprecated in favor of :func:`TSHttpSsnIsInternal`."
+msgstr ""
+
+# c84a3ee591994be78fd2ad88af84857c
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:52
+msgid "Return Values"
+msgstr ""
+
+# c7ae256cbfdf42d182697ffc47eeab46
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:54
+msgid ""
+"Both these APIs returns a :type:`TSReturnCode`, indicating whether the "
+"object was internal (:data:`TS_SUCCESS`) or not (:data:`TS_ERROR`)."
+msgstr ""
+
+# 433931aaef804647b38a660bcf32fe9b
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:58
+msgid "See Also"
+msgstr ""
+
+# 1739ffb30efc474b874b8211dda92386
+#: ../../developer-guide/api/functions/TSHttpIsInternalRequest.en.rst:60
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSHttpSsnIsInternal(3ts)`, "
+":manpage:`TSHttpTxnIsInternal(3ts)`"
+msgstr ""
+

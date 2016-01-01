@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# bbdeb3bdba7e4229bc5f71e14142b104
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:22
+msgid "TSHttpTxnCacheLookupUrlGet"
+msgstr ""
+
+# dd3a848622514eac902ce4393550fcf3
+# 6e9575ca5b3547d284e4079bc37205d1
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:25
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:42
+msgid "Synopsis"
+msgstr ""
+
+# 1bbff25db7d84e88851e613f8fbee4ec
+# cac52c26c7974b05afdcfc4aefe80bf8
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:27
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:44
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# bc645d1835e848409a40899e0ed451f7
+# 00262a8486b24ef99037d1a3aac9b635
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:32
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:49
+msgid "Description"
+msgstr ""
+
+# 96ee8e3730264a6ca1d2c18672a13658
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:34
+msgid ""
+"Get the current cache key URL, also referred to as the lookup URL. This "
+"must be stored in a properly allocated URL object, typically created with"
+" a :c:func:`TSUrlCreate()`."
+msgstr ""
+
+# 9eb80c4343824e8db24e5748e4b074a9
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:39
+msgid "TSHttpTxnCacheLookupUrlSet"
+msgstr ""
+
+# 3bded96ef45c4971bee05ffb04bfc3e9
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:51
+msgid ""
+"Set the current cache key URL, also referred to as the lookup URL. This "
+"must be stored in a properly allocated URL object, typically created with"
+" a :c:func:`TSUrlCreate()` or :c:func:`TSUrlClone()`."
+msgstr ""
+
+# 7c94c686695548f797452d06a278301c
+#: ../../developer-guide/api/functions/TSHttpTxnCacheLookupUrlGet.en.rst:55
+msgid ""
+"This API can be called as early as ``TS_HTTP_READ_REQUEST_HDR_HOOK`` but "
+"no later than ``TS_HTTP_POST_REMAP_HOOK``. This is the preferred and most"
+" efficient way to modify the cache key, but an alternative is to use the "
+"old :c:func:`TSCacheUrlSet()`, which takes a simple string as argument."
+msgstr ""
+

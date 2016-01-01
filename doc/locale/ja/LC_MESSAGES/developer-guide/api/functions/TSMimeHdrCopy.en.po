@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# bcca3c4ece314eb1a69f49ceba668dcc
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:22
+msgid "TSMimeHdrCopy"
+msgstr ""
+
+# 0626f9c546c143d9a663807466904e3d
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# a9c7335592db42d19f46ff304dda8268
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# e50bf35d99924f2dbb9e92f8ed1ee3ac
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:32
+msgid "Description"
+msgstr ""
+
+# 07bb7d2edd934cbdb75e008ebe2a3004
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:34
+msgid ""
+"Copies the contents of the MIME header located at :arg:`src_loc` within "
+":arg:`src_bufp` to the MIME header located at :arg:`dest_loc` within "
+":arg:`dest_bufp`."
+msgstr ""
+
+# 28d5d84541f64d39bbe38a88fc8ae074
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:38
+msgid ""
+":c:func:`TSMimeHdrCopy` works correctly even if :arg:`src_bufp` and "
+":arg:`dest_bufp` point to different marshal buffers."
+msgstr ""
+
+# 6aa16bbcf1ed43cc8339a00fa0115d71
+#: ../../developer-guide/api/functions/TSMimeHdrCopy.en.rst:43
+msgid ""
+"You must create the destination MIME header before copying into it, using"
+" :c:func:`TSMimeHdrCreate`."
+msgstr ""
+

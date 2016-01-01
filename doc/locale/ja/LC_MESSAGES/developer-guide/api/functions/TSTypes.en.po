@@ -1,0 +1,199 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 764e8afc98ab432daf5a290ad485e4ad
+#: ../../developer-guide/api/functions/TSTypes.en.rst:22
+msgid "TSAPI Types"
+msgstr ""
+
+# ff539efbd0af441e864f580768be7ea2
+#: ../../developer-guide/api/functions/TSTypes.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# cc560a46072f4b64aa4c568e9292a75a
+#: ../../developer-guide/api/functions/TSTypes.en.rst:27
+msgid "`#include <ts/ts.h>` `#include <ts/remap.h>`"
+msgstr ""
+
+# f2550b7fa70e41cd88767f128f51d570
+#: ../../developer-guide/api/functions/TSTypes.en.rst:31
+msgid "Description"
+msgstr ""
+
+# 76081099f15a4e389ef3860eddea70b1
+#: ../../developer-guide/api/functions/TSTypes.en.rst:33
+msgid ""
+"The Apache Traffic Server API provides large number of types. Many of "
+"them are specific to a particular API function or function group, but "
+"others are used more widely. Those are described on this page."
+msgstr ""
+
+# 4102e0a44eef4177bf16dd081862c895
+#: ../../developer-guide/api/functions/TSTypes.en.rst:49
+msgid "An opaque type that represents a Traffic Server :term:`continuation`."
+msgstr ""
+
+# 562c096da4264dacb56582598985ce2a
+#: ../../developer-guide/api/functions/TSTypes.en.rst:53
+msgid ":type:`TSEvents` are sent to continuations when they are called back."
+msgstr ""
+
+# 2c635e1d302a440aa02786d0f6bff7dc
+#: ../../developer-guide/api/functions/TSTypes.en.rst:56
+msgid ""
+"The :type:`TSEvent` provides the continuation's handler function with "
+"information about the callback.  Based on the event it receives, the "
+"handler function can decide what to do."
+msgstr ""
+
+# bfb10b3a826e483d8d5d3bd597a4727d
+#: ../../developer-guide/api/functions/TSTypes.en.rst:68
+msgid "\"High Resolution Time\""
+msgstr ""
+
+# b8cf7f874d504898a50eb8a31b416a0b
+#: ../../developer-guide/api/functions/TSTypes.en.rst:70
+msgid "A 64 bit time value, measured in nanoseconds."
+msgstr ""
+
+# 9782a8d165904cdeba8f59dc1c0f0486
+#: ../../developer-guide/api/functions/TSTypes.en.rst:74
+msgid ""
+"An enumeration that identifies a specific type of hook for HTTP "
+"transactions."
+msgstr ""
+
+# 47527688ce654b4a9371aeb64c878057
+#: ../../developer-guide/api/functions/TSTypes.en.rst:80
+msgid "An opaque type that represents a Traffic Server :term:`session`."
+msgstr ""
+
+# a7c0a257bb3e45d58e19501fd1eb4cb6
+#: ../../developer-guide/api/functions/TSTypes.en.rst:84
+msgid ""
+"This set of enums represents possible return values from "
+":func:`TSHttpHdrStatusGet`, which retrieves the status code from an HTTP "
+"response header (:func:`TSHttpHdrStatusGet` retrieves status codes only "
+"from headers of type :data:`TS_HTTP_TYPE_RESPONSE`)."
+msgstr ""
+
+# 1aef54ca3a21488798521aebf1ce8461
+#: ../../developer-guide/api/functions/TSTypes.en.rst:89
+msgid ""
+"You can also set the :type:`TSHttpStatus` of a response header using "
+":func:`TSHttpHdrStatusSet`."
+msgstr ""
+
+# 8efe159073fd42c090d87229b7934dd2
+#: ../../developer-guide/api/functions/TSTypes.en.rst:94
+msgid "An opaque type that represents a Traffic Server HTTP :term:`transaction`."
+msgstr ""
+
+# e7a5525957a54397876028366916c712
+#: ../../developer-guide/api/functions/TSTypes.en.rst:98
+msgid ""
+"This set of enums represents the possible HTTP types that can be assigned"
+" to an HTTP header."
+msgstr ""
+
+# 1fcb05ba87a84baba3cce8cd03f79b07
+#: ../../developer-guide/api/functions/TSTypes.en.rst:101
+msgid ""
+"When a header is created with :func:`TSHttpHdrCreate`, it is "
+"automatically assigned a type of :data:`TS_HTTP_TYPE_UNKNOWN`.  You can "
+"modify the HTTP type ONCE after it the header is created, using "
+":func:`TSHttpHdrTypeSet`.  After setting the HTTP type once, you cannot "
+"set it again.  Use :func:`TSHttpHdrTypeGet` to obtain the "
+":type:`TSHttpType` of an HTTP header."
+msgstr ""
+
+# acb6f96eb1464525860c9d8cf849c1a3
+#: ../../developer-guide/api/functions/TSTypes.en.rst:118
+msgid ""
+"An enumeration that identifies a :ref:`life cycle hook <ts-lifecycle-"
+"hook-add>`."
+msgstr ""
+
+# 48ee79eae2074edf8b485f94208a54e5
+#: ../../developer-guide/api/functions/TSTypes.en.rst:126
+msgid ""
+"The type used internally for a floating point value. This corresponds to "
+"the value :const:`TS_RECORDDATATYPE_FLOAT` for :type:`TSRecordDataType`."
+msgstr ""
+
+# 6b0439b2e7b24b0a907be2b9ed0c350d
+#: ../../developer-guide/api/functions/TSTypes.en.rst:131
+msgid ""
+"The type used internally for an integer. This corresponds to the value "
+":const:`TS_RECORDDATATYPE_INT` for :type:`TSRecordDataType`."
+msgstr ""
+
+# 06b204b9b2804631b1f94bc24136b3d0
+#: ../../developer-guide/api/functions/TSTypes.en.rst:144
+msgid ""
+"This set of enums are possible values returned by "
+":func:`TSHttpHdrParseReq` and :func:`TSHttpHdrParseResp`."
+msgstr ""
+
+# c0af45b560854db5a10a97cb74861824
+#: ../../developer-guide/api/functions/TSTypes.en.rst:149
+msgid "The following struct is used by :func:`TSPluginRegister`."
+msgstr ""
+
+# 332f745be22840b0b47d96113a608eb9
+#: ../../developer-guide/api/functions/TSTypes.en.rst:151
+msgid "It stores registration information about the plugin."
+msgstr ""
+
+# 980d1d583ca449348ebc78ba12461d57
+#: ../../developer-guide/api/functions/TSTypes.en.rst:155
+msgid ""
+"An enumeration that specifies the type of a value in an internal data "
+"structure that is accessible via the API."
+msgstr ""
+
+# d122b637991a46cbab38bfa3b1d97b8a
+#: ../../developer-guide/api/functions/TSTypes.en.rst:165
+msgid ""
+"An indicator of the results of an API call. A value of "
+":const:`TS_SUCCESS` means the call was successful. Any other value "
+"indicates a failure and is specific to the API call."
+msgstr ""
+
+# b180a57336c747dba0bc38a457634912
+#: ../../developer-guide/api/functions/TSTypes.en.rst:170
+msgid "Starting 2.0, SDK now follows same versioning as Traffic Server."
+msgstr ""
+
+# b962050927ea400aba06d9a207b0d8aa
+#: ../../developer-guide/api/functions/TSTypes.en.rst:176
+msgid ""
+"This type represents a custom log file that you create with "
+":func:`TSTextLogObjectCreate`."
+msgstr ""
+
+# 865282aca866402b8876a9030d23843b
+#: ../../developer-guide/api/functions/TSTypes.en.rst:179
+msgid ""
+"Your plugin writes entries into this log file using "
+":func:`TSTextLogObjectWrite`."
+msgstr ""
+

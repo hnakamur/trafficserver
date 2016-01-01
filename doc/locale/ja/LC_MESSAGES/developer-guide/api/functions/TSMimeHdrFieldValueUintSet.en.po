@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# b6402577768b45c4b8acfa34328a5ce4
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueUintSet.en.rst:22
+msgid "TSMimeHdrFieldValueUintSet"
+msgstr ""
+
+# 3d62be70f51440bdbcb9a56d2bce2ee9
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueUintSet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# de39fa8f299c437fa23318aa008f6bfe
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueUintSet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# af55e5c8e5bb4b64b6a91ff455a5989d
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueUintSet.en.rst:32
+msgid "Description"
+msgstr ""
+

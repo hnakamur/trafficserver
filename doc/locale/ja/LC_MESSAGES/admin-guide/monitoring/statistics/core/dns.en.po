@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 55cb4218311544df9016b9d37e11f717
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:23
+msgid "DNS"
+msgstr ""
+
+# d639604cbbdc420a87d0f92d560b85ac
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:30
+msgid "Average number of milliseconds spent performing DNS lookups per host."
+msgstr ""
+
+# bba06bd3c32249809dbbbc08cd7867d3
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:36
+msgid "The average number of DNS lookups performance per second."
+msgstr ""
+
+# afef5016be544ad095db669309c57e61
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:42
+msgid "Total number of DNS lookups performance since statistics collection began."
+msgstr ""
+
+# cdc0c47f08534d98bda5ef9db681bdb0
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:49
+msgid "The average time per DNS lookup, in milliseconds, which ultimately failed."
+msgstr ""
+
+# 241620cf1e164a2c96467ed12572a555
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:55
+msgid "The number of DNS lookups currently in progress."
+msgstr ""
+
+# a076281c79cb4c42b99ccbbb698d12f5
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:62
+msgid "The average time spent performaning DNS lookups per host."
+msgstr ""
+
+# 299544653686428999e65cae2044d4b6
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:68
+msgid ""
+"The total number of DNS lookups which have failed since statistics "
+"collection began."
+msgstr ""
+
+# fb7a4922c7c947b683f8fcc6b14aa85a
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:75
+msgid ""
+"The total number of DNS lookups which have succeeded since statistics "
+"collection began."
+msgstr ""
+
+# 824c77cc8b474474b240dfc66a7ec92e
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:82
+msgid ""
+"The number of DNS lookups which have been failed due to the maximum "
+"number of retries being exceeded."
+msgstr ""
+
+# 95fc95470df64e029d1483a4402f6f9a
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:94
+msgid "The average time per DNS lookup, in milliseconds, which have succeeded."
+msgstr ""
+
+# d59daaaaa93f44aab2ff94d8c2e557d9
+#: ../../admin-guide/monitoring/statistics/core/dns.en.rst:100
+msgid ""
+"The total number of DNS lookups which have been performed since "
+"statistics collection began."
+msgstr ""
+

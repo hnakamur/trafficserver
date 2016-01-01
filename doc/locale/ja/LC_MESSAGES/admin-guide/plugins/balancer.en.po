@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 10cc1531d8c1451e92ee48aada738517
+#: ../../admin-guide/plugins/balancer.en.rst:4
+msgid "Balancer Plugin"
+msgstr ""
+
+# fb0e932d2ff54637af6acb4bdd0e84d6
+#: ../../admin-guide/plugins/balancer.en.rst:24
+msgid ""
+"The ``balancer`` balances requests across multiple origin servers. To use"
+" this plugin, configure it in a :file:`remap.config` rule, specifying a "
+"balancing policy and a set of origin servers. For example::"
+msgstr ""
+
+# edb1517cd60d444b8a110145f53a5151
+#: ../../admin-guide/plugins/balancer.en.rst:31
+msgid ""
+"The ``replacement`` URL in the mapping rule is not used. The argument to "
+"the ``--policy`` option is a comma-separated list of keywords. The first "
+"keyword is the name of a balancing policy. The subsequent keywords are "
+"used to refine the requested policy."
+msgstr ""
+
+# 76039fcbed1d4ae49aabf4490f163d9a
+#: ../../admin-guide/plugins/balancer.en.rst:36
+msgid ""
+"The remaining plugin arguments are balancer targets. Typically, these "
+"will be the host names of origin servers that requests should be balanced"
+" across. The target name may contain a colon-separated port number."
+msgstr ""
+
+# 715868ea3c584b73b75d6e4c9171ac0a
+#: ../../admin-guide/plugins/balancer.en.rst:42
+msgid "Hash Balancing Policy"
+msgstr ""
+
+# a5685751d5534a1fa4dd0813a8efcc1f
+#: ../../admin-guide/plugins/balancer.en.rst:44
+msgid ""
+"The ``hash`` balancing policy performs a consistent hash across the set "
+"of origins. This minimizes the number of hash entries that must be moved "
+"when the set of origin servers changes. An optional list of hash fields "
+"follows the ``hash`` keyword. Each specified hash field is hashed to "
+"select an outbound origin server."
+msgstr ""
+
+# f3128138f4fd4cbfbc1dc8ab58482a23
+#: ../../admin-guide/plugins/balancer.en.rst:50
+msgid "The following fields can be supplied to the hash:"
+msgstr ""
+
+# ee5553c93da24a81b3c2bae44d3c736b
+#: ../../admin-guide/plugins/balancer.en.rst:55
+msgid "key"
+msgstr ""
+
+# 96b4a800ff0945c1a55bcdbfb8863682
+#: ../../admin-guide/plugins/balancer.en.rst:53
+msgid ""
+"The request cache key. Note that the cache key will only be set if you "
+"have already chained a plugin that sets a custom cache key."
+msgstr ""
+
+# 4f350f9cc4fb4685969e77926056d7d6
+#: ../../admin-guide/plugins/balancer.en.rst:59
+msgid "url"
+msgstr ""
+
+# 2f0fd7982eca4ca193a9eea12662a19c
+#: ../../admin-guide/plugins/balancer.en.rst:58
+msgid ""
+"The request URL. This is the default hash field that is used if no other "
+"fields are specified."
+msgstr ""
+
+# fe65553f2bcd46408aa220edd00b349e
+#: ../../admin-guide/plugins/balancer.en.rst:62
+msgid "srcaddr"
+msgstr ""
+
+# 9f2bf693402f41c7a95c6ce0cd38f042
+#: ../../admin-guide/plugins/balancer.en.rst:62
+msgid "The source IP address of the request."
+msgstr ""
+
+# c3651e91aa5743dbb2a68a201a8c24d2
+#: ../../admin-guide/plugins/balancer.en.rst:65
+msgid "dstaddr"
+msgstr ""
+
+# 293ac595c1754c298f2212a27f428e5d
+#: ../../admin-guide/plugins/balancer.en.rst:65
+msgid "The destination IP address of the request."
+msgstr ""
+
+# 8b91f5f209c54279b34877bf140632b2
+#: ../../admin-guide/plugins/balancer.en.rst:68
+msgid "Round Robin Balancing Policy"
+msgstr ""
+
+# 4b3ad4fee2654bce90a01c1b84a80f81
+#: ../../admin-guide/plugins/balancer.en.rst:70
+msgid ""
+"The ``roundrobin`` balancing policy simply allocates requests to origin "
+"servers in order. Over time, the number of requests received by each "
+"origin should be approximately the same."
+msgstr ""
+
+# fd2b0888aa3f408db807aa0dc8a5ad7a
+#: ../../admin-guide/plugins/balancer.en.rst:75
+msgid "Health Checking"
+msgstr ""
+
+# ec7721d9966f4365a1f3e34bde8f3850
+#: ../../admin-guide/plugins/balancer.en.rst:77
+msgid ""
+"The ``balancer`` plugin does not check the health of the origin servers, "
+"however the plugin is fully reloadable so health checking is usualy "
+"simple to implement. Most production environments already have mechanisms"
+" to check service health. It is recommended that you write a simple "
+"script to monitor this information and rewrite :file:`remap.config` when "
+"appropriate. Running :option:`traffic_ctl config reload` will reload the "
+"``balancer`` plugin with the new set of origin servers."
+msgstr ""
+

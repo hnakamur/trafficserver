@@ -1,0 +1,482 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 4829440e5db5484eab000d2dcddb5bef
+#: ../../developer-guide/plugins/introduction.en.rst:23
+msgid "Plugin Development Introduction"
+msgstr ""
+
+# 1f2b73d00caf444bbcd76005856251ac
+#: ../../developer-guide/plugins/introduction.en.rst:28
+msgid ""
+"This chapter provides a foundation for designing and writing plugins. "
+"Reading this chapter will help you to understand:"
+msgstr ""
+
+# 21346f02d4664d8f81c93648cd59c993
+#: ../../developer-guide/plugins/introduction.en.rst:31
+msgid ""
+"The asynchronous event mode. This is the design paradigm used throughout "
+"Traffic Server; plugins must also follow this design. It includes the "
+"callback mechanism for Traffic Server to \"wake up\" your plugin and put "
+"it to work."
+msgstr ""
+
+# dd2ecbb1e66647acb2500addae654678
+#: ../../developer-guide/plugins/introduction.en.rst:36
+msgid ""
+"Traffic Server's HTTP processing, with an overview of the HTTP state "
+"machine."
+msgstr ""
+
+# 9506ea263ec747d793b24f47c252ca5e
+#: ../../developer-guide/plugins/introduction.en.rst:39
+msgid ""
+"How plugins can hook onto and modify/extend Traffic Server's HTTP "
+"processing."
+msgstr ""
+
+# c3c64e32431e4663ad82adb8323d4db3
+#: ../../developer-guide/plugins/introduction.en.rst:42
+msgid ""
+"A :ref:`developer-plugins-roadmap` with an overview of the functionality "
+"provided by the Traffic Server API."
+msgstr ""
+
+# 8cee5ded0a7e4e51b685e68af8d02882
+#: ../../developer-guide/plugins/introduction.en.rst:48
+msgid "Roadmap"
+msgstr ""
+
+# 283f5eccbd9d4e5cbcadbe93aa73f613
+#: ../../developer-guide/plugins/introduction.en.rst:50
+msgid ""
+"This chapter has provided an overview of Traffic Server's HTTP "
+"processing, API hooks, and the asynchronous event model. Next, you must "
+"understand the capabilities of Traffic Server API functions. These are "
+"quite broad:"
+msgstr ""
+
+# 6549bdcc3e194f78a540dc75ccbdd435
+#: ../../developer-guide/plugins/introduction.en.rst:55
+msgid "**HTTP header manipulation functions**"
+msgstr ""
+
+# c1174730c58f40ff8487cc8607c3efc9
+#: ../../developer-guide/plugins/introduction.en.rst:57
+msgid ""
+"Obtain information about and manipulate HTTP headers, URLs, & MIME "
+"headers."
+msgstr ""
+
+# b8702f7156904578ae7e5398c0254bc8
+#: ../../developer-guide/plugins/introduction.en.rst:60
+msgid "**HTTP transaction functions**"
+msgstr ""
+
+# 4cd93aee5d8f460092962066129cc600
+#: ../../developer-guide/plugins/introduction.en.rst:62
+msgid ""
+"Get information about and modify HTTP transactions (for example: get the "
+"client IP associated to the transaction; get the server IP; get parent "
+"proxy information)"
+msgstr ""
+
+# 4f8d16c71f9c4cf48fbc0b94020f3a61
+#: ../../developer-guide/plugins/introduction.en.rst:66
+msgid "**IO functions**"
+msgstr ""
+
+# 848d1bc1f16a41369199d17a20b1a4ee
+#: ../../developer-guide/plugins/introduction.en.rst:68
+msgid ""
+"Manipulate vconnections (virtual connections, used for network and disk "
+"I/O)"
+msgstr ""
+
+# 26deaed4821f48e49a26ef470831a74c
+#: ../../developer-guide/plugins/introduction.en.rst:71
+msgid "**Network connection functions**"
+msgstr ""
+
+# 4f8794825a38456daaf17b9e3fe78af9
+#: ../../developer-guide/plugins/introduction.en.rst:73
+msgid "Open connections to remote servers."
+msgstr ""
+
+# e201a4652a1f495599871e143fb0a1fa
+#: ../../developer-guide/plugins/introduction.en.rst:75
+msgid "**Statistics functions**"
+msgstr ""
+
+# e423f904ef6a4e389e500390bd182ff9
+#: ../../developer-guide/plugins/introduction.en.rst:77
+msgid "Define and compute statistics for your plugin's activity."
+msgstr ""
+
+# fc9962fedc734f7484b99fcdf00515cd
+#: ../../developer-guide/plugins/introduction.en.rst:79
+msgid "**Traffic Server management functions**"
+msgstr ""
+
+# 69db3065960b42ee991b54aa33ec372b
+#: ../../developer-guide/plugins/introduction.en.rst:81
+msgid "Obtain values for Traffic Server configuration and statistics variables."
+msgstr ""
+
+# 14c6af05e17342578a4bb8394133139e
+#: ../../developer-guide/plugins/introduction.en.rst:84
+msgid "Below are some guidelines for creating a plugin:"
+msgstr ""
+
+# 3a105207e7534967b4fa5e9e092b6f45
+#: ../../developer-guide/plugins/introduction.en.rst:86
+msgid ""
+"Decide what you want your plugin to do, based on the capabilities of the "
+"API and |TS|. The two kinds of example plugins provided with this SDK are"
+" HTTP-based (includes header-based and response transform plugins), and "
+"non-HTTP-based (a protocol plugin). These examples are discussed in the "
+"following chapters."
+msgstr ""
+
+# 5438820fcd6b42d889f4866bf26966b7
+#: ../../developer-guide/plugins/introduction.en.rst:92
+msgid ""
+"Determine where your plugin needs to hook on to Traffic Server's HTTP "
+"processing (view the :ref:`http-txn-state-diagram`."
+msgstr ""
+
+# e87f9ef9c3a94b46909e607bb0df5829
+#: ../../developer-guide/plugins/introduction.en.rst:95
+msgid ""
+"Read :ref:`developer-plugins-header-based-examples` to learn the basics "
+"of writing plugins: creating continuations and setting up hooks. If you "
+"want to write a plugin that transforms data, then read :ref:`developer-"
+"plugins-http-transformations`."
+msgstr ""
+
+# e3d7430a2c4e4a50980102dc7151f998
+#: ../../developer-guide/plugins/introduction.en.rst:100
+msgid ""
+"Figure out what parts of the Traffic Server API you need to use and then "
+"read about the details of those APIs in this manual's reference chapters."
+msgstr ""
+
+# dd06d4fec09b45f58e66ccf49722269b
+#: ../../developer-guide/plugins/introduction.en.rst:104
+msgid ""
+"Compile and load your plugin (see :ref:`developer-plugins-getting-"
+"started`."
+msgstr ""
+
+# 9b7c4b72f5fe45ea86ff521f7d472262
+#: ../../developer-guide/plugins/introduction.en.rst:106
+msgid ""
+"Depending on your plugin's functionality, you might start testing it by "
+"issuing requests by hand and checking for the desired behavior in Traffic"
+" Server log files. See the ***Traffic Server Administrator's Guide*** for"
+" information about Traffic Server logs."
+msgstr ""
+
+# a7ed29e3bc174e7cb2eee71d498428bf
+#: ../../developer-guide/plugins/introduction.en.rst:112
+msgid "Asynchronous Event Model"
+msgstr ""
+
+# 70bcc0bc95034abaa71a742a17bbfbdd
+#: ../../developer-guide/plugins/introduction.en.rst:114
+msgid ""
+"Traffic Server is a multi-threaded process. There are two main reasons "
+"why a server might use multiple threads:"
+msgstr ""
+
+# 9d72570ff35c4416a8a5e9f02a9103e9
+#: ../../developer-guide/plugins/introduction.en.rst:117
+msgid ""
+"To take advantage of the concurrency available with multiple CPUs and "
+"multiple I/O devices."
+msgstr ""
+
+# 69585b151bee4e4babb3fef7a72673ac
+#: ../../developer-guide/plugins/introduction.en.rst:120
+msgid ""
+"To manage concurrency from having many simultaneous client connections. "
+"For example, a server could create one thread for each connection, "
+"allowing the operating system (OS) to control switching between threads."
+msgstr ""
+
+# 3ea3d04bf21d44919498635fd823aaf8
+#: ../../developer-guide/plugins/introduction.en.rst:125
+msgid ""
+"Traffic Server uses multiple threads for the first reason. However, "
+"Traffic Server does not use a separate OS thread per transaction because "
+"it would not be efficient when handling thousands of simultaneous "
+"connections."
+msgstr ""
+
+# 1988d13b0bc24acabe3329860a5defe7
+#: ../../developer-guide/plugins/introduction.en.rst:130
+msgid ""
+"Instead, Traffic Server provides special event-driven mechanisms for "
+"efficiently scheduling work: the event system and continuations. The "
+"**event system** is used to schedule work to be done on threads. A "
+"**continuation** is a passive, event-driven state machine that can do "
+"some work until it reaches a waiting point; it then sleeps until it "
+"receives notification that conditions are right for doing more work. For "
+"example, HTTP state machines (which handle HTTP transactions) are "
+"implemented as continuations."
+msgstr ""
+
+# e96b8f673b2140e3a2bbe8d149e354a4
+#: ../../developer-guide/plugins/introduction.en.rst:139
+msgid ""
+"Continuation objects are used throughout Traffic Server. Some might live "
+"for the duration of the Traffic Server process, while others are created "
+"(perhaps by other continuations) for specific needs and then destroyed. "
+":ref:`TSInternals` (below) shows how the major components of Traffic "
+"Server interact. Traffic Server has several **processors**, such as "
+"*cache processor* and *net processor*, that consolidate cache or network "
+"I/O tasks. Processors talk to the event system and schedule work on "
+"threads. An executing thread calls back a continuation by sending it an "
+"event. When a continuation receives an event, it wakes up, does some "
+"work, and either destroys itself or goes back to sleep & waits for the "
+"next event."
+msgstr ""
+
+# 358c1ef017594108a0abd64ac596532b
+#: ../../developer-guide/plugins/introduction.en.rst:151
+msgid "**Traffic Server Internals**"
+msgstr ""
+
+# a72613de011d499b8807b08eaf488ad5
+#: ../../developer-guide/plugins/introduction.en.rst:158
+msgid "Traffic Server Internals"
+msgstr ""
+
+# 6abd110790814a1d9c9eaf64563a1932
+#: ../../developer-guide/plugins/introduction.en.rst:160
+msgid ""
+"Plugins are typically implemented as continuations. All of the sample "
+"code plugins (except ``hello-world``) are continuations that are created "
+"when Traffic Server starts up; they then wait for events that trigger "
+"them into activity."
+msgstr ""
+
+# cd8db59cc88946edb9923aebcda3b75d
+#: ../../developer-guide/plugins/introduction.en.rst:165
+msgid "**Traffic Server with Plugins**"
+msgstr ""
+
+# 501fbda2bf39414aadcdd67f55c7eeba
+#: ../../developer-guide/plugins/introduction.en.rst:172
+msgid "Traffic Server with Plugins"
+msgstr ""
+
+# 63e909ac1e314da6b33eac008afec0cf
+#: ../../developer-guide/plugins/introduction.en.rst:174
+msgid ""
+"A plugin may consist of just one static continuation that is called "
+"whenever certain events happen. Examples of such plugins include "
+"``blacklist-1.c``, ``basic-auth.c``, and ``redirect-1.c``. Alternatively,"
+" a plugin might dynamically create other continuations as needed. "
+"Transform plugins are built in this manner: a static parent continuation "
+"checks all transactions to see if any are transformable; when a "
+"transaction is transformable, the static continuation creates a type of "
+"continuation called a **vconnection**. The vconnection lives as long as "
+"it takes to complete the transform and then destroys itself. This design "
+"can be seen in all of the sample transform plugins. Plugins that support "
+"new protocols also have this architecture: a static continuation listens "
+"for incoming client connections and then creates transaction state "
+"machines to handle each protocol transaction."
+msgstr ""
+
+# 2f7bc8be06c84633ad26ae7c121d06dd
+#: ../../developer-guide/plugins/introduction.en.rst:188
+msgid ""
+"When you write plugins, there are several ways to send events to "
+"continuations. For HTTP plugins, there is a \"hook\" mechanism that "
+"enables the Traffic Server HTTP state machine to send your plugin wakeup "
+"calls when needed. Additionally, several Traffic Server API functions "
+"trigger Traffic Server sub-processes to send events to plugins: "
+"``TSContCall``, ``TSVConnRead``, ``TSCacheWrite``, and "
+"``TSMgmtUpdateRegister``, to name a few."
+msgstr ""
+
+# 78778817fd6c442880b1592afd786b42
+#: ../../developer-guide/plugins/introduction.en.rst:197
+msgid "Naming Conventions"
+msgstr ""
+
+# 9eeceb1296694ccba809ae749cb11d84
+#: ../../developer-guide/plugins/introduction.en.rst:200
+msgid "Traffic Server HTTP State Machine"
+msgstr ""
+
+# 9de4f6f846004f1c810174ab0692fbb5
+#: ../../developer-guide/plugins/introduction.en.rst:202
+msgid ""
+"Traffic Server performs sophisticated HTTP caching and proxying. "
+"Important features include checking for alternates and document "
+"freshness, filtering, supporting cache hierarchies, and hosting. Traffic "
+"Server handles thousands of client requests at a time and each request is"
+" handled by an HTTP state machine. These machines follow a complex state "
+"diagram that includes all of the states required to support Traffic "
+"Server's features. The Traffic Server API provides hooks to a subset of "
+"these states, chosen for their relevance to plugins. You can view the API"
+" hooks and corresponding HTTP states in the :ref:`http-txn-state-"
+"diagram`."
+msgstr ""
+
+# 0f65897f2f834d36b38c0c7f06adc161
+#: ../../developer-guide/plugins/introduction.en.rst:213
+msgid ""
+"The example in this section (below) explains how a plugin typically "
+"intervenes and extends Traffic Server's processing of an HTTP "
+"transaction. Complete details about hooking on to Traffic Server "
+"processes are provided in :ref:`developer-plugins-hooks-and-"
+"transactions`."
+msgstr ""
+
+# d2e825be20704035abb730f50cf0766d
+#: ../../developer-guide/plugins/introduction.en.rst:219
+msgid "HTTP Transaction"
+msgstr ""
+
+# c5daf87ae4474393b490427547bd1e32
+#: ../../developer-guide/plugins/introduction.en.rst:221
+msgid ""
+"An HTTP transaction consists of a client request for a web document and "
+"Traffic Server's response. The response could be the requested web server"
+" content or it could be an error message. The content could come from the"
+" Traffic Server cache or Traffic Server might fetch it from the origin "
+"server. The following diagram shows some states in a typical transaction "
+"- specifically, the scenario wherein content is served from cache."
+msgstr ""
+
+# cca542143e8d412580610b5b7e4d1b4a
+#: ../../developer-guide/plugins/introduction.en.rst:229
+msgid "**Simplified HTTP Transaction**"
+msgstr ""
+
+# bf4203bb2f4241c0a52fa58d926cc926
+#: ../../developer-guide/plugins/introduction.en.rst:236
+msgid "Simplified HTTP Transaction"
+msgstr ""
+
+# b14c40c721e144afbfdf1a20992bede9
+#: ../../developer-guide/plugins/introduction.en.rst:238
+msgid ""
+"In the diagram above, Traffic Server accepts the client connection, reads"
+" the request headers, looks up the origin server's IP address, and looks "
+"for the requested content in the cache. If the content is not in the "
+"cache (a \"miss\"), then Traffic Server opens a connection to the origin "
+"server and issues a request for the content. If the content is in the "
+"cache (a \"hit\"), then Traffic Server checks it for freshness."
+msgstr ""
+
+# faa5f63201eb4988ad7d5902e4f0692e
+#: ../../developer-guide/plugins/introduction.en.rst:245
+msgid ""
+"If the content is fresh, then Traffic Server sends a reply header to the "
+"client. If the content is stale, then Traffic Server opens a connection "
+"to the origin server and requests the content. The figure above, "
+":ref:`SimplifiedHTTPTransaction`, does not show behavior in the event of "
+"an error. If there is an error at a any stage, then the HTTP state "
+"machine jumps to the \"send reply header\" state and sends a reply. If "
+"the reply is an error, then the transaction closes. If the reply is not "
+"an error, then Traffic Server first sends the response content before it "
+"closes the transaction."
+msgstr ""
+
+# 2a82359d36424730bd045f31d5bec2f2
+#: ../../developer-guide/plugins/introduction.en.rst:255
+msgid "**API Hooks Corresponding to States**"
+msgstr ""
+
+# b09df6c2de704a00ae7e351d3b50fa80
+#: ../../developer-guide/plugins/introduction.en.rst:262
+msgid "API Hooks Corresponding to States Listed in"
+msgstr ""
+
+# f2bdac514ac14da490a988439651f0a6
+#: ../../developer-guide/plugins/introduction.en.rst:264
+msgid ""
+"You use hooks as triggers to start your plugin. The name of a hook "
+"reflects the Traffic Server state that was *just completed*. For example,"
+" the \"OS DNS lookup\" hook wakes up a plugin right *after* the origin "
+"server DNS lookup. For a plugin that requires the IP address of the "
+"requested origin server, this hook is the right one to use. The Blacklist"
+" plugin works in this manner, as shown in the :ref:`BlackListPlugin` "
+"diagram below."
+msgstr ""
+
+# 0c4768358018486c95252209e9a999f3
+#: ../../developer-guide/plugins/introduction.en.rst:272
+msgid "**Blacklist Plugin**"
+msgstr ""
+
+# bfd5adb6d8394f4e8cc03c8422717fa9
+#: ../../developer-guide/plugins/introduction.en.rst:279
+msgid "Blacklist Plugin"
+msgstr ""
+
+# b623d983ee924287ab18965b56a0490b
+#: ../../developer-guide/plugins/introduction.en.rst:281
+msgid ""
+"Traffic Server calls the Blacklist plugin right after the origin server "
+"DNS lookup. The plugin checks the requested host against a list of "
+"blacklisted servers; if the request is allowed, then the transaction "
+"proceeds. If the host is forbidden, then the Blacklist plugin sends the "
+"transaction into an error state. When the HTTP state machine gets to the "
+"\"send reply header\" state, it then calls the Blacklist plugin to "
+"provide the error message that's sent to the client."
+msgstr ""
+
+# 6096320d462c46acb4bdcbfb7472313e
+#: ../../developer-guide/plugins/introduction.en.rst:290
+msgid "Types of Hooks"
+msgstr ""
+
+# 51b9cd24c0194eb5a5db696d21bd93bf
+#: ../../developer-guide/plugins/introduction.en.rst:292
+msgid ""
+"The Blacklist plugin's hook to the origin server DNS lookup state is a "
+"*global hook*, meaning that the plugin is called every time there's an "
+"HTTP transaction with a DNS lookup event. The plugin's hook to the send "
+"reply header state is a *transaction hook*, meaning that this hook is "
+"only invoked for specified transactions (in the :ref:`developer-plugins-"
+"examples-blacklist` example, it's only used for requests to blacklisted "
+"servers). Several examples of setting up hooks are provided in :ref"
+":`developer-plugins-header-based-examples` and :ref:`developer-plugins-"
+"http-transformations`."
+msgstr ""
+
+# 2f2e38ea61a64e70b87ebc67edbd68ee
+#: ../../developer-guide/plugins/introduction.en.rst:301
+msgid ""
+"*Header manipulation plugins*, such as filtering, basic authorization, or"
+" redirects, usually have a global hook to the DNS lookup or the read "
+"request header states. If specific actions need to be done to the "
+"transaction further on, then the plugin adds itself to a transaction "
+"hook. *Transformation plugins* require a global hook to check all "
+"transactions for transformability followed by a *transform hook*, which "
+"is a type of transaction hook used specifically for transforms."
+msgstr ""
+

@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# c38409b1de3f428d87db0363204b111f
+#: ../../admin-guide/plugins/memcache.en.rst:4
+msgid "memcache Plugin"
+msgstr ""
+
+# 9c2eb7c380b24a7b903ef1bd7ceee082
+#: ../../admin-guide/plugins/memcache.en.rst:24
+msgid "This plugin implements the memcache protocol for cache contents."
+msgstr ""
+
+# 95eef8737967478188804521db73e159
+#: ../../admin-guide/plugins/memcache.en.rst:27
+msgid "Installation"
+msgstr ""
+
+# dbcc61140c784c909427dc34d0f992ab
+#: ../../admin-guide/plugins/memcache.en.rst:29
+msgid "Add the following line to :file:`plugin.config`::"
+msgstr ""
+
+# 26c8bc3c30cc49b6a18b27c99a022cf0
+#: ../../admin-guide/plugins/memcache.en.rst:33
+msgid "In this case, the plugin will use the default behaviour:"
+msgstr ""
+
+# cddb77a0ee394699be2da36d82ab6d55
+#: ../../admin-guide/plugins/memcache.en.rst:35
+msgid "Listen for memcache traffic on the default memcache port 11211"
+msgstr ""
+
+# 265e78db37664d1f84337d4de9033e75
+#: ../../admin-guide/plugins/memcache.en.rst:36
+msgid "Write memcache data to the cache in the background (without waiting)"
+msgstr ""
+
+# 18411adf08044d2f80412e1275ae7397
+#: ../../admin-guide/plugins/memcache.en.rst:39
+msgid "Configuration"
+msgstr ""
+
+# da65f15f31c14488b61f5016dda8a229
+#: ../../admin-guide/plugins/memcache.en.rst:41
+msgid "Alternatively, a configuration can also be specified::"
+msgstr ""
+
+# c17915553ab3478897c64e935142d9f9
+#: ../../admin-guide/plugins/memcache.en.rst:45
+msgid ""
+"After modifying plugin.config, restart traffic server (sudo traffic_ctl "
+"server restart) the configuration is also re-read when a management "
+"update is given (sudo traffic_ctl config reload)"
+msgstr ""
+
+# 130b126af7ca46a6bc1f0fcadbab0b0b
+#: ../../admin-guide/plugins/memcache.en.rst:50
+msgid "Options"
+msgstr ""
+
+# ec7de479eea14d389fcb0ae1bf222d0f
+#: ../../admin-guide/plugins/memcache.en.rst:52
+msgid "Flags and options are:"
+msgstr ""
+
+# d818299f1e7f4fd39ab694fb8322577b
+#: ../../admin-guide/plugins/memcache.en.rst:54
+msgid "``port``: A single port to listen on for memcache protocol commands."
+msgstr ""
+
+# fa2bd06fcf074163bc5262b3041e335f
+#: ../../admin-guide/plugins/memcache.en.rst:56
+msgid ""
+"Options in the code: ``TSMEMCACHE_WRITE_SYNC`` whether or not to wait for"
+" the write to complete."
+msgstr ""
+

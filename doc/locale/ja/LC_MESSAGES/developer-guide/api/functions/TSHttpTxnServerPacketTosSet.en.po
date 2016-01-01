@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 5d8b8d838d0c45d8a8a8dc4505c69407
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:21
+msgid "TSHttpTxnServerPacketTosSet"
+msgstr ""
+
+# 8f1a0af05cf14607afeec577f81199f7
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:23
+msgid "Change packet TOS for the server side connection."
+msgstr ""
+
+# edfa80bfdd9f4802bb3e628cd41d44bb
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:26
+msgid "Synopsis"
+msgstr ""
+
+# 4a3d8d8b31144f6981534435b1ffc803
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:28
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 70da3db4c5634f9798ae41d6de353458
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:33
+msgid "Description"
+msgstr ""
+
+# b8f44929c38042acadf3fe25ccf1a0a7
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:37
+msgid ""
+"The change takes effect immediately. If no OS connection has been made, "
+"then this sets the mark that will be used. If an OS connection is "
+"established"
+msgstr ""
+
+# 07410804a8e945dfb44c7873dc26e83d
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:41
+msgid ""
+"TOS is deprecated and replaced by DSCP. This is still used to set DSCP, "
+"however the first 2 bits of this value will be ignored as they now belong"
+" to the ECN field."
+msgstr ""
+
+# d0b36f405ad04a5fa587305cb6fcc7f5
+#: ../../developer-guide/api/functions/TSHttpTxnServerPacketTosSet.en.rst:48
+msgid "See Also"
+msgstr ""
+

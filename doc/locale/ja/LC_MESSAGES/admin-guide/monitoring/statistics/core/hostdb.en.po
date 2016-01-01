@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 0537040bab7f484686c95dcae84b0765
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:23
+msgid "HostDB"
+msgstr ""
+
+# 5a5b1ee083874441bd5379ec76096a60
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:25
+msgid ""
+"The HostDB component of |TS| manages origin server name resolution and "
+"host health checks. The statistics documented here can help to ensure "
+"that your |TS| instances are not spending an unreasonable amount of "
+"timing resolving your origin servers' hostnames prior to object "
+"revalidation or retrieval."
+msgstr ""
+
+# 2d6265f891f7440a9fe0676c7895afe5
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:34
+msgid ""
+"Represents the ratio of origin server name resolutions which were "
+"satisfied by the HostDB lookup cache over the last 10 seconds."
+msgstr ""
+
+# ad98139341e448a48cef150d8e6b214c
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:41
+msgid ""
+"Represents the ratio of origin server name resolutions which were "
+"satisfied by the HostDB lookup cache since statistics collection began."
+msgstr ""
+
+# 428b0a8f58df40d09645dc38e59ab44f
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:48
+msgid ""
+"The value of :ts:stat:`proxy.node.hostdb.hit_ratio` converted to an "
+"integer percent."
+msgstr ""
+
+# 3fd90b7c62d446b2a46caedef0cb4684
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:54
+msgid ""
+"Represents the number of origin server name resolutions which were "
+"satisfied by the HostDB lookup cache over the last 10 seconds."
+msgstr ""
+
+# 1cd173e115b7475bb6558b7d645fbc43
+# 8ace0f2a1c6e4cfaac5704f0fa8f517d
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:60
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:96
+msgid ""
+"Represents the total number of origin server name resolutions which were "
+"satisfied by entries in the HostDB lookup cache, since statistics "
+"collection began."
+msgstr ""
+
+# c5f240630cd54ed793620cf9e801dab0
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:67
+msgid ""
+"Represents the number of origin server name resolutions which were "
+"performed over the last 10 seconds, regardless of whether they were "
+"satisfied by the HostDB lookup cache."
+msgstr ""
+
+# c7e32f49ce154857afd0d85648fc813b
+# 2534f15bd4a848cbb165d60b161e12bb
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:74
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:103
+msgid ""
+"Represents the total number of origin server name resolutions which have "
+"been performed, since statistics collection began, regardless of whether "
+"they were satisfied by the HostDB lookup cache or required DNS lookups."
+msgstr ""
+
+# e5efdc2b917543f2a25b96aae87bcb0d
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:82
+msgid "Represents the number of bytes allocated to the HostDB lookup cache."
+msgstr ""
+
+# d548ae7cccc745c192a47b8d65a9c76b
+#: ../../admin-guide/monitoring/statistics/core/hostdb.en.rst:90
+msgid ""
+"Represents the total number of host entries currently in the HostDB "
+"lookup cache."
+msgstr ""
+

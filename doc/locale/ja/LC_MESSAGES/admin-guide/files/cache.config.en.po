@@ -1,0 +1,393 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 68d1461b2a114e91ab19455e304b332c
+#: ../../admin-guide/files/cache.config.en.rst:22
+msgid "cache.config"
+msgstr ""
+
+# 74046aa423c044788efd45375d3ae64e
+#: ../../admin-guide/files/cache.config.en.rst:24
+msgid ""
+"The :file:`cache.config` file (by default, located in "
+"``/usr/local/etc/trafficserver/``) defines how Traffic Server caches web "
+"objects. You can add caching rules to specify the following:"
+msgstr ""
+
+# 05774b3b20b4446db40d4f4fd5867892
+#: ../../admin-guide/files/cache.config.en.rst:28
+msgid "Not to cache objects from specific IP addresses"
+msgstr ""
+
+# 00aab47d6be441e8840f97e8ad23d621
+#: ../../admin-guide/files/cache.config.en.rst:29
+msgid "How long to pin particular objects in the cache"
+msgstr ""
+
+# 2c94eb3cefc743b58e916b1995bb055b
+#: ../../admin-guide/files/cache.config.en.rst:30
+msgid "How long to consider cached objects as fresh"
+msgstr ""
+
+# ec148d8ee3fd49af9d17f3b204525cbf
+#: ../../admin-guide/files/cache.config.en.rst:31
+msgid "Whether to ignore no-cache directives from the server"
+msgstr ""
+
+# bae1d879a36440818e72623ddff85028
+#: ../../admin-guide/files/cache.config.en.rst:35
+msgid ""
+"After you modify the :file:`cache.config` file, navigate to the Traffic "
+"Server bin directory; then run the :option:`traffic_ctl config reload` "
+"command to apply changes. When you apply the changes to a node in a "
+"cluster, Traffic Server automatically applies the changes to all other "
+"nodes in the cluster."
+msgstr ""
+
+# 9f778fbe1bc845da918cac69eda82add
+#: ../../admin-guide/files/cache.config.en.rst:42
+msgid "Format"
+msgstr ""
+
+# be29c6f0f41f4325b3ba1fc63dcd83c1
+#: ../../admin-guide/files/cache.config.en.rst:44
+msgid ""
+"Each line in the :file:`cache.config` file contains a caching rule. "
+"Traffic Server recognizes three space-delimited tags::"
+msgstr ""
+
+# 1471daa3a7ca42a7acec706d5c472629
+#: ../../admin-guide/files/cache.config.en.rst:49
+msgid ""
+"You can use more than one secondary specifier in a rule. However, you "
+"cannot repeat a secondary specifier. The following list shows the "
+"possible primary destinations with allowed values."
+msgstr ""
+
+# 05d824dad8c24cd28183380164c97909
+#: ../../admin-guide/files/cache.config.en.rst:57
+msgid "``dest_domain``"
+msgstr ""
+
+# c7feba9e139e4775b01ba1d58fa60273
+#: ../../admin-guide/files/cache.config.en.rst:56
+msgid ""
+"A requested domain name. Traffic Server matches the domain name of the "
+"destination from the URL in the request."
+msgstr ""
+
+# 317700bc3d094fc0bf68f06118a80699
+#: ../../admin-guide/files/cache.config.en.rst:63
+msgid "``dest_host``"
+msgstr ""
+
+# 62181db143374f32abd5fee76be08149
+#: ../../admin-guide/files/cache.config.en.rst:62
+msgid ""
+"A requested hostname. Traffic Server matches the hostname of the "
+"destination from the URL in the request."
+msgstr ""
+
+# 77646ffcc05a48e1906404c257d9edb0
+#: ../../admin-guide/files/cache.config.en.rst:69
+msgid "``dest_ip``"
+msgstr ""
+
+# 820e61b1fda74718a082e1ce07e52a71
+#: ../../admin-guide/files/cache.config.en.rst:68
+msgid ""
+"A requested IP address. Traffic Server matches the IP address of the "
+"destination in the request."
+msgstr ""
+
+# 2256fad8a7f947dfb4e094ce5fd537b9
+#: ../../admin-guide/files/cache.config.en.rst:74
+msgid "``url_regex``"
+msgstr ""
+
+# 00f4aafe21a14c9494ee45c48f23a3c7
+#: ../../admin-guide/files/cache.config.en.rst:74
+msgid "A regular expression (regex) to be found in a URL."
+msgstr ""
+
+# 8ff810e9b4074d73b8b3b21ec43d3c5d
+#: ../../admin-guide/files/cache.config.en.rst:76
+msgid ""
+"The secondary specifiers are optional in the :file:`cache.config` file. "
+"The following list shows possible secondary specifiers with allowed "
+"values."
+msgstr ""
+
+# 04e6fa8079bc4addb2581cf42883b4fd
+#: ../../admin-guide/files/cache.config.en.rst:82
+msgid "``port``"
+msgstr ""
+
+# 559d3f58950c40ad8740483b45a10f1e
+#: ../../admin-guide/files/cache.config.en.rst:82
+msgid "A requested URL port."
+msgstr ""
+
+# 37416b8fe4a14033add32bfbd980b56b
+#: ../../admin-guide/files/cache.config.en.rst:87
+msgid "``scheme``"
+msgstr ""
+
+# e0a322abf7ec411b9a93ea0c77d8d9ea
+#: ../../admin-guide/files/cache.config.en.rst:87
+msgid "A request URL protocol: http or https."
+msgstr ""
+
+# ac383a12c9044c7a9d3dda562d111d1c
+#: ../../admin-guide/files/cache.config.en.rst:92
+msgid "``prefix``"
+msgstr ""
+
+# 20a9c152b39c48b5a7240cfa78352bfa
+#: ../../admin-guide/files/cache.config.en.rst:92
+msgid "A prefix in the path part of a URL."
+msgstr ""
+
+# 57e10413952d4b9482dcab245c69368b
+#: ../../admin-guide/files/cache.config.en.rst:97
+msgid "``suffix``"
+msgstr ""
+
+# f516baf9d5a042829775f6bd23b6d18b
+#: ../../admin-guide/files/cache.config.en.rst:97
+msgid "A file suffix in the URL."
+msgstr ""
+
+# c7f3c8a65929415c856e50800ec2c75a
+#: ../../admin-guide/files/cache.config.en.rst:102
+msgid "``method``"
+msgstr ""
+
+# aad2575c28b14685bc9f86b203083761
+#: ../../admin-guide/files/cache.config.en.rst:102
+msgid "A request URL method: get, put, post, trace."
+msgstr ""
+
+# e5a6619c4b1d4a33855abd6d13ebeb78
+#: ../../admin-guide/files/cache.config.en.rst:107
+msgid "``time``"
+msgstr ""
+
+# 6c4fe1ab39644e60b0fc49b6524569f1
+#: ../../admin-guide/files/cache.config.en.rst:107
+msgid "A time range, such as 08:00-14:00."
+msgstr ""
+
+# 478b1c7a2a3848b98f6e667f82dbb334
+#: ../../admin-guide/files/cache.config.en.rst:112
+msgid "``src_ip``"
+msgstr ""
+
+# df182ffecda44bcab9b075209f7d53f2
+#: ../../admin-guide/files/cache.config.en.rst:112
+msgid "A client IP address."
+msgstr ""
+
+# d532fa34d5e24d69a94e5570ba29a62d
+#: ../../admin-guide/files/cache.config.en.rst:119
+msgid "``internal``"
+msgstr ""
+
+# 330840cace6340ea8a8aabca3c7ae131
+#: ../../admin-guide/files/cache.config.en.rst:117
+msgid ""
+"A boolean value, ``true`` or ``false``, specifying if the rule should "
+"match (or not match) a transaction originating from an internal API. This"
+" is useful to differentiate transaction originating from an ATS plugin."
+msgstr ""
+
+# 8ac0f3f5eed84ab1942686c516ff9c78
+#: ../../admin-guide/files/cache.config.en.rst:121
+msgid "The following list shows possible actions and their allowed values."
+msgstr ""
+
+# 651bc00b03124ea3bbae325dc1be9262
+#: ../../admin-guide/files/cache.config.en.rst:138
+msgid "``action``"
+msgstr ""
+
+# db51afe23fb5489f8153f1b4834bca9a
+#: ../../admin-guide/files/cache.config.en.rst:127
+msgid "One of the following values:"
+msgstr ""
+
+# 37236b1805c34583bcb7a8cdad0652cf
+#: ../../admin-guide/files/cache.config.en.rst:129
+msgid ""
+"``never-cache`` configures Traffic Server to never cache specified "
+"objects."
+msgstr ""
+
+# 87f67950d50c40998e5f81720d67b0e8
+#: ../../admin-guide/files/cache.config.en.rst:131
+msgid ""
+"``ignore-no-cache`` configures Traffic Server to ignore all ``Cache-"
+"Control: no-cache`` headers."
+msgstr ""
+
+# 409019dbdf334e40b9296b6f6da62d71
+#: ../../admin-guide/files/cache.config.en.rst:133
+msgid ""
+"``ignore-client-no-cache`` configures Traffic Server to ignore ``Cache-"
+"Control: no-cache`` headers from client requests."
+msgstr ""
+
+# 217dd06915824d488469f7a5d9c0fdc6
+#: ../../admin-guide/files/cache.config.en.rst:135
+msgid ""
+"``ignore-server-no-cache`` configures Traffic Server to ignore ``Cache-"
+"Control: no-cache`` headers from origin server responses."
+msgstr ""
+
+# a8aabe2c9a2c41d79456f421d1b3fa87
+#: ../../admin-guide/files/cache.config.en.rst:137
+msgid ""
+"``cluster-cache-local`` configures the cluster cache to allow for this "
+"content to be stored locally on every cluster node."
+msgstr ""
+
+# 4c369559a4544347b0729c00624400df
+#: ../../admin-guide/files/cache.config.en.rst:148
+msgid "``cache-responses-to-cookies``"
+msgstr ""
+
+# abe14f90e97f4e02910365e58c3bb8b3
+#: ../../admin-guide/files/cache.config.en.rst:143
+msgid ""
+"Change the style of caching with regard to cookies. This effectively "
+"overrides the configuration parameter "
+":ts:cv:`proxy.config.http.cache.cache_responses_to_cookies` and uses the "
+"same values with the same semantics. The override happens only for "
+"requests that match."
+msgstr ""
+
+# 4add5114eff24cc19c74a86700cbf29f
+#: ../../admin-guide/files/cache.config.en.rst:168
+msgid "``pin-in-cache``"
+msgstr ""
+
+# cb95fe95269e45aebab4086aefc21633
+#: ../../admin-guide/files/cache.config.en.rst:153
+msgid ""
+"Preserves objects in cache, preventing them from being overwritten. Does "
+"not affect objects that are determined not to be cacheable. This setting "
+"can have performance issues, and  severely affect the cache. For "
+"instance, if the primary destination matches all objects, once the cache "
+"is full, no new objects could get written as nothing would be evicted.  "
+"Similarly, for each cache-miss, each object would incur extra checks to "
+"determine if the object it would replace could be overwritten."
+msgstr ""
+
+# 68548e72f2ef4a70939efdf054157fba
+#: ../../admin-guide/files/cache.config.en.rst:161
+msgid ""
+"The value is the amount of time you want to keep the object(s) in the "
+"cache. The following time formats are allowed:"
+msgstr ""
+
+# ea5339e8b998478f8b13d48d49f6c416
+#: ../../admin-guide/files/cache.config.en.rst:164
+msgid "``d`` for days; for example: 2d"
+msgstr ""
+
+# f97636e806794392ba92ff8ab6b73a66
+#: ../../admin-guide/files/cache.config.en.rst:165
+msgid "``h`` for hours; for example: 10h"
+msgstr ""
+
+# a8c7db01538046efb9af8762eb4ca27f
+#: ../../admin-guide/files/cache.config.en.rst:166
+msgid "``m`` for minutes; for example: 5m"
+msgstr ""
+
+# b7d05433c8904d078615ded37859968e
+#: ../../admin-guide/files/cache.config.en.rst:167
+msgid "``s`` for seconds; for example: 20s"
+msgstr ""
+
+# c3213050181b47f2ae612f58c21dd8c9
+#: ../../admin-guide/files/cache.config.en.rst:168
+msgid "mixed units; for example: 1h15m20s"
+msgstr ""
+
+# 3881257379204b53bf6090180cdedc50
+#: ../../admin-guide/files/cache.config.en.rst:174
+msgid "``revalidate``"
+msgstr ""
+
+# e8d41e67e9534b579146f30a002c74ec
+#: ../../admin-guide/files/cache.config.en.rst:173
+msgid ""
+"For objects that are in cache, overrides the the amount of time the "
+"object(s) are to be considered fresh. Use the same time formats as ``pin-"
+"in-cache``."
+msgstr ""
+
+# e3c45da08ef84d14a7b62ba3fc3773a9
+#: ../../admin-guide/files/cache.config.en.rst:182
+msgid "``ttl-in-cache``"
+msgstr ""
+
+# c9b127717e694ea3955ff3e28d5d7500
+#: ../../admin-guide/files/cache.config.en.rst:179
+msgid ""
+"Forces object(s) to become cached, as if they had a Cache-Control: max-"
+"age:<time> header. Can be overruled by requests with cookies. The value "
+"is the amount of time object(s) are to be kept in the cache, regardless "
+"of Cache-Control response headers. Use the same time formats as pin-in-"
+"cache and revalidate."
+msgstr ""
+
+# c5617e16a4324184a3a3f3fdf431bb31
+#: ../../admin-guide/files/cache.config.en.rst:185
+msgid "Examples"
+msgstr ""
+
+# 03869d8b1a804a94ba5704c23b9555ff
+#: ../../admin-guide/files/cache.config.en.rst:187
+msgid ""
+"The following example configures Traffic Server to revalidate ``gif`` and"
+" ``jpeg`` objects in the domain ``mydomain.com`` every 6 hours, and all "
+"other objects in ``mydomain.com`` every hour. The rules are applied in "
+"the order listed. ::"
+msgstr ""
+
+# 41362a5ac256492e8b6e1e20b73a9d4f
+#: ../../admin-guide/files/cache.config.en.rst:196
+msgid ""
+"Force a specific regex to be in cache between 7-11pm of the server's time"
+" for 26hours. ::"
+msgstr ""
+
+# 13b84bd9567a42939b57a2a51dd97492
+#: ../../admin-guide/files/cache.config.en.rst:200
+msgid "Prevent objects from being evicted from cache:"
+msgstr ""
+
+# 9ca6361604f948a097be35440394acb2
+#: ../../admin-guide/files/cache.config.en.rst:202
+msgid "url_regex=example.com/game/.* pin-in-cache=1h"
+msgstr ""
+

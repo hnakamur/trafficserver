@@ -1,0 +1,666 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 65241f6343cb4087bb0e260215d4a071
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:23
+msgid "Managing Logs"
+msgstr ""
+
+# 5927c36a985f4e63a7cccfea0dc3528a
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:25
+msgid ""
+"|TS| enables you to control where event log files are located and how "
+"much space they can consume. Additionally, you can specify how to handle "
+"low disk space in the logging directory."
+msgstr ""
+
+# fb5f1fa951a54b828f546ee1e43246a6
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:30
+msgid "Choosing the Logging Directory"
+msgstr ""
+
+# 016ad4ce1f274d6ea5c844c29a132cfb
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:32
+msgid ""
+"By default, Traffic Server writes all event log files in the ``logs`` "
+"directory located in the directory where you installed |TS|. To change "
+"this location, adjust the value of :ts:cv:`proxy.config.log.logfile_dir` "
+"in :file:`records.config`. You will need to either restart |TS| or run "
+"the command :option:`traffic_line -x` for changes to take effect."
+msgstr ""
+
+# 4c601deffc504b36bc5c6250257ab946
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:39
+msgid "Controlling Logging Space"
+msgstr ""
+
+# 9da7ed5d4be94eec92623fa0357cb485
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:41
+msgid ""
+"|TS| enables you to control the amount of disk space that the logging "
+"directory can consume. This allows the system to operate smoothly within "
+"a specified space window for a long period of time.  After you establish "
+"a space limit, |TS| continues to monitor the space in the logging "
+"directory. When the free space dwindles to the headroom limit, it enters "
+"a low space state and takes the following actions:"
+msgstr ""
+
+# 588588e98f6f46fd84a644c381c0ed14
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:48
+msgid ""
+"If the autodelete option (discussed in `Rolling Event Log Files`_) is "
+"*enabled*, then |TS| identifies previously-rolled log files (log files "
+"with the ``.old`` extension). It starts deleting files one by one, "
+"beginning with the oldest file, until it emerges from the low state. |TS|"
+" logs a record of all deleted files in the system error log."
+msgstr ""
+
+# df2bf1b46f774f8cadfd3fda3b31ba38
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:54
+msgid ""
+"If the autodelete option is *disabled* or there are not enough old log "
+"files to delete for the system to emerge from its low space state, then "
+"|TS| issues a warning and continues logging until space is exhausted. "
+"When available space is consumed, event logging stops. |TS| resumes event"
+" logging when enough space becomes available for it to exit the low space"
+" state. To make space available, either explicitly increase the logging "
+"space limit or remove files from the logging directory manually."
+msgstr ""
+
+# adf5fe9d67a342f79b45fd032d6697c9
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:62
+msgid ""
+"You can run a :manpage:`cron(8)` script in conjunction with |TS| to "
+"automatically remove old log files from the logging directory before |TS|"
+" enters the low space state. Relocate the old log files to a temporary "
+"partition, where you can run a variety of log analysis scripts. Following"
+" analysis, either compress the logs and move to an archive location, or "
+"simply delete them."
+msgstr ""
+
+# 626e6c9d77f74a589d23b313d1b36b10
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:70
+msgid "Setting Log File Management Options"
+msgstr ""
+
+# 175d5ef046124ff4ba90e495308c6e7d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:72
+msgid "To set log management options, follow the steps below:"
+msgstr ""
+
+# 6752fe44657a43e3bbdab4dc15964b63
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:74
+msgid "In the :file:`records.config` file, edit the following variables"
+msgstr ""
+
+# 1a511325eb4c4788abd6b71efefd5cac
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:76
+msgid ":ts:cv:`proxy.config.log.max_space_mb_for_logs`"
+msgstr ""
+
+# 24894dc8483e40989cc60aaa993b3e0c
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:77
+msgid ":ts:cv:`proxy.config.log.max_space_mb_headroom`"
+msgstr ""
+
+# 8d7e191eb3224e19a1852e3c1bc9d1f6
+# 76e1372839084e60bcea28986cb2a167
+# e0de2e407ea34589ba25fb3ae39ca863
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:79
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:215
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:302
+msgid ""
+"Run the command :option:`traffic_line -x` to apply the configuration "
+"changes."
+msgstr ""
+
+# 4c8dc9464e7d440a9eff602501da7d93
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:83
+msgid "Rolling Logs"
+msgstr ""
+
+# f2251c472d104689b571752bab8d4e5a
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:85
+msgid ""
+"|TS| provides automatic log file rolling. At specific intervals during "
+"the day or when log files reach a certain size, |TS| closes its current "
+"set of log files and opens new log files. Depending on the amount of "
+"traffic your servers are exposed to, you may find that increasing the "
+"frequency of log rolling is beneficial, or even necessary, to maintain "
+"manageable log file sets. |TS| nodes processing moderately high levels of"
+" traffic may want to start by rolling logs every six hours, and adjusting"
+" from there."
+msgstr ""
+
+# c4ae4e896cda4359b609f3c0f179f2df
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:93
+msgid "Log file rolling offers the following benefits:"
+msgstr ""
+
+# 0ad8b873724547958d6553013cb5c29d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:95
+msgid ""
+"It defines an consistent interval over which log analysis can be "
+"performed."
+msgstr ""
+
+# 1f513317c0664aef9cfeb6f4ac3ce1a9
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:97
+msgid ""
+"It keeps any single log file from becoming too large and helps to keep "
+"the logging system within the specified space limits."
+msgstr ""
+
+# e0dd2bac81e94afea5bca1c2591d0ce4
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:100
+msgid ""
+"It provides an easy way to identify files that are no longer being used "
+"so that an automated script can clean the logging directory and run log "
+"analysis programs."
+msgstr ""
+
+# 93983fcf7957419f804832cebe38f31c
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:105
+msgid "Rolled Log Filename Format"
+msgstr ""
+
+# 884bcb7a712c4746871a9bf0d2218581
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:107
+msgid ""
+"|TS| provides a consistent naming scheme for rolled log files that "
+"enables you to easily identify log files. When |TS| rolls a log file, it "
+"saves and closes the old file before it starts a new file. |TS| renames "
+"the old file to include the following information:"
+msgstr ""
+
+# 2950c02cedcf4c8faac06b350ff9f5d6
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:112
+msgid "The format of the file (such as ``squid.log``)."
+msgstr ""
+
+# c14bf5082066430693448cb5701175d6
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:114
+msgid "The hostname of the |TS| that generated the log file."
+msgstr ""
+
+# 0617d692ecba4c47be990e08154ce4ea
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:116
+msgid ""
+"Two timestamps separated by a hyphen (``-``). The first timestamp is a "
+"*lower bound* for the timestamp of the first record in the log file. The "
+"lower bound is the time when the new buffer for log records is created. "
+"Under low load, the first timestamp in the filename can be different from"
+" the timestamp of the first entry. Under normal load, the first timestamp"
+" in the filename and the timestamp of the first entry are similar. The "
+"second timestamp is an *upper bound* for the timestamp of the last record"
+" in the log file (this is normally the rolling time)."
+msgstr ""
+
+# 7122f2e3849a4b03afdd18caf1895caf
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:126
+msgid ""
+"The suffix ``.old``, which makes it easy for automated scripts to find "
+"rolled log files."
+msgstr ""
+
+# 15773b3b75704d1999f761a122ddc5aa
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:129
+msgid "Timestamps have the following format: ::"
+msgstr ""
+
+# a7eb9e359eca449baaebddc0edb5544c
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:133
+msgid "The following table describes the format:"
+msgstr ""
+
+# 742464f57d054373a446d920d9acb4d2
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:136
+msgid "Format"
+msgstr ""
+
+# ac0d316429b045429da234390a57f84a
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:136
+msgid "Description"
+msgstr ""
+
+# 2b4b00d9e99d41a8bd9489d762c1f21d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:136
+msgid "Sample"
+msgstr ""
+
+# 864ba667a60e40e0bf93f1faf3ed4069
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:138
+msgid "``%Y``"
+msgstr ""
+
+# 74d3d234339243ca8b645db76eca643d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:138
+msgid "The year in four-digit format."
+msgstr ""
+
+# 1d4f33a6e7ad4107aac638f8a4674e90
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:138
+msgid "2000"
+msgstr ""
+
+# 36a40e45f4b74bbc8626ae45985b39c5
+# cd0172ca4dfe48908eae8d61c7d0be8f
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:139
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:142
+msgid "``%M``"
+msgstr ""
+
+# ef8639a83714494c888c7cda489ecb6d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:139
+msgid "The month in two-digit format, from 01-12."
+msgstr ""
+
+# 7559709bc2f4468ab0ae461ef9b919d9
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:139
+msgid "07"
+msgstr ""
+
+# e7ebb629542344faabf70b770e9ea983
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:140
+msgid "``%D``"
+msgstr ""
+
+# 563f000097d248a78691013d1390a217
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:140
+msgid "The day in two-digit format, from 01-31."
+msgstr ""
+
+# 9ad5de4b9c8a42988670b8b5af156a37
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:140
+msgid "19"
+msgstr ""
+
+# 9de775ff951540fbb31b018ea9404d21
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:141
+msgid "``%H``"
+msgstr ""
+
+# 19aa258193e24f90a9c2bed38af2f65d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:141
+msgid "The hour in two-digit format, from 00-23."
+msgstr ""
+
+# 70d215ec08344497b2ff2958e3792543
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:141
+msgid "21"
+msgstr ""
+
+# edcf2a419f134cbea1cc6bd4a351ab28
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:142
+msgid "The minute in two-digit format, from 00-59."
+msgstr ""
+
+# f00d3a80f8f045bd92f7ea4d563d8f68
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:142
+msgid "52"
+msgstr ""
+
+# 3ca8681bdfb44fd18ed5cc7480ea8aeb
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:143
+msgid "``%S``"
+msgstr ""
+
+# e8d51de5b42e447499ac5f628a1826d2
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:143
+msgid "The second in two-digit format, from 00-59."
+msgstr ""
+
+# 7e1b0183de344eff9a5ebf03cf881d1c
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:143
+msgid "36"
+msgstr ""
+
+# 026964c1e03e4a908cd00360cdb0a817
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:148
+msgid "The following is an example of a rolled log filename: ::"
+msgstr ""
+
+# e1939f7909714d86bbad04750094dc32
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:152
+msgid ""
+"The logging system buffers log records before writing them to disk. When "
+"a log file is rolled, the log buffer might be partially full. If it is, "
+"then the first entry in the new log file will have a timestamp earlier "
+"than the time of rolling. When the new log file is rolled, its first "
+"timestamp will be a lower bound for the timestamp of the first entry."
+msgstr ""
+
+# 5d1cf4426e8a4edc83432d1072ba6b42
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:158
+msgid ""
+"For example, suppose logs are rolled every three hours, and the first "
+"rolled log file is: ::"
+msgstr ""
+
+# df34a1b646a34c6ab59c92301cc74b19
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:163
+msgid ""
+"If the lower bound for the first entry in the log buffer at 3:00:00 is "
+"2:59:47, then the next log file will have the following timestamp when "
+"rolled: ::"
+msgstr ""
+
+# 85cc653efb624e1eb35bc7e4487c66e8
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:169
+msgid ""
+"The contents of a log file are always between the two timestamps. Log "
+"files do not contain overlapping entries, even if successive timestamps "
+"appear to overlap."
+msgstr ""
+
+# 0dc68f984664436783016e19f2ac0430
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:174
+msgid "Rolling Intervals"
+msgstr ""
+
+# ec7c6c65d7c341a69ad994104f9b0fe0
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:176
+msgid ""
+"Log files are rolled at specific intervals relative to a given hour of "
+"the day. Three options may be used to control when log files are rolled:"
+msgstr ""
+
+# 338171aaf2604c29a492f6e9ed7fccad
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:179
+msgid ""
+"A file size threshold, which will prevent any individual log from growing"
+" too large."
+msgstr ""
+
+# 7977c4e9c8c643c3a0cef3ae305f6b7f
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:182
+msgid "The offset hour, which is an hour between ``0`` (midnight) and ``23``."
+msgstr ""
+
+# cbc5a6853d2b4910a14e69456f916436
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:184
+msgid "The rolling interval."
+msgstr ""
+
+# 1a5d3355b83e455ea1c2f7a575f2cac7
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:186
+msgid ""
+"Both the offset hour and the rolling interval determine when log file "
+"rolling starts. Rolling occurs every *rolling interval* and at the "
+"*offset* hour. For example, if the rolling interval is six hours and the "
+"offset hour is ``0`` (midnight), then the logs will roll at midnight "
+"(00:00), 06:00, 12:00, and 18:00 each day. If the rolling interval is 12 "
+"hours and the offset hour is ``3``, then logs will roll at 03:00 and "
+"15:00 each day."
+msgstr ""
+
+# 9806aed6de8b4955964ca52a7cdd09de
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:193
+msgid ""
+"To set log file rolling options and/or configure |TS| to roll log files "
+"when they reach a certain size, adjust the following settings in "
+":file:`records.config`:"
+msgstr ""
+
+# 0348c9c309b44a31bd8a2883e378ca1b
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:197
+msgid "Enable log rolling with :ts:cv:`proxy.config.log.rolling_enabled`. ::"
+msgstr ""
+
+# 4152bf0acb3549d29f8776471d42fbeb
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:201
+msgid ""
+"Configure the upper limit on log file size with "
+":ts:cv:`proxy.config.log.rolling_size_mb`. ::"
+msgstr ""
+
+# 2cd0e711c6dd42ca8b9d130df1098189
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:206
+msgid "Set the offset hour with :ts:cv:`proxy.config.log.rolling_offset_hr`. ::"
+msgstr ""
+
+# f9d6304fc8a34ec8a8c499ed49bbe452
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:210
+msgid ""
+"Set the interval (in seconds) with "
+":ts:cv:`proxy.config.log.rolling_interval_sec`. ::"
+msgstr ""
+
+# 5f701cfbfe0b42ac82630b0553fb832f
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:218
+msgid ""
+"You can fine-tune log file rolling settings for a custom log file in the "
+":ref:`LogObject` specification in :file:`logs_xml.config`. The custom log"
+" file uses the rolling settings in its :ref:`LogObject`, which override "
+"the default settings you specify in Traffic Manager or "
+":file:`records.config` described above."
+msgstr ""
+
+# c49094606d2b482db1260d537ab89a2d
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:227
+msgid "Separating Logs by Origin"
+msgstr ""
+
+# 3d86e2280aa843a5aec9a1df0a8bc163
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:229
+msgid ""
+"HTTP host log splitting enables you to record HTTP transactions for "
+"different origin servers in separate log files. When HTTP host log "
+"splitting is enabled, |TS| creates a separate log file for each origin "
+"server that's listed in :file:`log_hosts.config`."
+msgstr ""
+
+# 660bf9b461fc4dee8beb198fc213adc3
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:234
+msgid "To enable host log splitting, perform the following steps:"
+msgstr ""
+
+# ffdbf580208647318ba9d48560ad5218
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:236
+msgid ""
+"Adjust the setting :ts:cv:`proxy.config.log.separate_host_logs` in "
+":file:`records.config`::"
+msgstr ""
+
+# d8a302d0dc0743d6a89e9285d5345019
+# 3a68ce0a3ca44f6b887e10d7ddc07a7a
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:241
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:328
+msgid ""
+"Run the command :option:`traffic_line -x` to apply the changes, or "
+"restart |TS|."
+msgstr ""
+
+# d78dffab734d4a8cac7c8ff61da0984c
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:244
+msgid ""
+"When both ICP (covered in :ref:`admin-monitoring-logging-icp-split`) and "
+"HTTP host log splitting are enabled, |TS| generates separate log files "
+"for HTTP transactions (based on the origin server) and places all ICP "
+"transactions in their own respective log files. For example, if "
+":file:`log_hosts.config` contains the two origin servers ``uni.edu`` and "
+"``company.com`` and Squid format is enabled, then |TS| generates the "
+"following log files:"
+msgstr ""
+
+# 5f9c795b71b344f09edad2d76da1e5f5
+# 6f7bbd8778144d459d7457d671fd7c35
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:252
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:265
+msgid "Log File"
+msgstr ""
+
+# 644b0ceaf5594c11b009386e85f5c213
+# add90322ef3740078e1d1097d1b3ed50
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:252
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:265
+msgid "Contents"
+msgstr ""
+
+# d776956c5e984ec28d02d3777cb6dd1b
+# 07f03dcffff04ac2a60708ae44b555ca
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:254
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:267
+msgid "``squid-uni.edu.log``"
+msgstr ""
+
+# d81af5b992e942eaa7f56d69167cf1e1
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:254
+msgid "All HTTP transactions for ``uni.edu``."
+msgstr ""
+
+# 197e6df0f53f48c3bce56b6adbf07650
+# 2d10ebee1b8e4f0d91e4810b0c6af8e6
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:255
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:268
+msgid "``squid-company.com.log``"
+msgstr ""
+
+# 6f53f75413bc44b6a0d07880b6eccff2
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:255
+msgid "All HTTP transactions for ``company.com``."
+msgstr ""
+
+# 3a0d462398634049bfbfcf6af80d65e0
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:256
+msgid "``squid-icp.log``"
+msgstr ""
+
+# 3d72eaa88b4248f292ec51338f385db2
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:256
+msgid "All ICP transactions for all hosts."
+msgstr ""
+
+# 98ca0aaf29c74c3c9066de832ba5d8fa
+# 27dc0790a2dc41c5843de286173eb686
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:257
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:269
+msgid "``squid.log``"
+msgstr ""
+
+# 15a6e171776e476db3d3bf059661f8ee
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:257
+msgid "All HTTP transactions for other hosts."
+msgstr ""
+
+# 07c520587ef1496cbb9606500825e8a0
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:260
+msgid ""
+"If you disable ICP log splitting, then ICP transactions are placed in the"
+" same log file as HTTP transactions. Using the hosts and log format from "
+"the previous example, |TS| generates the log files below:"
+msgstr ""
+
+# fd85cc7acafc4790a8a0bfccd2460a44
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:267
+msgid "All entries for ``uni.edu``."
+msgstr ""
+
+# 5e1c3863153e45fca4165e332fb9a427
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:268
+msgid "All entries for ``company.com``."
+msgstr ""
+
+# 4f5c9c94e4b149128a6750525b0c76a6
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:269
+msgid "All other entries."
+msgstr ""
+
+# e66a68a71a8041ff8aa326f8081a0533
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:272
+msgid ""
+"|TS| also enables you to create XML-based :ref:`admin-monitoring-logging-"
+"custom-formats` that offer even greater control over log file generation."
+msgstr ""
+
+# 7eed432a9ed24d0fa79566e8ea4a5524
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:277
+msgid "Defining Hosts in log_hosts.config"
+msgstr ""
+
+# e256354dba514bc1939a6eb16015568e
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:279
+msgid ""
+"The default :file:`log_hosts.config` file is located in the |TS| "
+"``config`` directory. To record HTTP transactions for different origin "
+"servers in separate log files, you must specify the hostname of each "
+"origin server on a separate line in :file:`log_hosts.config`. For "
+"example, if you specify the keyword ``sports``, then Traffic Server "
+"records all HTTP transactions from ``sports.yahoo.com`` and "
+"``www.foxsports.com`` in a log file called ``squid-sports.log`` (if the "
+"Squid format is enabled)."
+msgstr ""
+
+# c1cdc5a2d6fe437baf8c146133b7efae
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:289
+msgid ""
+"If Traffic Server is clustered and you enable log file collation, then "
+"you should use the same :file:`log_hosts.config` file on every |TS| node "
+"in the cluster."
+msgstr ""
+
+# a2b7b44ace844ad797a4d9eed5d3f0cb
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:293
+msgid "To edit the log hosts list:"
+msgstr ""
+
+# edac693d1c4349e698dc57f3b4833fbf
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:295
+msgid ""
+"Enter the hostname of each origin server on a separate line in "
+":file:`log_hosts.config`. ::"
+msgstr ""
+
+# cf7995ac9245435197bbb8f39f999626
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:308
+msgid "ICP Log Splitting"
+msgstr ""
+
+# 13b8983a7e024fc19cf81c869c57d79f
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:310
+msgid ""
+"By default, |TS| uses standard log formats and generates log files that "
+"contain HTTP and ICP transactions in the same file. However, you can "
+"enable log splitting if you prefer to log transactions for different "
+"protocols in separate log files."
+msgstr ""
+
+# 52e8dc21286745e88d008eb1ad839ac6
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:315
+msgid ""
+"When ICP log splitting is enabled, |TS| records ICP transactions in a "
+"separate log file with a name that contains ``icp``. For example, if you "
+"enable the Squid format, then all ICP transactions are recorded in the "
+"``squid-icp.log`` file. When you disable ICP log splitting, |TS| records "
+"all ICP transactions in the same log file as HTTP transactions."
+msgstr ""
+
+# 6ea01366ce8146869d7ab6392af26686
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:321
+msgid "To enable ICP log splitting, perform the following steps:"
+msgstr ""
+
+# 8f9de55284944a999ec00718c184dc3c
+#: ../../admin-guide/monitoring/logging/managing-logs.en.rst:323
+msgid ""
+"Adjust the setting :ts:cv:`proxy.config.log.separate_icp_logs` in "
+":file:`records.config`::"
+msgstr ""
+

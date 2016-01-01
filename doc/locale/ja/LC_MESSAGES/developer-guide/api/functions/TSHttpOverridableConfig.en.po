@@ -1,0 +1,497 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 9b0f597a0da44594967785800da742df
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:23
+msgid "TSHttpOverridableConfig"
+msgstr ""
+
+# 1bc96f589d704542b08fc2a431748900
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:26
+msgid "Synopsis"
+msgstr ""
+
+# 2b0f6b5774bd4ae8a75816df284f169f
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:28
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 9af52296776c4b10a3628f794074b518
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:41
+msgid "Description"
+msgstr ""
+
+# 88f43eb8960d4b268cab474de4422b58
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:43
+msgid ""
+"Some of the values that are set in :file:`records.config` can be changed "
+"for a specific transaction. It is important to note that these functions "
+"change the configuration values stored for the transation, which is not "
+"quite the same as changing the actual operating values of the "
+"transaction. The critical effect is the value must be changed before it "
+"is used by the transaction - after that, changes will not have any "
+"effect."
+msgstr ""
+
+# 50e5ddca5c504f8d85290a68e63e81b1
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:50
+msgid ""
+"All of the ``...Get`` functions store the internal value in the storage "
+"indicated by the :arg:`value` argument. For strings :arg:`length*` will "
+"receive the length of the string."
+msgstr ""
+
+# 7a80d9b5f2234a5a883d3b72430bed64
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:54
+msgid ""
+"The values are identified by the enumeration "
+":type:`TSOverridableConfigKey`. String values can be used indirectly by "
+"first passing them to :func:`TSHttpTxnConfigFind` which, if the string "
+"matches an overridable value, return the key and data type."
+msgstr ""
+
+# a72837348529409ea168c6bc19e5ffb0
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:60
+msgid "Configurations"
+msgstr ""
+
+# b614dcd832b740bfbe0fff0e58b46b88
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:62
+msgid "The following configurations (from ``records.config``) are overridable."
+msgstr ""
+
+# f43045e3aaf8471189881fc7f47200c1
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:64
+msgid ":ts:cv:`proxy.config.url_remap.pristine_host_hdr`"
+msgstr ""
+
+# f77d4b8306c74d3091cef556a2298ff2
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:65
+msgid ":ts:cv:`proxy.config.http.chunking_enabled`"
+msgstr ""
+
+# b33e5ec1dfe7437abcd6f4dd3c1fa4d5
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:66
+msgid ":ts:cv:`proxy.config.http.negative_caching_enabled`"
+msgstr ""
+
+# b9244f5a5fda46cc902aa743e2f17788
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:67
+msgid ":ts:cv:`proxy.config.http.negative_caching_lifetime`"
+msgstr ""
+
+# 8280b84c5d9140a0a6f53620e4470947
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:68
+msgid ":ts:cv:`proxy.config.http.cache.when_to_revalidate`"
+msgstr ""
+
+# a118f281a72b4fd99e3a1a29c0067742
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:69
+msgid ":ts:cv:`proxy.config.http.keep_alive_enabled_in`"
+msgstr ""
+
+# e85c212f6b7c43ad864dd321099bc7e8
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:70
+msgid ":ts:cv:`proxy.config.http.keep_alive_enabled_out`"
+msgstr ""
+
+# 7a440383e6f84fab88cac16b419f999f
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:71
+msgid ":ts:cv:`proxy.config.http.keep_alive_post_out`"
+msgstr ""
+
+# 576a15d3f942405e8d0ed45143fe4877
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:72
+msgid ":ts:cv:`proxy.config.net.sock_recv_buffer_size_out`"
+msgstr ""
+
+# 2d6531c39f7c40e3a9b6f7aff81778ed
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:73
+msgid ":ts:cv:`proxy.config.net.sock_send_buffer_size_out`"
+msgstr ""
+
+# 59b13ee96cd04cf49933e2cb02236935
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:74
+msgid ":ts:cv:`proxy.config.net.sock_option_flag_out`"
+msgstr ""
+
+# f3559870649548eaaa8c9b4cf089317e
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:75
+msgid ":ts:cv:`proxy.config.http.forward.proxy_auth_to_parent`"
+msgstr ""
+
+# f254fc552f8742669d53a3e1fc3a0d58
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:76
+msgid ":ts:cv:`proxy.config.http.anonymize_remove_from`"
+msgstr ""
+
+# a56406122d78480ab0f9ec9edbc44766
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:77
+msgid ":ts:cv:`proxy.config.http.anonymize_remove_referer`"
+msgstr ""
+
+# 6c87ac8212ec4559b81bf4057e22d281
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:78
+msgid ":ts:cv:`proxy.config.http.anonymize_remove_user_agent`"
+msgstr ""
+
+# 57209c1491ad4472b14961011e2db07c
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:79
+msgid ":ts:cv:`proxy.config.http.anonymize_remove_cookie`"
+msgstr ""
+
+# 879fd7ea88d043d4966aadbccb972b6a
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:80
+msgid ":ts:cv:`proxy.config.http.anonymize_remove_client_ip`"
+msgstr ""
+
+# 1ec3deea70ed40e4848add0194730a44
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:81
+msgid ":ts:cv:`proxy.config.http.anonymize_insert_client_ip`"
+msgstr ""
+
+# be29d34518e445ca87fa8f60af4f273e
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:82
+msgid ":ts:cv:`proxy.config.http.response_server_enabled`"
+msgstr ""
+
+# 02d1a62590c7404fa8163266dd99db93
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:83
+msgid ":ts:cv:`proxy.config.http.insert_squid_x_forwarded_for`"
+msgstr ""
+
+# 2994dd42a2164f938813cd6fe2c71cec
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:84
+msgid ":ts:cv:`proxy.config.http.server_tcp_init_cwnd`"
+msgstr ""
+
+# 4b983e57da2248b38f86eb198cd3cb10
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:85
+msgid ":ts:cv:`proxy.config.http.send_http11_requests`"
+msgstr ""
+
+# 5970f8ebbe134c95ab888066e8e1bd20
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:86
+msgid ":ts:cv:`proxy.config.http.cache.http`"
+msgstr ""
+
+# fed94bcab4524167ab56cc7ad6a3336e
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:87
+msgid ":ts:cv:`proxy.config.http.cache.cluster_cache_local`"
+msgstr ""
+
+# 1493cbc691bd4e649edd79a37b206693
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:88
+msgid ":ts:cv:`proxy.config.http.cache.ignore_client_no_cache`"
+msgstr ""
+
+# f3003c3a4883429598a83aaf98aa7da5
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:89
+msgid ":ts:cv:`proxy.config.http.cache.ignore_client_cc_max_age`"
+msgstr ""
+
+# bb0dc0c93b354327a8054626d953f1dc
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:90
+msgid ":ts:cv:`proxy.config.http.cache.ims_on_client_no_cache`"
+msgstr ""
+
+# f129d7cdeab44003909c55cf1570db03
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:91
+msgid ":ts:cv:`proxy.config.http.cache.ignore_server_no_cache`"
+msgstr ""
+
+# c3a27deabc7a4e4289ea9bf328a5b1de
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:92
+msgid ":ts:cv:`proxy.config.http.cache.cache_responses_to_cookies`"
+msgstr ""
+
+# 5e35b641287a43df92b70ddd7e1f2583
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:93
+msgid ":ts:cv:`proxy.config.http.cache.ignore_authentication`"
+msgstr ""
+
+# a10f272cb3ec49f4862ca1441d94a7b0
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:94
+msgid ":ts:cv:`proxy.config.http.cache.cache_urls_that_look_dynamic`"
+msgstr ""
+
+# 9a5a1b3c9b2e46819f95a7cc67fcc19d
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:95
+msgid ":ts:cv:`proxy.config.http.cache.required_headers`"
+msgstr ""
+
+# 7618e6dfefb34037b73d7c212462d8bf
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:96
+msgid ":ts:cv:`proxy.config.http.insert_request_via_str`"
+msgstr ""
+
+# 1df4b89a517344219a0f43c39a9e4f9a
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:97
+msgid ":ts:cv:`proxy.config.http.insert_response_via_str`"
+msgstr ""
+
+# a3259566c5b04a7eae3309b942d04092
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:98
+msgid ":ts:cv:`proxy.config.http.cache.heuristic_min_lifetime`"
+msgstr ""
+
+# 0957c3bd5e494ab1b911c52edc4929ae
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:99
+msgid ":ts:cv:`proxy.config.http.cache.heuristic_max_lifetime`"
+msgstr ""
+
+# 49e5d8802a9f4a21a775a05e1d6d536d
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:100
+msgid ":ts:cv:`proxy.config.http.cache.guaranteed_min_lifetime`"
+msgstr ""
+
+# 6798ec9b97db45e5b83a29af8c2e28bb
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:101
+msgid ":ts:cv:`proxy.config.http.cache.guaranteed_max_lifetime`"
+msgstr ""
+
+# 48b70cdf63534eff99da2773a2cbe3e2
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:102
+msgid ":ts:cv:`proxy.config.http.cache.max_stale_age`"
+msgstr ""
+
+# 2e65e275295449398e74931b6ec24bee
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:103
+msgid ":ts:cv:`proxy.config.http.keep_alive_no_activity_timeout_in`"
+msgstr ""
+
+# a41204a0c9e8423593cc862a30fc5bea
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:104
+msgid ":ts:cv:`proxy.config.http.keep_alive_no_activity_timeout_out`"
+msgstr ""
+
+# a3f706d083684216945b8e87abcd8b46
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:105
+msgid ":ts:cv:`proxy.config.http.transaction_no_activity_timeout_in`"
+msgstr ""
+
+# 8d4693e118104d1789087f6301d26173
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:106
+msgid ":ts:cv:`proxy.config.http.transaction_no_activity_timeout_out`"
+msgstr ""
+
+# f69378db7afa4c18b1f1055cbfe7ba17
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:107
+msgid ":ts:cv:`proxy.config.http.transaction_active_timeout_out`"
+msgstr ""
+
+# 4f87654534574aa18cf3bb27494e5893
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:108
+msgid ":ts:cv:`proxy.config.http.origin_max_connections`"
+msgstr ""
+
+# 5672b56a9a514f76a9ae050d8d38cf7f
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:109
+msgid ":ts:cv:`proxy.config.http.connect_attempts_max_retries`"
+msgstr ""
+
+# 949ca4df46564421874c9827a81a36a3
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:110
+msgid ":ts:cv:`proxy.config.http.connect_attempts_max_retries_dead_server`"
+msgstr ""
+
+# 2e79915ab9ce455a9468d93f123450dd
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:111
+msgid ":ts:cv:`proxy.config.http.connect_attempts_rr_retries`"
+msgstr ""
+
+# a06beebe97aa4394966a78b6cc5912ae
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:112
+msgid ":ts:cv:`proxy.config.http.connect_attempts_timeout`"
+msgstr ""
+
+# b65645beb94a46a28a2c0e26bf1d6adf
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:113
+msgid ":ts:cv:`proxy.config.http.post_connect_attempts_timeout`"
+msgstr ""
+
+# 58f3ab5cf77843e98ad4b34ff45e8785
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:114
+msgid ":ts:cv:`proxy.config.http.down_server.cache_time`"
+msgstr ""
+
+# 4b1a563679f949dcbe01a08488664e52
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:115
+msgid ":ts:cv:`proxy.config.http.down_server.abort_threshold`"
+msgstr ""
+
+# 8a4e5d7974c94d6b83f644724ec15548
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:116
+msgid ":ts:cv:`proxy.config.http.cache.fuzz.time`"
+msgstr ""
+
+# 70afc7a383a2424f98f1137348456357
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:117
+msgid ":ts:cv:`proxy.config.http.cache.fuzz.min_time`"
+msgstr ""
+
+# f656cb4399ab43bc9d4478e52892a8c0
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:118
+msgid ":ts:cv:`proxy.config.http.doc_in_cache_skip_dns`"
+msgstr ""
+
+# 4a8b88315e3249c6892b4f9d8686c543
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:119
+msgid ":ts:cv:`proxy.config.http.background_fill_active_timeout`"
+msgstr ""
+
+# b294aeb3969244c189be5f4534a50880
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:120
+msgid ":ts:cv:`proxy.config.http.response_server_str`"
+msgstr ""
+
+# 9ec619bf6f4149b782f3ec2d462a754e
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:121
+msgid ":ts:cv:`proxy.config.http.cache.heuristic_lm_factor`"
+msgstr ""
+
+# 6a69e503f4aa47f99aa1befe4a7fc769
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:122
+msgid ":ts:cv:`proxy.config.http.cache.fuzz.probability`"
+msgstr ""
+
+# 01f1ba097b28490b86135b80a144553b
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:123
+msgid ":ts:cv:`proxy.config.http.background_fill_completed_threshold`"
+msgstr ""
+
+# 929aa60d299f4e9a88cc8562d1108abb
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:124
+msgid ":ts:cv:`proxy.config.net.sock_packet_mark_out`"
+msgstr ""
+
+# d65e900e69a04c45b702708b656d2f2c
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:125
+msgid ":ts:cv:`proxy.config.net.sock_packet_tos_out`"
+msgstr ""
+
+# cecb719d6c134946884b5080a3ce537f
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:126
+msgid ":ts:cv:`proxy.config.http.insert_age_in_response`"
+msgstr ""
+
+# 07a24d2d6e8d45509e04135383a3cad8
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:127
+msgid ":ts:cv:`proxy.config.http.chunking.size`"
+msgstr ""
+
+# 34ddec9650d1490f8b6e16a6a7822262
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:128
+msgid ":ts:cv:`proxy.config.http.flow_control.enabled`"
+msgstr ""
+
+# e0f2a0e0ad6940178a0d422034fa4fd6
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:129
+msgid ":ts:cv:`proxy.config.http.flow_control.low_water`"
+msgstr ""
+
+# 58d94b7b6e3e4965bf63cd2a99b97e19
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:130
+msgid ":ts:cv:`proxy.config.http.flow_control.high_water`"
+msgstr ""
+
+# 8ea22a5957c04fcb9d3f080cc2288f6b
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:131
+msgid ":ts:cv:`proxy.config.http.cache.range.lookup`"
+msgstr ""
+
+# f1a1ef5d494a4f3e9388fbfd12d96389
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:132
+msgid ":ts:cv:`proxy.config.http.normalize_ae_gzip`"
+msgstr ""
+
+# a30006f7d75345baa989636676a7b9f2
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:133
+msgid ":ts:cv:`proxy.config.http.default_buffer_size`"
+msgstr ""
+
+# eaff756eb4954d36b9329da7bb38337b
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:134
+msgid ":ts:cv:`proxy.config.http.default_buffer_water_mark`"
+msgstr ""
+
+# bfb7f2fdd05540788a161ed5c3db1899
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:135
+msgid ":ts:cv:`proxy.config.http.request_header_max_size`"
+msgstr ""
+
+# 907a2d1f9d4446878917289c45ec082a
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:136
+msgid ":ts:cv:`proxy.config.http.response_header_max_size`"
+msgstr ""
+
+# d347c5f831aa4f7abf5fe2c60d567a4d
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:137
+msgid ":ts:cv:`proxy.config.http.negative_revalidating_enabled`"
+msgstr ""
+
+# 32e21f9c8d7b4cc491541ffef669f2aa
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:138
+msgid ":ts:cv:`proxy.config.http.negative_revalidating_lifetime`"
+msgstr ""
+
+# ffeb2dd15b12450e941e9a26ee905e57
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:139
+msgid ":ts:cv:`proxy.config.http.accept_encoding_filter_enabled`"
+msgstr ""
+
+# 169e1b5ccfef484e9d0ea5a6e3895f6f
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:140
+msgid ":ts:cv:`proxy.config.http.cache.range.write`"
+msgstr ""
+
+# 1cb26b445bcb41f5a57d722d513b5cfa
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:141
+msgid ":ts:cv:`proxy.config.http.global_user_agent_header`"
+msgstr ""
+
+# c2f731243c76472ab0629c58c318095d
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:142
+msgid ":ts:cv:`proxy.config.http.slow.log.threshold`"
+msgstr ""
+
+# 05fcfe69997d46e3b982ae65ad4a69e9
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:145
+msgid "Examples"
+msgstr ""
+
+# 049856d0fb2c45b9ab71884f0f113338
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:147
+msgid ""
+"Enable :ref:`transaction buffer control <transaction-buffering-control>` "
+"with a high water mark of :literal:`262144` and a low water mark of "
+":literal:`65536`. ::"
+msgstr ""
+
+# 5452e8c33d4648ad8edb8811523ded94
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:160
+msgid "See Also"
+msgstr ""
+
+# 1f212fce49d344bcacd8f4f28366dc86
+#: ../../developer-guide/api/functions/TSHttpOverridableConfig.en.rst:162
+msgid ":manpage:`TSAPI(3ts)`"
+msgstr ""
+

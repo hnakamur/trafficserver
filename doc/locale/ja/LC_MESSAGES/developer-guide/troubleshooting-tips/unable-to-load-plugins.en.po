@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# b58d1bf3c04f499ab68ec386cd0096cf
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:23
+msgid "Unable to Load Plugins"
+msgstr ""
+
+# e191006a153b4fac9709f07642b99ae2
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:25
+msgid "To load plugins, follow the steps below."
+msgstr ""
+
+# c346d15f4ba142c0b9fec1f6a40857d0
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:27
+msgid ""
+"Make sure that your plugin source code contains an ``TSPluginInit`` "
+"initialization function."
+msgstr ""
+
+# 680e631f60e44da59d643c12fee30cd1
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:30
+msgid "Compile your plugin source code, creating a shared library."
+msgstr ""
+
+# a60948bf4a0c46018f1f4b0bd0fd1f1f
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:32
+msgid "Add an entry to the ``plugin.config`` file for your plugin."
+msgstr ""
+
+# dbc66b032d1c472d9ee1ed86d003b13c
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:34
+msgid ""
+"Add the path to your plugin shared library to the :file:`records.config` "
+"file."
+msgstr ""
+
+# 35deb534f0054e5797161b6030e5e405
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:37
+msgid "Restart Traffic Server."
+msgstr ""
+
+# c2eb376666434136816127b045ae0cd8
+#: ../../developer-guide/troubleshooting-tips/unable-to-load-plugins.en.rst:39
+msgid ""
+"For detailed information about each step above, refer to :ref:`developer-"
+"plugins-getting-started-simple-plugin`."
+msgstr ""
+

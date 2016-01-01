@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 1dcbb67138f94364a086cf41d5b6aa3a
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:21
+msgid "TSHttpTxnClientPacketTosSet"
+msgstr ""
+
+# d16d88d77fa24b4988458da684536c63
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:24
+msgid "Synopsis"
+msgstr ""
+
+# 4f5d8ba8a9b444299539169cc7a0ba43
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:26
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# cd1a5d5eac8348d38e72e5a07476802e
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:31
+msgid "Description"
+msgstr ""
+
+# 2db0c5201d6d47e087bb1824ac1e0db0
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:33
+msgid "Change packet :arg:`tos` for the client side connection."
+msgstr ""
+
+# 4db0ba5117764f2c975d4dac3448ad4e
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:37
+msgid "Changes take effect immediately"
+msgstr ""
+
+# 970072ae6c944ecd82d3533482430a2e
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:41
+msgid ""
+"TOS is deprecated and replaced by DSCP. This is still used to set DSCP, "
+"however the first 2 bits of this value will be ignored as they now belong"
+" to the ECN field."
+msgstr ""
+
+# c3ae02e69915451a85ffc3238bb4cbe8
+#: ../../developer-guide/api/functions/TSHttpTxnClientPacketTosSet.en.rst:46
+msgid "See Also"
+msgstr ""
+

@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# b033fc9d4acc41deacf7b9be73585ed1
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:22
+msgid "TSHttpTxnIntercept"
+msgstr ""
+
+# 27021579b9c74288842644493b35b5ae
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:24
+msgid ""
+"Allows a plugin take over the servicing of the request as though it was "
+"the origin server."
+msgstr ""
+
+# d379ed9013184820babdb1ab59acdb92
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# 10398d7fdfef4df2a5aef651b2ff1eb2
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# b951fbf0b62f474da4068e9fb9f2223e
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:35
+msgid "Description"
+msgstr ""
+
+# 607027f937cf4ef1ba340ffa022bb2c6
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:37
+msgid ""
+":arg:`contp` will be sent :data:`TS_EVENT_NET_ACCEPT`. The edata passed "
+"with :data:`TS_NET_EVENT_ACCEPT` is an :c:type:`TSVConn` just as it would"
+" be for a normal accept. The plugin must act as if it is an HTTP server "
+"and read the HTTP request and body off the :c:type:`TSVConn` and send an "
+"HTTP response header and body."
+msgstr ""
+
+# d6ce16a6ccb94cb280394fcf36439d53
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:43
+msgid ""
+":func:`TSHttpTxnIntercept` must be called be called from only "
+":data:`TS_HTTP_READ_REQUEST_HOOK`.  Using :type:`TSHttpTxnIntercept` will"
+" bypass the Traffic Server cache.  If response sent by the plugin should "
+"be cached, use :func:`TSHttpTxnServerIntercept` instead. "
+":func:`TSHttpTxnIntercept` primary use is allow plugins to serve data "
+"about their functioning directly."
+msgstr ""
+
+# f1af954eeecc40ac8a55bfc2e549ed6c
+#: ../../developer-guide/api/functions/TSHttpTxnIntercept.en.rst:51
+msgid ":func:`TSHttpTxnIntercept` must only be called once per transaction."
+msgstr ""
+

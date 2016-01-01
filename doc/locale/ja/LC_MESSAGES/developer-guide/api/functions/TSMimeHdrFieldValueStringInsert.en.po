@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 0dae6116bb9d4b2c826075a891e83682
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueStringInsert.en.rst:22
+msgid "TSMimeHdrFieldValueStringInsert"
+msgstr ""
+
+# 50bccb4334f24e02b98e7e762e856f16
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueStringInsert.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 047a65fc725240d29082078cee2e1d42
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueStringInsert.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 4a181846d2dc4caa91b1deb9f3b1e4a8
+#: ../../developer-guide/api/functions/TSMimeHdrFieldValueStringInsert.en.rst:32
+msgid "Description"
+msgstr ""
+

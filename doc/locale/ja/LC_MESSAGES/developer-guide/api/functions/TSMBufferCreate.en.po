@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 2c247709ec1345fbbe43b63b7538f00b
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:21
+msgid "TSMBufferCreate"
+msgstr ""
+
+# 9509978a0da047de8f789273dd0ba287
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:23
+msgid "Traffic Server marshall buffer API."
+msgstr ""
+
+# 34734d760a834a6b94c673716792ae4d
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:26
+msgid "Synopsis"
+msgstr ""
+
+# 55aba7d38a30436baacaf793585685dc
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:28
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# ddaa0aa577e0459cbf8853c09799f249
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:35
+msgid "Description"
+msgstr ""
+
+# 2d1eb6dbf8ef43d4b1b764f94cb5de96
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:37
+msgid ""
+"The marshal buffer or :type:`TSMBuffer` is a heap data structure that "
+"stores parsed URLs, MIME headers and HTTP headers. You can allocate new "
+"objects out of marshal buffers, and change the values within the marshal "
+"buffer. Whenever you manipulate an object, you require the handle to the "
+"object (:type:`TSMLoc`) and the marshal buffer containing the object "
+"(:type:`TSMBuffer`)."
+msgstr ""
+
+# f23cf511c97d4104b65e3b3867743405
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:43
+msgid ""
+"Any marshal buffer fetched by :func:`TSHttpTxn*Get` will be used by other"
+" parts of the system. Be careful not to destroy these shared, transaction"
+" marshal buffers."
+msgstr ""
+
+# 4399cf5628f3431597e64f165572a2a3
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:46
+msgid ""
+":func:`TSMBufferCreate` creates a new marshal buffer and initializes the "
+"reference count. :func:`TSMBufferDestroy` Ignores the reference count and"
+" destroys the marshal buffer bufp. The internal data buffer associated "
+"with the marshal buffer is also destroyed if the marshal buffer allocated"
+" it."
+msgstr ""
+
+# 5abf1c4949ad4cb4952246e760bc3ae1
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:52
+msgid ""
+":func:`TSHandleMLocRelease` Releases the :type:`TSMLoc` mloc created from"
+" the :type:`TSMLoc` parent. If a :type:`TSMLoc` is obtained from a "
+"transaction, it does not have a parent :type:`TSMLoc`. Use the the "
+"constant :data:`TS_NULL_MLOC` as its parent."
+msgstr ""
+
+# 5b57d669da8c464da515a1c63d2da109
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:58
+msgid "Return values"
+msgstr ""
+
+# 3199eb8c5c6d4af1a1562025c3275814
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:60
+msgid ""
+":func:`TSMBufferDestroy` and :func:`TSHandleMLocRelease` return "
+":data:`TS_SUCCESS` on success, or :data:`TS_ERROR` on failure. "
+":func:`TSMBufferCreate` returns the new :type:`TSMBuffer`."
+msgstr ""
+
+# a0edefc302fb4660b3d6254856dc7cd1
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:65
+msgid "Examples"
+msgstr ""
+
+# 16b6b22e765b476fb0e0f9739f26bb87
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:95
+msgid "See also"
+msgstr ""
+
+# 2b4ab1a53edb4f7cacf294bd803f71fd
+#: ../../developer-guide/api/functions/TSMBufferCreate.en.rst:97
+msgid ":manpage:`TSAPI(3ts)`"
+msgstr ""
+

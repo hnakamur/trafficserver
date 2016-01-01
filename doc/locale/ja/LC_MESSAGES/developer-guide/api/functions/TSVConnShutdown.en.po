@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# e171b8c3d9814aeeafd2447e0a50e769
+#: ../../developer-guide/api/functions/TSVConnShutdown.en.rst:22
+msgid "TSVConnShutdown"
+msgstr ""
+
+# 1529e82614fe412ea27995390144bc43
+#: ../../developer-guide/api/functions/TSVConnShutdown.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# d0fe5b54a05f41f3b14e30416b8d4440
+#: ../../developer-guide/api/functions/TSVConnShutdown.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# e922a5f47bc5413199501c0394921ba9
+#: ../../developer-guide/api/functions/TSVConnShutdown.en.rst:32
+msgid "Description"
+msgstr ""
+

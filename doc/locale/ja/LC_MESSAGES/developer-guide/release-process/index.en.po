@@ -1,0 +1,302 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# e814401ece0d484d8327c94bdf3da6ba
+#: ../../developer-guide/release-process/index.en.rst:23
+msgid "Release Process"
+msgstr ""
+
+# bd6db7fedb024fb3a9a6785c84b0b790
+#: ../../developer-guide/release-process/index.en.rst:25
+msgid ""
+"Managing a release is easiest in an environment that is as clean as "
+"possible. For this reason, cloning the code base in to a new directory "
+"for the release process is recommended."
+msgstr ""
+
+# 7ef64a498d434266bc609186373a344d
+#: ../../developer-guide/release-process/index.en.rst:30
+msgid "Requirements"
+msgstr ""
+
+# 8d0455c720354fe2a63e9e787ed6f9e3
+#: ../../developer-guide/release-process/index.en.rst:32
+msgid "A system for git and building."
+msgstr ""
+
+# 430c2e979ab94705869679450515eee3
+#: ../../developer-guide/release-process/index.en.rst:34
+msgid ""
+"A cryptographic key that has been signed by at least two other PMC "
+"members. This should be preferentially associated with your "
+"``apache.org`` email address but that is not required."
+msgstr ""
+
+# 4f5e2459228c411abecf70dfea189b30
+#: ../../developer-guide/release-process/index.en.rst:41
+msgid "Release Candidate"
+msgstr ""
+
+# d820056345fe45e3ab13df7a0630b69c
+#: ../../developer-guide/release-process/index.en.rst:43
+msgid ""
+"The first step in a release is making a release candidate. This is "
+"distributed to the community for validation before the actual release."
+msgstr ""
+
+# 71d9b0be94ba4a8f942e00a44ea06d8f
+#: ../../developer-guide/release-process/index.en.rst:47
+msgid "Document"
+msgstr ""
+
+# 0d8312409d754ed5a7e0344154c94e4d
+#: ../../developer-guide/release-process/index.en.rst:49
+msgid ""
+"Gather up information about the changes for the release. The ``CHANGES`` "
+"file is a good starting point. You may also want to check the commits "
+"since the last release. The primary purpose of this is to generate a list"
+" of the important changes since the last release."
+msgstr ""
+
+# dceca9a3b4da4dd0a143fd958f80025c
+#: ../../developer-guide/release-process/index.en.rst:54
+msgid ""
+"Create or update a page on the Wiki for the release. If it is a major or "
+"minor release it should have its own page. Use the previous release page "
+"as a template. Point releases should get a section at the end of the "
+"corresponding release page."
+msgstr ""
+
+# 5c8fcb9f62ad409bbd2f9598add8b427
+#: ../../developer-guide/release-process/index.en.rst:59
+msgid ""
+"Write an announcement for the release. This will contain much of the same"
+" information that is on the Wiki page but more concisely. Check the "
+"`mailing list archives <http://mail-archives.apache.org/mod_mbox"
+"/trafficserver-dev/>`_ for examples to use as a base."
+msgstr ""
+
+# ec49b485965344649100b94d85cdc7ec
+#: ../../developer-guide/release-process/index.en.rst:65
+msgid "Build"
+msgstr ""
+
+# 016b4f45c6604d17b595e5c98df5df63
+#: ../../developer-guide/release-process/index.en.rst:67
+msgid "Go to the top level source directory."
+msgstr ""
+
+# 4796cdfe95ad4d95b4e798707915b222
+#: ../../developer-guide/release-process/index.en.rst:69
+msgid ""
+"Check the version in ``configure.ac``. There are two values near the top "
+"that need to be set, ``TS_VERSION_S`` and ``TS_VERSION_N``. These are the"
+" release version number in different encodings."
+msgstr ""
+
+# dd6b39b100ea44a89b457f3e39be91e7
+#: ../../developer-guide/release-process/index.en.rst:73
+msgid ""
+"Check the variable ``RC`` in the top level ``Makefile.am``. This should "
+"be the point release value. This needs to be changed for every release "
+"candidate. The first release candidate is ``0`` (zero)."
+msgstr ""
+
+# 28d5353528d94ac7b8b5a2a85495f7c1
+#: ../../developer-guide/release-process/index.en.rst:77
+msgid "Execute the following commands to make the distribution files. ::"
+msgstr ""
+
+# b62d01ef0cc5486bade43beb51d50d8f
+#: ../../developer-guide/release-process/index.en.rst:83
+msgid ""
+"These steps will create the distribution files and sign them using your "
+"key. Expect to be prompted twice for your passphrase unless you use an "
+"ssh key agent. If you have multiple keys you will need to set the default"
+" appropriately beforehand, as no option will be provided to select the "
+"signing key. The files should have names that start with "
+"``trafficserver-X.Y.Z-rcA.tar.bz2`` where ``X.Y.Z`` is the version and "
+"``A`` is the release candidate counter. There should be four such files, "
+"one with no extension and three others with the extensions ``asc``, "
+"``md5``, and ``sha1``. This will also create a signed git tag of the form"
+" ``X.Y.Z-rcA``."
+msgstr ""
+
+# 87686de3301745e08607abd16c165d40
+#: ../../developer-guide/release-process/index.en.rst:94
+msgid "Distribute"
+msgstr ""
+
+# 9d12e46d8304442c870b9ccb9756a4da
+#: ../../developer-guide/release-process/index.en.rst:96
+msgid ""
+"The release candidate files should be uploaded to some public storage. "
+"Your personal storage on *people.apach.org* is a reasonable location to "
+"use."
+msgstr ""
+
+# b936a5b8e7a34a129a1762766541ca13
+#: ../../developer-guide/release-process/index.en.rst:99
+msgid ""
+"Send the release candiate announcement to the *users* and *dev* "
+"mailinging lists, noting that it is a release *candidate* and providing a"
+" link to the distribution files you uploaded. This announcement should "
+"also call for a vote on the candidate, generally with a 72 hours time "
+"limit."
+msgstr ""
+
+# 05e0221c3e5d43f0a42bba8589533ba3
+#: ../../developer-guide/release-process/index.en.rst:104
+msgid ""
+"If the voting was successful (at least three \"+1\" votes and no \"-1\" "
+"votes), proceed to :ref:`release-management-official-release`. Otherwise,"
+" repeat the :ref:`release-management-release-candidate` process."
+msgstr ""
+
+# a5ed66a8aa1c4a1a86ab0e9fe3f9df4e
+#: ../../developer-guide/release-process/index.en.rst:111
+msgid "Official Release"
+msgstr ""
+
+# 1b441181ebaf49b5966e0c02718ff40c
+#: ../../developer-guide/release-process/index.en.rst:113
+msgid "Build the distribution files with the command ::"
+msgstr ""
+
+# da61248260d94d85948691f0534e17a0
+#: ../../developer-guide/release-process/index.en.rst:117
+msgid ""
+"Be sure to not have changed anything since the release candidate was "
+"built so the checksums are identical. This will create a signed git tag "
+"of the form ``X.Y.Z`` and produce the distribution files. Push the tag to"
+" the ASF repository with the command ::"
+msgstr ""
+
+# 941b545c704448d48c0e57ec2a6570b7
+#: ../../developer-guide/release-process/index.en.rst:124
+msgid ""
+"This presumes ``origin`` is the name for the ASF remote repository which "
+"is correct if you originally clone from the ASF repository."
+msgstr ""
+
+# 7b81b3a9a42a4b968bc54a70db92589a
+#: ../../developer-guide/release-process/index.en.rst:127
+msgid ""
+"The distribution files must be added to an SVN repository. This can be "
+"accessed with the command::"
+msgstr ""
+
+# 2fe687d47c884c419edea59175bd59ab
+#: ../../developer-guide/release-process/index.en.rst:132
+msgid ""
+"All four of the distribution files go here. If you are making a point "
+"release then you should also remove the distribution files for the "
+"previous release. Allow 24 hours for the files to be distributed through "
+"the ASF infrastructure."
+msgstr ""
+
+# b49c1b15d8c24a0ea7c5da7e4ad354fb
+#: ../../developer-guide/release-process/index.en.rst:136
+msgid ""
+"The Traffic Server website must be updated. This is an SVN repository "
+"which you can access with ::"
+msgstr ""
+
+# 70630e161b72436887f4e108356f71dd
+#: ../../developer-guide/release-process/index.en.rst:141
+msgid "The files of interest are in the ``content`` directory."
+msgstr ""
+
+# 67f6f0dafa00424ba1a26623e2c5652e
+#: ../../developer-guide/release-process/index.en.rst:145
+msgid "``index.html``"
+msgstr ""
+
+# d276510b771c4a1b86600cc830cdeccf
+#: ../../developer-guide/release-process/index.en.rst:144
+msgid ""
+"This is the front page. The places to edit here are any security "
+"announcements at the top and the \"News\" section."
+msgstr ""
+
+# 79110a713cda428ab2d4499b35915060
+#: ../../developer-guide/release-process/index.en.rst:148
+msgid "``downloads.en.mdtext``"
+msgstr ""
+
+# 4f3dc71c05714aa5add634b5948c2116
+#: ../../developer-guide/release-process/index.en.rst:148
+msgid "Update the downloads page to point to the new download objects."
+msgstr ""
+
+# 7ae04fc8591f4fcd9ce16a3c9cf7fb7d
+#: ../../developer-guide/release-process/index.en.rst:150
+msgid "After making changes, commit them and then run ::"
+msgstr ""
+
+# f7518483a4124927a06bf6156178ac9b
+#: ../../developer-guide/release-process/index.en.rst:154
+msgid "On the ``people.apache.org`` host."
+msgstr ""
+
+# 3e28107fef654f8ba37687f097374b31
+#: ../../developer-guide/release-process/index.en.rst:156
+msgid ""
+"If needed, update the Wiki page for the release to point at the release "
+"distribution files."
+msgstr ""
+
+# 8dac4bdc625f43009f39c2b0721c52cc
+#: ../../developer-guide/release-process/index.en.rst:159
+msgid ""
+"Update the announcement, if needed, to refer to the release distribution "
+"files and remove the comments concerning the release candidate. This "
+"announcement should be sent to the *users* and *dev* mailing lists. It "
+"should also be sent to the ASF announcement list, which must be done "
+"using an ``apache.org`` email address."
+msgstr ""
+
+# 3af4c699ccef4817a0687d73133b8396
+#: ../../developer-guide/release-process/index.en.rst:165
+msgid "Finally, update various files after the release:"
+msgstr ""
+
+# acc83da26c0d4ee6bb7525722d21c366
+#: ../../developer-guide/release-process/index.en.rst:167
+msgid ""
+"The ``STATUS`` file for master and for the release branch to include this"
+" version."
+msgstr ""
+
+# 5a76d7ebd1ed4f129ec3a3bfb381b4eb
+#: ../../developer-guide/release-process/index.en.rst:169
+msgid "The ``CHANGES`` file to have a header for the next version."
+msgstr ""
+
+# 0ad7f31050b9463ba11901e3b6b0618e
+#: ../../developer-guide/release-process/index.en.rst:171
+msgid "``configure.ac`` to be set to the next version."
+msgstr ""
+
+# 1a56ae3614eb4fd9be03fbbad405989f
+#: ../../developer-guide/release-process/index.en.rst:173
+msgid "In the top level ``Makefile.am`` change ``RC`` to have the value ``0``."
+msgstr ""
+

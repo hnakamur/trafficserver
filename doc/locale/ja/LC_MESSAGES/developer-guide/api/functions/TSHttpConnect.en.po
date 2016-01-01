@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# b17ad20497b648baa6731460b0aca622
+#: ../../developer-guide/api/functions/TSHttpConnect.en.rst:22
+msgid "TSHttpConnect"
+msgstr ""
+
+# bed75a072a39487f91038def2f96d2d6
+#: ../../developer-guide/api/functions/TSHttpConnect.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 94e3dd68743b41e3a7d9432b4593c147
+#: ../../developer-guide/api/functions/TSHttpConnect.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 3cdae9248c6d4304b6b93f976de33c41
+#: ../../developer-guide/api/functions/TSHttpConnect.en.rst:32
+msgid "Description"
+msgstr ""
+
+# bc4e8d84f8e54b7692b74a0084c5b172
+#: ../../developer-guide/api/functions/TSHttpConnect.en.rst:34
+msgid "Allows the plugin to initiate an HTTP connection."
+msgstr ""
+
+# 375e5f0a8cd843d9a44b62befb56c159
+#: ../../developer-guide/api/functions/TSHttpConnect.en.rst:36
+msgid ""
+"The :c:type:`TSVConn` the plugin receives as the result of successful "
+"operates identically to one created through :c:type:`TSNetConnect`. Aside"
+" from allowing the plugin to set the client ip and port for logging, the "
+"functionality of :c:func:`TSHttpConnect` is identical to connecting to "
+"localhost on the proxy port with :c:func:`TSNetConnect`. "
+":c:func:`TSHttpConnect` is more efficient than :c:func:`TSNetConnect` to "
+"localhost since it avoids the overhead of passing the data through the "
+"operating system."
+msgstr ""
+

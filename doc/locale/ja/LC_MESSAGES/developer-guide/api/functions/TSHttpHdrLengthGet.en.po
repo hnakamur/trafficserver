@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 5de4a04767304413a3faabc0e72f1482
+#: ../../developer-guide/api/functions/TSHttpHdrLengthGet.en.rst:22
+msgid "TSHttpHdrLengthGet"
+msgstr ""
+
+# dbb619b0965342d4b209acccf1c957dc
+#: ../../developer-guide/api/functions/TSHttpHdrLengthGet.en.rst:25
+msgid "Synopsis"
+msgstr ""
+
+# 95a6103f54fa49ba9aee6025e6f770e0
+#: ../../developer-guide/api/functions/TSHttpHdrLengthGet.en.rst:27
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# dc356ecbcd474d4abac26fc0cf09bb55
+#: ../../developer-guide/api/functions/TSHttpHdrLengthGet.en.rst:32
+msgid "Description"
+msgstr ""
+

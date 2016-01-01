@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# af3292e1cb7c45c999cacf7e5787525a
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:23
+msgid "TSHttpHookAdd"
+msgstr ""
+
+# b89ed60614134ec68454a71201eb85b1
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:25
+msgid "Intercept Traffic Server events."
+msgstr ""
+
+# beac5569009444d7a5db642a46366689
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:28
+msgid "Synopsis"
+msgstr ""
+
+# c6e28faae5614d97a6bd9f1ab9f33486
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:30
+msgid "`#include <ts/ts.h>`"
+msgstr ""
+
+# 4e0c6c12b5474cfb8b74585c869edad9
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:37
+msgid "Description"
+msgstr ""
+
+# 09eab8fd1bb642b383dbc2d29e0377e0
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:39
+msgid ""
+"Hooks are points in Apache Traffic Server transaction HTTP processing "
+"where plugins can step in and do some work. Registering a plugin function"
+" for callback amounts to adding the function to a hook. You can register "
+"your plugin to be called back for every single transaction, or for "
+"specific transactions only."
+msgstr ""
+
+# 256060346ed3443992ef68e42e7c7097
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:45
+msgid ""
+"HTTP :term:`transaction` hooks are set on a global basis using the "
+"function :func:`TSHttpHookAdd`. This means that the continuation "
+"specified as the parameter to :func:`TSHttpHookAdd` is called for every "
+"transaction. :func:`TSHttpHookAdd` is typically called from "
+":func:`TSPluginInit` or :func:`TSRemapInit`."
+msgstr ""
+
+# 971df55196674e9b9a187c8b20c94966
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:51
+msgid ""
+":func:`TSHttpSsnHookAdd` adds :arg:`contp` to the end of the list of HTTP"
+" :term:`session` hooks specified by :arg:`id`. This means that "
+":arg:`contp` is called back for every transaction within the session, at "
+"the point specified by the hook ID. Since :arg:`contp` is added to a "
+"session, it is not possible to call :func:`TSHttpSsnHookAdd` from the "
+"plugin initialization routine; the plugin needs a handle to an HTTP "
+"session."
+msgstr ""
+
+# 655807fd675443cd9b8b2f9e38d67bf6
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:59
+msgid ""
+":func:`TSHttpTxnHookAdd` adds :arg:`contp` to the end of the list of HTTP"
+" transaction hooks specified by :arg:`id`. Since :arg:`contp` is added to"
+" a transaction, it is not possible to call :func:`TSHttpTxnHookAdd` from "
+"the plugin initialization routine but only when the plugin has a handle "
+"to an HTTP transaction."
+msgstr ""
+
+# dfe64aa6e45442bba1f4173a5128a786
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:67
+msgid "Return Values"
+msgstr ""
+
+# 109eea119de34440b92a2706a7019f30
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:69
+msgid "None. Adding hooks is always successful."
+msgstr ""
+
+# 558c2c7076f44135bf48a1bfddfa9346
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:72
+msgid "Examples"
+msgstr ""
+
+# 69a5c5c7473b42e59d93a8495718f932
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:74
+msgid ""
+"The following example demonstrates how to add global, session and "
+"transaction hooks::"
+msgstr ""
+
+# 7257bfe11eb94f0580c4e19c98db9931
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:114
+msgid "See Also"
+msgstr ""
+
+# 2caef602a658416fa4c2e242817230d2
+#: ../../developer-guide/api/functions/TSHttpHookAdd.en.rst:116
+msgid ""
+":manpage:`TSAPI(3ts)`, :manpage:`TSContCreate(3ts)`, "
+":manpage:`TSLifecycleHookAdd(3ts)`"
+msgstr ""
+

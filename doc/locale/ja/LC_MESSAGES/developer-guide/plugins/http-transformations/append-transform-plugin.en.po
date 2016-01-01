@@ -1,0 +1,250 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015, dev@trafficserver.apache.org
+# This file is distributed under the same license as the Apache Traffic
+# Server package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Apache Traffic Server 6.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-01 09:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+# 1a508a865e9c4212a5d576f436248c25
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:23
+msgid "Append-Transform Plugin"
+msgstr ""
+
+# 80ece7508c0b41e69b73cb2452ffd5bc
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:25
+msgid ""
+"The append-transform plugin appends text to the body of an HTTP response."
+" It obtains this text from a file; the name of the file containing the "
+"append text is a parameter you specify in ``plugin.config``, as follows:"
+msgstr ""
+
+# 7434a55886db4929b62a856cf27aa940
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:34
+msgid ""
+"The append-transform plugin is based on ``null-transform.c``. The only "
+"difference is that after the plugin feeds the document through the "
+"transformation, it adds text to the response."
+msgstr ""
+
+# 932a72d306844597bc1c195c9820a48b
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:38
+msgid ""
+"Below is a list of the functions in ``append-transform.c``, in the order "
+"they appear in the source code. Below each entry is a description of what"
+" the function does:"
+msgstr ""
+
+# 9c4d4c2e191a4a82bcf89778f7bc5089
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:42
+msgid "**``my_data_alloc``**"
+msgstr ""
+
+# 92e70f465b7247ebbd3eb6e5d37450d7
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:44
+msgid ""
+"Allocates and initializes a ``MyData`` structure. The plugin defines a "
+"struct, ``MyData``, as follows:"
+msgstr ""
+
+# 0aa2738e1e9c4d019859b19dbe151775
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:56
+msgid ""
+"The ``MyData`` structure is used to represent data that the "
+"transformation (vconnection) needs. The transformation's data pointer is "
+"set to a ``MyData`` pointer using ``TSContDataSet`` in the "
+"``handle_transform`` routine."
+msgstr ""
+
+# d387f3ff2efa4d76a4cf38d7f548ad2e
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:61
+msgid "**``my_data_destroy``**"
+msgstr ""
+
+# 5c3d5bf9a8f84682819bdf043439ec52
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:63
+msgid ""
+"Destroys objects of type ``MyData``. To deallocate the transform's data, "
+"the ``append_transform`` routine (see below) calls ``my_data_destroy`` "
+"when the transformation is complete."
+msgstr ""
+
+# 3888aa3c765a4a65b3950b844e763f6e
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:67
+msgid "**``handle_transform``**"
+msgstr ""
+
+# 292209214d564e2ca82ae5997d09ee1d
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:69
+msgid ""
+"This function does the actual data transformation. The transformation is "
+"created in ``transform_add`` (see below). ``handle_transform`` is called "
+"by ``append_transform``."
+msgstr ""
+
+# 3dc56eee9209443585a5371c04c3f209
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:73
+msgid "**``append_transform``**"
+msgstr ""
+
+# 7401793998bb44e99184320a37006578
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:75
+msgid ""
+"This is the handler function for the transformation vconnection created "
+"in ``transform_add``. It is the implementation of the vconnection."
+msgstr ""
+
+# 689dac4c79eb4ccfbcc025ceb85ff709
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:79
+msgid ""
+"If the transformation vconnection has been closed, then "
+"``append_transform`` calls ``my_data_destroy`` to destroy the vonnection."
+msgstr ""
+
+# 1fd89b140c6b486b89a8c53ee4499133
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:83
+msgid ""
+"If ``append_transform`` receives an error event, then it calls back the "
+"continuation to let it know it has completed the write operation."
+msgstr ""
+
+# 13d73ae159884733bda274e8904585be
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:87
+msgid ""
+"If it receives a ``WRITE_COMPLETE`` event, then it shuts down the write "
+"portion of its vconnection."
+msgstr ""
+
+# 2e4f4491130a450bb0b8314010cba415
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:90
+msgid ""
+"If it receives a ``WRITE_READY`` or any other event (such as "
+"``TS_HTTP_RESPONSE_TRANSFORM_HOOK``), then it calls ``handle_transform`` "
+"to attempt to transform more data."
+msgstr ""
+
+# 411bf3f1e4db407f8be1a9d5c97cfd44
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:94
+msgid "**``transformable``**"
+msgstr ""
+
+# 5e79e54c59b34e808d86d8c03c33cc89
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:96
+msgid ""
+"The plugin transforms only documents that have a content type of "
+"``text/html``. This function examines the ``Content-Type`` MIME header "
+"field in the response header. If the value of the MIME field is "
+"``text/html``, then the function returns 1; otherwise, it returns zero."
+msgstr ""
+
+# 5dc1f9a3d98a463a9d197df54aab4980
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:102
+msgid "**``transform_add``**"
+msgstr ""
+
+# 9b36d75b25784b3d92f815e2f7aa05b2
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:104
+msgid ""
+"Creates the transformation for the current transaction and sets up a "
+"transformation hook. The handler function for the transformation is "
+"``append_transform``."
+msgstr ""
+
+# 50893e13ef724e8a8573cb26fc7850fd
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:108
+msgid "**``transform_plugin``**"
+msgstr ""
+
+# 61976b99e37a4c8fa88d4fee5b28477a
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:110
+msgid ""
+"This is the handler function for the main continuation for the plugin. "
+"Traffic Server calls this function whenever it reads an HTTP response "
+"header. ``transform_plugin`` does the following:"
+msgstr ""
+
+# ddfd5aa2126148ada53e6700dd4f6039
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:114
+msgid "Gets a handle to the HTTP transaction being processed"
+msgstr ""
+
+# da0b040e3cff473fb88c9efc4a97c524
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:116
+msgid ""
+"Calls ``transformable`` to determine whether the response document "
+"content is of type ``text/html``"
+msgstr ""
+
+# dc99fa46e8eb4d57afbb7b56eb8d2fcf
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:119
+msgid ""
+"If the content is transformable, then it calls ``transform_add`` to "
+"create the transformation."
+msgstr ""
+
+# 5c1d2fbffec7480f9a7246297a05a8d6
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:122
+msgid "Calls ``TSHttpTxnReenable`` to continue the transaction"
+msgstr ""
+
+# ca62809716844424b6e9460c03249313
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:124
+msgid "**``load``**"
+msgstr ""
+
+# 0a0395b5f008437d9a141f4ee4f13473
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:126
+msgid ""
+"Opens the file containing the text to be appended and loads the contents "
+"of the file into an ``TSIOBuffer`` called ``append_buffer``."
+msgstr ""
+
+# 804ff0a486db4c129c6767c07fb19fc8
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:129
+msgid "**``TSPluginInit``**"
+msgstr ""
+
+# 52ed1ca407c64f77b73bf2644f7ba8e6
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:131
+msgid "Does the following:"
+msgstr ""
+
+# 6700748cae084e1b8c8a42729b164844
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:133
+msgid ""
+"Checks to make sure that the required configuration information (the "
+"append text filename) is entered in ``plugin.config`` correctly."
+msgstr ""
+
+# 634e6d7cfb30486bb0566018cd5cca22
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:137
+msgid "If there is a filename, then ``TSPluginInit`` calls load to load the text."
+msgstr ""
+
+# 8739bde38007484b9751f00f15b8f2ca
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:140
+msgid ""
+"Creates a continuation for the plugin. The handler for this continuation "
+"is ``transform_plugin``."
+msgstr ""
+
+# 22d0aaec0b1d42e399957ea2f4561d3a
+#: ../../developer-guide/plugins/http-transformations/append-transform-plugin.en.rst:143
+msgid ""
+"Adds the plugin's continuation to ``TS_HTTP_READ_RESPONSE_HDR_HOOK``. In "
+"other words, it sets up a callback of the plugin's continuation when "
+"Traffic Server reads HTTP response headers."
+msgstr ""
+
