@@ -1385,6 +1385,52 @@ HostDBContinuation::lookup_done(IpAddr const &ip, char const *aname, bool around
 }
 
 
+// Lookup done, insert into the local table, return data to the
+// calling continuation or to the calling cluster node.
+//
+HostDBInfo *
+HostDBContinuation::unixpath_done(char const* aname, bool around_robin, unsigned int ttl_seconds, SRVHosts * srv)
+{
+  HostDBInfo *i = NULL;
+
+  ink_assert(this_ethread() == hostDB.lock_for_bucket((int) (fold_md5(md5.hash) % hostDB.buckets))->thread_holding);
+  if (!aname || !aname[0]) {
+
+    i = insert(hostdb_ip_fail_timeout_interval);        // currently ... 0
+    i->round_robin = false;
+    i->reverse_dns = !is_byname() && !is_srv();
+
+    i->set_failed();
+  } else {
+
+    if (hostdb_ip_timeout_interval * 60 > ttl_seconds)
+      ttl_seconds = hostdb_ip_timeout_interval * 60;
+
+    HOSTDB_SUM_DYN_STAT(hostdb_ttl_stat, ttl_seconds);
+    i = insert(ttl_seconds);
+    Debug("hostdb", "done %s TTL %d", aname, ttl_seconds);
+
+    sockaddr *sa = i->ip();
+    ink_strlcpy((char *) sa->sa_data, aname, TS_UNIX_SIZE);
+    sa->sa_family = AF_UNIX;
+    i->is_srv = false;
+    i->round_robin = around_robin;
+    i->reverse_dns = false;
+
+    if (md5.host_name != aname) {
+      ink_strlcpy(md5_host_name_store, aname, sizeof(md5_host_name_store));
+    }
+    i->is_srv = false;
+
+ }
+
+  if (from_cont)
+    do_put_response(from, i, from_cont);
+  ink_assert(!i->round_robin || !i->reverse_dns);
+
+  return i;
+}
+
 int
 HostDBContinuation::dnsPendingEvent(int event, Event *e)
 {
@@ -2018,6 +2064,15 @@ HostDBContinuation::do_dns()
       // check 127.0.0.1 format // What the heck does that mean? - AMC
       if (action.continuation) {
         HostDBInfo *r = lookup_done(tip, md5.host_name, false, HOST_DB_MAX_TTL, NULL);
+        reply_to_cont(action.continuation, r);
+      }
+      hostdb_cont_free(this);
+      return;
+    }
+    if ('/' == md5.host_name[0]) {
+      // check path format // What the heck does that mean? 
+      if (action.continuation) {
+        HostDBInfo *r = unixpath_done(md5.host_name, false, HOST_DB_MAX_TTL, NULL);
         reply_to_cont(action.continuation, r);
       }
       hostdb_cont_free(this);

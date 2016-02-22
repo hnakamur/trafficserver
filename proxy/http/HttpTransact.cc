@@ -5608,6 +5608,11 @@ HttpTransact::initialize_state_variables_from_request(State *s, HTTPHdr *obsolet
 
   s->next_hop_scheme = s->scheme = incoming_request->url_get()->scheme_get_wksidx();
 
+  char *unix_sock = s->url_map.getUnixSocket();
+  if(unix_sock) {
+      s->server_info.name = unix_sock;
+  }
+
   // With websockets we need to make an outgoing request
   // as http or https.
   // We switch back to HTTP or HTTPS for the next hop

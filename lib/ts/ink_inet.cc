@@ -175,7 +175,11 @@ ats_ip_ntop(const struct sockaddr *addr, char *dst, size_t size)
 char const *
 ats_ip_family_name(int family)
 {
-  return AF_INET == family ? "IPv4" : AF_INET6 == family ? "IPv6" : "Unspec";
+  return AF_INET == family ? "IPv4"
+    : AF_INET6 == family ? "IPv6"
+    : AF_UNIX == family ? "Unix"
+    : "Unspec"
+    ;
 }
 
 char const *
@@ -303,6 +307,8 @@ ats_ip_hash(sockaddr const *addr)
     zret.i = ats_ip4_addr_cast(addr);
   } else if (ats_is_ip6(addr)) {
     ink_code_md5(const_cast<uint8_t *>(ats_ip_addr8_cast(addr)), TS_IP6_SIZE, zret.c);
+  } else if (ats_is_unix(addr)) {
+    ink_code_md5((uint8_t*)(ats_unix_path_cast(addr)), TS_UNIX_SIZE, zret.c);
   }
   return zret.i;
 }

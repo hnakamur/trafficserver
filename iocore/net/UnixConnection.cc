@@ -243,7 +243,7 @@ Connection::open(NetVCOptions const &opt)
     family = opt.local_ip.family();
   } else {
     // No local address specified, so use family option if possible.
-    family = ats_is_ip(opt.ip_family) ? opt.ip_family : AF_INET;
+    family = ats_is_supported_family(opt.ip_family) ? opt.ip_family : AF_INET;
     local_addr.setToAnyAddr(family);
     is_any_address = true;
     local_addr.port() = htons(opt.local_port);

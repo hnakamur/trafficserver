@@ -27,6 +27,7 @@
 
 #include <netinet/in.h>
 #include <netdb.h>
+#include <sys/un.h>
 #include <sys/socket.h>
 #include "ts/ink_memory.h"
 #include "ts/ink_apidefs.h"
@@ -70,6 +71,7 @@ union IpEndpoint {
   struct sockaddr sa;       ///< Generic address.
   struct sockaddr_in sin;   ///< IPv4
   struct sockaddr_in6 sin6; ///< IPv6
+  struct sockaddr_un sun;   ///< Unix
 
   /** Assign from a socket address.
       The entire address (all parts) are copied if the @a ip is valid.
@@ -193,6 +195,9 @@ const char *ats_ip_ntop(const struct sockaddr *addr, char *dst, size_t size);
 /// Size in bytes of an IPv6 address.
 static size_t const TS_IP6_SIZE = sizeof(in6_addr);
 
+/// Size in bytes of an Unix socket path.
+static size_t const TS_UNIX_SIZE = sizeof(sockaddr_un::sun_path);
+
 /// Reset an address to invalid.
 /// @note Useful for marking a member as not yet set.
 inline void
@@ -229,6 +234,35 @@ ats_is_ip(IpEndpoint const *addr)
 {
   return addr && (AF_INET == addr->sa.sa_family || AF_INET6 == addr->sa.sa_family);
 }
+
+/// Test for suppoted address family.
+/// @return @c true if the address is supported, @c false otherwise.
+inline bool ats_is_supported_family(sockaddr const* addr) {
+  return addr
+    && (AF_INET == addr->sa_family || AF_INET6 == addr->sa_family || AF_UNIX == addr->sa_family);
+}
+/// @return @c true if the address is supported, @c false otherwise.
+inline bool ats_is_supported_family(IpEndpoint const* addr) {
+  return addr
+    && (AF_INET == addr->sa.sa_family || AF_INET6 == addr->sa.sa_family || AF_UNIX == addr->sa.sa_family);
+}
+/// Test for IP protocol.
+/// @return @c true if the value is an suported address family, @c false otherwise.
+inline bool ats_is_supported_family(int family) {
+  return AF_INET == family || AF_INET6 == family || AF_UNIX == family;
+}
+/// Test for UNIX domain.
+/// @return @c true if the the address is unix path, @c false otherwise.
+inline bool ats_is_unix(sockaddr const* addr) {
+  return addr && AF_UNIX == addr->sa_family;
+}
+/// Test for Unix domain.
+/// @note Convenience overload.
+/// @return @c true if the address is unix path, @c false otherwise.
+inline bool ats_is_unix(IpEndpoint const* addr) {
+  return addr && AF_UNIX == addr->sa.sa_family;
+}
+
 /// Test for IP protocol.
 /// @return @c true if the value is an IP address family, @c false otherwise.
 inline bool
@@ -415,18 +449,39 @@ ats_ip6_cast(sockaddr const &a)
   return *static_cast<sockaddr_in6 const *>(static_cast<void const *>(&a));
 }
 
+inline sockaddr_un* ats_unix_cast(sockaddr* a) {
+  return static_cast<sockaddr_un*>(static_cast<void*>(a));
+}
+inline sockaddr_un const* ats_unix_cast(sockaddr const* a) {
+  return static_cast<sockaddr_un const*>(static_cast<void const*>(a));
+}
+inline sockaddr_un& ats_unix_cast(sockaddr& a) {
+  return *static_cast<sockaddr_un*>(static_cast<void*>(&a));
+}
+inline sockaddr_un const& ats_unix_cast(sockaddr const& a) {
+  return *static_cast<sockaddr_un const*>(static_cast<void const*>(&a));
+}
+
 /// @return The @c sockaddr size for the family of @a addr.
 inline size_t
 ats_ip_size(sockaddr const *addr ///< Address object.
             )
 {
-  return AF_INET == addr->sa_family ? sizeof(sockaddr_in) : AF_INET6 == addr->sa_family ? sizeof(sockaddr_in6) : 0;
+  return AF_INET == addr->sa_family ? sizeof(sockaddr_in)
+    : AF_INET6 == addr->sa_family ? sizeof(sockaddr_in6)
+    : AF_UNIX == addr->sa_family ? sizeof(sockaddr_un)
+    : 0
+    ;
 }
 inline size_t
 ats_ip_size(IpEndpoint const *addr ///< Address object.
             )
 {
-  return AF_INET == addr->sa.sa_family ? sizeof(sockaddr_in) : AF_INET6 == addr->sa.sa_family ? sizeof(sockaddr_in6) : 0;
+  return AF_INET == addr->sa.sa_family ? sizeof(sockaddr_in)
+    : AF_INET6 == addr->sa.sa_family ? sizeof(sockaddr_in6)
+    : AF_UNIX == addr->sa.sa_family ? sizeof(sockaddr_un)
+    : 0
+    ;
 }
 /// @return The size of the IP address only.
 inline size_t
@@ -558,6 +613,28 @@ inline in6_addr const &
 ats_ip6_addr_cast(IpEndpoint const *ip)
 {
   return ip->sin6.sin6_addr;
+}
+
+/** Access the Unix socket path..
+
+    This function returens sockaddr_un.sun_path offset address. 
+    It must check sockaddr type is sockaddr_un before using.
+    @note This is direct access to the address so it will be in
+    unix path string.
+
+    @return A reference to the unix path in @a addr.
+*/
+inline char* ats_unix_path_cast(sockaddr* addr) {
+  return ats_unix_cast(addr)->sun_path;
+}
+inline char const* ats_unix_path_cast(sockaddr const* addr) {
+  return ats_unix_cast(addr)->sun_path;
+}
+inline char* ats_unix_path_cast(IpEndpoint* ip) {
+  return ip->sun.sun_path;
+}
+inline char const* ats_unix_path_cast(IpEndpoint const* ip) {
+  return ip->sun.sun_path;
 }
 
 /** Cast an IP address to an array of @c uint32_t.
@@ -743,6 +820,9 @@ ats_ip_copy(sockaddr *dst,      ///< Destination object.
     case AF_INET6:
       n = sizeof(sockaddr_in6);
       break;
+    case AF_UNIX:
+      n = sizeof(sockaddr_un);
+      break;
     }
   }
   if (n) {
@@ -882,6 +962,8 @@ ats_ip_addr_port_eq(sockaddr const *lhs, sockaddr const *rhs)
       zret = ats_ip4_cast(lhs)->sin_addr.s_addr == ats_ip4_cast(rhs)->sin_addr.s_addr;
     else if (AF_INET6 == lhs->sa_family)
       zret = 0 == memcmp(&ats_ip6_cast(lhs)->sin6_addr, &ats_ip6_cast(rhs)->sin6_addr, sizeof(in6_addr));
+    else if (AF_UNIX == lhs->sa_family)
+      zret = 0 == strncmp(ats_unix_cast(lhs)->sun_path, ats_unix_cast(rhs)->sun_path, TS_UNIX_SIZE);
   }
   return zret;
 }
@@ -1482,7 +1564,7 @@ IpEndpoint::host_order_port() const
 inline bool
 IpEndpoint::isValid() const
 {
-  return ats_is_ip(this);
+  return ats_is_supported_family(this);
 }
 
 inline bool
