@@ -669,6 +669,12 @@ remap_check_option(const char **argv, int argc, unsigned long findmode, int *_re
           idx = i;
         }
         ret_flags |= REMAP_OPTFLG_INTERNAL;
+      } else if (!strncasecmp(argv[i], "unix_socket=", 12)) {
+        if ((findmode & REMAP_OPTFLG_UNIX_SOCK) != 0)
+          idx = i;
+        if (argptr)
+          *argptr = &argv[i][12];
+        ret_flags |= REMAP_OPTFLG_UNIX_SOCK;
       }
 
       if ((findmode & ret_flags) && !argptr) {
@@ -1104,6 +1110,30 @@ remap_parse_config_bti(const char *path, BUILD_TABLE_INFO *bti)
       if (ret & REMAP_OPTFLG_MAP_ID) {
         c = strchr(bti->argv[idx], (int)'=');
         new_mapping->map_id = (unsigned int)atoi(++c);
+      }
+    }
+
+    if ((bti->remap_optflg & REMAP_OPTFLG_UNIX_SOCK) != 0) {
+      int idx = 0;
+      char *c;
+      int ret = remap_check_option((const char **)bti->argv, bti->argc, REMAP_OPTFLG_UNIX_SOCK, &idx);
+      if (ret & REMAP_OPTFLG_UNIX_SOCK) {
+        c = strchr(bti->argv[idx], (int) '=');
+        size_t unix_socket_len = strlen(c);
+        if(unix_socket_len > 0 && unix_socket_len < TS_UNIX_SIZE) {
+            struct stat s;
+            int err = stat(++c, &s);
+            if(!err & S_ISSOCK(s.st_mode)) {
+                new_mapping->unix_socket = (char *)ats_malloc(unix_socket_len);
+                memcpy(new_mapping->unix_socket, c , unix_socket_len);
+            } else {
+                errStr = "wrong unix_socket file";
+                goto MAP_ERROR;
+            }
+        } else {
+            errStr = "wrong unix_socket name";
+            goto MAP_ERROR;
+        }
       }
     }
 

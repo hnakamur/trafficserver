@@ -307,7 +307,7 @@ struct HostDBInfo {
   bool
   failed()
   {
-    return !((is_srv && data.srv.srv_offset) || (reverse_dns && data.hostname_offset) || ats_is_ip(ip()));
+    return !((is_srv && data.srv.srv_offset) || (reverse_dns && data.hostname_offset) || ats_is_supported_family(ip()));
   }
   void
   set_failed()

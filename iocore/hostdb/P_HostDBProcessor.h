@@ -510,6 +510,7 @@ struct HostDBContinuation : public Continuation {
     return md5.db_mark == HOSTDB_MARK_SRV;
   }
   HostDBInfo *lookup_done(IpAddr const &ip, char const *aname, bool round_robin, unsigned int attl, SRVHosts *s = NULL);
+  HostDBInfo *unixpath_done(char const* aname, bool round_robin, unsigned int attl, SRVHosts * s = NULL);
   bool do_get_response(Event *e);
   void do_put_response(ClusterMachine *m, HostDBInfo *r, Continuation *cont);
   int failed_cluster_request(Event *e);

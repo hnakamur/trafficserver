@@ -112,6 +112,7 @@ public:
   acl_filter_rule *filter; // acl filtering (list of rules)
   unsigned int _plugin_count;
   LINK(url_mapping, link); // For use with the main Queue linked list holding all the mapping
+  char *unix_socket;
 
   int
   getRank() const
@@ -153,6 +154,12 @@ public:
   getFromURL() const
   {
     return _mapping ? &(_mapping->fromURL) : NULL;
+  };
+
+  char *
+  getUnixSocket() const
+  {
+    return (_mapping && _mapping->unix_socket)? _mapping->unix_socket : NULL;
   };
 
   url_mapping *
