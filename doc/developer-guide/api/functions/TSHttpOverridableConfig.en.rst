@@ -90,6 +90,8 @@ The following configurations (from ``records.config``) are overridable.
 |   :ts:cv:`proxy.config.http.cache.ignore_client_no_cache`
 |   :ts:cv:`proxy.config.http.cache.ignore_client_cc_max_age`
 |   :ts:cv:`proxy.config.http.cache.ims_on_client_no_cache`
+|   :ts:cv:`proxy.config.http.cache.ignore_expires`
+|   :ts:cv:`proxy.config.http.cache.ignore_server_cc_max_age`
 |   :ts:cv:`proxy.config.http.cache.ignore_server_no_cache`
 |   :ts:cv:`proxy.config.http.cache.cache_responses_to_cookies`
 |   :ts:cv:`proxy.config.http.cache.ignore_authentication`

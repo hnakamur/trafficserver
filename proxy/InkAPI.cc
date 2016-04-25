@@ -7691,6 +7691,12 @@ _conf_to_memberp(TSOverridableConfigKey conf, OverridableHttpConfigParams *overr
   case TS_CONFIG_HTTP_CACHE_IMS_ON_CLIENT_NO_CACHE:
     ret = &overridableHttpConfig->cache_ims_on_client_no_cache;
     break;
+  case TS_CONFIG_HTTP_CACHE_IGNORE_EXPIRES:
+    ret = &overridableHttpConfig->cache_ignore_expires;
+    break;
+  case TS_CONFIG_HTTP_CACHE_IGNORE_SERVER_CC_MAX_AGE:
+    ret = &overridableHttpConfig->cache_ignore_server_cc_max_age;
+    break;
   case TS_CONFIG_HTTP_CACHE_IGNORE_SERVER_NO_CACHE:
     ret = &overridableHttpConfig->cache_ignore_server_no_cache;
     break;
@@ -8250,10 +8256,11 @@ TSHttpTxnConfigFind(const char *name, int length, TSOverridableConfigKey *conf, 
       else if (!strncmp(name, "proxy.config.http.flow_control.enabled", length))
         cnf = TS_CONFIG_HTTP_FLOW_CONTROL_ENABLED;
       break;
-      break;
     case 's':
       if (!strncmp(name, "proxy.config.http.send_http11_requests", length))
         cnf = TS_CONFIG_HTTP_SEND_HTTP11_REQUESTS;
+      else if (!strncmp(name, "proxy.config.http.cache.ignore_expires", length))
+        cnf = TS_CONFIG_HTTP_CACHE_IGNORE_EXPIRES;
       break;
     }
     break;
@@ -8514,6 +8521,8 @@ TSHttpTxnConfigFind(const char *name, int length, TSOverridableConfigKey *conf, 
         cnf = TS_CONFIG_HTTP_CACHE_IGNORE_CLIENT_CC_MAX_AGE;
       else if (!strncmp(name, "proxy.config.http.negative_revalidating_lifetime", length))
         cnf = TS_CONFIG_HTTP_NEGATIVE_REVALIDATING_LIFETIME;
+      else if (!strncmp(name, "proxy.config.http.cache.ignore_server_cc_max_age", length))
+        cnf = TS_CONFIG_HTTP_CACHE_IGNORE_SERVER_CC_MAX_AGE;
       break;
     case 't':
       switch (name[length - 4]) {

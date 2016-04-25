@@ -1026,6 +1026,8 @@ HttpConfig::startup()
   HttpEstablishStaticConfigByte(c.oride.cache_ignore_client_no_cache, "proxy.config.http.cache.ignore_client_no_cache");
   HttpEstablishStaticConfigByte(c.oride.cache_ignore_client_cc_max_age, "proxy.config.http.cache.ignore_client_cc_max_age");
   HttpEstablishStaticConfigByte(c.oride.cache_ims_on_client_no_cache, "proxy.config.http.cache.ims_on_client_no_cache");
+  HttpEstablishStaticConfigByte(c.oride.cache_ignore_expires, "proxy.config.http.cache.ignore_expires");
+  HttpEstablishStaticConfigByte(c.oride.cache_ignore_server_cc_max_age, "proxy.config.http.cache.ignore_server_cc_max_age");
   HttpEstablishStaticConfigByte(c.oride.cache_ignore_server_no_cache, "proxy.config.http.cache.ignore_server_no_cache");
   HttpEstablishStaticConfigByte(c.oride.cache_responses_to_cookies, "proxy.config.http.cache.cache_responses_to_cookies");
 
@@ -1299,6 +1301,8 @@ HttpConfig::reconfigure()
   params->oride.cache_ignore_client_no_cache = INT_TO_BOOL(m_master.oride.cache_ignore_client_no_cache);
   params->oride.cache_ignore_client_cc_max_age = INT_TO_BOOL(m_master.oride.cache_ignore_client_cc_max_age);
   params->oride.cache_ims_on_client_no_cache = INT_TO_BOOL(m_master.oride.cache_ims_on_client_no_cache);
+  params->oride.cache_ignore_expires = INT_TO_BOOL(m_master.oride.cache_ignore_expires);
+  params->oride.cache_ignore_server_cc_max_age = INT_TO_BOOL(m_master.oride.cache_ignore_server_cc_max_age);
   params->oride.cache_ignore_server_no_cache = INT_TO_BOOL(m_master.oride.cache_ignore_server_no_cache);
   params->oride.cache_responses_to_cookies = m_master.oride.cache_responses_to_cookies;
   params->oride.cache_ignore_auth = INT_TO_BOOL(m_master.oride.cache_ignore_auth);

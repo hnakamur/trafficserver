@@ -459,6 +459,8 @@ The Apache Traffic Server Administration Manual will explain what these strings 
  proxy.config.http.cache.ignore_client_cc_max_age
  proxy.config.http.cache.cluster_cache_local
  proxy.config.http.cache.ignore_client_no_cache
+ proxy.config.http.cache.ignore_expires
+ proxy.config.http.cache.ignore_server_cc_max_age
  proxy.config.http.cache.ignore_server_no_cache
  proxy.config.http.cache.ims_on_client_no_cache
  proxy.config.http.cache.max_open_read_retries

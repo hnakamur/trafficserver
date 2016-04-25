@@ -1601,6 +1601,30 @@ Cache Control
 
    When enabled (``1``), Traffic Server ignores origin server requests to bypass the cache.
 
+.. ts:cv:: CONFIG proxy.config.http.cache.ignore_expires INT 0
+   :reloadable:
+   :overridable:
+
+   When enabled (``1``), Traffic Server ignores any ``Expires``
+   headers from the server. This technically violates the HTTP RFC,
+   but simplifies the operation of web site administrators to control whether
+   or not contents are cached.
+   With combination with ``proxy.config.http.cache.required_headers = 2`` and
+   ``proxy.config.http.cache.ignore_server_cc_max_age = 1``, only the value of
+   ``Cache-Control: s-maxage`` is checked to determine the content is cacheable.
+
+.. ts:cv:: CONFIG proxy.config.http.cache.ignore_server_cc_max_age INT 0
+   :reloadable:
+   :overridable:
+
+   When enabled (``1``), Traffic Server ignores any ``Cache-Control:
+   max-age`` headers from the server. This technically violates the HTTP RFC,
+   but simplifies the operation of web site administrators to control whether
+   or not contents are cached.
+   With combination with ``proxy.config.http.cache.required_headers = 2`` and
+   ``proxy.config.http.cache.ignore_expires = 1``, only the value of
+   ``Cache-Control: s-maxage`` is checked to determine the content is cacheable.
+
 .. ts:cv:: CONFIG proxy.config.http.cache.cache_responses_to_cookies INT 1
    :reloadable:
    :overridable:
