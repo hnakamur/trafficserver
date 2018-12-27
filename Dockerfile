@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-# Install packages to build trafficserver
 RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
  && sed -i 's/^# deb-src/deb-src/' /etc/apt/sources.list \
  && apt-get update \
@@ -8,16 +7,11 @@ RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
  && useradd -r -m -s /bin/bash build
 
 USER build
-
-# Get the source and configure trafficserver
 RUN mkdir -p ~/dev/trafficserver
-
-# Copy trafficserver source
 COPY --chown=build:build . /home/build/dev/trafficserver/
 
-USER root
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN cd ~/dev/trafficserver \
+ && autoreconf -if \
+ && ./configure --with-brotli=/usr/include
 
-USER build
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["/bin/grep", "HAVE_BROTLI_ENCODE_H", "/home/build/dev/trafficserver/include/ink_autoconf.h"]
