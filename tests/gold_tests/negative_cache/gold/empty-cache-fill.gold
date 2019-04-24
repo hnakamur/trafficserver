@@ -1,4 +1,4 @@
-HTTP/1.1 301 Moved Permanently
+HTTP/1.1 ``
 Content-Length: 0
 Date: ``
 Age: 0

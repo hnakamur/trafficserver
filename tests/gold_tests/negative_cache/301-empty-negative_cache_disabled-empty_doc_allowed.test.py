@@ -66,19 +66,19 @@ tr.Processes.Default.StartBefore(server)
 tr.Processes.Default.StartBefore(Test.Processes.ts, ready=1)
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/301'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/negative-cache-301-empty-cache-fill.gold"
+tr.Processes.Default.Streams.stdout = "gold/empty-cache-fill.gold"
 tr.StillRunningAfter = ts
 
 # Test 2 - 301 empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/301'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/negative-cache-301-empty-cache-hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/empty-cache-hit.gold"
 tr.StillRunningAfter = ts
 
 # Test 3 - 301 empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/301'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/negative-cache-301-empty-cache-ram-hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/empty-cache-ram-hit.gold"
 tr.StillRunningAfter = ts
