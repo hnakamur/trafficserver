@@ -1,0 +1,10 @@
+HTTP/1.1 301 Moved Permanently
+Content-Length: 3
+Date: ``
+Age: ``
+Connection: keep-alive
+Via: http/1.1 `` (ApacheTrafficServer [uScHs f p eN:t cCHp s ])
+Server: ``
+X-Cache: hit-fresh
+``
+yyy``
