@@ -52,7 +52,9 @@ ts.Disk.records_config.update({
     'proxy.config.http.cache.allow_empty_doc': 1,
     'proxy.config.http.cache.http': 1,
     'proxy.config.http.negative_caching_enabled': 1,
-    'proxy.config.http.negative_caching_list': '""',
+    # NOTE: We cannot set the empty list to negative_caching_list,
+    # so here we set an unuesd status 599 instead
+    'proxy.config.http.negative_caching_list': '599',
     'proxy.config.http.response_via_str': 'ApacheTrafficServer',
     'proxy.config.http.wait_for_cache': 1,
 })
