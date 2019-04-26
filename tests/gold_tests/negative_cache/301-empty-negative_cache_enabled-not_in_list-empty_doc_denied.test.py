@@ -1,5 +1,5 @@
 '''
-Test negative cache 301 empty response with negative_caching_enabled=1 and allow_empty_doc=0
+Test negative cache 301 empty response with negative_caching_enabled=1, not in list and allow_empty_doc=0
 '''
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@ Test negative cache 301 empty response with negative_caching_enabled=1 and allow
 
 import os
 Test.Summary = '''
-Test negative cache 301 empty response with negative_caching_enabled=1 and allow_empty_doc=1
+Test negative cache 301 empty response with negative_caching_enabled=1, not in list and allow_empty_doc=1
 '''
 
 # Needs Curl

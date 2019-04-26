@@ -1,5 +1,5 @@
 '''
-Test negative cache 204 empty response with negative_caching_enabled=1 and allow_empty_doc=1
+Test negative cache 204 empty response with negative_caching_enabled=1, in list and allow_empty_doc=1
 '''
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@ Test negative cache 204 empty response with negative_caching_enabled=1 and allow
 
 import os
 Test.Summary = '''
-Test negative cache 204 empty response with negative_caching_enabled=1 and allow_empty_doc=1
+Test negative cache 204 empty response with negative_caching_enabled=1, in list and allow_empty_doc=1
 '''
 
 # Needs Curl
@@ -49,6 +49,7 @@ ts.Disk.records_config.update({
     'proxy.config.http.cache.allow_empty_doc': 1,
     'proxy.config.http.cache.http': 1,
     'proxy.config.http.negative_caching_enabled': 1,
+    'proxy.config.http.negative_caching_list': '204',
     'proxy.config.http.response_via_str': 'ApacheTrafficServer',
     'proxy.config.http.wait_for_cache': 1,
 })
