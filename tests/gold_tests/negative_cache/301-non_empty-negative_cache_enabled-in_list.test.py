@@ -1,5 +1,5 @@
 '''
-Test negative cache 301 with negative_caching_enabled=0
+Test negative cache 301 with negative_caching_enabled=1
 '''
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@ Test negative cache 301 with negative_caching_enabled=0
 
 import os
 Test.Summary = '''
-Test negative cache 301 with negative_caching_enabled=0
+Test negative cache 301 with negative_caching_enabled=1
 '''
 
 # Needs Curl
@@ -47,7 +47,8 @@ ts.Disk.records_config.update({
     'proxy.config.http.response_via_str': 'ApacheTrafficServer',
     'proxy.config.http.cache.http': 1,
     'proxy.config.http.wait_for_cache': 1,
-    'proxy.config.http.negative_caching_enabled': 0,
+    'proxy.config.http.negative_caching_enabled': 1,
+    'proxy.config.http.negative_caching_list': '301',
     'proxy.config.cache.ram_cache.algorithm': 1,
     'proxy.config.cache.ram_cache.use_seen_filter': 1,
 })

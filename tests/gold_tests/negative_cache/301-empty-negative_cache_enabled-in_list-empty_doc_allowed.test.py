@@ -1,5 +1,5 @@
 '''
-Test negative cache 301 with negative_caching_enabled=0
+Test negative cache 301 empty response with negative_caching_enabled=1 and allow_empty_doc=1
 '''
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@ Test negative cache 301 with negative_caching_enabled=0
 
 import os
 Test.Summary = '''
-Test negative cache 301 with negative_caching_enabled=0
+Test negative cache 301 empty response with negative_caching_enabled=1 and allow_empty_doc=1
 '''
 
 # Needs Curl
@@ -35,21 +35,23 @@ server = Test.MakeOriginServer("server")
 #**testname is required**
 testName = ""
 request_header1 = {"headers": "GET /301 HTTP/1.1\r\nHost: www.example.com\r\n\r\n", "timestamp": "1469733493.993", "body": ""}
-response_header1 = {"headers": "HTTP/1.1 301 Moved Permanently\r\nContent-Length: 3\r\nConnection: close\r\n\r\n", "timestamp": "1469733493.993", "body": "yyy"}
+response_header1 = {"headers": "HTTP/1.1 301 Moved Permanently\r\nContent-Length: 0\r\nConnection: close\r\n\r\n", "timestamp": "1469733493.993", "body": ""}
 server.addResponse("sessionlog.json", request_header1, response_header1)
 
 # ATS Configuration
 ts.Disk.plugin_config.AddLine('xdebug.so')
 ts.Disk.records_config.update({
+    'proxy.config.cache.ram_cache.algorithm': 1,
+    'proxy.config.cache.ram_cache.use_seen_filter': 1,
     'proxy.config.diags.debug.enabled': 1,
     'proxy.config.diags.debug.tags': 'http_trans',
     'proxy.config.diags.output.debug': 'L',
-    'proxy.config.http.response_via_str': 'ApacheTrafficServer',
+    'proxy.config.http.cache.allow_empty_doc': 1,
     'proxy.config.http.cache.http': 1,
+    'proxy.config.http.negative_caching_enabled': 1,
+    'proxy.config.http.negative_caching_list': '301',
+    'proxy.config.http.response_via_str': 'ApacheTrafficServer',
     'proxy.config.http.wait_for_cache': 1,
-    'proxy.config.http.negative_caching_enabled': 0,
-    'proxy.config.cache.ram_cache.algorithm': 1,
-    'proxy.config.cache.ram_cache.use_seen_filter': 1,
 })
 
 ts.Disk.remap_config.AddLine(
@@ -62,19 +64,19 @@ tr.Processes.Default.StartBefore(server)
 tr.Processes.Default.StartBefore(Test.Processes.ts, ready=1)
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/301'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/non-empty-cache-fill.gold"
+tr.Processes.Default.Streams.stdout = "gold/empty-cache-fill.gold"
 tr.StillRunningAfter = ts
 
 # Test 2 - 301 empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/301'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/non-empty-cache-hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/empty-cache-hit.gold"
 tr.StillRunningAfter = ts
 
 # Test 3 - 301 empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/301'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/non-empty-cache-ram-hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/empty-cache-ram-hit.gold"
 tr.StillRunningAfter = ts
