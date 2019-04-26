@@ -1,5 +1,5 @@
 '''
-Test negative cache 405 with negative_caching_enabled=1 and in list
+Test negative cache 500 with negative_caching_enabled=0
 '''
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@ Test negative cache 405 with negative_caching_enabled=1 and in list
 
 import os
 Test.Summary = '''
-Test negative cache 405 with negative_caching_enabled=1 and in list
+Test negative cache 500 with negative_caching_enabled=0
 '''
 
 # Needs Curl
@@ -34,8 +34,8 @@ server = Test.MakeOriginServer("server")
 
 #**testname is required**
 testName = ""
-request_header1 = {"headers": "GET /405 HTTP/1.1\r\nHost: www.example.com\r\n\r\n", "timestamp": "1469733493.993", "body": ""}
-response_header1 = {"headers": "HTTP/1.1 405 Method Not Allowed\r\nContent-Length: 3\r\nConnection: close\r\n\r\n", "timestamp": "1469733493.993", "body": "yyy"}
+request_header1 = {"headers": "GET /500 HTTP/1.1\r\nHost: www.example.com\r\n\r\n", "timestamp": "1469733493.993", "body": ""}
+response_header1 = {"headers": "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 3\r\nConnection: close\r\n\r\n", "timestamp": "1469733493.993", "body": "yyy"}
 server.addResponse("sessionlog.json", request_header1, response_header1)
 
 # ATS Configuration
@@ -48,8 +48,7 @@ ts.Disk.records_config.update({
     'proxy.config.http.cache.http': 1,
     'proxy.config.http.wait_for_cache': 1,
     'proxy.config.http.insert_age_in_response': 0,
-    'proxy.config.http.negative_caching_enabled': 1,
-    'proxy.config.http.negative_caching_list': '405',
+    'proxy.config.http.negative_caching_enabled': 0,
     'proxy.config.cache.ram_cache.algorithm': 1,
     'proxy.config.cache.ram_cache.use_seen_filter': 1,
 })
@@ -58,25 +57,25 @@ ts.Disk.remap_config.AddLine(
     'map / http://127.0.0.1:{0}'.format(server.Variables.Port)
 )
 
-# Test 1 - 405 non empty response and cache miss
+# Test 1 - 500 non empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.StartBefore(server)
 tr.Processes.Default.StartBefore(Test.Processes.ts, ready=1)
-tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/405'.format(port=ts.Variables.port)
+tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/500'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/non_empty-cache_fill.gold"
+tr.Processes.Default.Streams.stdout = "gold/non_empty-cache_no_fill-no_date.gold"
 tr.StillRunningAfter = ts
 
-# Test 2 - 405 non empty response and cache miss
+# Test 2 - 500 non empty response and cache miss
 tr = Test.AddTestRun()
-tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/405'.format(port=ts.Variables.port)
+tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/500'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/non_empty-cache_hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/non_empty-cache_no_fill-no_date.gold"
 tr.StillRunningAfter = ts
 
-# Test 3 - 405 non empty response and cache miss
+# Test 3 - 500 non empty response and cache miss
 tr = Test.AddTestRun()
-tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/405'.format(port=ts.Variables.port)
+tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/500'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/non_empty-cache_ram_hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/non_empty-cache_no_fill-no_date.gold"
 tr.StillRunningAfter = ts

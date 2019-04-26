@@ -53,6 +53,7 @@ ts.Disk.records_config.update({
     'proxy.config.http.negative_caching_list': '204',
     'proxy.config.http.response_via_str': 'ApacheTrafficServer',
     'proxy.config.http.wait_for_cache': 1,
+    'proxy.config.http.insert_age_in_response': 0,
 })
 
 ts.Disk.remap_config.AddLine(
@@ -65,19 +66,19 @@ tr.Processes.Default.StartBefore(server)
 tr.Processes.Default.StartBefore(Test.Processes.ts, ready=1)
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/204'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/204-cache-fill.gold"
+tr.Processes.Default.Streams.stdout = "gold/204-cache_fill.gold"
 tr.StillRunningAfter = ts
 
 # Test 2 - 204 empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/204'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/204-cache-hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/204-cache_hit.gold"
 tr.StillRunningAfter = ts
 
 # Test 3 - 204 empty response and cache miss
 tr = Test.AddTestRun()
 tr.Processes.Default.Command = 'curl -s -D - -v --ipv4 --http1.1 -H "x-debug: x-cache,via" -H "Host: www.example.com" http://localhost:{port}/204'.format(port=ts.Variables.port)
 tr.Processes.Default.ReturnCode = 0
-tr.Processes.Default.Streams.stdout = "gold/204-cache-ram-hit.gold"
+tr.Processes.Default.Streams.stdout = "gold/204-cache_ram_hit.gold"
 tr.StillRunningAfter = ts
