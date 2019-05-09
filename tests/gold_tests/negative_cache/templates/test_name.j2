@@ -1,0 +1,5 @@
+{{ status_code }}
+{%- if status_code != '204' %}-{% if empty_response %}empty{% else %}non_empty{% endif %}{% endif %}
+{%- if empty_response %}{% if allow_empty_doc %}-empty_doc_allowed{% else %}-empty_doc_denied{% endif %}{% endif %}
+{%- if negative_caching_enabled %}-negative_cache_enabled{% else %}-negative_cache_disabled{% endif %}
+{%- if status_in_list %}-status_in_list{% else %}-status_not_in_list{% endif %}

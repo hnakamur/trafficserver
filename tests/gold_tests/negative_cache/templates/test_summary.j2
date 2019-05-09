@@ -1,0 +1,5 @@
+Test negative cache {{ status_code }}
+{%- if empty_response %} empty{% else %} non empty{% endif %} response
+{%- if empty_response %}, allow_empty_doc={{ config_allow_empty_doc }}{% endif %}
+, negative_caching_enabled={{ config_negative_caching_enabled }}
+{%- if status_in_list %}, in list{% else %}, not in list{% endif %}
