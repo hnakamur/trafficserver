@@ -74,6 +74,8 @@ struct VolInitInfo;
 struct DiskVol;
 struct CacheVol;
 
+// MEMO: stripe内のヘッダまたはフッタ。
+// MEMO: ヘッダはfreelistのサイズが可変。フッタはfreelistを使わない。
 struct VolHeaderFooter {
   unsigned int magic;
   VersionNumber version;
@@ -119,6 +121,13 @@ struct EvacuationBlock {
   LINK(EvacuationBlock, link);
 };
 
+// MEMO: "cache stripe" の公開APIのクラス
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#stripe-structure
+// MEMO: This represents a storage unit inside a cache volume.
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/data-structures.en.html#_CPPv43Vol
+// MEMO: Internally the term volume is used for these stripes and implemented primarily in Vol. What a user thinks of as a volume (and what this document calls a cache volume) is represented by CacheVol.
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-layout
+// MEMO: https://docs.trafficserver.apache.org/en/latest/appendices/glossary.en.html#term-cache-volume
 struct Vol : public Continuation {
   char *path = nullptr;
   ats_scoped_str hash_text;
@@ -129,6 +138,7 @@ struct Vol : public Continuation {
   Dir *dir                = nullptr;
   VolHeaderFooter *header = nullptr;
   VolHeaderFooter *footer = nullptr;
+  // MEMO: The number of segments in the volume. This will be roughly the total number of entries divided by the number of entries in a segment. It will be rounded up to cover all entries.
   int segments            = 0;
   off_t buckets           = 0;
   off_t recover_pos       = 0;
@@ -136,7 +146,9 @@ struct Vol : public Continuation {
   off_t scan_pos          = 0;
   off_t skip              = 0; // start of headers
   off_t start             = 0; // start of data
+  // MEMO: このVol全体のバイト数
   off_t len               = 0;
+  // MEMO: The number of blocks of storage in the stripe.
   off_t data_blocks       = 0;
   int hit_evacuate_window = 0;
   AIOCallbackInternal io;
@@ -153,7 +165,7 @@ struct Vol : public Continuation {
   OpenDir open_dir;
   RamCache *ram_cache            = nullptr;
   int evacuate_size              = 0;
-  DLL<EvacuationBlock> *evacuate = nullptr;
+  DLL<EvacuationBlock> *evacuate = nullptr; // MEMO: Array of of EvacuationBlock buckets. This is sized so there is one bucket for every evacuation span.
   DLL<EvacuationBlock> lookaside[LOOKASIDE_SIZE];
   CacheVC *doc_evacuator = nullptr;
 
@@ -228,7 +240,7 @@ struct Vol : public Continuation {
   }
 
   int aggWriteDone(int event, Event *e);
-  int aggWrite(int event, void *e);
+  int aggWrite(int event, void *e); // MEMO: Schedule the aggregation buffer to be written to disk.
   void agg_wrap();
 
   int evacuateWrite(CacheVC *evacuator, int event, Event *e);
@@ -278,6 +290,11 @@ struct AIO_Callback_handler : public Continuation {
   AIO_Callback_handler() : Continuation(new_ProxyMutex()) { SET_HANDLER(&AIO_Callback_handler::handle_disk_failure); }
 };
 
+// MEMO: "cache volume"
+// MEMO: volume.config で定義される。
+// MEMO: https://docs.trafficserver.apache.org/en/latest/appendices/glossary.en.html#term-cache-volume
+// MEMO: A cache volume as described in volume.config. This class represents a single volume. CacheVol comprises of stripes spread across Spans(disks)
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/data-structures.en.html#_CPPv48CacheVol
 struct CacheVol {
   int vol_number;
   int scheme;
@@ -292,6 +309,8 @@ struct CacheVol {
   CacheVol() : vol_number(-1), scheme(0), size(0), num_vols(0), vols(nullptr), disk_vols(nullptr), vol_rsb(nullptr) {}
 };
 
+// MEMO: fragmentのヘッダ情報。fragmentはcahe stripe (Volクラス)のcontent部分。
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-directory
 // Note : hdr() needs to be 8 byte aligned.
 struct Doc {
   uint32_t magic;     // DOC_MAGIC
@@ -306,6 +325,7 @@ struct Doc {
   CryptoHash first_key; ///< first key in object.
   CryptoHash key;       ///< Key for this doc.
 #endif
+  // MEMO: ヘッダのバイト数
   uint32_t hlen;         ///< Length of this header.
   uint32_t doc_type : 8; ///< Doc type - indicates the format of this structure and its content.
   uint32_t v_major : 8;  ///< Major version number.
@@ -435,12 +455,14 @@ Doc::single_fragment()
   return data_len() == total_len;
 }
 
+// MEMO: Docの直後にヘッダがある。ヘッダがあるのはFirst Docのみ。
 TS_INLINE char *
 Doc::hdr()
 {
   return reinterpret_cast<char *>(this) + sizeof(Doc);
 }
 
+// MEMO: ヘッダの直後にデータがある。hlenはヘッダのバイト数。
 TS_INLINE char *
 Doc::data()
 {

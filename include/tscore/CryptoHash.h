@@ -38,6 +38,8 @@
 
 namespace ats
 {
+// MEMO: キャッシュキーをハッシュした結果の128bit固定サイズの値。
+// MEMO: https://docs.trafficserver.apache.org/en/latest/appendices/glossary.en.html#term-cache-id
 /// Crypto hash output.
 union CryptoHash {
   uint64_t b[CRYPTO_HASH_SIZE / sizeof(uint64_t)]; // Legacy placeholder

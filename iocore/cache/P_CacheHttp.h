@@ -42,6 +42,7 @@ struct vec_info {
   CacheHTTPInfo alternate;
 };
 
+// MEMO: First Docの後に続くalternateの情報(CacheHTTPInfo)のベクタ
 struct CacheHTTPInfoVector {
   void *magic;
 

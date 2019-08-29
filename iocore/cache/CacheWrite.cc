@@ -1699,6 +1699,7 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_ty
   }
 }
 
+// MEMO: キャッシュ書き込みのメインエントリポイント
 // main entry point for writing of http documents
 Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, time_t apin_in_cache,
@@ -1768,6 +1769,7 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, 
     ink_assert(!(c->update_key == zero_key));
     c->update_len = info->object_size_get();
   } else {
+    // MEMO: 下記から逆に判断すると新規書き込みのときはinfoがnullptrかCACHE_ALLOW_MULTIPLE_WRITESで呼ばれる。
     c->base_stat = cache_write_active_stat;
   }
   CACHE_INCREMENT_DYN_STAT(c->base_stat + CACHE_STAT_ACTIVE);

@@ -90,6 +90,9 @@ typedef Scalar<8 * Kilobytes::SCALE, int64_t, tag::bytes> CacheStoreBlocks;
 // Size unit for content stored in cache.
 typedef Scalar<512, int64_t, tag::bytes> CacheDataBlocks;
 
+// MEMO: storage.config の1行に対応する物理ストレージ
+// MEMO: https://docs.trafficserver.apache.org/en/latest/appendices/glossary.en.html#term-cache-span
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-storage
 /** A cache span is a representation of raw storage.
     It corresponds to a raw disk, disk partition, file, or directory.
  */
@@ -480,6 +483,7 @@ struct Span {
   std::list<Stripe *> _stripes;
 };
 /* --------------------------------------------------------------------------------------- */
+// MEMO: "cache stripe" の内部APIクラス
 struct Stripe {
   /// Meta data is stored in 4 copies A/B and Header/Footer.
   enum Copy { A = 0, B = 1 };

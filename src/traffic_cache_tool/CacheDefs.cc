@@ -437,6 +437,8 @@ Stripe::stripe_offset(CacheDirEntry *e)
   return this->_content + Bytes((dir_offset(e) * CACHE_BLOCK_SIZE) - CACHE_BLOCK_SIZE);
 }
 
+// MEMO: "directory probing"
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-directory-probe
 int
 Stripe::dir_probe(CryptoHash *key, CacheDirEntry *result, CacheDirEntry **last_collision)
 {

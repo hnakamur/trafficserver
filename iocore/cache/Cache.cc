@@ -3046,6 +3046,8 @@ rebuild_host_table(Cache *cache)
   }
 }
 
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-lookup
+// MEMO: によるとVolの配列に対してCacheKeyがハッシュキーとして使われるらしい。
 // if generic_host_rec.vols == nullptr, what do we do???
 Vol *
 Cache::key_to_vol(const CacheKey *key, const char *hostname, int host_len)

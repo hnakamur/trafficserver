@@ -112,6 +112,9 @@ typedef uint32_t DirInfo;
 
 // Cache Directory
 
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-directory
+// MEMO: w[3] (nextの部分) に次のDirのインデクスが入っている (dir_next関数参照)。同じsegment内のインデクスで最大値は2^16-1=65535。
+// MEMO: w[2] に前のDirのインデクスが入っている (dir_prev関数参照)
 // INTERNAL: do not access these members directly, use the
 // accessors below (e.g. dir_offset, dir_set_offset).
 // These structures are stored in memory 2 byte aligned.
@@ -205,8 +208,10 @@ struct FreeDir {
 #define dir_set_pinned(_e, _v) dir_set_bit(_e, 2, 14, _v)
 #define dir_token(_e) dir_bit(_e, 2, 15)
 #define dir_set_token(_e, _v) dir_set_bit(_e, 2, 15, _v)
+// MEMO: 次のDirのインデクスを返す。
 #define dir_next(_e) (_e)->w[3]
 #define dir_set_next(_e, _o) (_e)->w[3] = (uint16_t)(_o)
+// MEMO: 前のDirのインデクスを返す。
 #define dir_prev(_e) (_e)->w[2]
 #define dir_set_prev(_e, _o) (_e)->w[2] = (uint16_t)(_o)
 
@@ -245,6 +250,10 @@ struct OpenDirEntry {
   }
 };
 
+// MEMO: An open directory entry. It contains all the information of a Dir plus additional information from the first Doc.
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/data-structures.en.html#_CPPv47OpenDir
+// MEMO:
+// MEMO: Cache lookupの結果作られる。 https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-lookup
 struct OpenDir : public Continuation {
   Queue<CacheVC, Link_CacheVC_opendir_link> delayed_readers;
   DLL<OpenDirEntry> bucket[OPEN_DIR_BUCKETS];
@@ -314,6 +323,7 @@ extern Dir empty_dir;
 
 #define dir_in_seg(_s, _i) ((Dir *)(((char *)(_s)) + (SIZEOF_DIR * (_i))))
 
+// MEMO: DirとCacheKeyの下位12bitが一致するか
 TS_INLINE bool
 dir_compare_tag(const Dir *e, const CacheKey *key)
 {
@@ -350,6 +360,10 @@ dir_to_offset(const Dir *d, const Dir *seg)
   return i;
 #endif
 }
+// MEMO: segが指すDirの配列内でb番目のbucketのポインタを返す。
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-directory
+// MEMO: キャッシュキーのハッシュが衝突した際にchainingという手法で複数の値を持っている。
+// MEMO: Dirを4個並べたものがdirectory bucket。
 TS_INLINE Dir *
 dir_bucket(int64_t b, Dir *seg)
 {

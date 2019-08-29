@@ -1299,6 +1299,7 @@ enum {
   CACHE_ALT_MAGIC_DEAD      = 0xdeadeed,
 };
 
+// MEMO: alternateの情報
 // struct HTTPCacheAlt
 struct HTTPCacheAlt {
   HTTPCacheAlt();
@@ -1354,6 +1355,7 @@ struct HTTPCacheAlt {
   RefCountObj *m_ext_buffer;
 };
 
+// MEMO: alternateのメタデータを保持するクラス
 class HTTPInfo
 {
 public:

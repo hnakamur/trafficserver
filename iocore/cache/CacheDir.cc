@@ -69,6 +69,7 @@ OpenDir::OpenDir()
    for later writers.
    Returns 1 on success and 0 on failure.
    */
+// MEMO: max_writersは0, 1, cache_config_http_max_altsのいずれかで呼ばれる。
 int
 OpenDir::open_write(CacheVC *cont, int allow_if_writers, int max_writers)
 {
@@ -532,6 +533,11 @@ dir_free_entry(Dir *e, int s, Vol *d)
   d->header->freelist[s] = eo;
 }
 
+// MEMO: "directory probing"
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#cache-directory-probe
+// MEMO: によるとdir_probe関数内ではCacheKeyの上位64bitがsegmentのインデクス、下位64bitがbucketのインデクスとして使用されるらしい。
+// MEMO: bucketを特定した後は下位12bitをbucket内のentryと比較してマッチするものを探すとのこと。
+// MEMO: 見つかった(hit)場合は1、見つからない(miss)場合は0を返す。
 int
 dir_probe(const CacheKey *key, Vol *d, Dir *result, Dir **last_collision)
 {
