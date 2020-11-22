@@ -44,7 +44,7 @@ extern int cache_config_max_disk_errors;
 /* each disk vol block has a corresponding Vol object */
 struct CacheDisk;
 
-struct DiskVolBlock {
+struct DiskVolBlock { // MEMO: Span Block Header
   uint64_t offset; // offset in bytes from the start of the disk
   uint64_t len;    // length in in store blocks
   int number;
@@ -68,7 +68,7 @@ struct DiskVol {
   Queue<DiskVolBlockQueue> dpb_queue;
 };
 
-struct DiskHeader {
+struct DiskHeader { // MEMO: Cache Span Header
   unsigned int magic;
   unsigned int num_volumes;      /* number of discrete volumes (DiskVol) */
   unsigned int num_free;         /* number of disk volume blocks free */

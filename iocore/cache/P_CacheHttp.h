@@ -42,7 +42,7 @@ struct vec_info {
   CacheHTTPInfo alternate;
 };
 
-struct CacheHTTPInfoVector {
+struct CacheHTTPInfoVector { // MEMO: Vector of vec_info which contains CacheHTTPInfo
   void *magic = nullptr;
 
   CacheHTTPInfoVector();

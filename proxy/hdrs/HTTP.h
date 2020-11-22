@@ -1329,7 +1329,7 @@ enum {
 };
 
 // struct HTTPCacheAlt
-struct HTTPCacheAlt {
+struct HTTPCacheAlt { // MEMO: Cache alternative
   HTTPCacheAlt();
   void copy(HTTPCacheAlt *to_copy);
   void copy_frag_offsets_from(HTTPCacheAlt *src);
@@ -1383,7 +1383,7 @@ struct HTTPCacheAlt {
   RefCountObj *m_ext_buffer = nullptr;
 };
 
-class HTTPInfo
+class HTTPInfo // MEMO: Wrapper for HTTPCacheAlt
 {
 public:
   typedef HTTPCacheAlt::FragOffset FragOffset; ///< Import type.

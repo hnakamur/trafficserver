@@ -118,7 +118,7 @@ typedef uint32_t DirInfo;
 // The accessors prevent unaligned memory access which
 // is often either less efficient or unsupported depending
 // on the processor.
-struct Dir {
+struct Dir { // MEMO: directory entry in Cache Stripe
 #if DO_NOT_REMOVE_THIS
   // THE BIT-FIELD INTERPRETATION OF THIS STRUCT WHICH HAS TO
   // USE MACROS TO PREVENT UNALIGNED LOADS
