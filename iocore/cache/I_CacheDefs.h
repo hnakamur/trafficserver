@@ -120,7 +120,7 @@ enum CacheFragType {
   NUM_CACHE_FRAG_TYPES
 };
 
-typedef CryptoHash CacheKey;
+typedef CryptoHash CacheKey; // MEMO: Cache ID, 1st word (32bit) is segment index, 2nd word is bucket index, 3rd word is tag and hosttable hash, 4th word is ram cache hash, lookaside cache
 
 struct HttpCacheKey {
   int hostlen;

@@ -532,6 +532,8 @@ dir_free_entry(Dir *e, int s, Vol *d)
   d->header->freelist[s] = eo;
 }
 
+// MEMO: Locate of a specific directory entry in the stripe directory based on a cache ID.
+// MEMO: https://docs.trafficserver.apache.org/en/latest/developer-guide/cache-architecture/architecture.en.html#directory-probing
 int
 dir_probe(const CacheKey *key, Vol *d, Dir *result, Dir **last_collision)
 {

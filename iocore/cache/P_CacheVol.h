@@ -74,7 +74,7 @@ struct VolInitInfo;
 struct DiskVol;
 struct CacheVol;
 
-struct VolHeaderFooter {
+struct VolHeaderFooter { // MEMO: Stripe Header or Footer
   unsigned int magic;
   VersionNumber version;
   time_t create_time;
@@ -89,7 +89,7 @@ struct VolHeaderFooter {
   uint32_t dirty;
   uint32_t sector_size;
   uint32_t unused; // pad out to 8 byte boundary
-  uint16_t freelist[1];
+  uint16_t freelist[1]; // MEMO: Used only for header
 };
 
 // Key and Earliest key for each fragment that needs to be evacuated
@@ -119,7 +119,7 @@ struct EvacuationBlock {
   LINK(EvacuationBlock, link);
 };
 
-struct Vol : public Continuation {
+struct Vol : public Continuation { // MEMO: Cache Stripe
   char *path = nullptr;
   ats_scoped_str hash_text;
   CryptoHash hash_id;
@@ -278,7 +278,7 @@ struct AIO_Callback_handler : public Continuation {
   AIO_Callback_handler() : Continuation(new_ProxyMutex()) { SET_HANDLER(&AIO_Callback_handler::handle_disk_failure); }
 };
 
-struct CacheVol {
+struct CacheVol { // MEMO: Cache Volume
   int vol_number;
   int scheme;
   off_t size;
@@ -293,7 +293,7 @@ struct CacheVol {
 };
 
 // Note : hdr() needs to be 8 byte aligned.
-struct Doc {
+struct Doc { // MEMO: header data for a cache fragment
   uint32_t magic;     // DOC_MAGIC
   uint32_t len;       // length of this fragment (including hlen & sizeof(Doc), unrounded)
   uint64_t total_len; // total length of document
