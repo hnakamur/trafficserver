@@ -306,6 +306,7 @@ CacheDisk::create_volume(int number, off_t size_in_blocks, int scheme)
 
     DiskVolBlockQueue *new_q = new DiskVolBlockQueue();
     new_q->b                 = dpb;
+    Debug("my_cache_hosting", "create a new DiskVolBlock len=%" PRIu64 ", offset=%" PRIu64 " and enqueue", dpb->len, dpb->offset);
     free_blocks->dpb_queue.enqueue(new_q);
     free_blocks->size += dpb->len;
     free_space += dpb->len;
@@ -324,6 +325,7 @@ CacheDisk::create_volume(int number, off_t size_in_blocks, int scheme)
   /* add it to its disk_vol */
   for (i = 0; i < header->num_volumes; i++) {
     if (disk_vols[i]->vol_number == number) {
+      Debug("my_cache_hosting", "enqueue disk_vols[%d], vol_number=%d", i, number);
       disk_vols[i]->dpb_queue.enqueue(q);
       disk_vols[i]->num_volblocks++;
       disk_vols[i]->size += q->b->len;
@@ -335,6 +337,7 @@ CacheDisk::create_volume(int number, off_t size_in_blocks, int scheme)
     disk_vols[i]->num_volblocks = 1;
     disk_vols[i]->vol_number    = number;
     disk_vols[i]->disk          = this;
+    Debug("my_cache_hosting", "enqueue new disk_vols[%d], vol_number=%d", i, number);
     disk_vols[i]->dpb_queue.enqueue(q);
     disk_vols[i]->size = q->b->len;
     header->num_volumes++;
@@ -410,6 +413,7 @@ CacheDisk::update_header()
     int vol_number = header->vol_info[i].number;
     for (j = 0; j < n; j++) {
       if (disk_vols[j]->vol_number == vol_number) {
+        Debug("my_cache_hosting", "enqueue disk_vols[%d], vol_number=%d", j, vol_number);
         disk_vols[j]->dpb_queue.enqueue(dpbq);
         dpbq_referenced = true;
         disk_vols[j]->num_volblocks++;
@@ -425,6 +429,7 @@ CacheDisk::update_header()
       disk_vols[j]->disk          = this;
       disk_vols[j]->num_volblocks = 1;
       disk_vols[j]->size          = dpbq->b->len;
+      Debug("my_cache_hosting", "enqueue new disk_vols[%d], vol_number=%d", i, vol_number);
       disk_vols[j]->dpb_queue.enqueue(dpbq);
       dpbq_referenced = true;
       n++;

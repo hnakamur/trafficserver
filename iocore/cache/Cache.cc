@@ -1151,6 +1151,7 @@ Vol::db_check(bool /* fix ATS_UNUSED */)
 static void
 vol_init_data_internal(Vol *d)
 {
+  Debug("my_cache_init", "vol_init_data_internal start, d->len=%" PRIi64 ", d->start=%" PRIi64 ", d->skip=%" PRIi64 ", cache_config_min_average_object_size=%d", d->len, d->start, d->skip, cache_config_min_average_object_size);
   // step1: calculate the number of entries.
   off_t total_entries = (d->len - (d->start - d->skip)) / cache_config_min_average_object_size;
   // step2: calculate the number of buckets
@@ -1161,6 +1162,7 @@ vol_init_data_internal(Vol *d)
   d->buckets = (total_buckets + d->segments - 1) / d->segments;
   // step5: set the start pointer.
   d->start = d->skip + 2 * d->dirlen();
+  Debug("my_cache_init", "vol_init_data_internal end, total_entries=%" PRIi64 ", total_buckets=%" PRIi64 ", d->segments=%d, d->buckets=%" PRIi64 ", d->start=%" PRIi64, total_entries, total_buckets, d->segments, d->buckets, d->start);
 }
 
 static void
