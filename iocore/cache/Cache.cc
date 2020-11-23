@@ -1243,6 +1243,7 @@ Vol::clear_dir()
 int
 Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
 {
+  Debug("my_cache_init", "Vol::init start, s='%s', blocks=%" PRIi64 ", dir_skip=%" PRIi64 ", clear=%d, disk->hash_base_string='%s'", s, blocks, dir_skip, clear, (char *) disk->hash_base_string);
   char *seed_str              = disk->hash_base_string ? disk->hash_base_string : s;
   const size_t hash_seed_size = strlen(seed_str);
   const size_t hash_text_size = hash_seed_size + 32;
@@ -1257,6 +1258,7 @@ Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
   path     = ats_strdup(s);
   len      = blocks * STORE_BLOCK_SIZE;
   ink_assert(len <= MAX_VOL_SIZE);
+  Debug("my_cache_init", "rounded dir_skip=%" PRIi64 ", len=%" PRIi64, dir_skip, len);
   skip             = dir_skip;
   prev_recover_pos = 0;
 
@@ -1304,6 +1306,7 @@ Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
   off_t bs                               = skip + this->dirlen();
   init_info->vol_aio[2].aiocb.aio_offset = bs;
   init_info->vol_aio[3].aiocb.aio_offset = bs + footer_offset;
+  Debug("my_cache_init", "4 offsets=%" PRIi64 ", %" PRIi64 ", %" PRIi64 ", %" PRIi64 ", footerlen=%d", init_info->vol_aio[0].aiocb.aio_offset, init_info->vol_aio[1].aiocb.aio_offset, init_info->vol_aio[2].aiocb.aio_offset, init_info->vol_aio[3].aiocb.aio_offset, footerlen);
 
   for (unsigned i = 0; i < countof(init_info->vol_aio); i++) {
     AIOCallback *aio      = &(init_info->vol_aio[i]);
@@ -1708,6 +1711,7 @@ Vol::handle_recover_write_dir(int /* event ATS_UNUSED */, void * /* data ATS_UNU
 int
 Vol::handle_header_read(int event, void *data)
 {
+  Debug("my_cache_init", "Vol::handle_header_read start, event=%d", event);
   AIOCallback *op;
   VolHeaderFooter *hf[4];
   switch (event) {
@@ -2083,6 +2087,7 @@ Cache::open(bool clear, bool /* fix ATS_UNUSED */)
 
   CacheVol *cp = cp_list.head;
   for (; cp; cp = cp->link.next) {
+    Debug("my_cache_init", "cp->vol_number=%d, cp->scheme=%d, scheme=%d", cp->vol_number, cp->scheme, scheme);
     if (cp->scheme == scheme) {
       cp->vols   = (Vol **)ats_malloc(cp->num_vols * sizeof(Vol *));
       int vol_no = 0;
@@ -2102,6 +2107,7 @@ Cache::open(bool clear, bool /* fix ATS_UNUSED */)
 #if AIO_MODE == AIO_MODE_NATIVE
             eventProcessor.schedule_imm(new VolInit(cp->vols[vol_no], d->path, blocks, q->b->offset, vol_clear));
 #else
+            Debug("my_cache_init", "calling Vol::init for vol_no=%d", vol_no);
             cp->vols[vol_no]->init(d->path, blocks, q->b->offset, vol_clear);
 #endif
             vol_no++;
