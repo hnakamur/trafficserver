@@ -1,0 +1,25 @@
+./configure \
+        --enable-layout=opt \
+        --prefix=/opt/trafficserver \
+        --includedir=/usr/include \
+        --datarootdir=/usr/share \
+        --datadir=/usr/share \
+        --infodir=/usr/share/info \
+        --localedir=/usr/share/locale \
+        --mandir=/usr/share/man \
+        --docdir=/usr/share/doc/trafficserver \
+        --htmldir=/usr/share/doc/trafficserver \
+        --dvidir=/usr/share/doc/trafficserver \
+        --pdfdir=/usr/share/doc/trafficserver \
+        --psdir=/usr/share/doc/trafficserver \
+        --exec-prefix=/usr \
+        --sysconfdir=/opt/trafficserver/etc --libdir=/usr/lib/trafficserver \
+        --localstatedir=/opt/trafficserver/var \
+        --libexecdir=/usr/lib/trafficserver/modules \
+        --with-user=root --with-group=root --disable-silent-rules \
+        --enable-experimental-plugins --enable-32bit-build \
+        --enable-mime-sanity-check \
+        --with-build-version=8.1.0.debug \
+        --with-yaml-cpp=/usr \
+        --with-brotli=/usr/include \
+        --enable-wccp
