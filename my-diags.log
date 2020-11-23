@@ -1,0 +1,25 @@
+[Nov 23 10:53:08.439] traffic_server DEBUG: <CacheDisk.cc:58 (open)> (my_cache_hosting) CacheDisk::open start, s=/opt/trafficserver/var/cache/cache.db, blocks=32767, askip=8192, ahw_sector_size=4096, fildes=47, clear=0
+[Nov 23 10:53:08.443] traffic_server DEBUG: <Cache.cc:708 (start_internal)> (cache_hosting) Disk: 0:/opt/trafficserver/var/cache/cache.db, blocks: 32767
+[Nov 23 10:53:08.443] [ET_NET 11] DEBUG: <CacheDisk.cc:166 (openStart)> (my_cache_hosting) CacheDisk::openStart start, event=3900
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <CacheDisk.cc:213 (openDone)> (my_cache_hosting) CacheDisk::openDone, cacheProcessor.start_done=1
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:754 (diskInitialized)> (my_cache_hosting) CacheDisk::diskInitialized start, gndisks=1
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:797 (diskInitialized)> (my_cache_hosting) CacheProcessor::diskInitialized, config_volumes.num_volumes=0
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:831 (diskInitialized)> (cache_hosting) Disk: 0:/opt/trafficserver/var/cache/cache.db: Vol Blocks: 1: Free space: 0
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:834 (diskInitialized)> (cache_hosting)       Vol: 0 Size: 32766
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:837 (diskInitialized)> (cache_hosting)       Block No: 0 Size: 32766 Free: 0
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:845 (diskInitialized)> (my_cache_hosting) CacheProcessor::diskInitialized before theCache->open, config_volumes.num_volumes=0, config_volumes.num_http_volumes=0
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:2073 (open)> (my_cache_hosting) Cache::open start, clear=0
+[Nov 23 10:53:08.444] [ET_NET 11] DEBUG: <Cache.cc:2082 (open)> (cache_init) Cache::open - proxy.config.cache.min_average_object_size = 8000
+[Nov 23 10:53:08.445] [ET_NET 11] DEBUG: <Cache.cc:1274 (init)> (cache_init) Vol /opt/trafficserver/var/cache/cache.db 16384:32766: allocating 352256 directory bytes for a 268419072 byte volume (0.131234%)
+[Nov 23 10:53:08.445] [ET_NET 11] DEBUG: <Cache.cc:1300 (init)> (cache_init) reading directory '/opt/trafficserver/var/cache/cache.db 16384:32766'
+[Nov 23 10:53:08.446] [ET_NET 1] NOTE: using directory A for '/opt/trafficserver/var/cache/cache.db 16384:32766'
+[Nov 23 10:53:08.447] [TS_MAIN] NOTE: traffic server running
+[Nov 23 10:53:08.451] [ET_NET 3] NOTE: recovery clearing offsets of Vol /opt/trafficserver/var/cache/cache.db 16384:32766 : [16347136, 24735744] sync_serial 66 next 67
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <CacheHosting.cc:424 (Init)> (cache_hosting) Host Record: 0x7f8a60028a98, Volume: 0, size: 32766
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <Cache.cc:1901 (build_vol_hash_table)> (cache_init) build_vol_hash_table index 0 mapped to 0 requested 32707 got 32707
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <Cache.cc:885 (cacheInitialized)> (cache_init) CacheProcessor::cacheInitialized - theCache, total_size = 32766 = 255 MB
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <Cache.cc:914 (cacheInitialized)> (cache_init) CacheProcessor::cacheInitialized - caches_ready=0x9, gnvol=1
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <Cache.cc:934 (cacheInitialized)> (cache_init) CacheProcessor::cacheInitialized - cache_config_ram_cache_size == AUTO_SIZE_RAM_CACHE
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <Cache.cc:939 (cacheInitialized)> (cache_init) CacheProcessor::cacheInitialized - ram_cache_bytes = 352256 = 0Mb
+[Nov 23 10:53:08.453] [ET_NET 4] DEBUG: <Cache.cc:945 (cacheInitialized)> (cache_init) CacheProcessor::cacheInitialized - total_cache_bytes = 268066816 = 255Mb
+[Nov 23 10:53:08.453] [ET_NET 4] NOTE: cache enabled

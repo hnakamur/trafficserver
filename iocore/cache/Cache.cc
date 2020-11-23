@@ -751,6 +751,7 @@ CacheProcessor::start_internal(int flags)
 void
 CacheProcessor::diskInitialized()
 {
+  Debug("my_cache_hosting", "CacheDisk::diskInitialized start, gndisks=%d", gndisks);
   int n_init    = initialize_disk++;
   int bad_disks = 0;
   int res       = 0;
@@ -793,6 +794,7 @@ CacheProcessor::diskInitialized()
   RecSetGlobalRawStatSum(cache_rsb, cache_span_online_stat, gndisks);
 
   /* create the cachevol list only if num volumes are greater than 0. */
+  Debug("my_cache_hosting", "CacheProcessor::diskInitialized, config_volumes.num_volumes=%d", config_volumes.num_volumes);
   if (config_volumes.num_volumes == 0) {
     /* if no volumes, default to just an http cache */
     res = cplist_reconfigure();
@@ -840,6 +842,7 @@ CacheProcessor::diskInitialized()
       d->sync();
     }
   }
+  Debug("my_cache_hosting", "CacheProcessor::diskInitialized before theCache->open, config_volumes.num_volumes=%d, config_volumes.num_http_volumes=%d", config_volumes.num_volumes, config_volumes.num_http_volumes);
   if (config_volumes.num_volumes == 0) {
     theCache         = new Cache();
     theCache->scheme = CACHE_HTTP_TYPE;
@@ -2067,6 +2070,7 @@ Cache::open_done()
 int
 Cache::open(bool clear, bool /* fix ATS_UNUSED */)
 {
+  Debug("my_cache_hosting", "Cache::open start, clear=%d", clear);
   int i;
   off_t blocks          = 0;
   cache_read_done       = 0;

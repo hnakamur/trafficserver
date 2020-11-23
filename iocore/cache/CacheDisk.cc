@@ -55,6 +55,7 @@ CacheDisk::incrErrors(const AIOCallback *io)
 int
 CacheDisk::open(char *s, off_t blocks, off_t askip, int ahw_sector_size, int fildes, bool clear)
 {
+  Debug("my_cache_hosting", "CacheDisk::open start, s=%s, blocks=%" PRIi64 ", askip=%" PRIi64 ", ahw_sector_size=%d, fildes=%d, clear=%d", s, blocks, askip, ahw_sector_size, fildes, clear);
   path           = ats_strdup(s);
   hw_sector_size = ahw_sector_size;
   fd             = fildes;
@@ -162,6 +163,7 @@ CacheDisk::clearDone(int event, void * /* data ATS_UNUSED */)
 int
 CacheDisk::openStart(int event, void * /* data ATS_UNUSED */)
 {
+  Debug("my_cache_hosting", "CacheDisk::openStart start, event=%d", event);
   ink_assert(event == AIO_EVENT_DONE);
 
   if ((size_t)io.aiocb.aio_nbytes != (size_t)io.aio_result) {
@@ -208,6 +210,7 @@ CacheDisk::openStart(int event, void * /* data ATS_UNUSED */)
 int
 CacheDisk::openDone(int /* event ATS_UNUSED */, void * /* data ATS_UNUSED */)
 {
+  Debug("my_cache_hosting", "CacheDisk::openDone, cacheProcessor.start_done=%d", cacheProcessor.start_done);
   if (cacheProcessor.start_done) {
     SET_HANDLER(&CacheDisk::syncDone);
     cacheProcessor.diskInitialized();
