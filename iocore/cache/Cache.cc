@@ -842,7 +842,9 @@ CacheProcessor::diskInitialized()
       d->sync();
     }
   }
-  Debug("my_cache_hosting", "CacheProcessor::diskInitialized before theCache->open, config_volumes.num_volumes=%d, config_volumes.num_http_volumes=%d", config_volumes.num_volumes, config_volumes.num_http_volumes);
+  Debug("my_cache_hosting",
+        "CacheProcessor::diskInitialized before theCache->open, config_volumes.num_volumes=%d, config_volumes.num_http_volumes=%d",
+        config_volumes.num_volumes, config_volumes.num_http_volumes);
   if (config_volumes.num_volumes == 0) {
     theCache         = new Cache();
     theCache->scheme = CACHE_HTTP_TYPE;
@@ -1151,7 +1153,10 @@ Vol::db_check(bool /* fix ATS_UNUSED */)
 static void
 vol_init_data_internal(Vol *d)
 {
-  Debug("my_cache_init", "vol_init_data_internal start, d->len=%" PRIi64 ", d->start=%" PRIi64 ", d->skip=%" PRIi64 ", cache_config_min_average_object_size=%d", d->len, d->start, d->skip, cache_config_min_average_object_size);
+  Debug("my_cache_init",
+        "vol_init_data_internal start, d->len=%" PRIi64 ", d->start=%" PRIi64 ", d->skip=%" PRIi64
+        ", cache_config_min_average_object_size=%d",
+        d->len, d->start, d->skip, cache_config_min_average_object_size);
   // step1: calculate the number of entries.
   off_t total_entries = (d->len - (d->start - d->skip)) / cache_config_min_average_object_size;
   // step2: calculate the number of buckets
@@ -1162,7 +1167,10 @@ vol_init_data_internal(Vol *d)
   d->buckets = (total_buckets + d->segments - 1) / d->segments;
   // step5: set the start pointer.
   d->start = d->skip + 2 * d->dirlen();
-  Debug("my_cache_init", "vol_init_data_internal end, total_entries=%" PRIi64 ", total_buckets=%" PRIi64 ", d->segments=%d, d->buckets=%" PRIi64 ", d->start=%" PRIi64, total_entries, total_buckets, d->segments, d->buckets, d->start);
+  Debug("my_cache_init",
+        "vol_init_data_internal end, total_entries=%" PRIi64 ", total_buckets=%" PRIi64 ", d->segments=%d, d->buckets=%" PRIi64
+        ", d->start=%" PRIi64,
+        total_entries, total_buckets, d->segments, d->buckets, d->start);
 }
 
 static void
@@ -1245,7 +1253,8 @@ Vol::clear_dir()
 int
 Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
 {
-  Debug("my_cache_init", "Vol::init start, s='%s', blocks=%" PRIi64 ", dir_skip=%" PRIi64 ", clear=%d, disk->hash_base_string='%s'", s, blocks, dir_skip, clear, (char *) disk->hash_base_string);
+  Debug("my_cache_init", "Vol::init start, s='%s', blocks=%" PRIi64 ", dir_skip=%" PRIi64 ", clear=%d, disk->hash_base_string='%s'",
+        s, blocks, dir_skip, clear, (char *)disk->hash_base_string);
   char *seed_str              = disk->hash_base_string ? disk->hash_base_string : s;
   const size_t hash_seed_size = strlen(seed_str);
   const size_t hash_text_size = hash_seed_size + 32;
@@ -1308,7 +1317,9 @@ Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
   off_t bs                               = skip + this->dirlen();
   init_info->vol_aio[2].aiocb.aio_offset = bs;
   init_info->vol_aio[3].aiocb.aio_offset = bs + footer_offset;
-  Debug("my_cache_init", "4 offsets=%" PRIi64 ", %" PRIi64 ", %" PRIi64 ", %" PRIi64 ", footerlen=%d", init_info->vol_aio[0].aiocb.aio_offset, init_info->vol_aio[1].aiocb.aio_offset, init_info->vol_aio[2].aiocb.aio_offset, init_info->vol_aio[3].aiocb.aio_offset, footerlen);
+  Debug("my_cache_init", "4 offsets=%" PRIi64 ", %" PRIi64 ", %" PRIi64 ", %" PRIi64 ", footerlen=%d",
+        init_info->vol_aio[0].aiocb.aio_offset, init_info->vol_aio[1].aiocb.aio_offset, init_info->vol_aio[2].aiocb.aio_offset,
+        init_info->vol_aio[3].aiocb.aio_offset, footerlen);
 
   for (unsigned i = 0; i < countof(init_info->vol_aio); i++) {
     AIOCallback *aio      = &(init_info->vol_aio[i]);
@@ -1441,6 +1452,7 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
   uint32_t max_sync_serial = header->sync_serial;
   char *s, *e;
   if (event == EVENT_IMMEDIATE) {
+    Debug("my_cache_init", "handle_recover_from_data event==EVENT_IMMEDIATE, header->sync_serial=%d", header->sync_serial);
     if (header->sync_serial == 0) {
       io.aiocb.aio_buf = nullptr;
       SET_HANDLER(&Vol::handle_recover_write_dir);
@@ -1461,6 +1473,8 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
       io.aiocb.aio_nbytes = (skip + len) - recover_pos;
     }
   } else if (event == AIO_EVENT_DONE) {
+    Debug("my_cache_init", "handle_recover_from_data event==AIO_EVENT_DONE, nbytes=%" PRIu64 ", result=%" PRIu64,
+          io.aiocb.aio_nbytes, (size_t)io.aio_result);
     if ((size_t)io.aiocb.aio_nbytes != (size_t)io.aio_result) {
       Warning("disk read error on recover '%s', clearing", hash_text.get());
       disk->incrErrors(&io);
@@ -1501,23 +1515,30 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
     }
   }
   // examine what we got
+  Debug("my_cache_init", "got_len=%u", got_len);
   if (got_len) {
     Doc *doc = nullptr;
 
     if (recover_wrapped && start == io.aiocb.aio_offset) {
+      Debug("my_cache_init", "handle_recover_from_data #1");
       doc = (Doc *)s;
       if (doc->magic != DOC_MAGIC || doc->write_serial < last_write_serial) {
+        Debug("my_cache_init", "handle_recover_from_data #2");
         recover_pos = skip + len - EVACUATION_SIZE;
         goto Ldone;
       }
     }
 
     while (s < e) {
+      Debug("my_cache_init", "handle_recover_from_data #3");
       doc = (Doc *)s;
 
       if (doc->magic != DOC_MAGIC || doc->sync_serial != last_sync_serial) {
+        Debug("my_cache_init", "handle_recover_from_data #4");
         if (doc->magic == DOC_MAGIC) {
+          Debug("my_cache_init", "handle_recover_from_data #5");
           if (doc->sync_serial > header->sync_serial) {
+            Debug("my_cache_init", "handle_recover_from_data #6");
             max_sync_serial = doc->sync_serial;
           }
 
@@ -1549,6 +1570,7 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
           // case 1
           // case 2
           if (doc->sync_serial > last_sync_serial && doc->sync_serial <= header->sync_serial + 1) {
+            Debug("my_cache_init", "handle_recover_from_data #7");
             last_sync_serial = doc->sync_serial;
             s += round_to_approx_size(doc->len);
             continue;
@@ -1558,21 +1580,25 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
           // (doc->sync_serial > header->sync_serial + 1).
           // if we are too close to the end, wrap around
           else if (recover_pos - (e - s) > (skip + len) - AGG_SIZE) {
+            Debug("my_cache_init", "handle_recover_from_data #8");
             recover_wrapped     = true;
             recover_pos         = start;
             io.aiocb.aio_nbytes = RECOVERY_SIZE;
 
             break;
           }
+          Debug("my_cache_init", "handle_recover_from_data #9");
           // we are done. This doc was written in the earlier phase
           recover_pos -= e - s;
           goto Ldone;
         } else {
+          Debug("my_cache_init", "handle_recover_from_data #10");
           // doc->magic != DOC_MAGIC
           // If we are in the danger zone - recover_pos is within AGG_SIZE
           // from the end, then wrap around
           recover_pos -= e - s;
           if (recover_pos > (skip + len) - AGG_SIZE) {
+            Debug("my_cache_init", "handle_recover_from_data #11");
             recover_wrapped     = true;
             recover_pos         = start;
             io.aiocb.aio_nbytes = RECOVERY_SIZE;
@@ -1583,26 +1609,33 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
           goto Ldone;
         }
       }
+      Debug("my_cache_init", "handle_recover_from_data #12");
       // doc->magic == DOC_MAGIC && doc->sync_serial == last_sync_serial
       last_write_serial = doc->write_serial;
       s += round_to_approx_size(doc->len);
     }
 
+    Debug("my_cache_init", "handle_recover_from_data #13");
     /* if (s > e) then we gone through RECOVERY_SIZE; we need to
        read more data off disk and continue recovering */
     if (s >= e) {
+      Debug("my_cache_init", "handle_recover_from_data #14");
       /* In the last iteration, we increment s by doc->len...need to undo
          that change */
       if (s > e) {
+        Debug("my_cache_init", "handle_recover_from_data #15");
         s -= round_to_approx_size(doc->len);
       }
       recover_pos -= e - s;
       if (recover_pos >= skip + len) {
+        Debug("my_cache_init", "handle_recover_from_data #16");
         recover_wrapped = true;
         recover_pos     = start;
       }
+      Debug("my_cache_init", "handle_recover_from_data #17");
       io.aiocb.aio_nbytes = RECOVERY_SIZE;
       if ((off_t)(recover_pos + io.aiocb.aio_nbytes) > (off_t)(skip + len)) {
+        Debug("my_cache_init", "handle_recover_from_data #18");
         io.aiocb.aio_nbytes = (skip + len) - recover_pos;
       }
     }
@@ -1612,10 +1645,14 @@ Vol::handle_recover_from_data(int event, void * /* data ATS_UNUSED */)
   }
   prev_recover_pos    = recover_pos;
   io.aiocb.aio_offset = recover_pos;
+  Debug("my_cache_init", "handle_recover_from_data calling aio_read, recover_pos=%" PRIi64, recover_pos);
   ink_assert(ink_aio_read(&io));
   return EVENT_CONT;
 
 Ldone : {
+  Debug("my_cache_init",
+        "handle_recover_from_data Ldone, recover_pos=%" PRIi64 ", header->write_pos=%" PRIi64 ", recover_wrapped=%d", recover_pos,
+        header->write_pos, recover_wrapped);
   /* if we come back to the starting position, then we don't have to recover anything */
   if (recover_pos == header->write_pos && recover_wrapped) {
     SET_HANDLER(&Vol::handle_recover_write_dir);
@@ -1688,6 +1725,7 @@ Ldone : {
 }
 
 Lclear:
+  Debug("my_cache_init", "handle_recover_from_data Lclear");
   free((char *)io.aiocb.aio_buf);
   delete init_info;
   init_info = nullptr;
