@@ -90,7 +90,7 @@ int cache_config_compatibility_4_2_0_fixup = 1;
 // Globals
 
 RecRawStatBlock *cache_rsb          = nullptr;
-Cache *theCache                     = nullptr;
+Cache *theCache                     = nullptr; // MEMO: ディスクキャッシュ
 CacheDisk **gdisks                  = nullptr;
 int gndisks                         = 0;
 std::atomic<int> initialize_disk    = 0;
@@ -1681,6 +1681,8 @@ Ldone : {
   // clear effected portion of the cache
   off_t clear_start = this->offset_to_vol_offset(header->write_pos);
   off_t clear_end   = this->offset_to_vol_offset(recover_pos);
+  Debug("my_cache_init",
+        "handle_recover_from_data Ldone, before calling dir_clear_range clear_start=%" PRIi64 ", clear_end=%" PRIi64, clear_start, clear_end);
   if (clear_start <= clear_end) {
     dir_clear_range(clear_start, clear_end, this);
   } else {
@@ -1736,6 +1738,7 @@ Lclear:
 int
 Vol::handle_recover_write_dir(int /* event ATS_UNUSED */, void * /* data ATS_UNUSED */)
 {
+  Debug("my_cache_init", "Vol::handle_recover_write_dir start");
   if (io.aiocb.aio_buf) {
     free((char *)io.aiocb.aio_buf);
   }
@@ -1810,6 +1813,7 @@ Vol::handle_header_read(int event, void *data)
 int
 Vol::dir_init_done(int /* event ATS_UNUSED */, void * /* data ATS_UNUSED */)
 {
+  Debug("my_cache_init", "Vol::dir_init_done start, cache_read_done=%d", cache->cache_read_done);
   if (!cache->cache_read_done) {
     eventProcessor.schedule_in(this, HRTIME_MSECONDS(5), ET_CALL);
     return EVENT_CONT;

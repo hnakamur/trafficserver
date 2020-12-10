@@ -739,7 +739,7 @@ Vol::evac_range(off_t low, off_t high, int evac_phase)
 }
 
 static int
-agg_copy(char *p, CacheVC *vc)
+agg_copy(char *p, CacheVC *vc) // MEMO: vcからpにコピー。pはDoc*にキャストされる
 {
   Vol *vol = vc->vol;
   off_t o  = vol->header->write_pos + vol->agg_buf_pos;

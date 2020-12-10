@@ -972,6 +972,7 @@ struct CacheHostRecord;
 struct Vol;
 class CacheHostTable;
 
+// MEMO: Cache 構造体のフィールドにはキャシュのデータに関連しそうなものが見当たらないが、メソッドはキャッシュを読み書きするものが提供されている。これはどうなっているのか？
 struct Cache {
   int cache_read_done;
   int total_good_nvol;
