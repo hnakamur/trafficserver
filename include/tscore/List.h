@@ -213,6 +213,9 @@ SLL<C, L>::pop()
 //
 //      List descriptor for doubly-linked list of objects of type C.
 //
+/// @brief List descriptor for doubly-linked list of objects of type C.
+/// @tparam C is oject type
+/// @tparam L is link type (default is typename C::Link_link)
 template <class C, class L = typename C::Link_link> struct DLL {
   C *head;
   bool

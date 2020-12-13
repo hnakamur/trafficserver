@@ -61,6 +61,7 @@ typedef HTTPHdr CacheHTTPHdr;
 typedef URL CacheURL;
 typedef HTTPInfo CacheHTTPInfo;
 
+/// @brief The singleton cache management object. This handles threads and global initialization for the cache.
 struct CacheProcessor : public Processor {
   CacheProcessor()
     : min_stripe_version(CACHE_DB_MAJOR_VERSION, CACHE_DB_MINOR_VERSION),

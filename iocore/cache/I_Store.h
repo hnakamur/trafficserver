@@ -195,6 +195,7 @@ public:
   static const char *errorstr(span_error_t serr);
 };
 
+/// @brief A singleton containing all of the cache storage description.
 struct Store {
   //
   // Public Interface

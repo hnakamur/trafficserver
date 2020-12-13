@@ -99,6 +99,7 @@ struct EvacuationKey {
   CryptoHash earliest_key;
 };
 
+/// @brief A range of content to be evacuated.
 struct EvacuationBlock {
   union {
     unsigned int init;

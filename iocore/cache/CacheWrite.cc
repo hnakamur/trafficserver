@@ -969,6 +969,10 @@ Vol::agg_wrap()
    Also, make sure that any functions called by this also use
    the eventProcessor to schedule events
 */
+/// @brief Schedule the aggregation buffer to be written to disk.
+/// @param event is an AIO event type.
+/// @param e is unused.
+/// @return an event callback return value
 int
 Vol::aggWrite(int event, void * /* e ATS_UNUSED */)
 {

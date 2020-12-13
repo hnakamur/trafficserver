@@ -852,6 +852,10 @@ Lcallreturn:
   This code follows CacheVC::openReadStartHead closely,
   if you change this you might have to change that.
 */
+/// @brief Performs the initial read for an alternate of an object.
+/// @param event is unused (an AIO event type).
+/// @param e is unused (an Event pointer).
+/// @return an AIO event type.
 int
 CacheVC::openReadStartEarliest(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
 {
@@ -1055,6 +1059,10 @@ Lrestart:
   This code follows CacheVC::openReadStartEarliest closely,
   if you change this you might have to change that.
 */
+/// @brief Performs the initial read for a cached object.
+/// @param event is an AIO event type.
+/// @param e is an Event pointer.
+/// @return an AIO event type.
 int
 CacheVC::openReadStartHead(int event, Event *e)
 {

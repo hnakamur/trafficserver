@@ -228,6 +228,7 @@ extern int cache_read_while_writer_retry_delay;
 extern int cache_config_read_while_writer_max_retries;
 
 // CacheVC
+/// @brief A virtual connection class which accepts input for writing to cache.
 struct CacheVC : public CacheVConnection {
   CacheVC();
 

@@ -154,7 +154,7 @@ void init_buffer_allocators(int iobuffer_advice);
   </table>
 
  */
-class IOBufferData : public RefCountObj
+class IOBufferData : public RefCountObj // MEMO: 参照カウンタ付きIOバッファデータ
 {
 public:
   /**
@@ -269,7 +269,7 @@ inkcoreapi extern ClassAllocator<IOBufferData> ioDataAllocator;
   block is both in use and usable by the MIOBuffer it is attached to.
 
 */
-class IOBufferBlock : public RefCountObj
+class IOBufferBlock : public RefCountObj  // MEMO: 参照カウンタ付きIOバッファブロック(IOBufferDataのシングルリンクリスト)
 {
 public:
   /**

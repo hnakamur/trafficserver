@@ -118,7 +118,8 @@ typedef uint32_t DirInfo;
 // The accessors prevent unaligned memory access which
 // is often either less efficient or unsupported depending
 // on the processor.
-struct Dir { // MEMO: directory entry in Cache Stripe
+/// @brief directory entry (10 bytes) in Cache Stripe
+struct Dir {
 #if DO_NOT_REMOVE_THIS
   // THE BIT-FIELD INTERPRETATION OF THIS STRUCT WHICH HAS TO
   // USE MACROS TO PREVENT UNALIGNED LOADS
@@ -245,6 +246,7 @@ struct OpenDirEntry {
   }
 };
 
+/// @brief An open directory entry. It contains all the information of a Dir plus additional information from the first Doc.
 struct OpenDir : public Continuation {
   Queue<CacheVC, Link_CacheVC_opendir_link> delayed_readers;
   DLL<OpenDirEntry> bucket[OPEN_DIR_BUCKETS];
