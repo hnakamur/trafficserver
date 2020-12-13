@@ -739,6 +739,10 @@ Vol::evac_range(off_t low, off_t high, int evac_phase)
   return 0;
 }
 
+/// @brief Copy data from vc to agg buf
+/// @param p is a pointer in agg buf
+/// @param vc is a virtual connection
+/// @return number of bytes copied
 static int
 agg_copy(char *p, CacheVC *vc)
 {
@@ -976,6 +980,10 @@ Vol::agg_wrap()
    Also, make sure that any functions called by this also use
    the eventProcessor to schedule events
 */
+/// @brief Write agg_buf to disk
+/// @param event is an event type (checks it is EVENT_CALL in some condition)
+/// @param e is unused
+/// @return event callback return value
 int
 Vol::aggWrite(int event, void * /* e ATS_UNUSED */)
 {
