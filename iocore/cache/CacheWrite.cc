@@ -1238,6 +1238,8 @@ CacheVC::openWriteCloseHead(int event, Event *e)
   }
 }
 
+/// @brief called when vc is closed after writing data?
+/// adjust write_len to MAX_FRAG_SIZE if write_len > MAX_FRAG_SIZE
 int
 CacheVC::openWriteCloseDataDone(int event, Event *e)
 {
@@ -1289,6 +1291,11 @@ Lcallreturn:
   return handleEvent(AIO_EVENT_DONE, nullptr);
 }
 
+/// @brief called when vc is closed after write?
+/// adjust write_len to MAX_FRAG_SIZE if write_len > MAX_FRAG_SIZE
+/// @param event is an AIO event type
+/// @param e is an Event
+/// @return callback return value
 int
 CacheVC::openWriteClose(int event, Event *e)
 {
@@ -1385,6 +1392,12 @@ target_fragment_size()
   return value;
 }
 
+/// @brief openWriteMain.
+/// adjust towrite to MAX_FRAG_SIZE if towrite > MAX_FRAG_SIZE.
+/// comparing write_len to target_fragment_size and adjust it.
+/// @param event is unused.
+/// @param e is unused.
+/// @return event callback return value.
 int
 CacheVC::openWriteMain(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
 {
@@ -1647,6 +1660,16 @@ CacheVC::openWriteStartBegin(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED
 }
 
 // main entry point for writing of of non-http documents
+/// @brief main entry point for writing of http documents.
+/// called from CacheProcessor::open_write.
+/// @param cont is a Contiuation
+/// @param key is a CacheKey
+/// @param frag_type is a CacheFragType
+/// @param options is an options
+/// @param apin_in_cache is a timestamp of pin in cache
+/// @param hostname is a hostname
+/// @param host_len is the length of the hostname
+/// @return a pointer to an Action
 Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_type, int options, time_t apin_in_cache,
                   const char *hostname, int host_len)
@@ -1713,6 +1736,17 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_ty
 }
 
 // main entry point for writing of http documents
+/// @brief main entry point for writing of http documents.
+/// called from CacheProcessor::open_write.
+/// @param cont is a Contiuation
+/// @param key is a CacheKey
+/// @param info is a CacheHTTPInfo
+/// @param apin_in_cache is a timestamp of pin in cache
+/// @param key1 is unused (const CacheKey *)
+/// @param type is a CacheFragType
+/// @param hostname is a hostname
+/// @param host_len is the length of the hostname
+/// @return a pointer to an Action
 Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, time_t apin_in_cache,
                   const CacheKey * /* key1 ATS_UNUSED */, CacheFragType type, const char *hostname, int host_len)

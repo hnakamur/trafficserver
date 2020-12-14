@@ -122,11 +122,12 @@ enum CacheFragType {
 
 typedef CryptoHash CacheKey;
 
+/// @brief HttpCacheKey consists of hostname and CacheKey hash.
 struct HttpCacheKey {
   int hostlen;
   const char *hostname;
   CacheKey hash;
-  CacheKey hash2;
+  CacheKey hash2; // not used
 };
 
 #define CACHE_ALLOW_MULTIPLE_WRITES 1

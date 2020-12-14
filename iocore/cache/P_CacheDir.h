@@ -245,6 +245,8 @@ struct OpenDirEntry {
   }
 };
 
+/// @brief a more detailed directory entry.
+/// https://docs.trafficserver.apache.org/en/9.0.x/developer-guide/cache-architecture/architecture.en.html#cache-lookup
 struct OpenDir : public Continuation {
   Queue<CacheVC, Link_CacheVC_opendir_link> delayed_readers;
   DLL<OpenDirEntry> bucket[OPEN_DIR_BUCKETS];
