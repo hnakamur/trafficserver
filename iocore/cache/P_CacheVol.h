@@ -74,21 +74,36 @@ struct VolInitInfo;
 struct DiskVol;
 struct CacheVol;
 
+// header or footer in stripe metadata.
 struct VolHeaderFooter {
+  // Container for a magic value, VOL_MAGIC, to indicate the instance is valid.
   unsigned int magic;
+  // Version of the instance.
   ts::VersionNumber version;
+  // Epoch time when the stripe was created.
   time_t create_time;
+  // Position of the write cursor, as a byte offset in the stripe.
   off_t write_pos;
+  // Location of the write cursor of the most recently completed disk write.
   off_t last_write_pos;
+  // The byte offset in the stripe where the current aggregation buffer will be written.
   off_t agg_pos;
   uint32_t generation; // token generation (vary), this cannot be 0
+  // phase which is filpped in `Vol::agg_wrap`
   uint32_t phase;
+  // cycle which is incremented in `Vol::agg_wrap`
   uint32_t cycle;
+  // sync serial counter which is incremented in CacheSync::mainEvent and sync_cache_dir_on_shutdown.
   uint32_t sync_serial;
+  // write serial counter which is incremented in Vol::aggWriteDone and sync_cache_dir_on_shutdown.
   uint32_t write_serial;
+  // dirty flag which is set in dir_delete_entry, dir_insert, and dir_overwrite.
   uint32_t dirty;
   uint32_t sector_size;
   uint32_t unused; // pad out to 8 byte boundary
+  // Array whose element is the first directory entry in the free list for the segment corresponding to the array index.
+  // For header, the actual array length is Vol::segments.
+  // For footer, this is not used and the array length is 1.
   uint16_t freelist[1];
 };
 
@@ -119,6 +134,7 @@ struct EvacuationBlock {
   LINK(EvacuationBlock, link);
 };
 
+// a storage unit inside a cache volume.
 struct Vol : public Continuation {
   char *path = nullptr;
   ats_scoped_str hash_text;
@@ -129,14 +145,23 @@ struct Vol : public Continuation {
   Dir *dir                = nullptr;
   VolHeaderFooter *header = nullptr;
   VolHeaderFooter *footer = nullptr;
-  int segments            = 0;
-  off_t buckets           = 0;
-  off_t recover_pos       = 0;
-  off_t prev_recover_pos  = 0;
-  off_t scan_pos          = 0;
-  off_t skip              = 0; // start of headers
-  off_t start             = 0; // start of data
-  off_t len               = 0;
+  // The number of segments in the volume. This will be roughly the total number of entries divided by the number of entries in a
+  // segment. It will be rounded up to cover all entries.
+  int segments = 0;
+  // The number of buckets in the volume. This will be roughly the number of entries in a segment divided by DIR_DEPTH. For
+  // currently defined values this is around 16,384 (2^16 / 4). Buckets are used as the targets of the index hash.
+  off_t buckets          = 0;
+  off_t recover_pos      = 0;
+  off_t prev_recover_pos = 0;
+  off_t scan_pos         = 0;
+  // The start of stripe data. This represents either space reserved at the start of a physical device to avoid problems with the
+  // host operating system, or an offset representing use of space in the cache span by other stripes.
+  off_t skip = 0;
+  // The offset for the start of the content, after the stripe metadata.
+  off_t start = 0;
+  // Length of stripe in bytes.
+  off_t len = 0;
+  // Total number of blocks in the stripe available for content storage.
   off_t data_blocks       = 0;
   int hit_evacuate_window = 0;
   AIOCallbackInternal io;
@@ -146,7 +171,9 @@ struct Vol : public Continuation {
   Queue<CacheVC, Continuation::Link_link> sync;
   char *agg_buffer  = nullptr;
   int agg_todo_size = 0;
-  int agg_buf_pos   = 0;
+  // position in the aggregation buffer. This is set to `round_to_approx_size(sizeof(Doc))` when writing sync marker in
+  // Vol::aggWrite.
+  int agg_buf_pos = 0;
 
   Event *trigger = nullptr;
 
@@ -339,18 +366,28 @@ extern unsigned short *vol_hash_table;
 
 // inline Functions
 
+/* @brief returns the byte length of header (VolHeaderFooter) and the freelist.
+ * @return the byte length of header (VolHeaderFooter) and the freelist.
+ */
 TS_INLINE int
 Vol::headerlen()
 {
   return ROUND_TO_STORE_BLOCK(sizeof(VolHeaderFooter) + sizeof(uint16_t) * (this->segments - 1));
 }
 
+/* @brief returns the Dir pointer to the start of the segment
+ * @param s the segment index
+ * @return the Dir pointer to the start of the segment
+ */
 TS_INLINE Dir *
 Vol::dir_segment(int s)
 {
   return (Dir *)(((char *)this->dir) + (s * this->buckets) * DIR_DEPTH * SIZEOF_DIR);
 }
 
+/* @brief returns total byte length of header, dir, and footer.
+ * @return total byte length of header, dir, and footer.
+ */
 TS_INLINE size_t
 Vol::dirlen()
 {
@@ -358,6 +395,9 @@ Vol::dirlen()
          ROUND_TO_STORE_BLOCK(sizeof(VolHeaderFooter));
 }
 
+/* @brief returns the number of dir entries.
+ * @return the number of dir entries.
+ */
 TS_INLINE int
 Vol::direntries()
 {
@@ -394,12 +434,20 @@ Vol::vol_offset(Dir *e)
   return this->start + (off_t)dir_offset(e) * CACHE_BLOCK_SIZE - CACHE_BLOCK_SIZE;
 }
 
+/* @brief convert a byte offset to a vol offset.
+ * @param pos is a byte offset
+ * @return a vol offset (cache block index) (=ceil((pos - this->start) / CACHE_BLOCK_SIZE (512byte)))
+ */
 TS_INLINE off_t
 Vol::offset_to_vol_offset(off_t pos)
 {
   return ((pos - this->start + CACHE_BLOCK_SIZE) / CACHE_BLOCK_SIZE);
 }
 
+/* @brief convert a vol offset to a byte offset.
+ * @param pos is a vol offset (cache block index).
+ * @return a byte offset (= this->start + (pos - 1) * CACHE_BLOCK_SIZE (512byte))
+ */
 TS_INLINE off_t
 Vol::vol_offset_to_offset(off_t pos)
 {
