@@ -84,7 +84,10 @@ struct CacheVC;
     dir_assign(_e, _x);                 \
     dir_set_next(_e, next);             \
   } while (0)
-// entry is valid
+// @brief Returns whether the entry is valid.
+// @param _d is the pointer to the Vol.
+// @param _e is the pointer to the directory entry.
+// @return whether the entry is valid.
 #define dir_valid(_d, _e) (_d->header->phase == dir_phase(_e) ? _d->vol_in_phase_valid(_e) : _d->vol_out_of_phase_valid(_e))
 // entry is valid and outside of write aggregation region
 #define dir_agg_valid(_d, _e) (_d->header->phase == dir_phase(_e) ? _d->vol_in_phase_valid(_e) : _d->vol_out_of_phase_agg_valid(_e))
@@ -112,6 +115,8 @@ typedef uint32_t DirInfo;
 
 // Cache Directory
 
+// Dir is the directory entry.
+//
 // INTERNAL: do not access these members directly, use the
 // accessors below (e.g. dir_offset, dir_set_offset).
 // These structures are stored in memory 2 byte aligned.
@@ -140,6 +145,12 @@ struct Dir {
 #endif
 };
 
+// FreeDir is meant for the directory entry in the freelist,
+// but struct FreeDir is not actually used in the code.
+// Dir is used instead, but w[2] is used for "prev" (the previous
+// directory entry index in the freelist and accessed with
+// dir_prev and dir_set_prev.
+//
 // INTERNAL: do not access these members directly, use the
 // accessors below (e.g. dir_offset, dir_set_offset)
 struct FreeDir {
@@ -157,8 +168,14 @@ struct FreeDir {
 #endif
 };
 
+// @brief Returns the byte offset of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @return the byte offset of the directory entry.
 #define dir_offset(_e) \
   ((int64_t)(((uint64_t)(_e)->w[0]) | (((uint64_t)((_e)->w[1] & 0xFF)) << 16) | (((uint64_t)(_e)->w[4]) << 24)))
+// @brief Sets the byte offset of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @param _o is the byte offset of the directory entry.
 #define dir_set_offset(_e, _o)                                              \
   do {                                                                      \
     (_e)->w[0] = (uint16_t)_o;                                              \
@@ -167,10 +184,25 @@ struct FreeDir {
   } while (0)
 #define dir_bit(_e, _w, _b) ((uint32_t)(((_e)->w[_w] >> (_b)) & 1))
 #define dir_set_bit(_e, _w, _b, _v) (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)))
+// @brief Returns the size multiplier of the document.
+// @param _e is the pointer to the directory entry.
+// @return the size multiplier (2-bit value as uint32_t) of the document.
 #define dir_big(_e) ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
+// @brief Sets the size multiplier of the document.
+// @param _e is the pointer to the directory entry.
+// @param _v is the size multiplier (2-bit value as uint16_t) of the document.
 #define dir_set_big(_e, _v) (_e)->w[1] = (uint16_t)(((_e)->w[1] & 0xFCFF) | (((uint16_t)(_v)) & 0x3) << 8)
+// @brief Returns the size part of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @return the size (6-bit value as uint32_t) of the directory entry.
 #define dir_size(_e) ((uint32_t)(((_e)->w[1]) >> 10))
+// @brief Sets the size part of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @param _v is the size part (6-bit value as uint16_t) of the directory entry.
 #define dir_set_size(_e, _v) (_e)->w[1] = (uint16_t)(((_e)->w[1] & ((1 << 10) - 1)) | ((_v) << 10))
+// @brief Sets the big and size part of the directory entry by the approximate size of the document.
+// @param _e is the pointer to the directory entry.
+// @param _v is the approximate size of the document.
 #define dir_set_approx_size(_e, _s)                   \
   do {                                                \
     if ((_s) <= DIR_SIZE_WITH_BLOCK(0)) {             \
@@ -187,6 +219,9 @@ struct FreeDir {
       dir_set_size(_e, ((_s)-1) / DIR_BLOCK_SIZE(3)); \
     }                                                 \
   } while (0)
+// @brief Returns the approximate size of the document.
+// @param _e is the pointer to the directory entry.
+// @return the approximate size (uint32_t) of the document.
 #define dir_approx_size(_e) ((dir_size(_e) + 1) * DIR_BLOCK_SIZE(dir_big(_e)))
 #define round_to_approx_dir_size(_s)      \
   (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
@@ -194,20 +229,58 @@ struct FreeDir {
      (_s <= DIR_SIZE_WITH_BLOCK(1) ?      \
         ROUND_TO(_s, DIR_BLOCK_SIZE(1)) : \
         (_s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(_s, DIR_BLOCK_SIZE(2)) : ROUND_TO(_s, DIR_BLOCK_SIZE(3)))))
+// @brief Returns the 12-bit tag value of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @return the 12-bit tag value.
 #define dir_tag(_e) ((uint32_t)((_e)->w[2] & ((1 << DIR_TAG_WIDTH) - 1)))
+// @brief Sets the 12-bit tag value of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @param _t is the 12-bit tag value.
 #define dir_set_tag(_e, _t) \
   (_e)->w[2] = (uint16_t)(((_e)->w[2] & ~((1 << DIR_TAG_WIDTH) - 1)) | ((_t) & ((1 << DIR_TAG_WIDTH) - 1)))
+// @brief Returns the phase flag value of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @return the phase flag value of the directory entry.
 #define dir_phase(_e) dir_bit(_e, 2, 12)
+// @brief Sets the phase flag value of the directory entry.
+// @param _e is the pointer to the directory entry.
+// @param _v is the phase flag value of the directory entry.
 #define dir_set_phase(_e, _v) dir_set_bit(_e, 2, 12, _v)
+// @brief Returns whether the directory entry is the first fragment or not.
+// @param _e is the pointer to the directory entry.
+// @return whether the directory entry is the first fragment or not.
 #define dir_head(_e) dir_bit(_e, 2, 13)
+// @brief Sets whether the directory entry is the first fragment or not.
+// @param _e is the pointer to the directory entry.
+// @param _v is the flag whether the directory entry is the first fragment or not.
 #define dir_set_head(_e, _v) dir_set_bit(_e, 2, 13, _v)
+// @brief Returns whether the document is pinned or not.
+// @param _e is the pointer to the directory entry.
+// @return whether the document is pinned or not.
 #define dir_pinned(_e) dir_bit(_e, 2, 14)
+// @brief Sets whether the document is pinned or not.
+// @param _e is the pointer to the directory entry.
+// @param _v is whether the document is pinned or not.
 #define dir_set_pinned(_e, _v) dir_set_bit(_e, 2, 14, _v)
 #define dir_token(_e) dir_bit(_e, 2, 15)
 #define dir_set_token(_e, _v) dir_set_bit(_e, 2, 15, _v)
+// @brief Returns the segment local index of the next entry.
+// @param _e is the directory entry.
+// @return the segment local index of the next entry.
 #define dir_next(_e) (_e)->w[3]
+// @brief Sets the segment local index of the next entry.
+// @param _e is the directory entry.
+// @param _o is the segment local index of the next entry.
 #define dir_set_next(_e, _o) (_e)->w[3] = (uint16_t)(_o)
+// @brief Returns the segment local index of the previous entry.
+// This is only valid for the directory entry in the freelist.
+// @param _e is the directory entry.
+// @return the segment local index of the previous entry.
 #define dir_prev(_e) (_e)->w[2]
+// @brief Sets the segment local index of the previous entry.
+// This is only valid for the directory entry in the freelist.
+// @param _e is the directory entry.
+// @param _o is the segment local index of the previous entry.
 #define dir_set_prev(_e, _o) (_e)->w[2] = (uint16_t)(_o)
 
 // INKqa11166 - Cache can not store 2 HTTP alternates simultaneously.
@@ -217,6 +290,7 @@ struct FreeDir {
 // is deleted/inserted into the vector just before writing the vector disk
 // (CacheVC::updateVector).
 LINK_FORWARD_DECLARATION(CacheVC, opendir_link) // forward declaration
+// TODO: Make clear what is different between OpenDirEntry and OpenDir.
 struct OpenDirEntry {
   DLL<CacheVC, Link_CacheVC_opendir_link> writers; // list of all the current writers
   DLL<CacheVC, Link_CacheVC_opendir_link> readers; // list of all the current readers - not used
@@ -302,14 +376,26 @@ extern Dir empty_dir;
 
 // Inline Functions
 
+// @brief Returns the pointer to directory entry in the segment.
+// @param _s is the pointer to the segment.
+// @param _i is the index of the directory entry in the segment.
+// @return the pointer to directory entry in the segment.
 #define dir_in_seg(_s, _i) ((Dir *)(((char *)(_s)) + (SIZEOF_DIR * (_i))))
 
+// @brief Compares the tag part in the directory entry and that in the cache key.
+// @apram e is the directory entry.
+// @param key is the cache key.
+// @return whether the tag is the same or not.
 TS_INLINE bool
 dir_compare_tag(const Dir *e, const CacheKey *key)
 {
   return (dir_tag(e) == DIR_MASK_TAG(key->slice32(2)));
 }
 
+// @brief Returns the pointer to directory entry in the segment.
+// @param i is the index of the directory in the segment.
+// @param seg is the pointer to the segment.
+// @return the pointer to directory entry in the segment, or nullptr is i is 0.
 TS_INLINE Dir *
 dir_from_offset(int64_t i, Dir *seg)
 {
@@ -323,6 +409,11 @@ dir_from_offset(int64_t i, Dir *seg)
   return dir_in_seg(seg, i);
 #endif
 }
+// @brief Returns the pointer to the "next" directory entry.
+// @param d is the pointer to the directory entry.
+// @param seg is the pointer to the segment.
+// @return the pointer to the "next" directory entry specified by dir_next index in d,
+//         or nullptr if the "next" does not exist.
 TS_INLINE Dir *
 next_dir(Dir *d, Dir *seg)
 {
@@ -340,11 +431,19 @@ dir_to_offset(const Dir *d, const Dir *seg)
   return i;
 #endif
 }
+// @brief Returns the pointer to the bucket.
+// @param b is bucket index in the segment.
+// @param seg is the pointer to the segment.
+// @return the pointer to the bucket.
 TS_INLINE Dir *
 dir_bucket(int64_t b, Dir *seg)
 {
   return dir_in_seg(seg, b * DIR_DEPTH);
 }
+// @brief Return the pointer to the diretory entry in the bucket.
+// @param b is the pointer to the bucket.
+// @param i is the directory entry index in the bucket.
+// @return the pointer to the diretory entry in the bucket.
 TS_INLINE Dir *
 dir_bucket_row(Dir *b, int64_t i)
 {

@@ -314,6 +314,12 @@ unlink_from_freelist(Dir *e, int s, Vol *d)
   }
 }
 
+// @brief Delete the entry from the linked list of directory entries.
+// @param e is the pointer to the directory entry to remove.
+// @param p is the pointer to the previous directory entry in the linked list.
+// @param s is the segment index.
+// @param d is the pointer to the Vol.
+// @return the pointer to the next directory entry to e.
 inline Dir *
 dir_delete_entry(Dir *e, Dir *p, int s, Vol *d)
 {
@@ -344,6 +350,11 @@ dir_delete_entry(Dir *e, Dir *p, int s, Vol *d)
   return dir_from_offset(no, seg);
 }
 
+// @brief Clean bucket.
+// Iterate through the linked list starting from the bucket and delete invalid entries.
+// @param b is the pointer to the bucket.
+// @param s is the segment index.
+// @param vol is the pointer to the Vol.
 inline void
 dir_clean_bucket(Dir *b, int s, Vol *vol)
 {
@@ -376,6 +387,9 @@ dir_clean_bucket(Dir *b, int s, Vol *vol)
   } while (e);
 }
 
+// @brief Clean the segment in the Vol.
+// @param s is the segment index.
+// @param d is the pointer to the Vol.
 void
 dir_clean_segment(int s, Vol *d)
 {
@@ -386,6 +400,8 @@ dir_clean_segment(int s, Vol *d)
   }
 }
 
+// @brief Clean all segments in the Vol.
+// @param d is the pointer to the Vol.
 void
 dir_clean_vol(Vol *d)
 {
@@ -421,6 +437,16 @@ check_bucket_not_contains(Dir *b, Dir *e, Dir *seg)
   ink_assert(!x);
 }
 
+// @brief Clean up the freelist by purging some directory entries in the segment.
+// This function is called from freelist_pop.
+//
+// First call dir_clean_segment and returns if the freelist for the segment become non-empty.
+// Otherwise, delete some directory entries in the segment and call dire_clean_segment again.
+// As for deleting some directory entries, all directory entries are searched, but only
+// the Dir's for the first fragment are selected, and only one in every ten of first fragment
+// Dir's are actually deleted.
+// @param s is the segment index.
+// @param vol is the pointer to the Vol.
 void
 freelist_clean(int s, Vol *vol)
 {
@@ -444,6 +470,12 @@ freelist_clean(int s, Vol *vol)
   dir_clean_segment(s, vol);
 }
 
+// @brief Pop a directory entry from the freelist.
+// @param s is the segment index.
+// @param d is the pointer to the Vol.
+// @return a directory entry popped from the freelist,
+// or nullptr if the freelist is still empty even after
+// some cleaning of the segment.
 inline Dir *
 freelist_pop(int s, Vol *d)
 {
@@ -519,6 +551,10 @@ dir_segment_accounted(int s, Vol *d, int offby, int *f, int *u, int *et, int *v,
   return d->buckets * DIR_DEPTH - (free + used + empty) <= offby;
 }
 
+// @brief Put the directory entry back to the freelist.
+// @param e is the pointer to the directory entry.
+// @param s is the segment index.
+// @param d is the pointer to the Vol.
 void
 dir_free_entry(Dir *e, int s, Vol *d)
 {
@@ -532,6 +568,17 @@ dir_free_entry(Dir *e, int s, Vol *d)
   d->header->freelist[s] = eo;
 }
 
+// @brief Locate a specific directory entry in the stripe directory based on a cache ID.
+//
+// https://docs.trafficserver.apache.org/en/9.0.x/developer-guide/cache-architecture/architecture.en.html#directory-probing
+// @param [in] key is the pointer to the cache key (cache ID).
+// @param [in] d is the pointer to the Vol.
+// @param [out] result is the copy destination for the directory entry if found.
+// @param [in,out] last_collision is  is used to mark the last matching entry returned by dir_probe().
+// If a tag match is found and there is no collision then that entry is returned and last_collision is updated to that entry.
+// If collision is set and if it isn’t the current match, the search continues down the linked list,
+// otherwise collision is cleared and the search continues.
+// @return whether directory probing is hit or miss.
 int
 dir_probe(const CacheKey *key, Vol *d, Dir *result, Dir **last_collision)
 {
@@ -599,6 +646,17 @@ Lagain:
   return 0;
 }
 
+// Insert the directory entry corresponding to the cache key.
+//
+// The target segment and bucket is determined from the cache key.
+// If the segment is full, some entries are deleted to make room for the new entry.
+//
+// As a side effect, the d->header->dirty is set to 1.
+//
+// @param key is the cache key.
+// @param d is the pointer to the Vol.
+// @param to_part is the directory entry to insert. Its value is copied to the new entry.
+// @return Whether the entry is inserted or not. Always return true.
 int
 dir_insert(const CacheKey *key, Vol *d, Dir *to_part)
 {
@@ -729,6 +787,12 @@ Lfill:
   return res;
 }
 
+// Delete an directory entry whose tag matches the tag of the cache key
+// and whose offset matches to the offset of the target Dir del.
+// @param key is the cache key.
+// @param d is the pointer to the Vol.
+// @param del is the directory entry contains the offset to match that in the entries in the linked list in the segment.
+// @return whether a directory entry is deleted or not.
 int
 dir_delete(const CacheKey *key, Vol *d, Dir *del)
 {
