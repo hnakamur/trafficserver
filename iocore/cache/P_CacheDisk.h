@@ -103,6 +103,7 @@ struct DiskHeader {
   DiskVolBlock vol_info[1];
 };
 
+// A representation of the physical device used for a Span.
 struct CacheDisk : public Continuation {
   DiskHeader *header = nullptr;
   char *path         = nullptr;

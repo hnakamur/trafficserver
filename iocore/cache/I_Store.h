@@ -48,6 +48,8 @@ enum span_error_t {
   SPAN_ERROR_MEDIA_PROBE,
 };
 
+// Cache span disk ID type.
+// Stores a 16 byte ID.
 struct span_diskid_t {
   int64_t id[2];
 
@@ -70,13 +72,16 @@ struct span_diskid_t {
   }
 };
 
+// Span models a cache span. This is a contiguous span of storage.
 //
 // A Store is a place to store data.
 // Those on the same disk should be in a linked list.
 //
 struct Span {
-  int64_t blocks          = 0; // in STORE_BLOCK_SIZE blocks
-  int64_t offset          = 0; // used only if (file == true); in bytes
+  // Number of storage blocks in the span. See STORE_BLOCK_SIZE.
+  int64_t blocks = 0;
+  // Offset (in bytes) to the start of the span. This is used only if the base storage is a file.
+  int64_t offset          = 0;
   unsigned hw_sector_size = DEFAULT_HW_SECTOR_SIZE;
   unsigned alignment      = 0;
   span_diskid_t disk_id;
@@ -190,6 +195,7 @@ public:
   static const char *errorstr(span_error_t serr);
 };
 
+// A singleton containing all of the cache storage description.
 struct Store {
   //
   // Public Interface
@@ -259,11 +265,12 @@ struct Store {
   Store();
   ~Store();
 
-  // The number of disks/paths defined in storage.config
+  // The number of distinct devices (disks/paths) defined in storage.config
   unsigned n_disks_in_config = 0;
-  // The number of disks/paths we could actually read and parse.
+  // The number of valid and distinct devices (disks/paths we could actually read and parse).
   unsigned n_disks = 0;
-  Span **disk      = nullptr;
+  // List of spans.
+  Span **disk = nullptr;
 
   Result read_config();
 

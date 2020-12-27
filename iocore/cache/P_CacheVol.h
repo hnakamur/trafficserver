@@ -38,7 +38,7 @@
 #define START_POS ((off_t)START_BLOCKS * CACHE_BLOCK_SIZE)
 #define AGG_SIZE (4 * 1024 * 1024)     // 4MB
 #define AGG_HIGH_WATER (AGG_SIZE / 2)  // 2MB
-#define EVACUATION_SIZE (2 * AGG_SIZE) // 8MB
+#define EVACUATION_SIZE (2 * AGG_SIZE) // The size of the contiguous area to check for evacuation. 8MB
 #define MAX_VOL_SIZE ((off_t)512 * 1024 * 1024 * 1024 * 1024)
 #define STORE_BLOCKS_PER_CACHE_BLOCK (STORE_BLOCK_SIZE / CACHE_BLOCK_SIZE)
 #define MAX_VOL_BLOCKS (MAX_VOL_SIZE / CACHE_BLOCK_SIZE)
@@ -116,6 +116,7 @@ struct EvacuationKey {
   CryptoHash earliest_key;
 };
 
+// A range of content to be evacuated.
 struct EvacuationBlock {
   union {
     unsigned int init;

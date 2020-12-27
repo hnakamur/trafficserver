@@ -120,6 +120,7 @@ enum CacheFragType {
   NUM_CACHE_FRAG_TYPES     = 4
 };
 
+// The hash value for a cache object. Currently a 128 bit MD5 hash.
 typedef CryptoHash CacheKey;
 
 struct HttpCacheKey {

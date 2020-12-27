@@ -550,6 +550,10 @@ Vol::close_read(CacheVC *cont)
 
 // Cache Processor
 
+// @brief Starts the cache processing threads, n_threads are created each with a stack of size stacksize.
+// @param n_cache_threads is default to zero, but not used.
+// @param stacksize is default to DEFAULT_STACKSIZE, but not used.
+// @return 0 on success, -1 on failure.
 int
 CacheProcessor::start(int, size_t)
 {
@@ -1810,6 +1814,8 @@ cmprtable(const void *aa, const void *bb)
   return 0;
 }
 
+// Construct the global stripe assignment table based on the configuration record cp.
+// @param cp is the pointer to CacheHostRecord.
 void
 build_vol_hash_table(CacheHostRecord *cp)
 {
@@ -2706,6 +2712,8 @@ fillExclusiveDisks(CacheVol *cp)
   return diskCount;
 }
 
+// Rebuild the assignment of stripes to volumes.
+// @return 0 on success, -1 on failure.
 int
 cplist_reconfigure()
 {

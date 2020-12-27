@@ -315,6 +315,8 @@ Lagain:
   return found ? 0 : -1;
 }
 
+// Read storage.config and initialize the base state of the instance.
+// @return Result::ok on success, Result::failure on failure.
 Result
 Store::read_config()
 {

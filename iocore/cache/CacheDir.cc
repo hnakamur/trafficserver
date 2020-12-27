@@ -568,13 +568,15 @@ dir_free_entry(Dir *e, int s, Vol *d)
   d->header->freelist[s] = eo;
 }
 
-// @brief Locate a specific directory entry in the stripe directory based on a cache ID.
+// Probe the stripe directory for a candidate directory entry.
+//
+// Locate a specific directory entry in the stripe directory based on a cache ID.
 //
 // https://docs.trafficserver.apache.org/en/9.0.x/developer-guide/cache-architecture/architecture.en.html#directory-probing
-// @param [in] key is the pointer to the cache key (cache ID).
-// @param [in] d is the pointer to the Vol.
-// @param [out] result is the copy destination for the directory entry if found.
-// @param [in,out] last_collision is  is used to mark the last matching entry returned by dir_probe().
+// @param key [in] is the pointer to the cache key (cache ID).
+// @param d [in] is the pointer to the Vol.
+// @param result [out] is the copy destination for the directory entry if found.
+// @param last_collision [in,out] is used to mark the last matching entry returned by dir_probe().
 // If a tag match is found and there is no collision then that entry is returned and last_collision is updated to that entry.
 // If collision is set and if it isn’t the current match, the search continues down the linked list,
 // otherwise collision is cleared and the search continues.
