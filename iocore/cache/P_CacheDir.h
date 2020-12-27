@@ -66,10 +66,21 @@ struct CacheVC;
 #ifdef DO_CHECK_DIR
 #define CHECK_DIR(_d) ink_assert(check_dir(_d))
 #else
+// @brief CHECK_DIR is no-op if DO_CHECK_DIR is undefined.
+// If DO_CHECK_DIR is defined, CHECK_DIR calls check_dir and
+// asserts the result is true.
+// @param _d is the pointer to the directory entry.
 #define CHECK_DIR(_d) ((void)0)
 #endif
 
+// @brief Returns the pointer to directory entry at the index _i in the directory entries in the Vol.
+// @param _e is the pointer to the Vol.
+// @param _i is the index of the directory entry.
+// @return the pointer to the directory entry.
 #define dir_index(_e, _i) ((Dir *)((char *)(_e)->dir + (SIZEOF_DIR * (_i))))
+// @brief Copy the contents of the directory entry _x to _e.
+// @param _e is the destination directory entry.
+// @param _x is the source directory entry.
 #define dir_assign(_e, _x)   \
   do {                       \
     (_e)->w[0] = (_x)->w[0]; \
@@ -78,6 +89,10 @@ struct CacheVC;
     (_e)->w[3] = (_x)->w[3]; \
     (_e)->w[4] = (_x)->w[4]; \
   } while (0)
+// @brief Copy the data part of the directory entry _x to _e.
+// The data part is all but the "next" local index part.
+// @param _e is the destination directory entry.
+// @param _x is the source directory entry.
 #define dir_assign_data(_e, _x)         \
   do {                                  \
     unsigned short next = dir_next(_e); \
@@ -95,7 +110,13 @@ struct CacheVC;
 #define dir_write_valid(_d, _e) \
   (_d->header->phase == dir_phase(_e) ? vol_in_phase_valid(_d, _e) : vol_out_of_phase_write_valid(_d, _e))
 #define dir_agg_buf_valid(_d, _e) (_d->header->phase == dir_phase(_e) && _d->vol_in_phase_agg_buf_valid(_e))
+// @brief Returns whether the directory is empty or not.
+// @param _e is the pointer to the directory entry.
+// @return whether the directory is empty (that is, the offset is zero) or not.
 #define dir_is_empty(_e) (!dir_offset(_e))
+// @brief Clears the content of the directory entry,
+// that is, sets all bytes in the direcotry to zero.
+// @param _e is the pointer to the directory entry.
 #define dir_clear(_e) \
   do {                \
     (_e)->w[0] = 0;   \
@@ -104,6 +125,8 @@ struct CacheVC;
     (_e)->w[3] = 0;   \
     (_e)->w[4] = 0;   \
   } while (0)
+// @brief Delete the directory entry, that is, set the offset to zero.
+// @param _e is the pointer to the directory entry.
 #define dir_clean(_e) dir_set_offset(_e, 0)
 
 // OpenDir
