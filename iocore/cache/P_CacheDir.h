@@ -192,6 +192,9 @@ struct FreeDir {
 };
 
 // @brief Returns the byte offset of the directory entry.
+// Note if the offset is zero, it means the entry is empty.
+// The dir_is_empty is preferred for this purpose,
+// but there are places dir_offset is used instead.
 // @param _e is the pointer to the directory entry.
 // @return the byte offset of the directory entry.
 #define dir_offset(_e) \

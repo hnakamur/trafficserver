@@ -711,6 +711,23 @@ Lfill:
   return 1;
 }
 
+// @brief Overwrites the directory entry corresponding with the cache key.
+// The target segment and bucket is determined from the cache key.
+// The directory entry is searched from the linked list and
+// the entries whose tag matches that of the cache key
+// and whose offset matches that of the directory entry `oeverwrite`.
+//
+// If must_overwrite is true and if no entry matches tag and offset,
+// an entry is searched from empty entires or the freelist.
+//
+// By sideeffect, d->header->dirty is set to 1.
+//
+// @param key is the pointer to the cache key.
+// @param d is the pointer to the Vol.
+// @param dir is used just for checking the approximate size.
+// @param overwrite is the entry to match the offset.
+// @param must_overwrite prevents searching an entry from the freelist if true.
+// @return always zero.
 int
 dir_overwrite(const CacheKey *key, Vol *d, Dir *dir, Dir *overwrite, bool must_overwrite)
 {
