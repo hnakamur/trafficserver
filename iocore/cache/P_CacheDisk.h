@@ -44,17 +44,29 @@ extern int cache_config_max_disk_errors;
 /* each disk vol block has a corresponding Vol object */
 struct CacheDisk;
 
+// A description of a span stripe (Vol) block.
+// This is a serialized data structure.
 struct DiskVolBlock {
-  uint64_t offset; // offset in bytes from the start of the disk
-  uint64_t len;    // length in in store blocks
+  // Offset in bytes from the start of the disk.
+  // Offset in the span of the start of the span stripe (Vol) block, in bytes.
+  uint64_t offset;
+  // Length in in store blocks.
+  // Length of the span block in store blocks.
+  uint64_t len;
+  // The cache volume index for this span block.
   int number;
+  // Type of the span block.
   unsigned int type : 3;
+  // In use or free flag - set if the span block is not in use by a cache volume.
   unsigned int free : 1;
 };
 
 struct DiskVolBlockQueue {
   DiskVolBlock *b = nullptr;
-  int new_block   = 0; /* whether an existing vol or a new one */
+  // Whether an existing vol or a new one.
+  // Indicates if this is a new stripe rather than an existing one.
+  // In case a stripe is new ATS decides to clear that stripe(Vol)
+  int new_block = 0;
   LINK(DiskVolBlockQueue, link);
 
   DiskVolBlockQueue() {}
@@ -68,13 +80,26 @@ struct DiskVol {
   Queue<DiskVolBlockQueue> dpb_queue;
 };
 
+// Header for a span. This is a serialized data structure.
 struct DiskHeader {
+  // Holds a magic value :code:DISK_HEADER_MAGIC to indicate the span is valid and initialized.
   unsigned int magic;
-  unsigned int num_volumes;      /* number of discrete volumes (DiskVol) */
-  unsigned int num_free;         /* number of disk volume blocks free */
-  unsigned int num_used;         /* number of disk volume blocks in use */
-  unsigned int num_diskvol_blks; /* number of disk volume blocks */
+  // Number of discrete volumes (DiskVol).
+  // Number of cache volumes containing stripes in this span.
+  unsigned int num_volumes;
+  // number of disk volume blocks free.
+  // The number of span blocks defined but not in use.
+  unsigned int num_free;
+  // Number of disk volume blocks in use.
+  // The number of span blocks in use by stripes.
+  unsigned int num_used;
+  // The number of disk volume blocks.
+  // The number of span blocks.
+  unsigned int num_diskvol_blks;
+  // The number of volume blocks in the span.
   uint64_t num_blocks;
+  // A flexible array. The actual length of this array is
+  // num_diskvol_blks and each element describes a span block.
   DiskVolBlock vol_info[1];
 };
 

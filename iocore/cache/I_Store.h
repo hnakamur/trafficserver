@@ -33,6 +33,7 @@
 #include "tscore/ink_platform.h"
 #include "tscore/Result.h"
 
+// The storage unit for span and stripe metadata.
 #define STORE_BLOCK_SIZE 8192
 #define STORE_BLOCK_SHIFT 13
 #define DEFAULT_HW_SECTOR_SIZE 512

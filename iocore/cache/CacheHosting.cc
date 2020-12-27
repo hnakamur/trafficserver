@@ -216,11 +216,14 @@ CacheHostTable::Print()
   }
 }
 
+// @brief Search the table for a match for the hostname fqdn, a string of length len. If found the result is placed in result.
 // void ControlMatcher<Data, Result>::Match(RequestData* rdata
 //                                          Result* result)
 //
 //   Queries each table for the Result*
-//
+// @parram rdata is the regular expression.
+// @param rlen is the byte length of the regular expression.
+// @param result is the pointer to the result.
 void
 CacheHostTable::Match(const char *rdata, int rlen, CacheHostResult *result)
 {

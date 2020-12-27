@@ -694,6 +694,11 @@ Ldone:
   return aggWrite(event, e);
 }
 
+// @brief Start an evacuation if there is any EvacuationBlock in the range from low to high.
+// @param low is the start byte offset.
+// @param high is the end byte offset.
+// @param evac_phase is the flag to filter dir by phase.
+// @return 0 if no evacuation was started, non-zero otherwise.
 int
 Vol::evac_range(off_t low, off_t high, int evac_phase)
 {
@@ -969,13 +974,18 @@ Vol::agg_wrap()
   periodic_scan();
 }
 
-/* NOTE: This state can be called by an AIO thread, so DON'T DON'T
-   DON'T schedule any events on this thread using VC_SCHED_XXX or
-   mutex->thread_holding->schedule_xxx_local(). ALWAYS use
-   eventProcessor.schedule_xxx().
-   Also, make sure that any functions called by this also use
-   the eventProcessor to schedule events
-*/
+// @brief Schedule the aggregation buffer to be written to disk.
+//
+// NOTE: This state can be called by an AIO thread, so DON'T DON'T
+// DON'T schedule any events on this thread using VC_SCHED_XXX or
+// mutex->thread_holding->schedule_xxx_local(). ALWAYS use
+// eventProcessor.schedule_xxx().
+// Also, make sure that any functions called by this also use
+// the eventProcessor to schedule events
+//
+// @param event is not used.
+// @param e is not used.
+// @return an AIO event callback return value.
 int
 Vol::aggWrite(int event, void * /* e ATS_UNUSED */)
 {

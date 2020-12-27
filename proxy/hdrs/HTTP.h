@@ -1328,7 +1328,13 @@ enum {
   CACHE_ALT_MAGIC_DEAD      = 0xdeadeed,
 };
 
-// struct HTTPCacheAlt
+// This is the metadata for a single alternate for a cached object.
+// It contains, among other data, the following:
+//
+// * The key for the earliest Doc of the alternate.
+// * The request and response headers.
+// * The fragment offset table.[#fragment-offset-table]_
+// * Timestamps for request and response from origin server.
 struct HTTPCacheAlt {
   HTTPCacheAlt();
   void copy(HTTPCacheAlt *to_copy);
@@ -1383,6 +1389,9 @@ struct HTTPCacheAlt {
   RefCountObj *m_ext_buffer = nullptr;
 };
 
+// This class is a wrapper for HTTPCacheAlt. It provides the external API
+// for accessing data in the wrapped class. It contains only a pointer
+// (possibly NULL) to an instance of the wrapped class.
 class HTTPInfo
 {
 public:

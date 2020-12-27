@@ -245,6 +245,12 @@ struct HttpTunnelProducer {
   );
 };
 
+// Data transfer driver. This contains a set of producers.
+// Each producer is connected to one or more consumers.
+// The tunnel handles events and buffers so that data moves from producers to consumers.
+// The data, as much as possible, is kept in reference counted buffers so that copies
+// are done only when the data is modified or for sources (which acquire data from
+// outside Traffic Server) and sinks (which move data to outside Traffic Server).
 class HttpTunnel : public Continuation
 {
   friend class HttpPagesHandler;

@@ -227,7 +227,7 @@ extern int cache_config_mutex_retry_delay;
 extern int cache_read_while_writer_retry_delay;
 extern int cache_config_read_while_writer_max_retries;
 
-// CacheVC
+// A virtual connection class which accepts input for writing to cache.
 struct CacheVC : public CacheVConnection {
   CacheVC();
 
@@ -968,12 +968,14 @@ struct CacheHostRecord;
 struct Vol;
 class CacheHostTable;
 
+// Base object for a cache.
 struct Cache {
-  int cache_read_done       = 0;
-  int total_good_nvol       = 0;
-  int total_nvol            = 0;
-  int ready                 = CACHE_INITIALIZING;
-  int64_t cache_size        = 0; // in store block size
+  int cache_read_done = 0;
+  int total_good_nvol = 0;
+  int total_nvol      = 0;
+  int ready           = CACHE_INITIALIZING;
+  int64_t cache_size  = 0; // in store block size
+  // A generic class:CacheHostRecord that contains all cache volumes that are not explicitly assigned in hosting.config.
   CacheHostTable *hosttable = nullptr;
   int total_initialized_vol = 0;
   CacheType scheme          = CACHE_NONE_TYPE;
@@ -1005,6 +1007,15 @@ struct Cache {
 
   int open_done();
 
+  // @brief Compute the stripe (Vol*) for a cache key and host.
+  // The host is used to find the appropriate CacheHostRecord instance.
+  // From there the stripe assignment slot is determined by taking bits 64..83 (20 bits)
+  // of the cache key modulo the stripe assignment array count (VOL_HASH_TABLE_SIZE).
+  // These bits are the third 32 bit slice of the key less the bottom DIR_TAG_WIDTH (12) bits.
+  // @param key is a cache key.
+  // @param hostname is a hostname.
+  // @param host_len is a byte length of the hostname.
+  // @return a poiner to Vol.
   Vol *key_to_vol(const CacheKey *key, const char *hostname, int host_len);
 
   Cache() {}

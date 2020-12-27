@@ -846,10 +846,12 @@ Lcallreturn:
   return handleEvent(AIO_EVENT_DONE, nullptr);
 }
 
-/*
-  This code follows CacheVC::openReadStartHead closely,
-  if you change this you might have to change that.
-*/
+// @brief Performs the initial read for an alternate of an object.
+// This code follows CacheVC::openReadStartHead closely,
+// if you change this you might have to change that.
+// @param event is unused.
+// @param e is unused.
+// @return an AIO event callback return value.
 int
 CacheVC::openReadStartEarliest(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
 {
@@ -1049,10 +1051,12 @@ Lrestart:
   return openReadStartHead(EVENT_IMMEDIATE, nullptr);
 }
 
-/*
-  This code follows CacheVC::openReadStartEarliest closely,
-  if you change this you might have to change that.
-*/
+// @brief Performs the initial read for a cached object.
+// This code follows CacheVC::openReadStartEarliest closely,
+// if you change this you might have to change that.
+// @param event is passed to openReadStartEarliest.
+// @param e is passed to openReadStartEarliest.
+// @return an AIO event callback return value.
 int
 CacheVC::openReadStartHead(int event, Event *e)
 {

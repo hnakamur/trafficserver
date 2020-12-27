@@ -245,6 +245,7 @@ struct OpenDirEntry {
   }
 };
 
+// An open directory entry. It contains all the information of a Dir plus additional information from the first Doc.
 struct OpenDir : public Continuation {
   Queue<CacheVC, Link_CacheVC_opendir_link> delayed_readers;
   DLL<OpenDirEntry> bucket[OPEN_DIR_BUCKETS];

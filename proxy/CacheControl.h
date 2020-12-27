@@ -59,6 +59,7 @@ enum CacheControlType {
 
 struct matcher_line;
 
+// Holds the data from a line in cache.config.
 class CacheControlResult
 {
 public:

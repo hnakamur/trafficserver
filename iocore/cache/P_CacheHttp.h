@@ -38,10 +38,16 @@ enum {
   OWNER_HTTP  = 2,
 };
 
+// This class is a wrapper for CacheHTTPInfo, which is HTTPInfo
+// and HTTPInfo has a pointer to HTTPCacheAlt.
 struct vec_info {
   CacheHTTPInfo alternate;
 };
 
+// This is an array of HTTPInfo objects and serves as the repository of information about alternates of an object.
+// It is marshaled as part of the metadata for an object in the cache.
+// The CacheHTTPInfoVector is stored only in the first Doc. Subsequent Doc instances for the object,
+// including the earliest Doc, should have an hlen of zero and if not, it is ignored.
 struct CacheHTTPInfoVector {
   void *magic = nullptr;
 

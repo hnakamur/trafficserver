@@ -34,6 +34,7 @@ struct CacheVol;
 struct CacheHostResult;
 struct Cache;
 
+// A cache hosting record from hosting.config.
 struct CacheHostRecord {
   int Init(CacheType typ);
   int Init(matcher_line *line_info, CacheType typ);
@@ -46,20 +47,25 @@ struct CacheHostRecord {
     ats_free(cp);
   }
 
-  CacheType type                 = CACHE_NONE_TYPE;
-  Vol **vols                     = nullptr;
-  int good_num_vols              = 0;
-  int num_vols                   = 0;
-  int num_initialized            = 0;
+  CacheType type = CACHE_NONE_TYPE;
+  // The stripes that are part of the cache volumes. This is the union over the stripes of CacheHostRecord::cp
+  Vol **vols          = nullptr;
+  int good_num_vols   = 0;
+  int num_vols        = 0;
+  int num_initialized = 0;
+  // The stripe assignment table. This is an array of indices in to CacheHostRecord::vols.
   unsigned short *vol_hash_table = nullptr;
-  CacheVol **cp                  = nullptr;
-  int num_cachevols              = 0;
+  // The cache volumes that are part of this cache host record.
+  CacheVol **cp     = nullptr;
+  int num_cachevols = 0;
 
   CacheHostRecord() {}
 };
 
 void build_vol_hash_table(CacheHostRecord *cp);
 
+// A wrapper for CacheHostRecord used by CacheHostTable::Match().
+// This contains the set of cache volumes for the cache host record and is used to perform stripe assignment.
 struct CacheHostResult {
   CacheHostRecord *record = nullptr;
 
@@ -102,6 +108,8 @@ private:
   CacheType type;
 };
 
+// A container that maps from a FQDN to a CacheHostRecord.
+// This is constructed from the contents of hosting.config.
 class CacheHostTable
 {
 public:
@@ -165,11 +173,14 @@ struct CacheHostTableConfig : public Continuation {
   }
 };
 
-/* list of volumes in the volume.config file */
+// This class represents an individual volume.
+// list of volumes in the volume.config file
 struct ConfigVol {
+  // Identification number of the volume
   int number;
   CacheType scheme;
   off_t size;
+  // Used as an indicator if the volume is part of the overall volumes created by ATS
   bool in_percent;
   bool ramcache_enabled;
   int percent;
@@ -178,7 +189,9 @@ struct ConfigVol {
 };
 
 struct ConfigVolumes {
+  // Total number of volumes specified in volume.config
   int num_volumes;
+  // Total number of volumes specified in volume.config for HTTP scheme
   int num_http_volumes;
   Queue<ConfigVol> cp_queue;
   void read_config_file();

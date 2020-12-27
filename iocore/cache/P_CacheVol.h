@@ -88,7 +88,9 @@ struct VolHeaderFooter {
   off_t last_write_pos;
   // The byte offset in the stripe where the current aggregation buffer will be written.
   off_t agg_pos;
-  uint32_t generation; // token generation (vary), this cannot be 0
+  // Generation of this instance.
+  // token generation (vary), this cannot be 0.
+  uint32_t generation;
   // phase which is filpped in `Vol::agg_wrap`
   uint32_t phase;
   // cycle which is incremented in `Vol::agg_wrap`
@@ -161,6 +163,7 @@ struct Vol : public Continuation {
   off_t start = 0;
   // Length of stripe in bytes.
   off_t len = 0;
+  // The number of blocks of storage in the stripe.
   // Total number of blocks in the stripe available for content storage.
   off_t data_blocks       = 0;
   int hit_evacuate_window = 0;
@@ -305,14 +308,22 @@ struct AIO_Callback_handler : public Continuation {
   AIO_Callback_handler() : Continuation(new_ProxyMutex()) { SET_HANDLER(&AIO_Callback_handler::handle_disk_failure); }
 };
 
+// A cache volume as described in volume.config.
+// This class represents a single volume.
+// CacheVol comprises of stripes spread across Spans(disks)
 struct CacheVol {
-  int vol_number        = -1;
-  int scheme            = 0;
-  off_t size            = 0;
+  // identification number of this volume
+  int vol_number = -1;
+  // An enumeration of value CacheType::HTTP or CacheType::Stream.
+  int scheme = 0;
+  off_t size = 0;
+  // Number of stripes(Vol) contained in this volume
   int num_vols          = 0;
   bool ramcache_enabled = true;
-  Vol **vols            = nullptr;
-  DiskVol **disk_vols   = nullptr;
+  // Vol represents a single stripe in the disk. vols contains all the stripes this volume is made up of
+  Vol **vols = nullptr;
+  // disk_vols contain references to the disks of all the stripes in this volum
+  DiskVol **disk_vols = nullptr;
   LINK(CacheVol, link);
   // per volume stats
   RecRawStatBlock *vol_rsb = nullptr;
@@ -320,28 +331,42 @@ struct CacheVol {
   CacheVol() {}
 };
 
+// the header data for a fragment.
 // Note : hdr() needs to be 8 byte aligned.
 struct Doc {
-  uint32_t magic;     // DOC_MAGIC
-  uint32_t len;       // length of this fragment (including hlen & sizeof(Doc), unrounded)
-  uint64_t total_len; // total length of document
+  uint32_t magic; // DOC_MAGIC
+  // The length of this segment including the header length, fragment table, and this structure.
+  // length of this fragment (including hlen & sizeof(Doc), unrounded)
+  uint32_t len;
+  // Total length of document.
+  // Total length of the entire document not including meta data but including headers.
+  uint64_t total_len;
 #if TS_ENABLE_FIPS == 1
   // For FIPS CryptoHash is 256 bits vs. 128, and the 'first_key' must be checked first, so
   // ensure that the new 'first_key' overlaps the old 'first_key' and that the rest of the data layout
   // is the same by putting 'key' at the ned.
   CryptoHash first_key; ///< first key in object.
 #else
-  CryptoHash first_key; ///< first key in object.
-  CryptoHash key;       ///< Key for this doc.
+  // first key in object.
+  // First index key in the document (the index key used to locate this object in the volume index).
+  CryptoHash first_key;
+  // Key for this doc.
+  // The index key for this fragment. Fragment keys are computationally chained so that the key
+  // for the next and previous fragments can be computed from this key.
+  CryptoHash key;
 #endif
-  uint32_t hlen;         ///< Length of this header.
+  // Length of this header.
+  // Document header (metadata) length. This is not the length of the HTTP headers.
+  uint32_t hlen;
   uint32_t doc_type : 8; ///< Doc type - indicates the format of this structure and its content.
   uint32_t v_major : 8;  ///< Major version number.
   uint32_t v_minor : 8;  ///< Minor version number.
   uint32_t unused : 8;   ///< Unused, forced to zero.
   uint32_t sync_serial;
   uint32_t write_serial;
-  uint32_t pinned; // pinned until
+  // pinned until.
+  // Flag and timer for pinned objects.
+  uint32_t pinned;
   uint32_t checksum;
 #if TS_ENABLE_FIPS == 1
   CryptoHash key; ///< Key for this doc.
