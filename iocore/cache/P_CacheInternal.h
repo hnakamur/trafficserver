@@ -970,11 +970,15 @@ class CacheHostTable;
 
 // Base object for a cache.
 struct Cache {
+  // Wether the open method succeeded or not.
   int cache_read_done = 0;
   int total_good_nvol = 0;
-  int total_nvol      = 0;
-  int ready           = CACHE_INITIALIZING;
-  int64_t cache_size  = 0; // in store block size
+  // Total number of volumes (Vol)
+  int total_nvol = 0;
+  // Cache initialization result.
+  // In open_done method, this becomes CACHE_INITIALIZED on success, or CACHE_INIT_FAILED on failure.
+  int ready          = CACHE_INITIALIZING;
+  int64_t cache_size = 0; // in store block size
   // A generic class:CacheHostRecord that contains all cache volumes that are not explicitly assigned in hosting.config.
   CacheHostTable *hosttable = nullptr;
   int total_initialized_vol = 0;

@@ -137,7 +137,7 @@ struct EvacuationBlock {
   LINK(EvacuationBlock, link);
 };
 
-// a storage unit inside a cache volume.
+// The cache stripe which is a storage unit inside a cache volume.
 struct Vol : public Continuation {
   char *path = nullptr;
   ats_scoped_str hash_text;

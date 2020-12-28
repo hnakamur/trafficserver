@@ -160,7 +160,8 @@ struct CacheProcessor : public Processor {
   ts::VersionNumber max_stripe_version;
 
   CALLBACK_FUNC cb_after_init = nullptr;
-  int wait_for_cache          = 0;
+  // The value for proxy.config.http.wait_for_cache.
+  int wait_for_cache = 0;
 };
 
 inline void

@@ -117,6 +117,9 @@ Store::free(Store &s)
   }
 }
 
+// Sort disks in disk (array of Span *) by device and then by pathname and offset,
+// then merge adjacent spans.
+// The disk and n_disks fields are updated.
 void
 Store::sort()
 {
@@ -316,6 +319,7 @@ Lagain:
 }
 
 // Read storage.config and initialize the base state of the instance.
+// Span instances are created and set to the disk field and n_disks is updated.
 // @return Result::ok on success, Result::failure on failure.
 Result
 Store::read_config()

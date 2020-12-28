@@ -229,6 +229,8 @@ struct Store {
   void add(Store &s);
   void dup(Store &s);
   void sort();
+  // Reallocate memory for the disk array field to have i elements if i > n_disks.
+  // @param i is the number of elements which is stored to n_disks.
   void
   extend(unsigned i)
   {
@@ -269,7 +271,7 @@ struct Store {
   unsigned n_disks_in_config = 0;
   // The number of valid and distinct devices (disks/paths we could actually read and parse).
   unsigned n_disks = 0;
-  // List of spans.
+  // List of spans. This is an array whose element type is (Span *).
   Span **disk = nullptr;
 
   Result read_config();

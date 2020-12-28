@@ -104,6 +104,10 @@ struct DiskHeader {
 };
 
 // A representation of the physical device used for a Span.
+//
+// This class is a continuation and so can be used to perform potentially blocking operations on the span.
+// The primary use of these is to be passed to the AIO threads as the callback when an I/O operation completes.
+// These are then dispatched to AIO threads to perform storage unit (which is obsolete term for cache span) initialization.
 struct CacheDisk : public Continuation {
   DiskHeader *header = nullptr;
   char *path         = nullptr;

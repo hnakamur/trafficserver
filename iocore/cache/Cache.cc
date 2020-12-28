@@ -85,14 +85,20 @@ int cache_config_read_while_writer_max_retries = 10;
 
 // Globals
 
-RecRawStatBlock *cache_rsb          = nullptr;
-Cache *theCache                     = nullptr;
-CacheDisk **gdisks                  = nullptr;
+RecRawStatBlock *cache_rsb = nullptr;
+// The global variable for the pointer to the singleton instance of Cache.
+Cache *theCache = nullptr;
+// The global variable for array of (CacheDisk *) disk.
+// The array length is global variable gndisks.
+CacheDisk **gdisks = nullptr;
+// global variable for number of disks.
 int gndisks                         = 0;
 std::atomic<int> initialize_disk    = 0;
 Cache *caches[NUM_CACHE_FRAG_TYPES] = {nullptr};
 CacheSync *cacheDirSync             = nullptr;
 Store theCacheStore;
+// Whether CacheProcessor is initialized.
+// It becomes CACHE_INITIALIZED on success, or CACHE_INIT_FAILED on failure.
 int CacheProcessor::initialized          = CACHE_INITIALIZING;
 uint32_t CacheProcessor::cache_ready     = 0;
 int CacheProcessor::start_done           = 0;
@@ -101,8 +107,14 @@ bool CacheProcessor::fix                 = false;
 bool CacheProcessor::check               = false;
 int CacheProcessor::start_internal_flags = 0;
 int CacheProcessor::auto_clear_flag      = 0;
+// The global variable for the singleton instance of CacheProcessor.
 CacheProcessor cacheProcessor;
-Vol **gvol             = nullptr;
+// The global variable for Vol instance array.
+// The array length is gnvol global variable.
+// The each element is updated in Vol::dir_init_done method.
+// This array is reconstructed in cplist_reconfigure function.
+Vol **gvol = nullptr;
+// The global variable for number of Vol instances.
 std::atomic<int> gnvol = 0;
 ClassAllocator<CacheVC> cacheVConnectionAllocator("cacheVConnection");
 ClassAllocator<EvacuationBlock> evacuationBlockAllocator("evacuationBlock");
@@ -111,6 +123,8 @@ ClassAllocator<EvacuationKey> evacuationKeyAllocator("evacuationKey");
 int CacheVC::size_to_init = -1;
 CacheKey zero_key;
 
+// VolInitInfo is a struct to 4 AIO callback results to hold two pairs of header and footers.
+// Used when calling ink_aio_read in Vol::init method.
 struct VolInitInfo {
   off_t recover_pos;
   AIOCallbackInternal vol_aio[4];
@@ -551,6 +565,7 @@ Vol::close_read(CacheVC *cont)
 // Cache Processor
 
 // @brief Starts the cache processing threads, n_threads are created each with a stack of size stacksize.
+// This method just calls CacheProcessor::start_internal().
 // @param n_cache_threads is default to zero, but not used.
 // @param stacksize is default to DEFAULT_STACKSIZE, but not used.
 // @return 0 on success, -1 on failure.
@@ -562,6 +577,20 @@ CacheProcessor::start(int, size_t)
 
 static const int DEFAULT_CACHE_OPTIONS = (O_RDWR);
 
+// Start the cache processor.
+//
+// This does a number of things:
+// Create CacheDisk objects for each span in the configuration file and store in gdisks.
+//
+// After all of those have completed, the resulting storage is distributed across the volumes in cplist_reconfigure().
+// The CacheVol instances are created at this time.
+// https://docs.trafficserver.apache.org/en/9.0.x/developer-guide/cache-architecture/cache-initialization.en.html
+//
+// @param flags is set to static field start_internal_flags.
+//        It is zero when called from CacheProcessor::start.
+//        Other values are PROCESSOR_RECONFIGURE and PROCESSOR_RECONFIGURE
+//        which are used in the cmd_clear function in traffic_server.cc.
+// @return 0 on success, -1 on failure.
 int
 CacheProcessor::start_internal(int flags)
 {
@@ -1195,6 +1224,8 @@ vol_init_dir(Vol *d)
   }
 }
 
+// Clear Vol.
+// @param d is the pointer to Vol.
 void
 vol_clear_init(Vol *d)
 {
@@ -1227,6 +1258,10 @@ vol_dir_clear(Vol *d)
   return 0;
 }
 
+// Clear dir.
+// First call vol_clear_init and then call ink_aio_write to clear dir.
+// The callback for this is handle_dir_clear.
+// @return always zero.
 int
 Vol::clear_dir()
 {
@@ -1246,6 +1281,16 @@ Vol::clear_dir()
   return 0;
 }
 
+// Initialize Vol.
+// The dirlen() byte memory is allocated and set to raw_dir field.
+// The dir, header, footer fields are adjusted to point to appropriate position in raw_dir.
+// Then VolInitInfo is created and ink_aio_read is called to read header and footer pairs
+// at two possible locations. The callback is handle_header_read method.
+// @param s is CacheDisk path and cloned to path member variable.
+// @param blocks is the number of blocks.
+// @param dir_skip is the byte offset to skip before reading header.
+// @param clear is the flag to clear Vol. If true, clear_dir method is called.
+// @return always zero.
 int
 Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
 {
@@ -1328,6 +1373,13 @@ Vol::init(char *s, off_t blocks, off_t dir_skip, bool clear)
   return 0;
 }
 
+// The callback method after ink_aio_write in clear_dir method.
+// If fully written, then call another ink_aio_write to clear
+// header for directory B. The callback is this method.
+// When this method is called again, calls dir_init_done method.
+// @param event is an AIO event. Do nothing if not AIO_EVENT_DONE.
+// @param data is (AIOCallback *)op;
+// @return an AIO event callback return value. always EVENT_DONE.
 int
 Vol::handle_dir_clear(int event, void *data)
 {
@@ -1359,6 +1411,10 @@ Vol::handle_dir_clear(int event, void *data)
   return EVENT_DONE;
 }
 
+// Callback method after ink_aio_read in handle_header_read.
+// @param event is an AIO event.
+// @param data is the (AIOCallback *)op.
+// @return an AIO event callback return value. EVENT_DONE when called clear_dir(), EVENT_CONT otherwise.
 int
 Vol::handle_dir_read(int event, void *data)
 {
@@ -1714,6 +1770,13 @@ Vol::handle_recover_write_dir(int /* event ATS_UNUSED */, void * /* data ATS_UNU
   return dir_init_done(EVENT_IMMEDIATE, nullptr);
 }
 
+// Callback method for ink_aio_read in init method.
+// First, decide to use which one pair of header and footer read from two possible locations.
+// Then call ink_aio_read to read header, footer, and directory entries.
+// The callback for this is handle_dir_read method.
+// @param event is an AIO event. should be AIO_EVENT_DONE.
+// @param data is the (AIOCallback *)data.
+// @return an AIO event callback return value. always EVENT_DONE.
 int
 Vol::handle_header_read(int event, void *data)
 {
@@ -1772,6 +1835,14 @@ Vol::handle_header_read(int event, void *data)
   return EVENT_DONE;
 }
 
+// Called when dir initialization is done for each Vol.
+// Called from handle_dir_clear and handle_recover_write_dir.
+// When cache->cache_read_done, set handler to aggWrite method and call vol_initialized method of cache field.
+// Increment gnvol global variable and append this Vol pointer to gvol global array.
+// When !cache->cache_read_done, calls eventProcessor.schedule_in method to call this method again after 5 milliseconds.
+// @param event is unused.
+// @param data is unused.
+// @return an AIO event callback return value. EVENT_DONE when cache->cache_read_done, EVENT_CONT otherwise.
 int
 Vol::dir_init_done(int /* event ATS_UNUSED */, void * /* data ATS_UNUSED */)
 {
@@ -2078,6 +2149,14 @@ Cache::open_done()
   return 0;
 }
 
+// Create and initialize Vol instances for each node in global Queue<CacheVol> cp_list.
+// The created Vol instances are set to vols member variable of CacheVol in cp_list.
+// This method updates cache_size member variable.
+// Set cache_read_done member variable to 1 on success.
+// @param clear is the flag to force clear the Vol. Even this is false, the Vol is
+//        cleared when CacheDisk cleared member variable is true or
+//        DiskVolBlockQueue new_block member variable is true.
+// @return always zero
 int
 Cache::open(bool clear, bool /* fix ATS_UNUSED */)
 {
@@ -2521,6 +2600,8 @@ Cache::remove(Continuation *cont, const CacheKey *key, CacheFragType type, const
 
 CacheVConnection::CacheVConnection() : VConnection(nullptr) {}
 
+// Create CacheVol instances by iterating DiskVol in CacheDisk stored in gdisks global variable.
+// The CacheVol instances are stored in cp_list global variable and cp_list_len is also set.
 void
 cplist_init()
 {
@@ -3153,6 +3234,9 @@ FragmentSizeUpdateCb(const char * /* name ATS_UNUSED */, RecDataT /* data_type A
   return 0;
 }
 
+// Initialize theCacheStore by calling read_config method after
+// linking dozens of proxy.config.*settings to global variables.
+// @param v is the cache module version which should be CACHE_MODULE_VERSION.
 void
 ink_cache_init(ts::ModuleVersion v)
 {
