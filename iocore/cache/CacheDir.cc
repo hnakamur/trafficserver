@@ -178,8 +178,11 @@ OpenDirEntry::wait(CacheVC *cont, int msec)
 // Cache Directory
 //
 
-// return value 1 means no loop
-// zero indicates loop
+// Check loop exists in the linked list starting at start_dir.
+// Called from dir_bucket_loop_fix and check_dir.
+// @param start_dir is the pointer to the starting directory entry.
+// @param seg is the pointer to the segment.
+// @return 1 when no loop exist, 0 when loop exists
 int
 dir_bucket_loop_check(Dir *start_dir, Dir *seg)
 {
@@ -210,7 +213,12 @@ dir_bucket_loop_check(Dir *start_dir, Dir *seg)
 }
 
 // adds all the directory entries
-// in a segment to the segment freelist
+// in a segment to the segment freelist.
+// Actually the first entry in each bucket is marked unused (zeroed) but not
+// added to the freelist. The rest entries in each bucket are added to the
+// freelist, in depth first order, all the seconds, then the thirds, then the fourths.
+// Because the free lists are LIFOs, this means extra entries will be selected from
+// the fourth entries across all the buckets first, then the thirds, etc.
 void
 dir_init_segment(int s, Vol *d)
 {
@@ -255,6 +263,11 @@ dir_freelist_length(Vol *d, int s)
   return free;
 }
 
+// Get the length of the linked list for the bucket.
+// @param b is the pointer to the bucket.
+// @param s is the segment index.
+// @param d is the pointer to Vol.
+// @return the length of linked list, or -1 if length > 100
 int
 dir_bucket_length(Dir *b, int s, Vol *d)
 {
@@ -275,6 +288,10 @@ dir_bucket_length(Dir *b, int s, Vol *d)
   return i;
 }
 
+// Check directory entries in the cache stripe.
+// Called from regression test Cache_dir.
+// @param d is the pointer to the cache stripe.
+// @return 1 when directories are OK, 0 otherwise.
 int
 check_dir(Vol *d)
 {
@@ -298,6 +315,11 @@ check_dir(Vol *d)
   return 1;
 }
 
+// Unlink the directory entry from the freelist.
+// Called from dir_insert and dir_overwrite.
+// @param e is the pointer to the directory entry to unlink.
+// @param s is the segment index.
+// @param d is the pointer to the cache stripe.
 inline void
 unlink_from_freelist(Dir *e, int s, Vol *d)
 {
@@ -411,6 +433,10 @@ dir_clean_vol(Vol *d)
   CHECK_DIR(d);
 }
 
+// Clear directory entries whose offset is in the specified range.
+// @param start is the start offset of the range (inclusive).
+// @param end is the end offset of the range (exclusive).
+// @param vol is the pointer to the cache stripe.
 void
 dir_clear_range(off_t start, off_t end, Vol *vol)
 {
@@ -424,6 +450,7 @@ dir_clear_range(off_t start, off_t end, Vol *vol)
   dir_clean_vol(vol);
 }
 
+// Note this function is not used.
 void
 check_bucket_not_contains(Dir *b, Dir *e, Dir *seg)
 {
@@ -470,7 +497,7 @@ freelist_clean(int s, Vol *vol)
   dir_clean_segment(s, vol);
 }
 
-// @brief Pop a directory entry from the freelist.
+// @brief Pop a directory entry from the front of the freelist.
 // @param s is the segment index.
 // @param d is the pointer to the Vol.
 // @return a directory entry popped from the freelist,
@@ -498,6 +525,8 @@ freelist_pop(int s, Vol *d)
   return e;
 }
 
+// Get metrics for the segment.
+// Called from ShowCacheInternal::showVolumes which is used in CacheTool.
 int
 dir_segment_accounted(int s, Vol *d, int offby, int *f, int *u, int *et, int *v, int *av, int *as)
 {
@@ -551,7 +580,7 @@ dir_segment_accounted(int s, Vol *d, int offby, int *f, int *u, int *et, int *v,
   return d->buckets * DIR_DEPTH - (free + used + empty) <= offby;
 }
 
-// @brief Put the directory entry back to the freelist.
+// @brief Put the directory entry to the front of the freelist.
 // @param e is the pointer to the directory entry.
 // @param s is the segment index.
 // @param d is the pointer to the Vol.

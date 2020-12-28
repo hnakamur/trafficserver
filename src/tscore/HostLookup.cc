@@ -936,10 +936,11 @@ HostLookup::AllocateSpace(int num_entries)
   leaf_array.reserve(num_entries);
 }
 
-// void HostLookup::NewEntry(const char* match_data, bool domain_record, void* opaque_data_in)
-//
-//   Insert a new element in to the table
-//
+// Insert a new element in to the table.
+// Called from CacheHostMatcher::NewEntry or HostMatcher::NewEntry.
+// @param match_data is the destination in one line of host.config.
+// @param domain_record is whether the line is domain record or not.
+// @param opaque_data_in is pointer to a CacheHostRecord instance to insert.
 void
 HostLookup::NewEntry(string_view match_data, bool domain_record, void *opaque_data_in)
 {

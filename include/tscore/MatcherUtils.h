@@ -78,8 +78,9 @@ enum matcher_type {
 };
 extern const char *matcher_type_str[];
 
-// A parsed config file line
+// Max number of tokens in config file line.
 const int MATCHER_MAX_TOKENS = 40;
+// A parsed config file line
 struct matcher_line {
   matcher_type type;                 // dest type
   int dest_entry;                    // entry which specifies the destination

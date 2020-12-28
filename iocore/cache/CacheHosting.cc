@@ -135,6 +135,10 @@ CacheHostMatcher::Match(const char *rdata, int rlen, CacheHostResult *result)
 //   Creates a new host/domain record
 //
 
+// Create a new entry of host/domain record for one line in the host.config file
+// whose desination is not '*'.
+// Created entry is added to host_lookup field by calling HostLookup::NewEntry method.
+// @param line_info is one line in parsed host.config file.
 void
 CacheHostMatcher::NewEntry(matcher_line *line_info)
 {
@@ -418,6 +422,10 @@ CacheHostTable::BuildTable(const char *config_file_path)
   return BuildTableFromString(config_file_path, content.data());
 }
 
+// Initialize the generic instance for all cache volumes that are not explicitly assigned.
+// This method is called for CacheHostTable::gen_host_rec field.
+// @param typ is the CacheType, whose value is CacheHostTable::type passed from CacheHostTable methods.
+// @return 0 on success, -1 on failure.
 int
 CacheHostRecord::Init(CacheType typ)
 {
@@ -457,6 +465,10 @@ CacheHostRecord::Init(CacheType typ)
   return 0;
 }
 
+// Initialize CacheHostRecord instance for each line in hosting.config file.
+// @param line_info is one line in parsed config file.
+// @param typ is the CacheType whose value is CacheHostTable::type field passed from CacheHostTable methods.
+// @return 0 on success, -1 on failure.
 int
 CacheHostRecord::Init(matcher_line *line_info, CacheType typ)
 {

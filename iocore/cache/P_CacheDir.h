@@ -40,20 +40,40 @@ struct CacheVC;
 #define SIZEOF_DIR 10
 #define ESTIMATED_OBJECT_SIZE 8000
 
-#define MAX_DIR_SEGMENTS (32 * (1 << 16))
+#define MAX_DIR_SEGMENTS (32 * (1 << 16)) // this constant is not used
+// number of directory entries in one bucket
 #define DIR_DEPTH 4
+// Max number of directory entries in one segment. 65536, but actual max seems 65535.
+// see https://docs.trafficserver.apache.org/en/9.0.x/developer-guide/cache-architecture/architecture.en.html#cache-directory
 #define MAX_ENTRIES_PER_SEGMENT (1 << 16)
+// Max number of buckets in one segment. 16384(= 2^14 = 1<<14)
 #define MAX_BUCKETS_PER_SEGMENT (MAX_ENTRIES_PER_SEGMENT / DIR_DEPTH)
+// Bit width of the size part in the directory entry
 #define DIR_SIZE_WIDTH 6
+// Length of the implicit table for calculating the approximate size
+// of a document with DIR_SIZE_WITH_BLOCK. In other words,
+// the max value of the parameter _i for DIR_SIZE_WITH_BLOCK is DIR_BLOCK_SIZES - 1.
 #define DIR_BLOCK_SIZES 4
+// Get the shift for calculating the approximate size of a document.
+// @param _i is the big value in the directory entry.
+// @return the shift width
 #define DIR_BLOCK_SHIFT(_i) (3 * (_i))
+// Get the multiplier for calculating the approximate size of a document.
+// @param _i is the big value in the directory entry.
+// @return the multiplier for byte length.
+// 512(=2^9) for 0, 4096(=4Ki=2^12) for 1, 32768(=32Ki=2^15) for 2, 262144(=256Ki=2^18) for 3.
 #define DIR_BLOCK_SIZE(_i) (CACHE_BLOCK_SIZE << DIR_BLOCK_SHIFT(_i))
+// Get the maximum size from the big value in the directory entry.
+// @return the maximum byte size.
+// 32768(=32Ki=2^15) for 0, 262144(=256Ki=2^18) for 1, 2097152(=2Mi=2^21) for 2, 16777216(=16Mi=2^24) for 3.
 #define DIR_SIZE_WITH_BLOCK(_i) ((1 << DIR_SIZE_WIDTH) * DIR_BLOCK_SIZE(_i))
+// Bit width of the offset in a directory entry
 #define DIR_OFFSET_BITS 40
+// Max value for the offset in a directory entry. (1<<40)-1 = 1Ti - 1
 #define DIR_OFFSET_MAX ((((off_t)1) << DIR_OFFSET_BITS) - 1)
 
-#define SYNC_MAX_WRITE (2 * 1024 * 1024)
-#define SYNC_DELAY HRTIME_MSECONDS(500)
+#define SYNC_MAX_WRITE (2 * 1024 * 1024) // 2MiB
+#define SYNC_DELAY HRTIME_MSECONDS(500)  // 500ms
 #define DO_NOT_REMOVE_THIS 0
 
 // Debugging Options
@@ -125,7 +145,8 @@ struct CacheVC;
     (_e)->w[3] = 0;   \
     (_e)->w[4] = 0;   \
   } while (0)
-// @brief Delete the directory entry, that is, set the offset to zero.
+// @brief Delete the directory entry, that is, set the offset to zero,
+// which means the entry is marked as unused.
 // @param _e is the pointer to the directory entry.
 #define dir_clean(_e) dir_set_offset(_e, 0)
 
@@ -191,17 +212,25 @@ struct FreeDir {
 #endif
 };
 
-// @brief Returns the byte offset of the directory entry.
-// Note if the offset is zero, it means the entry is empty.
-// The dir_is_empty is preferred for this purpose,
+// Returns the offset combined 3 offset parts in the directory entry.
+// Note the offset value starts at 1, not 0.
+// And the offset value 0 means the entry is empty (marked as unused).
+// The dir_is_empty is preferred for checking the directory is empty,
 // but there are places dir_offset is used instead.
 // @param _e is the pointer to the directory entry.
-// @return the byte offset of the directory entry.
+// @return the offset value of the directory entry.
 #define dir_offset(_e) \
   ((int64_t)(((uint64_t)(_e)->w[0]) | (((uint64_t)((_e)->w[1] & 0xFF)) << 16) | (((uint64_t)(_e)->w[4]) << 24)))
-// @brief Sets the byte offset of the directory entry.
+// Sets the offset value of the directory entry.
+//
+// Note offset value starts at 1, not 0.
+//
+// Setting the offset to zero means deleting the directory entry,
+// that is making the directory entry unused.
+// For this purpose, dir_clean is preferred.
+//
 // @param _e is the pointer to the directory entry.
-// @param _o is the byte offset of the directory entry.
+// @param _o is the offset value of the directory entry.
 #define dir_set_offset(_e, _o)                                              \
   do {                                                                      \
     (_e)->w[0] = (uint16_t)_o;                                              \
@@ -228,7 +257,7 @@ struct FreeDir {
 #define dir_set_size(_e, _v) (_e)->w[1] = (uint16_t)(((_e)->w[1] & ((1 << 10) - 1)) | ((_v) << 10))
 // @brief Sets the big and size part of the directory entry by the approximate size of the document.
 // @param _e is the pointer to the directory entry.
-// @param _v is the approximate size of the document.
+// @param _s is the approximate byte size of the document.
 #define dir_set_approx_size(_e, _s)                   \
   do {                                                \
     if ((_s) <= DIR_SIZE_WITH_BLOCK(0)) {             \
@@ -249,6 +278,14 @@ struct FreeDir {
 // @param _e is the pointer to the directory entry.
 // @return the approximate size (uint32_t) of the document.
 #define dir_approx_size(_e) ((dir_size(_e) + 1) * DIR_BLOCK_SIZE(dir_big(_e)))
+// Round up the approximate byte size of a document to 4 level maximum sizes and unit sizes.
+// Here level means the big part of the directory entry.
+// (level=0, max=   32KiB, unit=512B),
+// (level=1, max=  256KiB, unit=  4KiB),
+// (level=2, max=    2MiB, unit= 32KiB),
+// (level=3, max=infinity, unit=256KiB).
+// @param _s is the approximate byte size.
+// @return the rounded-up byte size.
 #define round_to_approx_dir_size(_s)      \
   (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
      ROUND_TO(_s, DIR_BLOCK_SIZE(0)) :    \

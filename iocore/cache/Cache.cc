@@ -1207,6 +1207,19 @@ vol_init_data(Vol *d)
   vol_init_data_internal(d);
 }
 
+// Initialize the directory entry freelist.
+// This function is called from vol_clear_init.
+// This function is much like dir_init_segment function but
+// this function initializes all directory entries and all freelist elements (for all segments)
+// while dir_init_segment re-initialize directory entries and one freelist element for one segment.
+// The second, third, and fourth entries in each bucket are added to the
+// freelist, in depth first order, all the seconds, then the thirds, then the fourths.
+// Because the free lists are LIFOs, this means extra entries will be selected from
+// the fourth entries across all the buckets first, then the thirds, etc.
+//
+// The first entries in all buckets are not modified in this function,
+// but are marked unused (=zeroed) in vol_clear_init.
+// @param d is the pointer to Vol.
 void
 vol_init_dir(Vol *d)
 {
@@ -1225,6 +1238,7 @@ vol_init_dir(Vol *d)
 }
 
 // Clear Vol.
+// Called from vol_dir_clear function and Vol::clear_dir method.
 // @param d is the pointer to Vol.
 void
 vol_clear_init(Vol *d)

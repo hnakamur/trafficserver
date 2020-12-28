@@ -415,15 +415,13 @@ const matcher_tags ip_allow_dest_tags = {nullptr, nullptr, "dest_ip", nullptr, n
 
 const matcher_tags socks_server_tags = {nullptr, nullptr, "dest_ip", nullptr, nullptr, nullptr, false};
 
-// char* parseConfigLine(char* line, matcher_line* p_line,
-//                       const matcher_tags* tags)
-//
-//   Parse out a config file line suitable for passing to
-//    a ControlMatcher object
-//
-//   If successful, nullptr is returned.  If unsuccessful,
-//     a static error string is returned
-//
+// Parse out a config file line suitable for passing to
+// a ControlMatcher object
+// @param line [in] is a config file line.
+// @param p_line [out] is the parse result.
+// @param tags [in] is used to select line by label in the line.
+//                  Only the lines whose label matches to specified tags fields are selected.
+// @return nullptr on success, or a static error string on failure.
 const char *
 parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
 {

@@ -744,6 +744,10 @@ Vol::evac_range(off_t low, off_t high, int evac_phase)
   return 0;
 }
 
+// Fill the document header and copy data from the virtual connection to the aggregation buffer.
+// @param p is the destination pointer in the aggregation buffer.
+// @param vc is the source virtual connection.
+// @return number of bytes copied.
 static int
 agg_copy(char *p, CacheVC *vc)
 {

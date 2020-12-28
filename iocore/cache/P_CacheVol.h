@@ -30,6 +30,10 @@
 #define ROUND_TO_STORE_BLOCK(_x) INK_ALIGN((_x), STORE_BLOCK_SIZE)
 #define ROUND_TO_CACHE_BLOCK(_x) INK_ALIGN((_x), CACHE_BLOCK_SIZE)
 #define ROUND_TO_SECTOR(_p, _x) INK_ALIGN((_x), _p->sector_size)
+// Align the byte size to power of 2 boundary.
+// @param _x is the byte size to align.
+// @param _y is the boundary.
+// @return the rounded-up byte size.
 #define ROUND_TO(_x, _y) INK_ALIGN((_x), (_y))
 
 // Vol (volumes)
@@ -144,9 +148,14 @@ struct Vol : public Continuation {
   CryptoHash hash_id;
   int fd = -1;
 
-  char *raw_dir           = nullptr;
-  Dir *dir                = nullptr;
+  // Raw directory memory region. Its size is dirlen().
+  // Allocated in Vol::init. It seems this is never freed.
+  char *raw_dir = nullptr;
+  // Pointer to the first directory entry in raw_dir.
+  Dir *dir = nullptr;
+  // Pointer to the header in raw_dir.
   VolHeaderFooter *header = nullptr;
+  // Pointer to the footer in raw_dir.
   VolHeaderFooter *footer = nullptr;
   // The number of segments in the volume. This will be roughly the total number of entries divided by the number of entries in a
   // segment. It will be rounded up to cover all entries.
@@ -173,17 +182,30 @@ struct Vol : public Continuation {
   Queue<CacheVC, Continuation::Link_link> agg;
   Queue<CacheVC, Continuation::Link_link> stat_cache_vcs;
   Queue<CacheVC, Continuation::Link_link> sync;
-  char *agg_buffer  = nullptr;
+  // The aggregation buffer. The size is AGG_SIZE (4MiB).
+  // Allocated in the Vol constructor and freed in the destructor.
+  char *agg_buffer = nullptr;
+  // The byte size to copy to the aggregation buffer.
+  // In normal case, this is incremented in CacheVC::handleWrite and Vol::evacuateWrite,
+  // and then decremented after calling agg_copy in Vol::aggWrite.
+  // In error cases, this is decremented by CacheVC::agg_len in CacheVC::handleWrite and Vol::aggWrite.
   int agg_todo_size = 0;
-  // position in the aggregation buffer. This is set to `round_to_approx_size(sizeof(Doc))` when writing sync marker in
-  // Vol::aggWrite.
+  // position in the aggregation buffer.
+  // This is incremented by writelen after calling agg_copy in Vol::aggWrite.
+  // This is set to `round_to_approx_size(sizeof(Doc))` when writing sync marker in Vol::aggWrite.
+  // This is reset to 0 in Vol::aggWriteDone and sync_cache_dir_on_shutdown.
   int agg_buf_pos = 0;
 
   Event *trigger = nullptr;
 
   OpenDir open_dir;
-  RamCache *ram_cache            = nullptr;
-  int evacuate_size              = 0;
+  RamCache *ram_cache = nullptr;
+  // The length of the array at the evaculate field.
+  int evacuate_size = 0;
+  // An array with an element for each evacuation region. Each element is a doubly linked list of EvacuationBlock instances.
+  // Each instance contains a Dir that specifies the fragment to evacuate. It is assumed that an evacuation block is placed
+  // in the evacuation bucket (array element) that corresponds to the evacuation region in which the fragment is located
+  // although no ordering per bucket is enforced in the linked list (this sorting is handled during evacuation).
   DLL<EvacuationBlock> *evacuate = nullptr;
   DLL<EvacuationBlock> lookaside[LOOKASIDE_SIZE];
   CacheVC *doc_evacuator = nullptr;
@@ -392,28 +414,25 @@ extern unsigned short *vol_hash_table;
 
 // inline Functions
 
-/* @brief returns the byte length of header (VolHeaderFooter) and the freelist.
- * @return the byte length of header (VolHeaderFooter) and the freelist.
- */
+// Returns the byte length of header (VolHeaderFooter) and the freelist.
+// @return the byte length of header (VolHeaderFooter) and the freelist.
 TS_INLINE int
 Vol::headerlen()
 {
   return ROUND_TO_STORE_BLOCK(sizeof(VolHeaderFooter) + sizeof(uint16_t) * (this->segments - 1));
 }
 
-/* @brief returns the Dir pointer to the start of the segment
- * @param s the segment index
- * @return the Dir pointer to the start of the segment
- */
+// Returns the Dir pointer to the start of the segment
+// @param s the segment index
+// @return the Dir pointer to the start of the segment
 TS_INLINE Dir *
 Vol::dir_segment(int s)
 {
   return (Dir *)(((char *)this->dir) + (s * this->buckets) * DIR_DEPTH * SIZEOF_DIR);
 }
 
-/* @brief returns total byte length of header, dir, and footer.
- * @return total byte length of header, dir, and footer.
- */
+// Returns total byte length of header, dir, and footer.
+// @return total byte length of header, dir, and footer.
 TS_INLINE size_t
 Vol::dirlen()
 {
@@ -421,59 +440,77 @@ Vol::dirlen()
          ROUND_TO_STORE_BLOCK(sizeof(VolHeaderFooter));
 }
 
-/* @brief returns the number of dir entries.
- * @return the number of dir entries.
- */
+// Returns the number of dir entries.
+// @return the number of dir entries.
 TS_INLINE int
 Vol::direntries()
 {
   return this->buckets * DIR_DEPTH * this->segments;
 }
 
+// Check if the offset is valid for the directory entry whose phase does not match to that of the cache stripe header.
+// Called from dir_valid.
+// @param e is the pointer to the directory entry.
+// @return Whether the offset is valid or not.
 TS_INLINE int
 Vol::vol_out_of_phase_valid(Dir *e)
 {
   return (dir_offset(e) - 1 >= ((this->header->agg_pos - this->start) / CACHE_BLOCK_SIZE));
 }
 
+// Check if the offset is valid and outside of write aggregation region
+// for the directory entry whose phase does not match to that of the cache stripe header.
+// Called from dir_agg_valid.
+// @param e is the pointer to the directory entry.
+// @return Whether the offset is valid and outside of write aggregation region or not.
 TS_INLINE int
 Vol::vol_out_of_phase_agg_valid(Dir *e)
 {
   return (dir_offset(e) - 1 >= ((this->header->agg_pos - this->start + AGG_SIZE) / CACHE_BLOCK_SIZE));
 }
 
+// Check if the offset is valid or overwritten in the last aggregate write
+// for the directory entry whose phase does not match to that of the cache stripe header.
+// Called from dir_write_valid.
+// @param e is the pointer to the directory entry.
+// @return Whether the offset is valid or not.
 TS_INLINE int
 Vol::vol_out_of_phase_write_valid(Dir *e)
 {
   return (dir_offset(e) - 1 >= ((this->header->write_pos - this->start) / CACHE_BLOCK_SIZE));
 }
 
+// Check if the offset is valid
+// for the directory entry whose phase matches to that of the cache stripe header.
+// Called from dir_valid, dir_agg_valid, and dir_write_valid.
+// @param e is the pointer to the directory entry.
+// @return Whether the offset is valid or not.
 TS_INLINE int
 Vol::vol_in_phase_valid(Dir *e)
 {
   return (dir_offset(e) - 1 < ((this->header->write_pos + this->agg_buf_pos - this->start) / CACHE_BLOCK_SIZE));
 }
 
+// Return the byte offset relative to the cache stripe of the document.
+// @param e is the pointer to directory entry.
 TS_INLINE off_t
 Vol::vol_offset(Dir *e)
 {
   return this->start + (off_t)dir_offset(e) * CACHE_BLOCK_SIZE - CACHE_BLOCK_SIZE;
 }
 
-/* @brief convert a byte offset to a vol offset.
- * @param pos is a byte offset
- * @return a vol offset (cache block index) (=ceil((pos - this->start) / CACHE_BLOCK_SIZE (512byte)))
- */
+// Convert a byte offset to a directory entry offset.
+// @param pos is a byte offset
+// @return a directory entry offset (=ceil((pos - this->start) / CACHE_BLOCK_SIZE (512byte)))
 TS_INLINE off_t
 Vol::offset_to_vol_offset(off_t pos)
 {
   return ((pos - this->start + CACHE_BLOCK_SIZE) / CACHE_BLOCK_SIZE);
 }
 
-/* @brief convert a vol offset to a byte offset.
- * @param pos is a vol offset (cache block index).
- * @return a byte offset (= this->start + (pos - 1) * CACHE_BLOCK_SIZE (512byte))
- */
+// convert a directory entry offset to a byte offset.
+// @param pos is a directory entry offset.
+// @return a byte offset (= this->start + (pos - 1) * CACHE_BLOCK_SIZE (512byte))
 TS_INLINE off_t
 Vol::vol_offset_to_offset(off_t pos)
 {
@@ -587,6 +624,9 @@ Vol::within_hit_evacuate_window(Dir *xdir)
     return -delta > (data_blocks - hit_evacuate_window) && -delta < data_blocks;
 }
 
+// Round up the size to the approximate size and then to the sector size.
+// @param l is the byte size to round up.
+// @return the rounded-up byte size.
 TS_INLINE uint32_t
 Vol::round_to_approx_size(uint32_t l)
 {

@@ -35,6 +35,10 @@ struct CacheHostResult;
 struct Cache;
 
 // A cache hosting record from hosting.config.
+// There is an instance of CacheHostRecord for each line in hosting.config and
+// one generic instance (Cache::hosttable) for all cache volumes that are not explicitly assigned.
+// If hosting.config is empty then all cache volumes will be in the generic record.
+// https://docs.trafficserver.apache.org/en/9.0.x/developer-guide/cache-architecture/cache-initialization.en.html
 struct CacheHostRecord {
   int Init(CacheType typ);
   int Init(matcher_line *line_info, CacheType typ);
@@ -48,7 +52,7 @@ struct CacheHostRecord {
   }
 
   CacheType type = CACHE_NONE_TYPE;
-  // The stripes that are part of the cache volumes. This is the union over the stripes of CacheHostRecord::cp
+  // The stripes that are part of the cache volumes. This is the union over the stripes of CacheHostRecord::cp::vols.
   Vol **vols          = nullptr;
   int good_num_vols   = 0;
   int num_vols        = 0;
@@ -144,6 +148,9 @@ public:
   CacheType type   = CACHE_HTTP_TYPE;
   Cache *cache     = nullptr;
   int m_numEntries = 0;
+  // The generic instance for all cache volumes that are not explicitly assigned.
+  // Initialized with CacheHostRecord::Init(CacheType typ) or
+  // CacheHostRecord::Init(matcher_line *line_info, CacheType typ) for line whose destination is '*'.
   CacheHostRecord gen_host_rec;
 
 private:
