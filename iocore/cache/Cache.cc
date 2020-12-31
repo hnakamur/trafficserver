@@ -1131,6 +1131,8 @@ CacheProcessor::open_write(Continuation *cont, CacheKey *key, CacheFragType frag
   return caches[frag_type]->open_write(cont, key, frag_type, options, pin_in_cache, hostname, host_len);
 }
 
+// Remove a cache.
+// Called from CacheVC::scanObject, tsmemache plugin MC::delete_item, and InkAPI.cc TSCacheRemove.
 Action *
 CacheProcessor::remove(Continuation *cont, const CacheKey *key, CacheFragType frag_type, const char *hostname, int host_len)
 {
@@ -2487,6 +2489,11 @@ Cache::lookup(Continuation *cont, const CacheKey *key, CacheFragType type, const
   }
 }
 
+// Remove cache event handler.
+// Called from Cache::remove.
+// @param event is unused.
+// @param e is unused.
+// @return an AIO event callback return value.
 int
 CacheVC::removeEvent(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
 {
@@ -2569,6 +2576,14 @@ Lfree:
   return free_CacheVC(this);
 }
 
+// Remove cache.
+// Called from CacheProcessor::remove (2 overloads).
+// @param cont is a continuation.
+// @param key is a cache key.
+// @param type is a cache fragment type.
+// @param hostname is a hostname.
+// @param host_len is a hostname length.
+// @return an action.
 Action *
 Cache::remove(Continuation *cont, const CacheKey *key, CacheFragType type, const char *hostname, int host_len)
 {
@@ -3358,6 +3373,7 @@ CacheProcessor::open_write(Continuation *cont, int expected_size, const HttpCach
 //----------------------------------------------------------------------------
 // Note: this should not be called from from the cluster processor, or bad
 // recursion could occur. This is merely a convenience wrapper.
+// NOTE: Called from HttpSM::do_cache_delete_all_alts and howCache::delete_url.
 Action *
 CacheProcessor::remove(Continuation *cont, const HttpCacheKey *key, CacheFragType frag_type)
 {

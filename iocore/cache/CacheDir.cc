@@ -131,6 +131,10 @@ OpenDir::signal_readers(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
   return 0;
 }
 
+// Close write.
+// Called from Vol::close_write.
+// @param const is a CacheVC.
+// @return always zero.
 int
 OpenDir::close_write(CacheVC *cont)
 {
