@@ -361,6 +361,8 @@ struct CacheVol {
 };
 
 // the header data for a fragment.
+// Doc is also used as a sync marker, in which just magic, len, sync_serial,
+// and write_serial are set, written in Vol::aggWrite.
 // Note : hdr() needs to be 8 byte aligned.
 struct Doc {
   uint32_t magic; // DOC_MAGIC
