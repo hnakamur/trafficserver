@@ -87,10 +87,16 @@ struct VolHeaderFooter {
   // Epoch time when the stripe was created.
   time_t create_time;
   // Position of the write cursor, as a byte offset in the stripe.
+  // Incremented by written bytes in Vol::aggWriteDone.
+  // Incremented by agg_buf_pos in sync_cache_dir_on_shutdown.
+  // Reset to Vol::start in Vol::agg_wrap and vol_clear_init.
   off_t write_pos;
   // Location of the write cursor of the most recently completed disk write.
+  // Set to write_pos in aggWriteDone, vol_clear_init and sync_cache_dir_on_shutdown
   off_t last_write_pos;
   // The byte offset in the stripe where the current aggregation buffer will be written.
+  // Set to write_pos in agg_wrap, vol_clear_init.
+  // Set to write_pos + Vol::agg_buf_pos in Vol::aggWrite and sync_cache_dir_on_shutdown.
   off_t agg_pos;
   // Generation of this instance.
   // token generation (vary), this cannot be 0.
