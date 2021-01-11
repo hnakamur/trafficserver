@@ -1624,7 +1624,8 @@ Lcallreturn:
   return handleEvent(AIO_EVENT_DONE, nullptr); // hopefully a tail call
 }
 
-// handle lock failures from main Cache::open_write entry points below
+// handle lock failures from main Cache::open_write entry points below.
+// Called from Cache::open_write for non-http overload.
 int
 CacheVC::openWriteStartBegin(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
 {
@@ -1652,7 +1653,8 @@ CacheVC::openWriteStartBegin(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED
   }
 }
 
-// main entry point for writing of of non-http documents
+// main entry point for writing of of non-http documents.
+// Called from CacheProcessor::open_write non-http overload.
 Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_type, int options, time_t apin_in_cache,
                   const char *hostname, int host_len)
@@ -1718,7 +1720,8 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_ty
   }
 }
 
-// main entry point for writing of http documents
+// main entry point for writing of http documents.
+// Called from CacheProcessor::open_write for http overload.
 Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, time_t apin_in_cache,
                   const CacheKey * /* key1 ATS_UNUSED */, CacheFragType type, const char *hostname, int host_len)
@@ -1779,6 +1782,8 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, 
        HTTP OPERATIONS
        open_write with info set
        close
+       NOTE: description for case c must be outdated since there is no
+             definition of openWriteRemoveVector, only declaration exists.
      */
     c->f.update  = 1;
     c->base_stat = cache_update_active_stat;

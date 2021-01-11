@@ -452,6 +452,8 @@ CacheVC::get_http_info(CacheHTTPInfo **ainfo)
 // cluster vc does an optimization where it calls do_io_write() before
 // calling set_http_info(), but it guarantees that the info will
 // be set before transferring any bytes
+//
+// Called from mainly HttpSM::setup_cache_write_transfer and HttpSM::issue_cache_update.
 void
 CacheVC::set_http_info(CacheHTTPInfo *ainfo)
 {
@@ -3373,7 +3375,7 @@ CacheProcessor::open_write(Continuation *cont, int expected_size, const HttpCach
 //----------------------------------------------------------------------------
 // Note: this should not be called from from the cluster processor, or bad
 // recursion could occur. This is merely a convenience wrapper.
-// NOTE: Called from HttpSM::do_cache_delete_all_alts and howCache::delete_url.
+// NOTE: Called from HttpSM::do_cache_delete_all_alts and CachePages.cc ShowCache::delete_url.
 Action *
 CacheProcessor::remove(Continuation *cont, const HttpCacheKey *key, CacheFragType frag_type)
 {

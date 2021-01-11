@@ -260,6 +260,7 @@ struct CacheVC : public CacheVConnection {
     return -1;
   }
 
+  // Called from memcache plugin.
   int
   set_header(void *ptr, int len) override
   {
@@ -439,40 +440,102 @@ struct CacheVC : public CacheVConnection {
   // NOTE: NOTE: NOTE: If vio is NOT the start, then CHANGE the
   // size_to_init initialization
   VIO vio;
+  // Set in Cache::lookup, Cache::remove, Cache::open_read,
+  // CacheVC::scanObject, and Cache::open_write.
   CacheFragType frag_type;
+  // Set to nullptr in Cache::open_write for non-http.
+  // Set to non-null in Cache::open_write for http.
   CacheHTTPInfo *info;
+  // Set in OpenDir::open_write and CacheVC::openReadChooseWriter.
   CacheHTTPInfoVector *write_vector;
   const OverridableHttpConfigParams *params;
-  int header_len;        // for communicating with agg_copy
-  int frag_len;          // for communicating with agg_copy
-  uint32_t write_len;    // for communicating with agg_copy
-  uint32_t agg_len;      // for communicating with aggWrite
-  uint32_t write_serial; // serial of the final write for SYNC
+  // for communicating with agg_copy.
+  // Set in CacheVC::openReadStartEarliest, CacheVC::scanOpenWrite,
+  // CacheVC::updateVector, and CacheVC::openWriteCloseHead.
+  int header_len;
+  // for communicating with agg_copy.
+  // Set to 0 in CacheVC::handleWrite.
+  int frag_len;
+  // for communicating with agg_copy.
+  // Set to 0 in CacheVC::openReadStartEarliest, CacheVC::scanObject, and
+  // CacheVC::openWriteCloseHead.
+  // Set to nonzero in Cache::link, CacheVC::updateVector,
+  // CacheVC::openWriteCloseHead, CacheVC::openWriteCloseDataDone,
+  // CacheVC::openWriteClose, and CacheVC::openWriteMain.
+  uint32_t write_len;
+  // for communicating with aggWrite.
+  // Set in CacheVC::handleWrite and Vol::evacuateWrite.
+  uint32_t agg_len;
+  // serial of the final write for SYNC.
+  // Set in agg_copy.
+  uint32_t write_serial;
   Vol *vol;
   Dir *last_collision;
   Event *trigger;
+  // Set in CacheVC::do_read_call.
   CacheKey *read_key;
   ContinuationHandler save_handler;
   uint32_t pin_in_cache;
+  // Set in new_CacheVC and CacheVC::openReadFromWriter
   ink_hrtime start_time;
   int base_stat;
   int recursive;
+  // Set to 1 (normal) in CacheVC::openWriteMain.
+  // Set to -1 (abort) in CacheVC::openWriteClose and CacheVC::openWriteWriteDone.
+  // Set to 1 or -1 in CacheVC::do_io_close.
   int closed;
-  uint64_t seek_to;      // pread offset
-  int64_t offset;        // offset into 'blocks' of data to write
-  int64_t writer_offset; // offset of the writer for reading from a writer
-  int64_t length;        // length of data available to write
-  int64_t doc_pos;       // read position in 'buf'
-  uint64_t write_pos;    // length written
-  uint64_t total_len;    // total length written and available to write
-  uint64_t doc_len;      // total_length (of the selected alternate for HTTP)
+  // pread offset.
+  // Set to non-zero in CacheVC::do_io_pread.
+  // Set to 0 in CacheVC::openReadFromWriterMain and CacheVC::openReadMain.
+  uint64_t seek_to;
+  // offset into 'blocks' of data to write.
+  // Set to 0 in Cache::scan and CacheVC::scanObject.
+  // Set to non-zero in CacheVC::scanObject and CacheVC::scanOpenWrite.
+  int64_t offset;
+  // offset of the writer for reading from a writer.
+  // Set to writer's offset in CacheVC::openReadFromWriter.
+  int64_t writer_offset;
+  // length of data available to write.
+  // Set to doc_len or fragment length in CacheVC::openReadFromWriter.
+  // Set to towrite in CacheVC::openWriteMain
+  int64_t length;
+  // read position in 'buf'.
+  // Set to 0 in CacheVC::openReadFromWriter and CacheVC::do_read_call.
+  // Set to nonzero or modified in CacheVC::openReadReadDone,
+  // CacheVC::openReadMain, and CacheVC::openReadStartHead
+  int64_t doc_pos;
+  // length written.
+  // Incremented by write_len in CacheVC::openWriteWriteDone and
+  // CacheVC::openWriteCloseDataDone.
+  uint64_t write_pos;
+  // total length written and available to write.
+  // Set to 0 in CacheVC::openReadStartEarliest.
+  // Incremented in CacheVC::evacuateDocDone and CacheVC::openWriteMain.
+  uint64_t total_len;
+  // total_length (of the selected alternate for HTTP).
+  // Updated in CacheVC::openReadFromWriter, CacheVC::openReadReadDone,
+  // CacheVC::openReadMain, CacheVC::openReadStartHead, and
+  // CacheVC::evacuateReadHead.
+  uint64_t doc_len;
+  // Updated in Cache::open_write, referenced in CacheVC::set_http_info.
   uint64_t update_len;
+  // Set to 0 in Cache::scan.
+  // Set to 1 in CacheVC::scanObject.
+  // Incremented in CacheVC::openReadReadDone, CacheVC::openReadMain,
+  // CacheVC::openWriteCloseDataDone, and CacheVC::openWriteWriteDone.
+  // Decremented in CacheVC::openReadMain.
   int fragment;
   int scan_msec_delay;
+  // Set to non-null in CacheVC::openReadChooseWriter.
+  // Set to nullptr in CacheVC::openReadFromWriter.
   CacheVC *write_vc;
+  // Set in Cache::scan.
   char *hostname;
+  // Set in Cache::scan.
   int host_len;
+  // Set in set_header, referenced in CacheVC::openWriteCloseHead for non-http cache.
   int header_to_write_len;
+  // Set in set_header.
   void *header_to_write;
   short writer_lock_retry;
   union {
