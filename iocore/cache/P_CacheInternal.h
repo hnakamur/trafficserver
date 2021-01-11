@@ -667,6 +667,9 @@ CacheVC *new_DocEvacuator(int nbytes, Vol *d);
 
 // inline Functions
 
+// Called from Cache::lookup, Cache::remove, Cache::link, Cache::deref,
+// Cache::open_read for non-http/http, Cache::scan, new_DocEvacuator,
+// and Cache::open_write for non-http/http.
 TS_INLINE CacheVC *
 new_CacheVC(Continuation *cont)
 {

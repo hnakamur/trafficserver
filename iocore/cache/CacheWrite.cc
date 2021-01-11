@@ -376,6 +376,7 @@ Vol::aggWriteDone(int event, Event *e)
   return EVENT_CONT;
 }
 
+// Called from Vol::evac_range.
 CacheVC *
 new_DocEvacuator(int nbytes, Vol *vol)
 {
@@ -699,6 +700,8 @@ Ldone:
 // @param high is the end byte offset.
 // @param evac_phase is the flag to filter dir by phase.
 // @return 0 if no evacuation was started, non-zero otherwise.
+//
+// Called from Vol::aggWrite.
 int
 Vol::evac_range(off_t low, off_t high, int evac_phase)
 {
@@ -748,6 +751,7 @@ Vol::evac_range(off_t low, off_t high, int evac_phase)
 // @param p is the destination pointer in the aggregation buffer.
 // @param vc is the source virtual connection.
 // @return number of bytes copied.
+// Called from Vol::aggWrite.
 static int
 agg_copy(char *p, CacheVC *vc)
 {
@@ -1721,6 +1725,16 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_ty
 }
 
 // main entry point for writing of http documents.
+// @param cont is a continuation.
+// @param key is a cache key.
+// @param info is a pointer to CacheHTTPInfo or CACHE_ALLOW_MULTIPLE_WRITES (1).
+//             CACHE_ALLOW_MULTIPLE_WRITES is passed from HttpCacheSM::open_write
+//             when allow_multiple is true.
+// @param apin_in_cache is the time when cache is pinned.
+// @param key1 is not used.
+// @param type is a cache fragment type.
+// @param hostname is a host name.
+// @param host_len is the length of the hostname.
 // Called from CacheProcessor::open_write for http overload.
 Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, time_t apin_in_cache,
