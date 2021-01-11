@@ -478,27 +478,91 @@ struct CacheVC : public CacheVConnection {
   union {
     uint32_t flags;
     struct {
+      // Whether the vector should be marshalled and to set
+      // the doc->key to the appropriate key (first_key or earliest_key)
+      // (copied from CacheVC::handleWrite comment).
+      //
+      // Set to 0 in CacheVC::openReadVecWrite, set to 1 in Cache::link,
+      // CacheVC::openReadStartEarliest, CacheVC::scanObject, CacheVC::updateVector,
+      // and CacheVC::openWriteCloseHead.
       unsigned int use_first_key : 1;
-      unsigned int overwrite : 1;      // overwrite first_key Dir if it exists
-      unsigned int close_complete : 1; // WRITE_COMPLETE is final
-      unsigned int sync : 1;           // write to be committed to durable storage before WRITE_COMPLETE
+      // overwrite first_key Dir if it exists.
+      //
+      // Set to (options & CACHE_WRITE_OPT_OVERWRITE) != 0 in Cache::open_write
+      unsigned int overwrite : 1;
+      // WRITE_COMPLETE is final.
+      //
+      // Set to (options & CACHE_WRITE_OPT_CLOSE_COMPLETE) != 0 in Cache::open_write
+      unsigned int close_complete : 1;
+      // write to be committed to durable storage before WRITE_COMPLETE.
+      //
+      // Set to (options & CACHE_WRITE_OPT_SYNC) == CACHE_WRITE_OPT_SYNC in Cache::open_write
+      unsigned int sync : 1;
+      // 1 if this is an evacuation.
+      //
+      // Set to 1 in new_DocEvacuator.
       unsigned int evacuator : 1;
+      // 1 if this is a single fragment.
+      //
+      // Set to 1 in CacheVC::openReadFromWriter,
+      // set to 0 in CacheVC::openReadStartHead,
+      // set to !write_vc->fragment in CacheVC::openReadFromWriter,
+      // set to doc->single_fragment() in CacheVC::openReadStartHead and agg_copy.
       unsigned int single_fragment : 1;
+      // If set, the writer is pushed in the beginning of the
+      // agg queue. And if !f.evac_vector && !f.update the alternate->object_size
+      // is set to vc->total_len
+      // (copied from CacheVC::handleWrite comment).
+      //
+      // Set to 0 in CacheVC::openReadVecWrite,
+      // set to 1 in CacheVC::openReadStartEarliest and CacheVC::scanObject.
       unsigned int evac_vector : 1;
+      // 1 if this is a lookup.
+      // Set to 1 in Cache::lookup.
       unsigned int lookup : 1;
+      // Used only if the write_vector needs to be written to disk.
+      // Used to set the length of the alternate to total_len.
+      //
+      // Set to 0 in CacheVC::openReadVecWrite,
+      // set to 1 in CacheVC::openReadStartEarliest and Cache::open_write
       unsigned int update : 1;
+      // 1 if this is a cache remove.
+      // Set to 1 in Cache::remove.
       unsigned int remove : 1;
+      // 1 if removing aborted writers.
+      // Set to 1 in CacheVC::removeEvent.
       unsigned int remove_aborted_writers : 1;
       unsigned int open_read_timeout : 1; // UNUSED
+      // Set to 1 in CacheVC::openWriteCloseDataDone.
       unsigned int data_done : 1;
+      // Set to 1 in CacheVC::openReadFromWriter.
       unsigned int read_from_writer_called : 1;
-      unsigned int not_from_ram_cache : 1; // entire object was from ram cache
+      // 1 if entire object was from ram cache.
+      //
+      // Set to 1 in CacheVC::handleReadDone.
+      unsigned int not_from_ram_cache : 1;
+      // 1 if the resident alternate is rewritten.
+      //
+      // Set to 1 in CacheVC::updateVector.
       unsigned int rewrite_resident_alt : 1;
+      // If set, assumes that this is an evacuation, so the write
+      // is not aborted even if vol->agg_todo_size > agg_write_backlog.
+      //
+      // Set to 1 in CacheVC::openReadFromWriter.
       unsigned int readers : 1;
+      // Initialized to 0 in CacheVC::handleRead.
+      // Set to 1 in CacheVC::handleRead when ramHit and memHit.
       unsigned int doc_from_ram_cache : 1;
+      // Set to 1 in CacheVC::openReadStartEarliest and CacheVC::openReadStartHead.
       unsigned int hit_evacuate : 1;
-      unsigned int compressed_in_ram : 1; // compressed state in ram cache
-      unsigned int allow_empty_doc : 1;   // used for cache empty http document
+      // compressed state in ram cache.
+      // Set to (ram_hit_state > RAM_HIT_COMPRESS_NONE) ? 1 : 0 in CacheVC::handleRead.
+      unsigned int compressed_in_ram : 1;
+      // used for cache empty http document.
+      //
+      // Set to 1 in CacheVC::set_http_info when value of Content-Length
+      // response header is zero, set to 0 otherwise.
+      unsigned int allow_empty_doc : 1;
     } f;
   };
   // BTF optimization used to skip reading stuff in cache partition that doesn't contain any
