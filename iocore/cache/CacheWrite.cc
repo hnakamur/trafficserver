@@ -1102,6 +1102,14 @@ Lagain:
    */
   io.thread = AIO_CALLBACK_THREAD_AIO;
   SET_HANDLER(&Vol::aggWriteDone);
+  {
+    Doc *d = reinterpret_cast<Doc *>(agg_buffer);
+    DDebug("cache_my_debug",
+           "calling ink_aio_write nbytes=%" PRIu64 ", len=%d, hlen=%u, total_len=%" PRIu64
+           ", sync_serial=%u, write_serial=%u, key=%u, first_key=%u",
+           io.aiocb.aio_nbytes, d->len, d->hlen, d->total_len, d->sync_serial, d->write_serial, d->key.slice32(0),
+           d->first_key.slice32(0));
+  }
   ink_aio_write(&io);
 
 Lwait:

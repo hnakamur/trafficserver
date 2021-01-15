@@ -1263,6 +1263,7 @@ Lrestart:
 
     if (!writepos) {
       // write header
+      Debug("cache_my_dir_sync", "write header b=%p, n=%d, off=%" PRId64, buf + writepos, headerlen, start + writepos);
       aio_write(vol->fd, buf + writepos, headerlen, start + writepos);
       writepos += headerlen;
     } else if (writepos < static_cast<off_t>(dirlen) - headerlen) {
@@ -1271,11 +1272,13 @@ Lrestart:
       if (writepos + l > static_cast<off_t>(dirlen) - headerlen) {
         l = dirlen - headerlen - writepos;
       }
+      Debug("cache_my_dir_sync", "write part of body b=%p, n=%d, off=%" PRId64, buf + writepos, l, start + writepos);
       aio_write(vol->fd, buf + writepos, l, start + writepos);
       writepos += l;
     } else if (writepos < static_cast<off_t>(dirlen)) {
       ink_assert(writepos == (off_t)dirlen - headerlen);
       // write footer
+      Debug("cache_my_dir_sync", "write footer b=%p, n=%d, off=%" PRId64, buf + writepos, headerlen, start + writepos);
       aio_write(vol->fd, buf + writepos, headerlen, start + writepos);
       writepos += headerlen;
     } else {
