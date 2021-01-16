@@ -234,13 +234,17 @@ iobufferblock_memcpy(char *p, int len, IOBufferBlock *ab, int offset)
     max_bytes -= offset;
     if (max_bytes <= 0) {
       offset = -max_bytes;
-      b      = b->next.get();
+      Debug("cache_my_debug", "continue to next, len=%d, b=%p, start=%p, end=%p, max_bytes=%d, offset=%d", len, b, start, end,
+            max_bytes, offset);
+      b = b->next.get();
       continue;
     }
     int bytes = len;
     if (bytes >= max_bytes) {
       bytes = max_bytes;
     }
+    Debug("cache_my_debug", "memcpy, len=%d, b=%p, start=%p, end=%p, max_bytes=%d, offset=%d, bytes=%d", len, b, start, end,
+          max_bytes, offset, bytes);
     ::memcpy(p, start + offset, bytes);
     p += bytes;
     len -= bytes;
@@ -1325,6 +1329,7 @@ CacheVC::openWriteCloseDataDone(int event, Event *e)
       if (write_len > MAX_FRAG_SIZE) {
         write_len = MAX_FRAG_SIZE;
       }
+      Debug("cache_my_debug", "CacheVC=%p, write_len=%u", this, write_len);
       if ((ret = do_write_call()) == EVENT_RETURN) {
         goto Lcallreturn;
       }
@@ -1487,6 +1492,7 @@ Lagain:
   } else {
     write_len = length;
   }
+  Debug("cache_my_debug", "CacheVC=%p, write_len=%u", this, write_len);
   bool not_writing = towrite != ntodo && towrite < target_fragment_size();
   if (!called_user) {
     if (not_writing) {

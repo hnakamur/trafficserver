@@ -330,6 +330,7 @@ CacheVC::scanObject(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
         alternate_index   = CACHE_ALT_REMOVED;
         earliest_key      = zero_key;
         writer_lock_retry = 0;
+        Debug("cache_my_debug", "CacheVC=%p, offset=%" PRId64, this, offset);
         SET_HANDLER(&CacheVC::scanOpenWrite);
         return scanOpenWrite(EVENT_NONE, nullptr);
       }
@@ -444,6 +445,7 @@ CacheVC::scanOpenWrite(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
     Dir d;
     Doc *doc = reinterpret_cast<Doc *>(buf->data() + offset);
     offset   = reinterpret_cast<char *>(doc) - buf->data() + vol->round_to_approx_size(doc->len);
+    Debug("cache_my_debug", "CacheVC=%p, offset=%" PRId64, this, offset);
     // if the doc contains some data, then we need to create
     // a new directory entry for this fragment. Remember the
     // offset and the key in earliest_key

@@ -807,6 +807,10 @@ Lread : {
     VC_SCHED_LOCK_RETRY();
   }
   if (dir_probe(&key, vol, &dir, &last_collision)) {
+    Debug("cache_my_debug",
+          "CacheVC=%p, dir_probe hit, key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", this, key.u8[0],
+          key.u8[1], key.u8[2], key.u8[3], key.u8[4], key.u8[5], key.u8[6], key.u8[7], key.u8[8], key.u8[9], key.u8[10], key.u8[11],
+          key.u8[12], key.u8[13], key.u8[14], key.u8[15]);
     SET_HANDLER(&CacheVC::openReadReadDone);
     int ret = do_read_call(&key);
     if (ret == EVENT_RETURN) {
@@ -817,6 +821,12 @@ Lread : {
     if (writer_done()) {
       last_collision = nullptr;
       while (dir_probe(&earliest_key, vol, &dir, &last_collision)) {
+        Debug("cache_my_debug",
+              "CacheVC=%p, dir_probe hit, earliest_key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x",
+              this, earliest_key.u8[0], earliest_key.u8[1], earliest_key.u8[2], earliest_key.u8[3], earliest_key.u8[4],
+              earliest_key.u8[5], earliest_key.u8[6], earliest_key.u8[7], earliest_key.u8[8], earliest_key.u8[9],
+              earliest_key.u8[10], earliest_key.u8[11], earliest_key.u8[12], earliest_key.u8[13], earliest_key.u8[14],
+              earliest_key.u8[15]);
         if (dir_offset(&dir) == dir_offset(&earliest_dir)) {
           DDebug("cache_read_agg", "%p: key: %X ReadMain complete: %d", this, first_key.slice32(1), (int)vio.ndone);
           doc_len = vio.ndone;
@@ -909,6 +919,15 @@ CacheVC::openReadStartEarliest(int /* event ATS_UNUSED */, Event * /* e ATS_UNUS
     earliest_key = key;
     doc_pos      = doc->prefix_len();
     next_CacheKey(&key, &doc->key);
+    Debug("cache_my_debug",
+          "CacheVC=%p, after next_CacheKey, earliest_key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x",
+          this, earliest_key.u8[0], earliest_key.u8[1], earliest_key.u8[2], earliest_key.u8[3], earliest_key.u8[4],
+          earliest_key.u8[5], earliest_key.u8[6], earliest_key.u8[7], earliest_key.u8[8], earliest_key.u8[9], earliest_key.u8[10],
+          earliest_key.u8[11], earliest_key.u8[12], earliest_key.u8[13], earliest_key.u8[14], earliest_key.u8[15]);
+    Debug("cache_my_debug",
+          "CacheVC=%p, after next_CacheKey, key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", this,
+          key.u8[0], key.u8[1], key.u8[2], key.u8[3], key.u8[4], key.u8[5], key.u8[6], key.u8[7], key.u8[8], key.u8[9], key.u8[10],
+          key.u8[11], key.u8[12], key.u8[13], key.u8[14], key.u8[15]);
     vol->begin_read(this);
     if (vol->within_hit_evacuate_window(&earliest_dir) &&
         (!cache_config_hit_evacuate_size_limit || doc_len <= static_cast<uint64_t>(cache_config_hit_evacuate_size_limit))) {
