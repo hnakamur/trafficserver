@@ -1703,6 +1703,10 @@ Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_type, int options, time_t apin_in_cache,
                   const char *hostname, int host_len)
 {
+  Debug("cache_my_debug",
+        "CacheVC=%p, Cache::open_write non-http key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", this,
+        key->u8[0], key->u8[1], key->u8[2], key->u8[3], key->u8[4], key->u8[5], key->u8[6], key->u8[7], key->u8[8], key->u8[9],
+        key->u8[10], key->u8[11], key->u8[12], key->u8[13], key->u8[14], key->u8[15]);
   if (!CacheProcessor::IsCacheReady(frag_type)) {
     cont->handleEvent(CACHE_EVENT_OPEN_WRITE_FAILED, (void *)-ECACHE_NOT_READY);
     return ACTION_RESULT_DONE;
@@ -1780,6 +1784,10 @@ Action *
 Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, time_t apin_in_cache,
                   const CacheKey * /* key1 ATS_UNUSED */, CacheFragType type, const char *hostname, int host_len)
 {
+  Debug("cache_my_debug",
+        "CacheVC=%p, Cache::open_write http key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", this,
+        key->u8[0], key->u8[1], key->u8[2], key->u8[3], key->u8[4], key->u8[5], key->u8[6], key->u8[7], key->u8[8], key->u8[9],
+        key->u8[10], key->u8[11], key->u8[12], key->u8[13], key->u8[14], key->u8[15]);
   if (!CacheProcessor::IsCacheReady(type)) {
     cont->handleEvent(CACHE_EVENT_OPEN_WRITE_FAILED, (void *)-ECACHE_NOT_READY);
     return ACTION_RESULT_DONE;

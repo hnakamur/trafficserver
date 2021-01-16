@@ -2466,6 +2466,9 @@ LmemHit:
 Action *
 Cache::lookup(Continuation *cont, const CacheKey *key, CacheFragType type, const char *hostname, int host_len)
 {
+  Debug("cache_my_debug", "CacheVC=%p, Cache::lookup key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x",
+        this, key->u8[0], key->u8[1], key->u8[2], key->u8[3], key->u8[4], key->u8[5], key->u8[6], key->u8[7], key->u8[8],
+        key->u8[9], key->u8[10], key->u8[11], key->u8[12], key->u8[13], key->u8[14], key->u8[15]);
   if (!CacheProcessor::IsCacheReady(type)) {
     cont->handleEvent(CACHE_EVENT_LOOKUP_FAILED, nullptr);
     return ACTION_RESULT_DONE;
