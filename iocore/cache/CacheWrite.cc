@@ -530,6 +530,7 @@ CacheVC::evacuateDocDone(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */)
           ink_assert(dir_compare_tag(&overwrite_dir, &doc->key));
           ink_assert(b->earliest_evacuator == this);
           total_len += doc->data_len();
+          Debug("cache_my_debug", "CacheVC this=%p, doc->data_len=%u, total_len=%" PRId64, this, doc->data_len(), total_len);
           first_key    = doc->first_key;
           earliest_dir = dir;
           if (dir_probe(&first_key, vol, &dir, &last_collision) > 0) {
@@ -795,18 +796,38 @@ agg_copy(char *p, CacheVC *vc)
     if (vc->f.use_first_key) {
       if (doc->data_len() || vc->f.allow_empty_doc) {
         doc->key = vc->earliest_key;
+        Debug("cache_my_debug",
+              "CacheVC=%p, earliest doc->key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", vc,
+              doc->key.u8[0], doc->key.u8[1], doc->key.u8[2], doc->key.u8[3], doc->key.u8[4], doc->key.u8[5], doc->key.u8[6],
+              doc->key.u8[7], doc->key.u8[8], doc->key.u8[9], doc->key.u8[10], doc->key.u8[11], doc->key.u8[12], doc->key.u8[13],
+              doc->key.u8[14], doc->key.u8[15]);
       } else { // the vector is being written by itself
         if (vc->earliest_key == zero_key) {
           do {
             rand_CacheKey(&doc->key, vc->vol->mutex);
           } while (DIR_MASK_TAG(doc->key.slice32(2)) == DIR_MASK_TAG(vc->first_key.slice32(2)));
+          Debug("cache_my_debug",
+                "CacheVC=%p, rand doc->key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", vc,
+                doc->key.u8[0], doc->key.u8[1], doc->key.u8[2], doc->key.u8[3], doc->key.u8[4], doc->key.u8[5], doc->key.u8[6],
+                doc->key.u8[7], doc->key.u8[8], doc->key.u8[9], doc->key.u8[10], doc->key.u8[11], doc->key.u8[12], doc->key.u8[13],
+                doc->key.u8[14], doc->key.u8[15]);
         } else {
           prev_CacheKey(&doc->key, &vc->earliest_key);
+          Debug("cache_my_debug",
+                "CacheVC=%p, prev doc->key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", vc,
+                doc->key.u8[0], doc->key.u8[1], doc->key.u8[2], doc->key.u8[3], doc->key.u8[4], doc->key.u8[5], doc->key.u8[6],
+                doc->key.u8[7], doc->key.u8[8], doc->key.u8[9], doc->key.u8[10], doc->key.u8[11], doc->key.u8[12], doc->key.u8[13],
+                doc->key.u8[14], doc->key.u8[15]);
         }
       }
       dir_set_head(&vc->dir, true);
     } else {
       doc->key = vc->key;
+      Debug("cache_my_debug",
+            "CacheVC=%p, vc->key doc->key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x, fragment=%d", vc,
+            doc->key.u8[0], doc->key.u8[1], doc->key.u8[2], doc->key.u8[3], doc->key.u8[4], doc->key.u8[5], doc->key.u8[6],
+            doc->key.u8[7], doc->key.u8[8], doc->key.u8[9], doc->key.u8[10], doc->key.u8[11], doc->key.u8[12], doc->key.u8[13],
+            doc->key.u8[14], doc->key.u8[15], vc->fragment);
       dir_set_head(&vc->dir, !vc->fragment);
     }
 
@@ -1285,11 +1306,20 @@ CacheVC::openWriteCloseDataDone(int event, Event *e)
         alternate.push_frag_offset(write_pos);
       }
     }
+    Debug("cache_my_debug",
+          "CacheVC=%p, calling dir_insert key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x, fragment=%d",
+          this, key.u8[0], key.u8[1], key.u8[2], key.u8[3], key.u8[4], key.u8[5], key.u8[6], key.u8[7], key.u8[8], key.u8[9],
+          key.u8[10], key.u8[11], key.u8[12], key.u8[13], key.u8[14], key.u8[15], fragment);
     fragment++;
     write_pos += write_len;
     dir_insert(&key, vol, &dir);
     blocks = iobufferblock_skip(blocks.get(), &offset, &length, write_len);
     next_CacheKey(&key, &key);
+    Debug(
+      "cache_my_debug",
+      "CacheVC=%p, after dir_insert next key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x, fragment=%d",
+      this, key.u8[0], key.u8[1], key.u8[2], key.u8[3], key.u8[4], key.u8[5], key.u8[6], key.u8[7], key.u8[8], key.u8[9],
+      key.u8[10], key.u8[11], key.u8[12], key.u8[13], key.u8[14], key.u8[15], fragment);
     if (length) {
       write_len = length;
       if (write_len > MAX_FRAG_SIZE) {
@@ -1443,11 +1473,13 @@ Lagain:
   if (!blocks && towrite) {
     blocks = vio.buffer.reader()->block;
     offset = vio.buffer.reader()->start_offset;
+    Debug("cache_my_debug", "CacheVC this=%p, offset=%" PRId64, this, offset);
   }
   if (avail > 0) {
     vio.buffer.reader()->consume(avail);
     vio.ndone += avail;
     total_len += avail;
+    Debug("cache_my_debug", "CacheVC this=%p, avail=%" PRId64 ", total_len=%" PRId64, this, avail, total_len);
   }
   length = static_cast<uint64_t>(towrite);
   if (length > target_fragment_size() && (length < target_fragment_size() + target_fragment_size() / 4)) {

@@ -1035,10 +1035,14 @@ next_CacheKey(CacheKey *next_key, CacheKey *key)
 {
   uint8_t *b = (uint8_t *)next_key;
   uint8_t *k = (uint8_t *)key;
-  b[0]       = CacheKey_next_table[k[0]];
+  Debug("cache_my_debug", "next_CacheKey input key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", k[0],
+        k[1], k[2], k[3], k[4], k[5], k[6], k[7], k[8], k[9], k[10], k[11], k[12], k[13], k[14], k[15]);
+  b[0] = CacheKey_next_table[k[0]];
   for (int i = 1; i < 16; i++) {
     b[i] = CacheKey_next_table[(b[i - 1] + k[i]) & 0xFF];
   }
+  Debug("cache_my_debug", "next_CacheKey output next_key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x",
+        b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8], b[9], b[10], b[11], b[12], b[13], b[14], b[15]);
 }
 extern uint8_t CacheKey_prev_table[];
 /**
@@ -1052,10 +1056,14 @@ prev_CacheKey(CacheKey *prev_key, CacheKey *key)
 {
   uint8_t *b = (uint8_t *)prev_key;
   uint8_t *k = (uint8_t *)key;
+  Debug("cache_my_debug", "prev_CacheKey input key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x", k[0],
+        k[1], k[2], k[3], k[4], k[5], k[6], k[7], k[8], k[9], k[10], k[11], k[12], k[13], k[14], k[15]);
   for (int i = 15; i > 0; i--) {
     b[i] = 256 + CacheKey_prev_table[k[i]] - k[i - 1];
   }
   b[0] = CacheKey_prev_table[k[0]];
+  Debug("cache_my_debug", "prev_CacheKey output prev_key=%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x",
+        b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8], b[9], b[10], b[11], b[12], b[13], b[14], b[15]);
 }
 
 TS_INLINE unsigned int
