@@ -371,6 +371,8 @@ struct Doc {
   uint32_t len;
   // Total length of document.
   // Total length of the entire document not including meta data but including headers.
+  // For non-last fragment, this is not same as Content-Length value, but is the total length
+  // read to CacheVC so far.
   uint64_t total_len;
 #if TS_ENABLE_FIPS == 1
   // For FIPS CryptoHash is 256 bits vs. 128, and the 'first_key' must be checked first, so
