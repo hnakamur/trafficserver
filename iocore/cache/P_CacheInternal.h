@@ -1024,6 +1024,12 @@ rand_CacheKey(CacheKey *next_key, Ptr<ProxyMutex> &mutex)
 }
 
 extern uint8_t CacheKey_next_table[];
+/**
+ * @brief Caclculate next key from key and set to next_key
+ *
+ * @param next_key the output next key
+ * @param key the input key
+ */
 void TS_INLINE
 next_CacheKey(CacheKey *next_key, CacheKey *key)
 {
@@ -1035,6 +1041,12 @@ next_CacheKey(CacheKey *next_key, CacheKey *key)
   }
 }
 extern uint8_t CacheKey_prev_table[];
+/**
+ * @brief Calculate previous key from key and set to prev_key
+ *
+ * @param prev_key the output previous key
+ * @param key the input key
+ */
 void TS_INLINE
 prev_CacheKey(CacheKey *prev_key, CacheKey *key)
 {
