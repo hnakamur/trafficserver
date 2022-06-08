@@ -592,6 +592,8 @@ static const RecordElement RecordsConfig[] =
   ,
   {RECT_CONFIG, "proxy.config.http.cache.ignore_server_no_cache", RECD_INT, "0", RECU_DYNAMIC, RR_NULL, RECC_NULL, nullptr, RECA_NULL}
   ,
+  {RECT_CONFIG, "proxy.config.http.cache.cache_control_target", RECD_STRING, "", RECU_DYNAMIC, RR_NULL, RECC_NULL, nullptr, RECA_NULL}
+  ,
   //       # cache responses to cookies has 4 options
   //       #
   //       #  0 - do not cache any responses to cookies
