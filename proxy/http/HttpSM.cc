@@ -5163,8 +5163,12 @@ HttpSM::do_http_server_open(bool raw)
 
   // See if the outbound connection tracker data is needed. If so, get it here for consistency.
   if (t_state.txn_conf->outbound_conntrack.max > 0 || t_state.txn_conf->outbound_conntrack.min > 0) {
-    t_state.outbound_conn_track_state = OutboundConnTrack::obtain(
-      t_state.txn_conf->outbound_conntrack, std::string_view{t_state.current.server->name}, t_state.current.server->dst_addr);
+    std::string_view oride_name = t_state.hdr_info.client_request.value_get(
+      std::string_view{MIME_FIELD_ATS_OUTCONNTRACK, static_cast<size_t>(MIME_LEN_ATS_OUTCONNTRACK)});
+    std::string_view name = oride_name.empty() ? std::string_view{t_state.current.server->name} : oride_name;
+    SMDebug("http", "servername=%s, @Ats-OutConnTrack=%s, name=%s", t_state.current.server->name, oride_name.data(), name.data());
+    t_state.outbound_conn_track_state =
+      OutboundConnTrack::obtain(t_state.txn_conf->outbound_conntrack, name, t_state.current.server->dst_addr);
   }
 
   // Check to see if we have reached the max number of connections on this upstream host.
