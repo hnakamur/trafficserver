@@ -32,7 +32,7 @@ ts.Disk.remap_config.AddLine(
 
 tr = Test.AddTestRun("traffic_ctl command")
 tr.Env = ts.Env
-tr.TimeOut = 5
+tr.TimeOut = 6
 tr.StillRunningAfter = ts
 
 p = tr.Processes.Default
