@@ -85,6 +85,7 @@ public:
     ConnAddr caddr(addr, hostname_hash, match_type);
     ink_mutex_acquire(&_mutex);
     int count = _hostCount.get(caddr);
+    Debug("out_conn_track", "incrementCount hash=%" PRIx64 ", count=%d, delta=%d", hostname_hash.u64[0], count, delta);
     _hostCount.put(caddr, count + delta);
     ink_mutex_release(&_mutex);
   }

@@ -474,6 +474,8 @@ protected:
 
   void wait_for_full_body();
 
+  void set_hostname_hash_once(ats::CryptoHash& hostname_hash);
+
   virtual void handle_api_return();
   void handle_server_setup_error(int event, void *data);
   void handle_http_server_open();

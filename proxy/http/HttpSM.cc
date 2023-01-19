@@ -1702,6 +1702,25 @@ HttpSM::handle_api_return()
   }
 }
 
+void
+HttpSM::set_hostname_hash_once(ats::CryptoHash& hostname_hash)
+{
+  if (CRYPTO_HASH_ZERO == hostname_hash) {
+    int name_len = 0;
+    const char *name =
+      t_state.hdr_info.client_request.value_get(MIME_FIELD_ATS_OUTCONNTRACK, MIME_LEN_ATS_OUTCONNTRACK, &name_len);
+    if (name) {
+      CryptoContext().hash_immediate(hostname_hash, name, name_len);
+      SMDebug("out_conn_track", "@Ats-OutConnTrack=\"%.*s\", hash=%" PRIx64, name_len, name, hostname_hash.u64[0]);
+    } else {
+      name = t_state.current.server->name;
+      name_len = strlen(name);
+      CryptoContext().hash_immediate(hostname_hash, name, name_len);
+      SMDebug("out_conn_track", "@Ats-OutConnTrack=nil, server_name=\"%.*s\", hash=%" PRIx64, name_len, name, hostname_hash.u64[0]);
+    }
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //
 //  HttpSM::state_http_server_open()
@@ -1738,7 +1757,7 @@ HttpSM::state_http_server_open(int event, void *data)
        UnixNetVConnection *server_vc = (UnixNetVConnection*)data;
        printf("client fd is :%d , server fd is %d\n",vc->con.fd,
        server_vc->con.fd); */
-    session->attach_hostname(t_state.current.server->name);
+    set_hostname_hash_once(session->hostname_hash);
     session->new_connection(static_cast<NetVConnection *>(data));
     session->state = HSS_ACTIVE;
 
@@ -3029,7 +3048,7 @@ HttpSM::tunnel_handler_server(int event, HttpTunnelProducer *p)
       t_state.client_info.keep_alive = HTTP_NO_KEEPALIVE;
     }
   } else {
-    server_session->attach_hostname(t_state.current.server->name);
+    set_hostname_hash_once(server_session->hostname_hash);
     server_session->server_trans_stat--;
     HTTP_DECREMENT_DYN_STAT(http_current_server_transactions_stat);
 
@@ -4883,8 +4902,17 @@ HttpSM::do_http_server_open(bool raw)
     ConnectionCount *connections = ConnectionCount::getInstance();
 
     CryptoHash hostname_hash;
-    CryptoContext().hash_immediate(hostname_hash, static_cast<const void *>(t_state.current.server->name),
-                                   static_cast<int>(strlen(t_state.current.server->name)));
+    int ats_outconntrack_len = 0;
+    const char *ats_outconntrack_val =
+      t_state.hdr_info.client_request.value_get(MIME_FIELD_ATS_OUTCONNTRACK, MIME_LEN_ATS_OUTCONNTRACK, &ats_outconntrack_len);
+    if (ats_outconntrack_val) {
+      CryptoContext().hash_immediate(hostname_hash, static_cast<const void *>(ats_outconntrack_val), ats_outconntrack_len);
+      SMDebug("out_conn_track", "@Ats-OutConnTrack=\"%.*s\", hash=%" PRIx64, ats_outconntrack_len, ats_outconntrack_val, hostname_hash.u64[0]);
+    } else {
+      CryptoContext().hash_immediate(hostname_hash, static_cast<const void *>(t_state.current.server->name),
+                                     static_cast<int>(strlen(t_state.current.server->name)));
+      SMDebug("out_conn_track", "@Ats-OutConnTrack=nil, server_name=\"%s\", hash=%" PRIx64, t_state.current.server->name, hostname_hash.u64[0]);
+    }
 
     auto ccount = connections->getCount(t_state.current.server->dst_addr, hostname_hash,
                                         (TSServerSessionSharingMatchType)t_state.txn_conf->server_session_sharing_match);
@@ -4896,6 +4924,7 @@ HttpSM::do_http_server_open(bool raw)
       Warning("[%" PRId64 "] too many connections (%d) for this host (%" PRId64 "): %s", sm_id, ccount,
               t_state.txn_conf->origin_max_connections, addrbuf);
       ink_assert(pending_action == nullptr);
+      SMDebug("out_conn_track", "throttled count=%d for hash=%" PRIx64 ", max=%" PRId64, ccount, hostname_hash.u64[0], t_state.txn_conf->origin_max_connections);
 
       // if we were previously queued, or the queue is disabled-- just reschedule
       if (t_state.origin_request_queued || t_state.txn_conf->origin_max_connections_queue < 0) {
@@ -5282,7 +5311,7 @@ HttpSM::release_server_session(bool serve_from_cache)
       plugin_tunnel_type == HTTP_NO_PLUGIN_TUNNEL) {
     HTTP_DECREMENT_DYN_STAT(http_current_server_transactions_stat);
     server_session->server_trans_stat--;
-    server_session->attach_hostname(t_state.current.server->name);
+    set_hostname_hash_once(server_session->hostname_hash);
     if (t_state.www_auth_content == HttpTransact::CACHE_AUTH_NONE || serve_from_cache == false) {
       // Must explicitly set the keep_alive_no_activity time before doing the release
       server_session->get_netvc()->set_inactivity_timeout(HRTIME_SECONDS(t_state.txn_conf->keep_alive_no_activity_timeout_out));
@@ -5370,8 +5399,17 @@ HttpSM::handle_http_server_open()
   // if we were a queued request, we need to decrement the queue size-- as we got a connection
   if (t_state.origin_request_queued) {
     CryptoHash hostname_hash;
-    CryptoContext().hash_immediate(hostname_hash, static_cast<const void *>(t_state.current.server->name),
-                                   strlen(t_state.current.server->name));
+    int ats_outconntrack_len = 0;
+    const char *ats_outconntrack_val =
+      t_state.hdr_info.client_request.value_get(MIME_FIELD_ATS_OUTCONNTRACK, MIME_LEN_ATS_OUTCONNTRACK, &ats_outconntrack_len);
+    if (ats_outconntrack_val) {
+      CryptoContext().hash_immediate(hostname_hash, static_cast<const void *>(ats_outconntrack_val), ats_outconntrack_len);
+      SMDebug("out_conn_track", "@Ats-OutConnTrack=\"%.*s\", hash=%" PRIx64, ats_outconntrack_len, ats_outconntrack_val, hostname_hash.u64[0]);
+    } else {
+      CryptoContext().hash_immediate(hostname_hash, static_cast<const void *>(t_state.current.server->name),
+                                     static_cast<int>(strlen(t_state.current.server->name)));
+      SMDebug("out_conn_track", "@Ats-OutConnTrack=nil, server_name=\"%s\", hash=%" PRIx64, t_state.current.server->name, hostname_hash.u64[0]);
+    }
 
     ConnectionCountQueue *waiting_connections = ConnectionCountQueue::getInstance();
     waiting_connections->incrementCount(t_state.current.server->dst_addr, hostname_hash,
