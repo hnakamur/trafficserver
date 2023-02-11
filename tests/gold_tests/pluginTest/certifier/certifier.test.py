@@ -47,6 +47,7 @@ class DynamicCertTest:
         # copy over the cert store in which the certs will be generated/stored
         self.certPathDest = os.path.join(self.ts.Variables.CONFIGDIR, "certifier-certs")
         Setup.Copy(self.certPathSrc, self.certPathDest)
+        Setup.Chown(os.path.join(self.certPathDest, "ca-serial.txt"), "nobody", "nobody")
         Setup.MakeDir(os.path.join(self.certPathDest, 'store'))
         self.ts.Disk.records_config.update({
             "proxy.config.diags.debug.enabled": 1,
@@ -131,6 +132,7 @@ class ReuseExistingCertTest:
         # copy over the cert store in which the certs will be generated/stored
         self.certPathDest = os.path.join(self.ts.Variables.CONFIGDIR, "certifier-certs")
         Setup.Copy(self.certPathSrc, self.certPathDest)
+        Setup.Chown(os.path.join(self.certPathDest, "ca-serial.txt"), "nobody", "nobody")
         Setup.MakeDir(os.path.join(self.certPathDest, 'store'))
         self.ts.Disk.records_config.update({
             "proxy.config.diags.debug.enabled": 1,
