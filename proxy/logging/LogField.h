@@ -32,7 +32,7 @@
 #include "LogFieldAliasMap.h"
 #include "Milestones.h"
 
-enum LogEscapeType { LOG_ESCAPE_NONE, LOG_ESCAPE_JSON };
+enum LogEscapeType { LOG_ESCAPE_NONE, LOG_ESCAPE_JSON, LOG_ESCAPE_LTSV };
 
 class LogAccess;
 
