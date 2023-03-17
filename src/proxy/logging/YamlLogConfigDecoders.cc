@@ -75,6 +75,8 @@ convert<std::unique_ptr<LogFormat>>::decode(const Node &node, std::unique_ptr<Lo
     std::string escape = node["escape"].as<std::string>();
     if (!strncasecmp(escape.c_str(), "json", 4)) {
       escape_type = LOG_ESCAPE_JSON;
+    } else if (!strncasecmp(escape.c_str(), "ltsv", 4)) {
+      escape_type = LOG_ESCAPE_LTSV;
     } else if (!strncasecmp(escape.c_str(), "none", 4)) {
       escape_type = LOG_ESCAPE_NONE;
     } else {
