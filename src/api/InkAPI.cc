@@ -47,6 +47,7 @@
 #include "proxy/HttpAPIHooks.h"
 #include "proxy/http/HttpSM.h"
 #include "proxy/http/HttpConfig.h"
+#include "proxy/http/HttpTransactHeaders.h"
 #include "proxy/PluginHttpConnect.h"
 #include "../iocore/net/P_Net.h"
 #include "../iocore/net/P_SSLNextProtocolAccept.h"
@@ -9578,4 +9579,23 @@ tsapi::c::TSHttpTxnTypeGet(TSHttpTxn txnp)
     }
   }
   return retval;
+}
+
+void
+tsapi::c::TSHttpTxnNormalizeAcceptEncoding(TSHttpTxn txnp, TSMBuffer request, int normalize_ae)
+{
+  sdk_assert(sdk_sanity_check_txn(txnp) == TS_SUCCESS);
+  HttpSM *sm = (HttpSM *)txnp;
+  HTTPHdr *req;
+
+  // We allow for either request to be empty, in
+  // which case we default to the transactions request.
+  if (request) {
+    sdk_assert(sdk_sanity_check_mbuffer(request) == TS_SUCCESS);
+    req = reinterpret_cast<HTTPHdr *>(request);
+  } else {
+    req = &(sm->t_state.hdr_info.client_request);
+  }
+
+  HttpTransactHeaders::normalize_accept_encoding(normalize_ae, req);
 }
