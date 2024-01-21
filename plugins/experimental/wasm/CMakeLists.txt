@@ -1,4 +1,4 @@
-find_library(wamr_LIBRARY NAMES iwasm)
+find_library(wasmtime_LIBRARY NAMES wasmtime)
 
 set(wasm_wasm_sources
     lib/src/bytecode_util.cc
@@ -29,12 +29,12 @@ set(wasm_wasm_sources
     wasm_main.cc
     lib/src/common/types.h
     lib/include/proxy-wasm/word.h
-    lib/src/wamr/wamr.cc
-    lib/src/wamr/types.h
-    lib/include/proxy-wasm/wamr.h
+    lib/src/wasmtime/wasmtime.cc
+    lib/src/wasmtime/types.h
+    lib/include/proxy-wasm/wasmtime.h
 )
 
 add_atsplugin(wasm ${wasm_wasm_sources})
-target_compile_definitions(wasm PRIVATE WAMR)
 target_include_directories(wasm PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-target_link_libraries(wasm PRIVATE ${wamr_LIBRARY})
+target_compile_definitions(wasm PRIVATE WASMTIME)
+target_link_libraries(wasm PRIVATE ${wasmtime_LIBRARY})
