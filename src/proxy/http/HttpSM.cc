@@ -6209,6 +6209,16 @@ HttpSM::do_setup_post_tunnel(HttpVC_t to_vc_type)
     //  header buffer into new buffer
     int64_t num_body_bytes = post_buffer->write(_ua.get_txn()->get_remote_reader(),
                                                 chunked ? _ua.get_txn()->get_remote_reader()->read_avail() : post_bytes);
+    SMDbg(dbg_ctl_http, "written post_buffer to_vc_type=%d, post_bytes=%" PRId64
+                        ", num_body_bytes=%" PRId64 ", client_request_body_bytes=%" PRId64
+                        ", read_closed=%d, transfered_bytes=%" PRId64
+                        ", alloc_index=%" PRId64 ", req_content_length=%" PRId64
+                        ", reader=%p, reader_start_offset=%" PRId64,
+                        to_vc_type, post_bytes, num_body_bytes, client_request_body_bytes,
+                        _ua.get_txn()->is_read_closed(), transfered_bytes,
+                        alloc_index, t_state.hdr_info.request_content_length,
+                        _ua.get_txn()->get_remote_reader(),
+                        _ua.get_txn()->get_remote_reader()->start_offset);
 
     // If is_using_post_buffer has been used, then client_request_body_bytes
     // will have already been set in wait_for_full_body and there will be
