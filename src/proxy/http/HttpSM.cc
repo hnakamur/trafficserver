@@ -6213,7 +6213,8 @@ HttpSM::do_setup_client_request_body_tunnel(HttpVC_t to_vc_type)
     MIOBuffer      *postdata_producer_buffer = new_empty_MIOBuffer(t_state.http_config_param->max_payload_iobuf_index);
     IOBufferReader *postdata_producer_reader = postdata_producer_buffer->alloc_reader();
 
-    postdata_producer_buffer->write(this->_postbuf.postdata_copy_buffer_start);
+    int64_t n = postdata_producer_buffer->write(this->_postbuf.postdata_copy_buffer_start);
+    SMDbg(dbg_ctl_http, "written to postdata_producer_buffer n=%" PRId64, n);
     int64_t post_bytes = postdata_producer_reader->read_avail();
     transfered_bytes   = post_bytes;
     p = tunnel.add_producer(HTTP_TUNNEL_STATIC_PRODUCER, post_bytes, postdata_producer_reader, (HttpProducerHandler) nullptr,
@@ -6246,6 +6247,7 @@ HttpSM::do_setup_client_request_body_tunnel(HttpVC_t to_vc_type)
     //  header buffer into new buffer
     int64_t num_body_bytes = post_buffer->write(_ua.get_txn()->get_remote_reader(),
                                                 chunked ? _ua.get_txn()->get_remote_reader()->read_avail() : post_bytes);
+    SMDbg(dbg_ctl_http, "written to post_buffer num_body_bytes=%" PRId64, num_body_bytes);
 
     // If is_using_post_buffer has been used, then client_request_body_bytes
     // will have already been sent in wait_for_full_body and there will be
