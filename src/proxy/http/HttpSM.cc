@@ -812,6 +812,8 @@ HttpSM::wait_for_full_body()
   int64_t post_bytes = chunked ? INT64_MAX : t_state.hdr_info.request_content_length;
   client_request_body_bytes =
     post_buffer->write(_ua.get_txn()->get_remote_reader(), chunked ? _ua.get_txn()->get_remote_reader()->read_avail() : post_bytes);
+  SMDbg(dbg_ctl_http, "read client body result=%" PRId64 ", post_bytes=%" PRId64 ", read_avail=%" PRId64,
+        client_request_body_bytes, post_bytes, _ua.get_txn()->get_remote_reader()->read_avail());
 
   _ua.get_txn()->get_remote_reader()->consume(client_request_body_bytes);
   p = tunnel.add_producer(_ua.get_entry()->vc, post_bytes, buf_start, &HttpSM::tunnel_handler_post_ua, HT_BUFFER_READ,
