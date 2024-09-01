@@ -5966,6 +5966,12 @@ HttpSM::handle_http_server_open()
   if (nullptr != server_txn) {
     NetVConnection *vc = server_txn->get_netvc();
     if (vc) {
+      char srcbuf[INET6_ADDRPORTSTRLEN];
+      char dstbuf[INET6_ADDRPORTSTRLEN];
+      SMDbg(dbg_ctl_http, "open server connection from %s to %s",
+            ats_ip_nptop(vc->get_local_addr(), srcbuf, sizeof(srcbuf)),
+            ats_ip_nptop(vc->get_remote_addr(), dstbuf, sizeof(dstbuf)));
+
       server_connection_provided_cert = vc->provided_cert();
       if (vc->options.sockopt_flags != t_state.txn_conf->sock_option_flag_out ||
           vc->options.packet_mark != t_state.txn_conf->sock_packet_mark_out ||
@@ -6234,6 +6240,8 @@ HttpSM::do_setup_client_request_body_tunnel(HttpVC_t to_vc_type)
     MIOBuffer      *post_buffer = new_MIOBuffer(alloc_index);
     IOBufferReader *buf_start   = post_buffer->alloc_reader();
     int64_t         post_bytes  = chunked ? INT64_MAX : t_state.hdr_info.request_content_length;
+    SMDbg(dbg_ctl_http, "post_buffer alloc_index=%" PRId64 ", write_avail=%" PRId64 ", post_bytes=%" PRId64,
+      alloc_index, post_buffer->write_avail(), post_bytes);
 
     if (enable_redirection) {
       this->_postbuf.init(post_buffer->clone_reader(buf_start));
@@ -6247,7 +6255,9 @@ HttpSM::do_setup_client_request_body_tunnel(HttpVC_t to_vc_type)
     //  header buffer into new buffer
     int64_t num_body_bytes = post_buffer->write(_ua.get_txn()->get_remote_reader(),
                                                 chunked ? _ua.get_txn()->get_remote_reader()->read_avail() : post_bytes);
-    SMDbg(dbg_ctl_http, "written to post_buffer num_body_bytes=%" PRId64, num_body_bytes);
+    SMDbg(dbg_ctl_http, "written to post_buffer num_body_bytes=%" PRId64 ", len=%" PRId64 ", read_avail=%" PRId64,
+      num_body_bytes, chunked ? _ua.get_txn()->get_remote_reader()->read_avail() : post_bytes,
+      _ua.get_txn()->get_remote_reader()->read_avail());
 
     // If is_using_post_buffer has been used, then client_request_body_bytes
     // will have already been sent in wait_for_full_body and there will be
