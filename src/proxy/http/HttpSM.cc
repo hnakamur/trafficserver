@@ -2775,10 +2775,12 @@ HttpSM::tunnel_handler_post(int event, void *data)
     break;
   case HTTP_SM_POST_SUCCESS:
     // It's time to start reading the response
+    SMDbg(dbg_ctl_http, "Start reading the response, is_waiting_for_full_body=%d", is_waiting_for_full_body);
     if (is_waiting_for_full_body) {
       is_waiting_for_full_body  = false;
       is_buffering_request_body = true;
       client_request_body_bytes = this->postbuf_buffer_avail();
+      SMDbg(dbg_ctl_http, "postbuf_buffer_avail=%" PRId64, this->postbuf_buffer_avail());
 
       call_transact_and_set_next_state(HttpTransact::HandleRequestBufferDone);
       break;
@@ -8214,6 +8216,7 @@ HttpSM::set_next_state()
   }
 
   case HttpTransact::SM_ACTION_WAIT_FOR_FULL_BODY: {
+    SMDbg(dbg_ctl_http, "calling wait_for_full_body");
     wait_for_full_body();
     break;
   }

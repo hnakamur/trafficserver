@@ -1504,6 +1504,9 @@ HttpTransact::HandleRequest(State *s)
 {
   TxnDbg(dbg_ctl_http_trans, "START HttpTransact::HandleRequest");
 
+  TxnDbg(dbg_ctl_http_trans, "is_waiting_for_full_body=%d, is_buffering_request_body=%d, request_buffer_enabled=%d",
+         s->state_machine->is_waiting_for_full_body, s->state_machine->is_buffering_request_body,
+         s->txn_conf->request_buffer_enabled);
   if (!s->state_machine->is_waiting_for_full_body && !s->state_machine->is_buffering_request_body) {
     ink_assert(!s->hdr_info.server_request.valid());
 
@@ -1577,6 +1580,7 @@ HttpTransact::HandleRequest(State *s)
     if (s->txn_conf->request_buffer_enabled &&
         s->state_machine->get_ua_txn()->has_request_body(s->hdr_info.request_content_length,
                                                          s->client_info.transfer_encoding == CHUNKED_ENCODING)) {
+      TxnDbg(dbg_ctl_http_trans, "TRANSACT_RETURN SM_ACTION_WAIT_FOR_FULL_BODY");
       TRANSACT_RETURN(SM_ACTION_WAIT_FOR_FULL_BODY, nullptr);
     }
   }
