@@ -562,9 +562,9 @@ static const std::unordered_map<std::string_view, prom_metric_info> prom_metric_
   {"proxy.process.cache.scan.active",                                    {"proxy_process_cache_scan_active", GAUGE, nullptr}                                      },
   {"proxy.process.cache.scan.success",                                   {"proxy_process_cache_scan_success", COUNTER, nullptr}                                   },
   {"proxy.process.cache.scan.failure",                                   {"proxy_process_cache_scan_failure", COUNTER, nullptr}                                   },
-  {"proxy.process.cache.frags_per_doc.1",                                {"proxy_process_cache_frags_per_doc_1", COUNTER, nullptr}                                },
-  {"proxy.process.cache.frags_per_doc.2",                                {"proxy_process_cache_frags_per_doc_2", COUNTER, nullptr}                                },
-  {"proxy.process.cache.frags_per_doc.3+",                               {"proxy_process_cache_frags_per_doc_3plus", COUNTER, nullptr}                            }, // 3+ -> 3plus
+  {"proxy.process.cache.frags_per_doc.1",                                {"proxy_process_cache_frags_per_doc{count=\"1\"", COUNTER, nullptr}                      },
+  {"proxy.process.cache.frags_per_doc.2",                                {"proxy_process_cache_frags_per_doc{count=\"2\"}", COUNTER, nullptr}                     },
+  {"proxy.process.cache.frags_per_doc.3+",                               {"proxy_process_cache_frags_per_doc{count=\"3+\"}", COUNTER, nullptr}                    },
   {"proxy.process.cache.bytes_used",                                     {"proxy_process_cache_bytes_used", GAUGE, nullptr}                                       },
   {"proxy.process.cache.bytes_total",                                    {"proxy_process_cache_bytes_total", GAUGE, nullptr}                                      },
   {"proxy.process.cache.stripes",                                        {"proxy_process_cache_stripes", GAUGE, nullptr}                                          },
