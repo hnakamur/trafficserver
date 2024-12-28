@@ -113,9 +113,17 @@ public:
    */
   self_type &operator+=(self_type const &that);
 
+  /** Get the sum of samples.
+   *
+   * @return The sum of samples (observed values).
+   */
+  raw_type sum() const;
+
 protected:
   /// The buckets.
   std::array<raw_type, N_BUCKETS> _bucket = {0};
+  /// The sum of samples.
+  raw_type _sum = 0;
 };
 
 /// @cond INTERNAL_DETAIL
@@ -135,6 +143,7 @@ Histogram<R, S>::operator+=(self_type const &that) -> self_type &
   for (raw_type idx = 0; idx < N_BUCKETS; ++idx) {
     *dst++ += *src++;
   }
+  _sum += that._sum;
   return *this;
 }
 
@@ -161,6 +170,7 @@ Histogram<R, S>::operator()(raw_type sample) -> self_type &
     idx += (sample >> normalize_shift_count) & SPAN_MASK;
   } // else idx remains the overflow bucket.
   ++_bucket[idx];
+  _sum += sample;
   return *this;
 }
 
@@ -187,7 +197,15 @@ Histogram<R, S>::decay() -> self_type &
   for (auto &v : _bucket) {
     v >>= 1;
   }
+  _sum >>= 1;
   return *this;
+}
+
+template <auto R, auto S>
+auto
+Histogram<R, S>::sum() const -> raw_type
+{
+  return _sum;
 }
 
 /// @endcond
