@@ -151,6 +151,7 @@ struct stats_state {
 #if HAVE_BROTLI_ENCODE_H
   b_stream bstrm;
 #endif
+  uint64_t cumulative_count;
 };
 
 static char *
@@ -524,6 +525,115 @@ csv_out_stats(stats_state *my_state)
   APPEND_STAT_CSV("version", "%s", version);
 }
 
+struct prom_metric_info2;
+using prom_stat_dump_handler = void (*)(stats_state *my_state, const char *name, TSRecordDataType data_type,
+                                TSRecordData *datum, prom_metric_info2 *info);
+struct prom_metric_info2 {
+  const char *prom_name;
+  const char *type;
+  const char *help;
+  prom_stat_dump_handler handler;
+};
+
+static void
+text_prometheus_out_stat_histogram_head_bucket(stats_state *my_state, const char *name,
+                         TSRecordDataType data_type, TSRecordData *datum, prom_metric_info2 *info)
+{
+  my_state->cumulative_count = wrap_unsigned_counter(datum->rec_counter);
+}
+
+static void
+text_prometheus_out_stat_histogram_tail_bucket(stats_state *my_state, const char *name,
+                         TSRecordDataType data_type, TSRecordData *datum, prom_metric_info2 *info)
+{
+  my_state->cumulative_count += wrap_unsigned_counter(datum->rec_counter);
+}
+
+static void
+text_prometheus_out_stat_histogram_sum(stats_state *my_state, const char *name,
+                         TSRecordDataType data_type, TSRecordData *datum, prom_metric_info2 *info)
+{
+}
+
+static void
+text_prometheus_out_stat_histogram_count(stats_state *my_state, const char *name,
+                         TSRecordDataType data_type, TSRecordData *datum, prom_metric_info2 *info)
+{
+}
+
+static const std::unordered_map<std::string_view, prom_metric_info2> prom_metric_info_map2 = {
+{"proxy.process.eventloop.time.0ms", {"proxy_process_eventloop_time_bucket{le=\"5\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_head_bucket}},
+{"proxy.process.eventloop.time.5ms", {"proxy_process_eventloop_time_bucket{le=\"10\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.10ms", {"proxy_process_eventloop_time_bucket{le=\"15\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.15ms", {"proxy_process_eventloop_time_bucket{le=\"20\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.20ms", {"proxy_process_eventloop_time_bucket{le=\"25\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.25ms", {"proxy_process_eventloop_time_bucket{le=\"30\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.30ms", {"proxy_process_eventloop_time_bucket{le=\"35\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.35ms", {"proxy_process_eventloop_time_bucket{le=\"40\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.40ms", {"proxy_process_eventloop_time_bucket{le=\"50\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.50ms", {"proxy_process_eventloop_time_bucket{le=\"60\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.60ms", {"proxy_process_eventloop_time_bucket{le=\"70\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.70ms", {"proxy_process_eventloop_time_bucket{le=\"80\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.80ms", {"proxy_process_eventloop_time_bucket{le=\"100\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.100ms", {"proxy_process_eventloop_time_bucket{le=\"120\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.120ms", {"proxy_process_eventloop_time_bucket{le=\"140\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.140ms", {"proxy_process_eventloop_time_bucket{le=\"160\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.160ms", {"proxy_process_eventloop_time_bucket{le=\"200\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.200ms", {"proxy_process_eventloop_time_bucket{le=\"240\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.240ms", {"proxy_process_eventloop_time_bucket{le=\"280\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.280ms", {"proxy_process_eventloop_time_bucket{le=\"320\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.320ms", {"proxy_process_eventloop_time_bucket{le=\"400\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.400ms", {"proxy_process_eventloop_time_bucket{le=\"480\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.480ms", {"proxy_process_eventloop_time_bucket{le=\"560\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.560ms", {"proxy_process_eventloop_time_bucket{le=\"640\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.640ms", {"proxy_process_eventloop_time_bucket{le=\"800\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.800ms", {"proxy_process_eventloop_time_bucket{le=\"960\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.960ms", {"proxy_process_eventloop_time_bucket{le=\"1120\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.1120ms", {"proxy_process_eventloop_time_bucket{le=\"1280\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.1280ms", {"proxy_process_eventloop_time_bucket{le=\"1600\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.1600ms", {"proxy_process_eventloop_time_bucket{le=\"1920\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.1920ms", {"proxy_process_eventloop_time_bucket{le=\"2240\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.2240ms", {"proxy_process_eventloop_time_bucket{le=\"2560\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.2560ms", {"proxy_process_eventloop_time_bucket{le=\"+Inf\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.eventloop.time.sum", {"proxy_process_eventloop_time_sum", nullptr, nullptr, text_prometheus_out_stat_histogram_sum}},
+{"proxy.process.eventloop.time.count", {"proxy_process_eventloop_time_count", nullptr, nullptr, text_prometheus_out_stat_histogram_count}},
+{"proxy.process.api.time.0ms", {"proxy_process_api_time_bucket{le=\"5\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_head_bucket}},
+{"proxy.process.api.time.5ms", {"proxy_process_api_time_bucket{le=\"10\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.10ms", {"proxy_process_api_time_bucket{le=\"15\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.15ms", {"proxy_process_api_time_bucket{le=\"20\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.20ms", {"proxy_process_api_time_bucket{le=\"25\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.25ms", {"proxy_process_api_time_bucket{le=\"30\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.30ms", {"proxy_process_api_time_bucket{le=\"35\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.35ms", {"proxy_process_api_time_bucket{le=\"40\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.40ms", {"proxy_process_api_time_bucket{le=\"50\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.50ms", {"proxy_process_api_time_bucket{le=\"60\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.60ms", {"proxy_process_api_time_bucket{le=\"70\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.70ms", {"proxy_process_api_time_bucket{le=\"80\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.80ms", {"proxy_process_api_time_bucket{le=\"100\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.100ms", {"proxy_process_api_time_bucket{le=\"120\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.120ms", {"proxy_process_api_time_bucket{le=\"140\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.140ms", {"proxy_process_api_time_bucket{le=\"160\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.160ms", {"proxy_process_api_time_bucket{le=\"200\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.200ms", {"proxy_process_api_time_bucket{le=\"240\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.240ms", {"proxy_process_api_time_bucket{le=\"280\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.280ms", {"proxy_process_api_time_bucket{le=\"320\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.320ms", {"proxy_process_api_time_bucket{le=\"400\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.400ms", {"proxy_process_api_time_bucket{le=\"480\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.480ms", {"proxy_process_api_time_bucket{le=\"560\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.560ms", {"proxy_process_api_time_bucket{le=\"640\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.640ms", {"proxy_process_api_time_bucket{le=\"800\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.800ms", {"proxy_process_api_time_bucket{le=\"960\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.960ms", {"proxy_process_api_time_bucket{le=\"1120\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.1120ms", {"proxy_process_api_time_bucket{le=\"1280\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.1280ms", {"proxy_process_api_time_bucket{le=\"1600\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.1600ms", {"proxy_process_api_time_bucket{le=\"1920\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.1920ms", {"proxy_process_api_time_bucket{le=\"2240\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.2240ms", {"proxy_process_api_time_bucket{le=\"2560\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.2560ms", {"proxy_process_api_time_bucket{le=\"+Inf\"}", nullptr, nullptr, text_prometheus_out_stat_histogram_tail_bucket}},
+{"proxy.process.api.time.sum", {"proxy_process_api_time_sum", nullptr, nullptr, text_prometheus_out_stat_histogram_sum}},
+{"proxy.process.api.time.count", {"proxy_process_api_time_count", nullptr, nullptr, text_prometheus_out_stat_histogram_count}},
+};
+
 struct prom_metric_info {
   const char *prom_name;
   const char *type;
@@ -532,6 +642,7 @@ struct prom_metric_info {
 
 #define COUNTER "counter"
 #define GAUGE   "gauge"
+
 
 static const std::unordered_map<std::string_view, prom_metric_info> prom_metric_info_map = {
   // src/iocore/aio/AIO.cc
