@@ -130,6 +130,10 @@ EventMetricStatSync(const char *, RecDataT, RecData *, RecRawStatBlock *rsb, int
   rsb->global[id]->count = 1;
   RecRawStatUpdateSum(rsb, id);
   ++id;
+  rsb->global[id]->sum   = summary._loop_timing.count();
+  rsb->global[id]->count = 1;
+  RecRawStatUpdateSum(rsb, id);
+  ++id;
 
   // Last are the plugin API histogram buckets.
   for (Graph::raw_type idx = 0; idx < Graph::N_BUCKETS; ++idx, ++id) {
@@ -138,6 +142,10 @@ EventMetricStatSync(const char *, RecDataT, RecData *, RecRawStatBlock *rsb, int
     RecRawStatUpdateSum(rsb, id);
   }
   rsb->global[id]->sum   = summary._api_timing.sum();
+  rsb->global[id]->count = 1;
+  RecRawStatUpdateSum(rsb, id);
+  ++id;
+  rsb->global[id]->sum   = summary._api_timing.count();
   rsb->global[id]->count = 1;
   RecRawStatUpdateSum(rsb, id);
 
@@ -543,8 +551,9 @@ EventProcessor::start(int n_event_threads, size_t stacksize)
              static_cast<size_t>(EThread::Metrics::LOOP_HISTOGRAM_BUCKET_SIZE.count() * Graph::min_for_bucket(id)));
     RecRegisterRawStat(rsb, RECT_PROCESS, name, RECD_INT, RECP_NON_PERSISTENT, stat_idx++, NULL);
   }
-  snprintf(name, sizeof(name), "%.*s_sum", (int)EThread::Metrics::LOOP_HISTOGRAM_STAT_STEM.length() - 1,
-           EThread::Metrics::LOOP_HISTOGRAM_STAT_STEM.data());
+  snprintf(name, sizeof(name), "%ssum", EThread::Metrics::LOOP_HISTOGRAM_STAT_STEM.data());
+  RecRegisterRawStat(rsb, RECT_PROCESS, name, RECD_INT, RECP_NON_PERSISTENT, stat_idx++, NULL);
+  snprintf(name, sizeof(name), "%scount", EThread::Metrics::LOOP_HISTOGRAM_STAT_STEM.data());
   RecRegisterRawStat(rsb, RECT_PROCESS, name, RECD_INT, RECP_NON_PERSISTENT, stat_idx++, NULL);
 
   // plugin API timings
@@ -553,8 +562,9 @@ EventProcessor::start(int n_event_threads, size_t stacksize)
              static_cast<size_t>(EThread::Metrics::API_HISTOGRAM_BUCKET_SIZE.count() * Graph::min_for_bucket(id)));
     RecRegisterRawStat(rsb, RECT_PROCESS, name, RECD_INT, RECP_NON_PERSISTENT, stat_idx++, NULL);
   }
-  snprintf(name, sizeof(name), "%.*s_sum", (int)EThread::Metrics::API_HISTOGRAM_STAT_STEM.length() - 1,
-           EThread::Metrics::API_HISTOGRAM_STAT_STEM.data());
+  snprintf(name, sizeof(name), "%ssum", EThread::Metrics::API_HISTOGRAM_STAT_STEM.data());
+  RecRegisterRawStat(rsb, RECT_PROCESS, name, RECD_INT, RECP_NON_PERSISTENT, stat_idx++, NULL);
+  snprintf(name, sizeof(name), "%scount", EThread::Metrics::API_HISTOGRAM_STAT_STEM.data());
   RecRegisterRawStat(rsb, RECT_PROCESS, name, RECD_INT, RECP_NON_PERSISTENT, stat_idx++, NULL);
 
   // Name must be that of a stat, pick one at random since we do all of them in one pass/callback.

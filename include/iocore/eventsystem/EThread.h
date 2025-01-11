@@ -553,7 +553,7 @@ public:
     static inline ts_clock::time_point _last_decay_time;
 
     /// Total number of metric based statistics.
-    static constexpr unsigned N_STATS = N_SLICE_STATS + 2 * (Graph::N_BUCKETS + 1);
+    static constexpr unsigned N_STATS = N_SLICE_STATS + 2 * (Graph::N_BUCKETS + 2);
 
     /// Summarize this instance into a global instance.
     void summarize(self_type &global);

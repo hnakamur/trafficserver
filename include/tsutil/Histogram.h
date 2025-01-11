@@ -119,6 +119,12 @@ public:
    */
   raw_type sum() const;
 
+  /** Get the count of events observed.
+   *
+   * @return The count of events observed.
+   */
+  raw_type count() const;
+
 protected:
   /// The buckets.
   std::array<raw_type, N_BUCKETS> _bucket = {0};
@@ -206,6 +212,17 @@ auto
 Histogram<R, S>::sum() const -> raw_type
 {
   return _sum;
+}
+
+template <auto R, auto S>
+auto
+Histogram<R, S>::count() const -> raw_type
+{
+  auto sum = 0;
+  for (auto &v : _bucket) {
+    sum += v;
+  }
+  return sum;
 }
 
 /// @endcond
