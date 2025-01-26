@@ -16,5 +16,5 @@
 #######################
 
 add_atsplugin(otel_tracer otel_tracer.cc)
-target_link_libraries(otel_tracer PRIVATE opentelemetry::opentelemetry protobuf::libprotobuf CURL::libcurl)
+target_link_libraries(otel_tracer opentelemetry_trace opentelemetry_exporter_otlp_http)
 verify_global_plugin(otel_tracer)
