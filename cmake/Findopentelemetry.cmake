@@ -34,6 +34,7 @@ set(OTEL_LIBS
     opentelemetry_exporter_otlp_http
     opentelemetry_exporter_otlp_http_client
     opentelemetry_http_client_curl
+    opentelemetry_logs
     opentelemetry_metrics
     opentelemetry_otlp_recordable
     opentelemetry_proto

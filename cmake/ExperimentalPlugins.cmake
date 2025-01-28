@@ -72,8 +72,13 @@ auto_option(
   BUILD_OTEL_TRACER
   PACKAGE_DEPENDS
   opentelemetry
-  Protobuf
-  CURL
+  protobuf
+  absl
+  curl
+  utf8
+  upb
+  HEADER_DEPENDS
+  "nlohmann/json.hpp"
   DEFAULT
   ${_DEFAULT}
 )
