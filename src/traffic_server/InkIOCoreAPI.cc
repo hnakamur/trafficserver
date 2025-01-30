@@ -571,6 +571,7 @@ TSIOBufferCreate()
 
   // TODO: Should remove this when memory allocations can't fail.
   sdk_assert(sdk_sanity_check_iocore_structure(b) == TS_SUCCESS);
+  TSDebug(TSAPI_DEBUG_TAG, "TSIOBufferCreate exit buf=%p", b);
   return reinterpret_cast<TSIOBuffer>(b);
 }
 
@@ -589,6 +590,7 @@ TSIOBufferSizedCreate(TSIOBufferSizeIndex index)
 void
 TSIOBufferDestroy(TSIOBuffer bufp)
 {
+  TSDebug(TSAPI_DEBUG_TAG, "TSIOBufferDestroy start buf=%p", bufp);
   sdk_assert(sdk_sanity_check_iocore_structure(bufp) == TS_SUCCESS);
   free_MIOBuffer((MIOBuffer *)bufp);
 }
@@ -784,6 +786,7 @@ TSIOBufferReaderAlloc(TSIOBuffer bufp)
 
   // TODO: Should remove this when memory allocation can't fail.
   sdk_assert(sdk_sanity_check_null_ptr((void *)readerp) == TS_SUCCESS);
+  TSDebug(TSAPI_DEBUG_TAG, "TSIOBufferReaderAlloc exit reader=%p", readerp);
   return readerp;
 }
 
@@ -799,6 +802,7 @@ TSIOBufferReaderClone(TSIOBufferReader readerp)
 void
 TSIOBufferReaderFree(TSIOBufferReader readerp)
 {
+  TSDebug(TSAPI_DEBUG_TAG, "TSIOBufferReaderFree start reader=%p", readerp);
   sdk_assert(sdk_sanity_check_iocore_structure(readerp) == TS_SUCCESS);
 
   IOBufferReader *r = (IOBufferReader *)readerp;

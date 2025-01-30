@@ -2138,12 +2138,14 @@ TSMBufferCreate()
   bufp             = (TSMBuffer)new_heap;
   // TODO: Should remove this when memory allocation is guaranteed to fail.
   sdk_assert(sdk_sanity_check_mbuffer(bufp) == TS_SUCCESS);
+  TSDebug(TSAPI_DEBUG_TAG, "TSMBufferCreate exit buf=%p", bufp);
   return bufp;
 }
 
 TSReturnCode
 TSMBufferDestroy(TSMBuffer bufp)
 {
+  TSDebug(TSAPI_DEBUG_TAG, "TSMBufferDestroy start buf=%p", bufp);
   // Allow to modify the buffer only
   // if bufp is modifiable. If bufp is not modifiable return
   // TS_ERROR. If allowed, return TS_SUCCESS. Changed the
@@ -4602,12 +4604,14 @@ TSContCreate(TSEventFunc funcp, TSMutex mutexp)
   INKContInternal *i = THREAD_ALLOC(INKContAllocator, this_thread());
 
   i->init(funcp, mutexp, pluginThreadContext);
+  TSDebug(TSAPI_DEBUG_TAG, "TSContCreate exit cont=%p", i);
   return (TSCont)i;
 }
 
 void
 TSContDestroy(TSCont contp)
 {
+  TSDebug(TSAPI_DEBUG_TAG, "TSContDestroy start cont=%p", contp);
   sdk_assert(sdk_sanity_check_iocore_structure(contp) == TS_SUCCESS);
 
   INKContInternal *i = (INKContInternal *)contp;

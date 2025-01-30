@@ -2200,6 +2200,8 @@ extern int diags_on_for_plugins;
   if (diags_on_for_plugins) \
   TSDebug
 
+#define TSAPI_DEBUG_TAG "tsapi"
+
 /* --------------------------------------------------------------------------
    logging api */
 
