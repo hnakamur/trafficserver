@@ -448,6 +448,7 @@ ts_lua_sleep_cleanup(ts_lua_async_item *ai)
     ai->data = NULL;
   }
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying cont=%p", __FUNCTION__, ai->contp);
   TSContDestroy(ai->contp);
   ai->deleted = 1;
 
@@ -548,6 +549,7 @@ ts_lua_host_lookup_cleanup(ts_lua_async_item *ai)
     ai->data = NULL;
   }
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying cont=%p", __FUNCTION__, ai->contp);
   TSContDestroy(ai->contp);
   ai->deleted = 1;
 

@@ -958,7 +958,11 @@ ts_lua_destroy_http_intercept_ctx(ts_lua_http_intercept_ctx *ictx)
     TSVConnClose(ictx->net_vc);
   }
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying intercept input buffer=%p, reader=%p", __FUNCTION__, __LINE__, ictx->input.buffer,
+          ictx->input.reader);
   TS_LUA_RELEASE_IO_HANDLE((&ictx->input));
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying intercept output buffer=%p, reader=%p", __FUNCTION__, __LINE__, ictx->output.buffer,
+          ictx->output.reader);
   TS_LUA_RELEASE_IO_HANDLE((&ictx->output));
 
   ts_lua_release_cont_info(ci);
@@ -1033,7 +1037,11 @@ ts_lua_destroy_http_transform_ctx(ts_lua_http_transform_ctx *transform_ctx)
 
   ci = &transform_ctx->cinfo;
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying transform output buffer=%p, reader=%p", __FUNCTION__, __LINE__,
+          transform_ctx->output.buffer, transform_ctx->output.reader);
   TS_LUA_RELEASE_IO_HANDLE((&transform_ctx->output));
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying transform reserved buffer=%p, reader=%p", __FUNCTION__, __LINE__,
+          transform_ctx->reserved.buffer, transform_ctx->reserved.reader);
   TS_LUA_RELEASE_IO_HANDLE((&transform_ctx->reserved));
 
   ts_lua_release_cont_info(ci);

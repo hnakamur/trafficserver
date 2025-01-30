@@ -85,7 +85,7 @@ ts_lua_http_intercept(lua_State *L)
 
   ictx  = ts_lua_create_http_intercept_ctx(L, http_ctx, n);
   contp = TSContCreate(ts_lua_http_intercept_entry, TSMutexCreate());
-  TSDebug(TS_LUA_DEBUG_TAG, "created intercept cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept cont=%p", __FUNCTION__, contp);
   TSContDataSet(contp, ictx);
 
   TSHttpTxnIntercept(contp, http_ctx->txnp);
@@ -120,7 +120,7 @@ ts_lua_http_server_intercept(lua_State *L)
 
   ictx  = ts_lua_create_http_intercept_ctx(L, http_ctx, n);
   contp = TSContCreate(ts_lua_http_intercept_entry, TSMutexCreate());
-  TSDebug(TS_LUA_DEBUG_TAG, "created intercept entry cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept entry cont=%p", __FUNCTION__, contp);
   TSContDataSet(contp, ictx);
 
   TSHttpTxnServerIntercept(contp, http_ctx->txnp);
@@ -153,7 +153,7 @@ ts_lua_http_intercept_entry(TSCont contp, TSEvent event, void *edata)
     break;
   }
 
-  TSDebug(TS_LUA_DEBUG_TAG, "destroying intercept cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying intercept cont=%p", __FUNCTION__, contp);
   TSContDestroy(contp);
   return 0;
 }
@@ -171,7 +171,7 @@ ts_lua_http_intercept_process(ts_lua_http_intercept_ctx *ictx, TSCont contp, TSV
 
   ci->mutex = TSContMutexGet(contp);
   ci->contp = TSContCreate(ts_lua_http_intercept_handler, TSContMutexGet(contp));
-  TSDebug(TS_LUA_DEBUG_TAG, "created intercept henler cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept henler cont=%p", __FUNCTION__, contp);
   TSContDataSet(ci->contp, ictx);
 
   ictx->net_vc = conn;
@@ -199,7 +199,8 @@ ts_lua_http_intercept_setup_read(ts_lua_http_intercept_ctx *ictx)
 {
   ictx->input.buffer = TSIOBufferCreate();
   ictx->input.reader = TSIOBufferReaderAlloc(ictx->input.buffer);
-  TSDebug(TS_LUA_DEBUG_TAG, "created intercept input buffer=%p, reader=%p", ictx->input.buffer, ictx->input.reader);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept input buffer=%p, reader=%p", __FUNCTION__, ictx->input.buffer,
+          ictx->input.reader);
   ictx->input.vio = TSVConnRead(ictx->net_vc, ictx->cinfo.contp, ictx->input.buffer, INT64_MAX);
 }
 
@@ -208,7 +209,8 @@ ts_lua_http_intercept_setup_write(ts_lua_http_intercept_ctx *ictx)
 {
   ictx->output.buffer = TSIOBufferCreate();
   ictx->output.reader = TSIOBufferReaderAlloc(ictx->output.buffer);
-  TSDebug(TS_LUA_DEBUG_TAG, "created intercept output buffer=%p, reader=%p", ictx->output.buffer, ictx->output.reader);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept output buffer=%p, reader=%p", __FUNCTION__, ictx->output.buffer,
+          ictx->output.reader);
   ictx->output.vio = TSVConnWrite(ictx->net_vc, ictx->cinfo.contp, ictx->output.reader, INT64_MAX);
 }
 
@@ -229,6 +231,7 @@ ts_lua_http_intercept_handler(TSCont contp, TSEvent event, void *edata)
     ret = ts_lua_http_intercept_process_write(event, ictx);
 
   } else {
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d, going to run coroutine", __FUNCTION__, event);
     mtxp = ictx->cinfo.routine.mctx->mutexp;
     n    = (intptr_t)edata;
 
@@ -290,6 +293,7 @@ static int
 ts_lua_http_intercept_process_read(TSEvent event, ts_lua_http_intercept_ctx *ictx)
 {
   int64_t avail = TSIOBufferReaderAvail(ictx->input.reader);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d, availd=%" PRId64, __FUNCTION__, event, avail);
   TSIOBufferReaderConsume(ictx->input.reader, avail);
 
   switch (event) {
@@ -314,6 +318,7 @@ ts_lua_http_intercept_process_write(TSEvent event, ts_lua_http_intercept_ctx *ic
 {
   int64_t done, avail;
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d", __FUNCTION__, event);
   switch (event) {
   case TS_EVENT_VCONN_WRITE_READY:
 
@@ -412,7 +417,7 @@ ts_lua_flush_wakeup(ts_lua_http_intercept_ctx *ictx)
   ci = &ictx->cinfo;
 
   contp = TSContCreate(ts_lua_flush_wakeup_handler, ci->mutex);
-  TSDebug(TS_LUA_DEBUG_TAG, "created intercept flush_wakeup cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept flush_wakeup cont=%p", __FUNCTION__, contp);
   action = TSContScheduleOnPool(contp, 0, TS_THREAD_POOL_NET);
 
   ai = ts_lua_async_create_item(contp, ts_lua_flush_cleanup, (void *)action, ci);
@@ -451,7 +456,7 @@ ts_lua_flush_cleanup(ts_lua_async_item *ai)
     ai->data = NULL;
   }
 
-  TSDebug(TS_LUA_DEBUG_TAG, "destroying intercept flush cont=%p", ai->contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying intercept flush cont=%p", __FUNCTION__, ai->contp);
   TSContDestroy(ai->contp);
   ai->deleted = 1;
 

@@ -77,6 +77,7 @@ ts_lua_transform_handler(TSCont contp, ts_lua_http_transform_ctx *transform_ctx,
   lua_State *L;
   TSMutex mtxp;
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d", __FUNCTION__, event);
   ci  = &transform_ctx->cinfo;
   crt = &ci->routine;
 
@@ -113,12 +114,12 @@ ts_lua_transform_handler(TSCont contp, ts_lua_http_transform_ctx *transform_ctx,
   if (!transform_ctx->output.buffer) {
     transform_ctx->output.buffer = TSIOBufferCreate();
     transform_ctx->output.reader = TSIOBufferReaderAlloc(transform_ctx->output.buffer);
-    TSDebug(TS_LUA_DEBUG_TAG, "created transform output buffer=%p, reader=%p", transform_ctx->output.buffer,
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] created transform output buffer=%p, reader=%p", __FUNCTION__, transform_ctx->output.buffer,
             transform_ctx->output.reader);
 
     transform_ctx->reserved.buffer = TSIOBufferCreate();
     transform_ctx->reserved.reader = TSIOBufferReaderAlloc(transform_ctx->reserved.buffer);
-    TSDebug(TS_LUA_DEBUG_TAG, "created transform reserved buffer=%p, reader=%p", transform_ctx->reserved.buffer,
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] created transform reserved buffer=%p, reader=%p", __FUNCTION__, transform_ctx->reserved.buffer,
             transform_ctx->reserved.reader);
 
     if (empty_input == 0) {
@@ -167,6 +168,7 @@ ts_lua_transform_handler(TSCont contp, ts_lua_http_transform_ctx *transform_ctx,
   ts_lua_set_cont_info(L, ci);
 
   do {
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d", __FUNCTION__, event);
     if (event == TS_LUA_EVENT_COROUTINE_CONT) {
       event = 0;
       goto launch;

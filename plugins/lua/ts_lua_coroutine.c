@@ -17,6 +17,7 @@
 */
 
 #include "ts_lua_coroutine.h"
+#include "ts_lua_common.h"
 
 static void
 ts_lua_async_push_item(ts_lua_async_item **head, ts_lua_async_item *node)
@@ -85,6 +86,7 @@ ts_lua_release_cont_info(ts_lua_cont_info *ci)
   ts_lua_async_destroy_chain(&ci->async_chain);
 
   if (ci->contp) {
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying cont=%p", __FUNCTION__, ci->contp);
     TSContDestroy(ci->contp);
   }
 

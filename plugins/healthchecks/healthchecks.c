@@ -411,6 +411,7 @@ add_data_to_resp(const char *buf, int len, HCState *my_state)
 static void
 hc_process_read(TSCont contp, TSEvent event, HCState *my_state)
 {
+  TSDebug(PLUGIN_NAME, "[%s] event: %d", __FUNCTION__, event);
   if (event == TS_EVENT_VCONN_READ_READY) {
     if (my_state->data->exists) {
       TSDebug(PLUGIN_NAME, "Setting OK response header");
@@ -437,6 +438,7 @@ hc_process_read(TSCont contp, TSEvent event, HCState *my_state)
 static void
 hc_process_write(TSCont contp, TSEvent event, HCState *my_state)
 {
+  TSDebug(PLUGIN_NAME, "[%s] event: %d", __FUNCTION__, event);
   if (event == TS_EVENT_VCONN_WRITE_READY) {
     char buf[48];
     int len;
@@ -477,7 +479,7 @@ hc_intercept(TSCont contp, TSEvent event, void *edata)
 {
   HCState *my_state = TSContDataGet(contp);
 
-  TSDebug(PLUGIN_NAME, "event: %d", event);
+  TSDebug(PLUGIN_NAME, "[%s] event: %d", __FUNCTION__, event);
   if (event == TS_EVENT_NET_ACCEPT) {
     my_state->net_vc = (TSVConn)edata;
     hc_process_accept(contp, my_state);

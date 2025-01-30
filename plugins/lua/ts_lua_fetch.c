@@ -86,7 +86,7 @@ ts_lua_fetch(lua_State *L)
   }
 
   contp = TSContCreate(ts_lua_fetch_multi_handler, ci->mutex);
-  TSDebug(TS_LUA_DEBUG_TAG, "created fetch_multi_handler cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created fetch_multi_handler cont=%p", __FUNCTION__, contp);
 
   sz  = sizeof(ts_lua_fetch_multi_info) + 1 * sizeof(ts_lua_fetch_info);
   fmi = (ts_lua_fetch_multi_info *)TSmalloc(sz);
@@ -99,7 +99,7 @@ ts_lua_fetch(lua_State *L)
   fi->fmi    = fmi;
   fi->buffer = TSIOBufferCreate();
   fi->reader = TSIOBufferReaderAlloc(fi->buffer);
-  TSDebug(TS_LUA_DEBUG_TAG, "created fetch buffer=%p, reader=%p", fi->buffer, fi->reader);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created fetch buffer=%p, reader=%p", __FUNCTION__, fi->buffer, fi->reader);
 
   ts_lua_fetch_one_item(L, url, url_len, fi);
 
@@ -144,7 +144,7 @@ ts_lua_fetch_multi(lua_State *L)
 
   // main continuation handler
   contp = TSContCreate(ts_lua_fetch_multi_handler, ci->mutex);
-  TSDebug(TS_LUA_DEBUG_TAG, "created fetch_multi_handler#2 cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created fetch_multi_handler#2 cont=%p", __FUNCTION__, contp);
 
   // Iterate the table
   n = lua_objlen(L, 1);
@@ -164,6 +164,7 @@ ts_lua_fetch_multi(lua_State *L)
 
     if (lua_objlen(L, -1) < 1) {
       ts_lua_destroy_fetch_multi_info(fmi);
+      TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying cont=%p", __FUNCTION__, __LINE__, contp);
       TSContDestroy(contp);
 
       return luaL_error(L, "'ts.fetch_mutli' got empty table item");
@@ -175,6 +176,7 @@ ts_lua_fetch_multi(lua_State *L)
 
     if (!lua_isstring(L, -1)) {
       ts_lua_destroy_fetch_multi_info(fmi);
+      TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying cont=%p", __FUNCTION__, __LINE__, contp);
       TSContDestroy(contp);
 
       return luaL_error(L, "'ts.fetch_mutli' got invalid table item: url illegal");
@@ -190,7 +192,8 @@ ts_lua_fetch_multi(lua_State *L)
     fi->fmi    = fmi;
     fi->buffer = TSIOBufferCreate();
     fi->reader = TSIOBufferReaderAlloc(fi->buffer);
-    TSDebug(TS_LUA_DEBUG_TAG, "created multi fetch buffer=%p, reader=%p, i=%d, n=%d", fi->buffer, fi->reader, i, n);
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] created multi fetch buffer=%p, reader=%p, i=%" PRIu64 ", n=%" PRIu64, __FUNCTION__, fi->buffer,
+            fi->reader, i, n);
 
     ts_lua_fetch_one_item(L, url, url_len, fi);
     lua_pop(L, 3); // misc table, url, fetch item
@@ -313,11 +316,12 @@ ts_lua_fetch_one_item(lua_State *L, const char *url, size_t url_len, ts_lua_fetc
   }
 
   contp = TSContCreate(ts_lua_fetch_handler, TSContMutexGet(fi->fmi->contp)); // reuse parent cont's mutex
-  TSDebug(TS_LUA_DEBUG_TAG, "created fetch_handler cont=%p", contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created fetch_handler cont=%p", __FUNCTION__, contp);
   TSContDataSet(contp, fi);
 
   fi->contp = contp;
   fi->fch   = TSFetchCreate(contp, method, url, "HTTP/1.1", &clientaddr, flags);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created fetch fch=%p", __FUNCTION__, fi->fch);
 
   /* header */
   cl = ht = ua = 0;
@@ -409,8 +413,9 @@ ts_lua_fetch_handler(TSCont contp, TSEvent ev, void *edata ATS_UNUSED)
   ts_lua_fetch_multi_info *fmi;
 
   event = (int)ev;
-  fi    = TSContDataGet(contp);
-  fmi   = fi->fmi;
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d", __FUNCTION__, event);
+  fi  = TSContDataGet(contp);
+  fmi = fi->fmi;
 
   switch (event) {
   case TS_FETCH_EVENT_EXT_HEAD_READY:
@@ -528,6 +533,7 @@ ts_lua_fetch_multi_handler(TSCont contp, TSEvent event ATS_UNUSED, void *edata)
   ts_lua_fetch_info *fi;
   ts_lua_fetch_multi_info *fmi;
 
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] event=%d", __FUNCTION__, event);
   ai = TSContDataGet(contp);
   ci = ai->cinfo;
 
@@ -578,7 +584,7 @@ ts_lua_destroy_fetch_multi_info(ts_lua_fetch_multi_info *fmi)
   for (i = 0; i < fmi->total; i++) {
     fi = &fmi->fiv[i];
 
-    TSDebug(TS_LUA_DEBUG_TAG, "destroying fetch buffer=%p, reader=%p", fi->buffer, fi->reader);
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying fetch buffer=%p, reader=%p, fch=%p", __FUNCTION__, fi->buffer, fi->reader, fi->fch);
     if (fi->reader) {
       TSIOBufferReaderFree(fi->reader);
     }
@@ -592,6 +598,7 @@ ts_lua_destroy_fetch_multi_info(ts_lua_fetch_multi_info *fmi)
     }
 
     if (fi->contp) {
+      TSDebug(TS_LUA_DEBUG_TAG, "[%s:%d] destroying cont=%p", __FUNCTION__, __LINE__, fi->contp);
       TSContDestroy(fi->contp);
     }
   }
@@ -608,6 +615,7 @@ ts_lua_fetch_multi_cleanup(ts_lua_async_item *ai)
 
   if (ai->data) {
     ai->data = NULL;
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] destroying cont=%p", __FUNCTION__, ai->contp);
     TSContDestroy(ai->contp);
     ai->contp = NULL;
   }
