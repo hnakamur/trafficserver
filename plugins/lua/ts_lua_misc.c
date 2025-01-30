@@ -331,6 +331,7 @@ ts_lua_schedule(lua_State *L)
   actx = ts_lua_create_async_ctx(L, ci, n);
 
   contp = TSContCreate(ts_lua_schedule_handler, ci->mutex);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created ts_lua_schedule_handler cont=%p", __FUNCTION__, contp);
   TSContDataSet(contp, actx);
 
   nci        = &actx->cinfo;
@@ -414,7 +415,8 @@ ts_lua_sleep(lua_State *L)
     sec = 1;
   }
 
-  contp  = TSContCreate(ts_lua_sleep_handler, ci->mutex);
+  contp = TSContCreate(ts_lua_sleep_handler, ci->mutex);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created ts_lua_sleep_handler cont=%p", __FUNCTION__, contp);
   action = TSContScheduleOnPool(contp, sec * 1000, TS_THREAD_POOL_NET);
 
   ai = ts_lua_async_create_item(contp, ts_lua_sleep_cleanup, (void *)action, ci);
@@ -480,7 +482,8 @@ ts_lua_host_lookup(lua_State *L)
   host = luaL_checklstring(L, 1, &host_len);
 
   contp = TSContCreate(ts_lua_host_lookup_handler, ci->mutex);
-  ai    = ts_lua_async_create_item(contp, ts_lua_host_lookup_cleanup, NULL, ci);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created ts_lua_host_lookup_handler cont=%p", __FUNCTION__, contp);
+  ai = ts_lua_async_create_item(contp, ts_lua_host_lookup_cleanup, NULL, ci);
 
   TSContDataSet(contp, ai);
   action = TSHostLookup(contp, host, host_len);

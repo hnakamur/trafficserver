@@ -315,6 +315,7 @@ TSRemapInit(TSRemapInterface *api_info, char *errbuf, int errbuf_size)
       pthread_key_create(&lua_state_key, NULL);
 
       TSCont const lcontp = TSContCreate(lifecycleHandler, TSMutexCreate());
+      TSDebug(TS_LUA_DEBUG_TAG, "[%s] created lifecycleHandler cont=%p", __FUNCTION__, lcontp);
       TSContDataSet(lcontp, ts_lua_main_ctx_array);
       TSLifecycleHookAdd(TS_LIFECYCLE_MSG_HOOK, lcontp);
 
@@ -324,6 +325,7 @@ TSRemapInit(TSRemapInterface *api_info, char *errbuf, int errbuf_size)
       if (NULL != plugin_stats) {
         TSDebug(TS_LUA_DEBUG_TAG, "Starting up stats management continuation");
         TSCont const scontp = TSContCreate(statsHandler, TSMutexCreate());
+        TSDebug(TS_LUA_DEBUG_TAG, "[%s] created statsHandler cont=%p", __FUNCTION__, scontp);
         TSContDataSet(scontp, plugin_stats);
         TSContScheduleOnPool(scontp, TS_LUA_STATS_TIMEOUT, TS_THREAD_POOL_TASK);
       }
@@ -524,6 +526,7 @@ ts_lua_remap_plugin_init(void *ih, TSHttpTxn rh, TSRemapRequestInfo *rri)
   L  = ci->routine.lua;
 
   contp = TSContCreate(ts_lua_http_cont_handler, NULL);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created ts_lua_http_cont_handler cont=%p", __FUNCTION__, contp);
   TSContDataSet(contp, http_ctx);
 
   ci->contp = contp;
@@ -709,6 +712,7 @@ globalHookHandler(TSCont contp, TSEvent event ATS_UNUSED, void *edata)
   }
 
   txn_contp = TSContCreate(ts_lua_http_cont_handler, NULL);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created ts_lua_http_cont_handler cont=%p", __FUNCTION__, txn_contp);
   TSContDataSet(txn_contp, http_ctx);
 
   ci        = &http_ctx->cinfo;
@@ -828,6 +832,7 @@ TSPluginInit(int argc, const char *argv[])
       pthread_key_create(&lua_g_state_key, NULL);
 
       TSCont const contp = TSContCreate(lifecycleHandler, TSMutexCreate());
+      TSDebug(TS_LUA_DEBUG_TAG, "[%s] created lifecycleHandler cont=%p", __FUNCTION__, contp);
       TSContDataSet(contp, ts_lua_g_main_ctx_array);
       TSLifecycleHookAdd(TS_LIFECYCLE_MSG_HOOK, contp);
 
@@ -835,6 +840,7 @@ TSPluginInit(int argc, const char *argv[])
 
       if (NULL != plugin_stats) {
         TSCont const scontp = TSContCreate(statsHandler, TSMutexCreate());
+        TSDebug(TS_LUA_DEBUG_TAG, "[%s] created statsHandler cont=%p", __FUNCTION__, scontp);
         TSContDataSet(scontp, plugin_stats);
         TSContScheduleOnPool(scontp, TS_LUA_STATS_TIMEOUT, TS_THREAD_POOL_TASK);
       }
@@ -935,6 +941,7 @@ TSPluginInit(int argc, const char *argv[])
     TSError("[ts_lua][%s] could not create transaction start continuation", __FUNCTION__);
     return;
   }
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created globalHookHandler cont=%p", __FUNCTION__, global_contp);
   TSContDataSet(global_contp, conf);
 
   // adding hook based on whether the lua global function exists.
@@ -1026,6 +1033,7 @@ TSPluginInit(int argc, const char *argv[])
     TSError("[ts_lua][%s] could not create vconn continuation", __FUNCTION__);
     return;
   }
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created vconnHookHandler cont=%p", __FUNCTION__, vconn_contp);
   TSContDataSet(vconn_contp, conf);
 
   // adding hook based on whther the lua global vconn function exists
@@ -1048,6 +1056,7 @@ TSPluginInit(int argc, const char *argv[])
       TSError("[ts_lua][%s] could not create configuration continuation", __FUNCTION__);
       return;
     }
+    TSDebug(TS_LUA_DEBUG_TAG, "[%s] created configHandler cont=%p", __FUNCTION__, config_contp);
     TSContDataSet(config_contp, conf);
 
     TSMgmtUpdateRegister(config_contp, "ts_lua");

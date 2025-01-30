@@ -171,7 +171,7 @@ ts_lua_http_intercept_process(ts_lua_http_intercept_ctx *ictx, TSCont contp, TSV
 
   ci->mutex = TSContMutexGet(contp);
   ci->contp = TSContCreate(ts_lua_http_intercept_handler, TSContMutexGet(contp));
-  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept henler cont=%p", __FUNCTION__, contp);
+  TSDebug(TS_LUA_DEBUG_TAG, "[%s] created intercept handler cont=%p", __FUNCTION__, ci->contp);
   TSContDataSet(ci->contp, ictx);
 
   ictx->net_vc = conn;
