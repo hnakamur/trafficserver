@@ -86,6 +86,7 @@ ts_lua_fetch(lua_State *L)
   }
 
   contp = TSContCreate(ts_lua_fetch_multi_handler, ci->mutex);
+  TSDebug(TS_LUA_DEBUG_TAG, "created fetch_multi_handler cont=%p", contp);
 
   sz  = sizeof(ts_lua_fetch_multi_info) + 1 * sizeof(ts_lua_fetch_info);
   fmi = (ts_lua_fetch_multi_info *)TSmalloc(sz);
@@ -98,6 +99,7 @@ ts_lua_fetch(lua_State *L)
   fi->fmi    = fmi;
   fi->buffer = TSIOBufferCreate();
   fi->reader = TSIOBufferReaderAlloc(fi->buffer);
+  TSDebug(TS_LUA_DEBUG_TAG, "created fetch buffer=%p, reader=%p", fi->buffer, fi->reader);
 
   ts_lua_fetch_one_item(L, url, url_len, fi);
 
@@ -142,6 +144,7 @@ ts_lua_fetch_multi(lua_State *L)
 
   // main continuation handler
   contp = TSContCreate(ts_lua_fetch_multi_handler, ci->mutex);
+  TSDebug(TS_LUA_DEBUG_TAG, "created fetch_multi_handler#2 cont=%p", contp);
 
   // Iterate the table
   n = lua_objlen(L, 1);
@@ -187,6 +190,7 @@ ts_lua_fetch_multi(lua_State *L)
     fi->fmi    = fmi;
     fi->buffer = TSIOBufferCreate();
     fi->reader = TSIOBufferReaderAlloc(fi->buffer);
+    TSDebug(TS_LUA_DEBUG_TAG, "created multi fetch buffer=%p, reader=%p, i=%d, n=%d", fi->buffer, fi->reader, i, n);
 
     ts_lua_fetch_one_item(L, url, url_len, fi);
     lua_pop(L, 3); // misc table, url, fetch item
@@ -309,6 +313,7 @@ ts_lua_fetch_one_item(lua_State *L, const char *url, size_t url_len, ts_lua_fetc
   }
 
   contp = TSContCreate(ts_lua_fetch_handler, TSContMutexGet(fi->fmi->contp)); // reuse parent cont's mutex
+  TSDebug(TS_LUA_DEBUG_TAG, "created fetch_handler cont=%p", contp);
   TSContDataSet(contp, fi);
 
   fi->contp = contp;
@@ -573,6 +578,7 @@ ts_lua_destroy_fetch_multi_info(ts_lua_fetch_multi_info *fmi)
   for (i = 0; i < fmi->total; i++) {
     fi = &fmi->fiv[i];
 
+    TSDebug(TS_LUA_DEBUG_TAG, "destroying fetch buffer=%p, reader=%p", fi->buffer, fi->reader);
     if (fi->reader) {
       TSIOBufferReaderFree(fi->reader);
     }

@@ -113,9 +113,13 @@ ts_lua_transform_handler(TSCont contp, ts_lua_http_transform_ctx *transform_ctx,
   if (!transform_ctx->output.buffer) {
     transform_ctx->output.buffer = TSIOBufferCreate();
     transform_ctx->output.reader = TSIOBufferReaderAlloc(transform_ctx->output.buffer);
+    TSDebug(TS_LUA_DEBUG_TAG, "created transform output buffer=%p, reader=%p", transform_ctx->output.buffer,
+            transform_ctx->output.reader);
 
     transform_ctx->reserved.buffer = TSIOBufferCreate();
     transform_ctx->reserved.reader = TSIOBufferReaderAlloc(transform_ctx->reserved.buffer);
+    TSDebug(TS_LUA_DEBUG_TAG, "created transform reserved buffer=%p, reader=%p", transform_ctx->reserved.buffer,
+            transform_ctx->reserved.reader);
 
     if (empty_input == 0) {
       transform_ctx->upstream_bytes = TSVIONBytesGet(input_vio);
