@@ -381,6 +381,8 @@ parse_configs(const char *fname)
 static void
 cleanup(TSCont contp, HCState *my_state)
 {
+  TSDebug(PLUGIN_NAME, "destroying (resp_reader=%p,) req_buffer=%p, resp_buffer=%p", my_state->resp_reader, my_state->req_buffer,
+          my_state->resp_buffer);
   if (my_state->req_buffer) {
     TSIOBufferDestroy(my_state->req_buffer);
     my_state->req_buffer = NULL;
@@ -393,6 +395,7 @@ cleanup(TSCont contp, HCState *my_state)
 
   TSVConnClose(my_state->net_vc);
   TSfree(my_state);
+  TSDebug(PLUGIN_NAME, "destroying cont=%p", contp);
   TSContDestroy(contp);
 }
 
@@ -463,7 +466,9 @@ hc_process_accept(TSCont contp, HCState *my_state)
   my_state->req_buffer  = TSIOBufferCreate();
   my_state->resp_buffer = TSIOBufferCreate();
   my_state->resp_reader = TSIOBufferReaderAlloc(my_state->resp_buffer);
-  my_state->read_vio    = TSVConnRead(my_state->net_vc, contp, my_state->req_buffer, INT64_MAX);
+  TSDebug(PLUGIN_NAME, "created req_buffer=%p, resp_buffer=%p, resp_reader=%p", my_state->req_buffer, my_state->resp_buffer,
+          my_state->resp_reader);
+  my_state->read_vio = TSVConnRead(my_state->net_vc, contp, my_state->req_buffer, INT64_MAX);
 }
 
 /* Implement the server intercept */
@@ -472,6 +477,7 @@ hc_intercept(TSCont contp, TSEvent event, void *edata)
 {
   HCState *my_state = TSContDataGet(contp);
 
+  TSDebug(PLUGIN_NAME, "event: %d", event);
   if (event == TS_EVENT_NET_ACCEPT) {
     my_state->net_vc = (TSVConn)edata;
     hc_process_accept(contp, my_state);
@@ -521,7 +527,8 @@ health_check_origin(TSCont contp ATS_UNUSED, TSEvent event ATS_UNUSED, void *eda
     TSHttpTxnCntlSet(txnp, TS_HTTP_CNTL_SKIP_REMAPPING, true); /* not strictly necessary, but speed is everything these days */
 
     /* This is us -- register our intercept */
-    icontp   = TSContCreate(hc_intercept, TSMutexCreate());
+    icontp = TSContCreate(hc_intercept, TSMutexCreate());
+    TSDebug(PLUGIN_NAME, "created health_check_origin cont=%p", icontp);
     my_state = (HCState *)TSmalloc(sizeof(*my_state));
     memset(my_state, 0, sizeof(*my_state));
     my_state->info = info;
@@ -579,5 +586,7 @@ TSPluginInit(int argc, const char *argv[])
   /* Create a continuation with a mutex as there is a shared global structure
      containing the headers to add */
   TSDebug(PLUGIN_NAME, "Started %s plugin", PLUGIN_NAME);
-  TSHttpHookAdd(TS_HTTP_READ_REQUEST_HDR_HOOK, TSContCreate(health_check_origin, NULL));
+  TSCont icontp = TSContCreate(health_check_origin, NULL);
+  TSDebug(PLUGIN_NAME, "created health_check_origin cont=%p", icontp);
+  TSHttpHookAdd(TS_HTTP_READ_REQUEST_HDR_HOOK, icontp);
 }
