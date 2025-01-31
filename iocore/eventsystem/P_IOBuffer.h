@@ -201,7 +201,8 @@ new_IOBufferData_internal(const char *location, void *b, int64_t size, int64_t a
 {
   (void)size;
   IOBufferData *d = THREAD_ALLOC(ioDataAllocator, this_thread());
-  d->_size_index  = asize_index;
+  Debug("iobuf.IOBufferData", "[%s] allocated IOBufferData=%p", __FUNCTION__, d);
+  d->_size_index = asize_index;
   ink_assert(BUFFER_SIZE_INDEX_IS_CONSTANT(asize_index) || size <= d->block_size());
   d->_location = location;
   d->_data     = (char *)b;
@@ -218,7 +219,8 @@ TS_INLINE IOBufferData *
 new_IOBufferData_internal(const char *loc, int64_t size_index, AllocType type)
 {
   IOBufferData *d = THREAD_ALLOC(ioDataAllocator, this_thread());
-  d->_location    = loc;
+  Debug("iobuf.IOBufferData", "[%s] allocated IOBufferData=%p", __FUNCTION__, d);
+  d->_location = loc;
   d->alloc(size_index, type);
   return d;
 }
@@ -288,6 +290,7 @@ TS_INLINE void
 IOBufferData::free()
 {
   dealloc();
+  Debug("iobuf.IOBufferData", "[%s] freeing IOBufferData=%p", __FUNCTION__, this);
   THREAD_FREE(this, ioDataAllocator, this_thread());
 }
 
@@ -301,7 +304,8 @@ TS_INLINE IOBufferBlock *
 new_IOBufferBlock_internal(const char *location)
 {
   IOBufferBlock *b = THREAD_ALLOC(ioBlockAllocator, this_thread());
-  b->_location     = location;
+  Debug("iobuf.IOBufferBlock", "[%s] allocated IOBufferBlock=%p", __FUNCTION__, b);
+  b->_location = location;
   return b;
 }
 
@@ -309,7 +313,8 @@ TS_INLINE IOBufferBlock *
 new_IOBufferBlock_internal(const char *location, IOBufferData *d, int64_t len, int64_t offset)
 {
   IOBufferBlock *b = THREAD_ALLOC(ioBlockAllocator, this_thread());
-  b->_location     = location;
+  Debug("iobuf.IOBufferBlock", "[%s] allocated IOBufferBlock=%p", __FUNCTION__, b);
+  b->_location = location;
   b->set(d, len, offset);
   return b;
 }
@@ -397,6 +402,7 @@ TS_INLINE void
 IOBufferBlock::free()
 {
   dealloc();
+  Debug("iobuf.IOBufferBlock", "[%s] freeing IOBufferBlock=%p", __FUNCTION__, this);
   THREAD_FREE(this, ioBlockAllocator, this_thread());
 }
 
@@ -669,6 +675,7 @@ TS_INLINE MIOBuffer *
 new_MIOBuffer_internal(const char *location, int64_t size_index)
 {
   MIOBuffer *b = THREAD_ALLOC(ioAllocator, this_thread());
+  Debug("iobuf.MIOBuffer", "[%s] allocated MIOBuffer=%p", __FUNCTION__, b);
   b->_location = location;
   b->alloc(size_index);
   b->water_mark = 0;
@@ -680,13 +687,15 @@ free_MIOBuffer(MIOBuffer *mio)
 {
   mio->_writer = nullptr;
   mio->dealloc_all_readers();
+  Debug("iobuf.MIOBuffer", "[%s] freeing MIOBuffer=%p", __FUNCTION__, mio);
   THREAD_FREE(mio, ioAllocator, this_thread());
 }
 
 TS_INLINE MIOBuffer *
 new_empty_MIOBuffer_internal(const char *location, int64_t size_index)
 {
-  MIOBuffer *b  = THREAD_ALLOC(ioAllocator, this_thread());
+  MIOBuffer *b = THREAD_ALLOC(ioAllocator, this_thread());
+  Debug("iobuf.MIOBuffer", "[%s] allocated empty MIOBuffer=%p", __FUNCTION__, b);
   b->size_index = size_index;
   b->water_mark = 0;
   b->_location  = location;
@@ -696,6 +705,7 @@ new_empty_MIOBuffer_internal(const char *location, int64_t size_index)
 TS_INLINE void
 free_empty_MIOBuffer(MIOBuffer *mio)
 {
+  Debug("iobuf.MIOBuffer", "[%s] freeing MIOBuffer=%p", __FUNCTION__, mio);
   THREAD_FREE(mio, ioAllocator, this_thread());
 }
 
@@ -1012,6 +1022,7 @@ MIOBuffer::dealloc_all_readers()
 {
   for (auto &reader : readers) {
     if (reader.allocated()) {
+      Debug("iobuf.IOBufferReader", "[%s] dealloc reader=%p", __FUNCTION__, &reader);
       dealloc_reader(&reader);
     }
   }

@@ -203,10 +203,12 @@ HttpVCTable::remove_entry(HttpVCTableEntry *e)
   e->vc  = nullptr;
   e->eos = false;
   if (e->read_buffer) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer=%p", __FUNCTION__, e->read_buffer);
     free_MIOBuffer(e->read_buffer);
     e->read_buffer = nullptr;
   }
   if (e->write_buffer) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, e->write_buffer);
     free_MIOBuffer(e->write_buffer);
     e->write_buffer = nullptr;
   }
@@ -892,6 +894,7 @@ HttpSM::state_read_client_request_header(int event, void *data)
         if (t_state.http_config_param->send_100_continue_response) {
           int64_t alloc_index = buffer_size_to_index(len_100_continue_response, t_state.http_config_param->max_payload_iobuf_index);
           if (ua_entry->write_buffer) {
+            Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, ua_entry->write_buffer);
             free_MIOBuffer(ua_entry->write_buffer);
             ua_entry->write_buffer = nullptr;
           }
@@ -1061,6 +1064,7 @@ HttpSM::state_watch_for_client_abort(int event, void *data)
     ink_assert(t_state.hdr_info.client_request.m_100_continue_required || t_state.http_config_param->send_100_continue_response);
     if (ua_entry->write_buffer) {
       ink_assert(ua_entry->write_vio && !ua_entry->write_vio->ntodo());
+      Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, ua_entry->write_buffer);
       free_MIOBuffer(ua_entry->write_buffer);
       ua_entry->write_buffer = nullptr;
     }
@@ -2190,6 +2194,7 @@ HttpSM::state_send_server_request_header(int event, void *data)
   case VC_EVENT_WRITE_COMPLETE:
     // We are done sending the request header, deallocate
     //  our buffer and then decide what to do next
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, server_entry->write_buffer);
     free_MIOBuffer(server_entry->write_buffer);
     server_entry->write_buffer = nullptr;
     method                     = t_state.hdr_info.server_request.method_get_wksidx();
@@ -2873,6 +2878,7 @@ HttpSM::tunnel_handler_post(int event, void *data)
   case VC_EVENT_INACTIVITY_TIMEOUT: // ua_txn timeout during sending the HTTP 408 response
   case VC_EVENT_ACTIVE_TIMEOUT:     // ua_txn timeout
     if (ua_entry->write_buffer) {
+      Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, ua_entry->write_buffer);
       free_MIOBuffer(ua_entry->write_buffer);
       ua_entry->write_buffer = nullptr;
     }
@@ -8608,6 +8614,7 @@ PostDataBuffers::clear()
   Debug("http_redirect", "[PostDataBuffers::clear]");
 
   if (this->postdata_copy_buffer != nullptr) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for postdata_copy_buffer=%p", __FUNCTION__, this->postdata_copy_buffer);
     free_MIOBuffer(this->postdata_copy_buffer);
     this->postdata_copy_buffer       = nullptr;
     this->postdata_copy_buffer_start = nullptr; // deallocated by the buffer

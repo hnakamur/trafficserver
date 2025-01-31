@@ -50,6 +50,7 @@ Http1ServerSession::destroy()
   ink_assert(read_buffer);
   magic = HTTP_SS_MAGIC_DEAD;
   if (read_buffer) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer=%p", __FUNCTION__, read_buffer);
     free_MIOBuffer(read_buffer);
     read_buffer = nullptr;
   }

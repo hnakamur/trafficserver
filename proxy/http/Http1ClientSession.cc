@@ -106,6 +106,7 @@ Http1ClientSession::free()
 {
   magic = HTTP_CS_MAGIC_DEAD;
   if (read_buffer) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer=%p", __FUNCTION__, read_buffer);
     free_MIOBuffer(read_buffer);
     read_buffer = nullptr;
   }

@@ -572,9 +572,11 @@ TransformControl::handle_event(int event, void * /* edata ATS_UNUSED */)
   case VC_EVENT_EOS:
     m_tvc->do_io_close();
 
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer->mbuf=%p", __FUNCTION__, m_read_buf->mbuf);
     free_MIOBuffer(m_read_buf->mbuf);
     m_read_buf = nullptr;
 
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, m_write_buf);
     free_MIOBuffer(m_write_buf);
     m_write_buf = nullptr;
     break;
@@ -610,6 +612,7 @@ NullTransform::NullTransform(ProxyMutex *_mutex)
 NullTransform::~NullTransform()
 {
   if (m_output_buf) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for output_buf=%p", __FUNCTION__, m_output_buf);
     free_MIOBuffer(m_output_buf);
   }
 }
@@ -767,6 +770,7 @@ RangeTransform::RangeTransform(ProxyMutex *mut, RangeRecord *ranges, int num_fie
 RangeTransform::~RangeTransform()
 {
   if (m_output_buf) {
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for output_buf=%p", __FUNCTION__, m_output_buf);
     free_MIOBuffer(m_output_buf);
   }
 }

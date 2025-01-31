@@ -596,6 +596,7 @@ PreWarmSM::_reset()
 
   if (_read_buf != nullptr) {
     // free_MIOBuffer dealloc all readers
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for _read_buf=%p", __FUNCTION__, _read_buf);
     free_MIOBuffer(_read_buf);
     _read_buf        = nullptr;
     _read_buf_reader = nullptr;
@@ -603,6 +604,7 @@ PreWarmSM::_reset()
 
   if (_write_buf != nullptr) {
     // free_MIOBuffer dealloc all readers
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for _write_buf=%p", __FUNCTION__, _write_buf);
     free_MIOBuffer(_write_buf);
     _write_buf        = nullptr;
     _write_buf_reader = nullptr;

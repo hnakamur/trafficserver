@@ -52,6 +52,7 @@ setup_client_request(HttpSM *sm, const char *scheme, const char *request)
   sm->t_state.hdr_info.client_request.parse_req(&httpParser, buffer_reader, &bytes_used, true /* eos */);
   sm->t_state.hdr_info.client_request.url_get()->scheme_set(scheme, strlen(scheme));
   sm->t_state.method = sm->t_state.hdr_info.client_request.method_get_wksidx();
+  Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer=%p", __FUNCTION__, read_buffer);
   free_MIOBuffer(read_buffer);
 }
 

@@ -131,8 +131,10 @@ Http2CommonSession::common_free(ProxySession *ssn)
   _h2_pushed_urls = nullptr;
   this->connection_state.destroy();
 
+  Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer=%p", __FUNCTION__, this->read_buffer);
   free_MIOBuffer(this->read_buffer);
   this->read_buffer = nullptr;
+  Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for write_buffer=%p", __FUNCTION__, this->write_buffer);
   free_MIOBuffer(this->write_buffer);
   this->write_buffer = nullptr;
   return true;

@@ -111,10 +111,12 @@ ChunkedHandler::clear()
   case ACTION_DOCHUNK:
   case ACTION_PASSTHRU:
     if (chunked_buffer) {
+      Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for chunked_buffer=%p", __FUNCTION__, chunked_buffer);
       free_MIOBuffer(chunked_buffer);
     }
     break;
   case ACTION_DECHUNK:
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for dechunked_buffer=%p", __FUNCTION__, dechunked_buffer);
     free_MIOBuffer(dechunked_buffer);
     break;
   default:
@@ -612,6 +614,7 @@ HttpTunnel::deallocate_buffers()
   for (auto &producer : producers) {
     if (producer.read_buffer != nullptr) {
       ink_assert(producer.vc != nullptr);
+      Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for read_buffer=%p", __FUNCTION__, producer.read_buffer);
       free_MIOBuffer(producer.read_buffer);
       producer.read_buffer  = nullptr;
       producer.buffer_start = nullptr;
@@ -620,6 +623,8 @@ HttpTunnel::deallocate_buffers()
 
     if (producer.chunked_handler.dechunked_buffer != nullptr) {
       ink_assert(producer.vc != nullptr);
+      Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for dechunked_buffer=%p", __FUNCTION__,
+            producer.chunked_handler.dechunked_buffer);
       free_MIOBuffer(producer.chunked_handler.dechunked_buffer);
       producer.chunked_handler.dechunked_buffer = nullptr;
       num++;
@@ -627,6 +632,8 @@ HttpTunnel::deallocate_buffers()
 
     if (producer.chunked_handler.chunked_buffer != nullptr) {
       ink_assert(producer.vc != nullptr);
+      Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for chunked_buffer=%p", __FUNCTION__,
+            producer.chunked_handler.chunked_buffer);
       free_MIOBuffer(producer.chunked_handler.chunked_buffer);
       producer.chunked_handler.chunked_buffer = nullptr;
       num++;

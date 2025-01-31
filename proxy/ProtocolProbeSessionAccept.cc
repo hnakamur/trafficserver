@@ -57,8 +57,18 @@ struct ProtocolProbeTrampoline : public Continuation, public ProtocolProbeSessio
                                    IOBufferReader *reader)
     : Continuation(mutex), probeParent(probe)
   {
-    this->iobuf  = buffer ? buffer : new_MIOBuffer(buffer_size_index);
+    this->iobuf = buffer ? buffer : new_MIOBuffer(buffer_size_index);
+    if (buffer) {
+      Debug("iobuf.MIOBuffer", "[%s] set buffer to this->iobuf=%p", __FUNCTION__, this->iobuf);
+    } else {
+      Debug("iobuf.MIOBuffer", "[%s] created this->iobuf=%p", __FUNCTION__, this->iobuf);
+    }
     this->reader = reader ? reader : iobuf->alloc_reader(); // reader must be allocated only on a new MIOBuffer.
+    if (reader) {
+      Debug("iobuf.IOBufferReader", "[%s] set reader to this->reader=%p", __FUNCTION__, this->reader);
+    } else {
+      Debug("iobuf.IOBufferReader", "[%s] created this->reader=%p", __FUNCTION__, this->reader);
+    }
     SET_HANDLER(&ProtocolProbeTrampoline::ioCompletionEvent);
   }
 
@@ -164,6 +174,7 @@ struct ProtocolProbeTrampoline : public Continuation, public ProtocolProbeSessio
 
   done:
     netvc->do_io_close();
+    Debug("iobuf.MIOBuffer", "[%s] calling free_MIOBuffer for this->iobuf=%p", __FUNCTION__, this->iobuf);
     free_MIOBuffer(this->iobuf);
     this->iobuf = nullptr;
     delete this;
