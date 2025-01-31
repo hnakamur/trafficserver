@@ -2761,6 +2761,11 @@ tsapi void TSHostStatusSet(const char *hostname, const size_t hostname_len, TSHo
 tsapi bool TSHttpTxnCntlGet(TSHttpTxn txnp, TSHttpCntlType ctrl);
 tsapi TSReturnCode TSHttpTxnCntlSet(TSHttpTxn txnp, TSHttpCntlType ctrl, bool data);
 
+/*
+ * Get entry count in parent.config.
+ */
+tsapi int TSHttpParentTableGetEntryCount(TSHttpTxn txnp);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
