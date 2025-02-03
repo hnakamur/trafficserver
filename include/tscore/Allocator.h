@@ -45,6 +45,7 @@
 #include "tscore/ink_queue.h"
 #include "tscore/ink_defs.h"
 #include "tscore/ink_resource.h"
+#include "tscore/Diags.h"
 #include <execinfo.h>
 
 #define RND16(_x) (((_x) + 15) & ~15)
@@ -140,6 +141,7 @@ public:
   alloc(Args &&... args)
   {
     void *ptr = ink_freelist_new(this->fl);
+    Debug("iobuf.ClassAllocator", "[%s] allocated ptr=%p", __FUNCTION__, ptr);
 
     ::new (ptr) C(std::forward<Args>(args)...);
     return (C *)ptr;
@@ -155,6 +157,7 @@ public:
   {
     destroy_if_enabled(ptr);
 
+    Debug("iobuf.ClassAllocator", "[%s] calling ink_freelist_free ptr=%p", __FUNCTION__, ptr);
     ink_freelist_free(this->fl, ptr);
   }
 
@@ -167,6 +170,7 @@ public:
   */
   ClassAllocator(const char *name, unsigned int chunk_size = 128, unsigned int alignment = 16)
   {
+    Debug("iobuf.ClassAllocator", "[%s] init name=%s, chunk_size=%d, alignment=%d", __FUNCTION__, name, chunk_size, alignment);
     ink_freelist_init(&this->fl, name, RND16(sizeof(C)), chunk_size, RND16(alignment));
   }
 
