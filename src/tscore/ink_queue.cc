@@ -468,12 +468,13 @@ ink_freelists_dump(FILE *f)
   uint64_t total_used      = 0;
   fll                      = freelists;
   while (fll) {
-    fprintf(f, " %18" PRIu64 " | %18" PRIu64 " | %10u | memory/%s\n",
+    int used = ink_atomic_increment(reinterpret_cast<int *>(&fll->fl->used), 0);
+    fprintf(f, " %18" PRIu64 " | %18" PRIu64 " | %10u | memory/%s fl=%p, used=%d\n",
             static_cast<uint64_t>(fll->fl->allocated) * static_cast<uint64_t>(fll->fl->type_size),
-            static_cast<uint64_t>(fll->fl->used) * static_cast<uint64_t>(fll->fl->type_size), fll->fl->type_size,
-            fll->fl->name ? fll->fl->name : "<unknown>");
+            static_cast<uint64_t>(used) * static_cast<uint64_t>(fll->fl->type_size), fll->fl->type_size,
+            fll->fl->name ? fll->fl->name : "<unknown>", fll->fl, used);
     total_allocated += static_cast<uint64_t>(fll->fl->allocated) * static_cast<uint64_t>(fll->fl->type_size);
-    total_used += static_cast<uint64_t>(fll->fl->used) * static_cast<uint64_t>(fll->fl->type_size);
+    total_used += static_cast<uint64_t>(used) * static_cast<uint64_t>(fll->fl->type_size);
     fll = fll->next;
   }
   fprintf(f, " %18" PRIu64 " | %18" PRIu64 " |            | TOTAL\n", total_allocated, total_used);
