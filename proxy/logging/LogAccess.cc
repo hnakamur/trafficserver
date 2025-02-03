@@ -778,6 +778,80 @@ LogAccess::unmarshal_str_json(char **buf, char *dest, int len, LogSlice *slice)
   return -1;
 }
 
+static int
+escape_ltsv(char *dest, const char *buf, int len)
+{
+  int escaped_len = 0;
+
+  for (int i = 0; i < len; i++) {
+    char c = buf[i];
+    if (c == '\\' || c == '\t' || c == '\n') { // escape.
+      if (dest) {
+        if (escaped_len + 2 > len) {
+          break;
+        }
+        *dest++ = '\\';
+        switch (c) {
+        case '\\':
+          *dest++ = '\\';
+          break;
+        case '\t':
+          *dest++ = 't';
+          break;
+        case '\n':
+          *dest++ = 'n';
+          break;
+        }
+      }
+      escaped_len += 2;
+
+    } else {
+      if (dest) {
+        if (escaped_len + 1 > len) {
+          break;
+        }
+        *dest++ = c;
+      }
+      escaped_len++;
+    }
+  } // end for
+  return escaped_len;
+}
+
+int
+LogAccess::unmarshal_str_ltsv(char **buf, char *dest, int len, LogSlice *slice)
+{
+  Debug("log-escape", "unmarshal_str_ltsv start, len=%d, slice=%p", len, slice);
+
+  char *val_buf   = *buf;
+  int val_len     = static_cast<int>(::strlen(val_buf));
+  int escaped_len = escape_ltsv(nullptr, val_buf, val_len);
+
+  *buf += LogAccess::strlen(val_buf); // this is how it was stored
+
+  if (slice && slice->m_enable) {
+    int offset, n;
+
+    n = slice->toStrOffset(escaped_len, &offset);
+    Debug("log-escape", "unmarshal_str_ltsv start, n=%d, offset=%d", n, offset);
+    if (n <= 0) {
+      return 0;
+    }
+
+    if (n >= len) {
+      return -1;
+    }
+
+    return escape_ltsv(dest, (val_buf + offset), n);
+  }
+
+  if (escaped_len < len) {
+    escape_ltsv(dest, val_buf, escaped_len);
+    return escaped_len;
+  }
+  return -1;
+}
+
 int
 LogAccess::unmarshal_ttmsf(char **buf, char *dest, int len)
 {
@@ -964,6 +1038,34 @@ LogAccess::unmarshal_http_text_json(char **buf, char *dest, int len, LogSlice *s
   p += res1;
   *p++     = ' ';
   int res2 = unmarshal_str_json(buf, p, len - res1 - 1, slice);
+  if (res2 < 0) {
+    return -1;
+  }
+  p += res2;
+  *p++     = ' ';
+  int res3 = unmarshal_http_version(buf, p, len - res1 - res2 - 2);
+  if (res3 < 0) {
+    return -1;
+  }
+  return res1 + res2 + res3 + 2;
+}
+
+int
+LogAccess::unmarshal_http_text_ltsv(char **buf, char *dest, int len, LogSlice *slice)
+{
+  ink_assert(buf != nullptr);
+  ink_assert(*buf != nullptr);
+  ink_assert(dest != nullptr);
+
+  char *p = dest;
+
+  int res1 = unmarshal_str_ltsv(buf, p, len);
+  if (res1 < 0) {
+    return -1;
+  }
+  p += res1;
+  *p++     = ' ';
+  int res2 = unmarshal_str_ltsv(buf, p, len - res1 - 1, slice);
   if (res2 < 0) {
     return -1;
   }

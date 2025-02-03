@@ -137,9 +137,9 @@ AC_ARG_WITH([build-number],
 #
 # Build environment
 #
-build_person="`id -nu | sed -e 's/\\\\/\\\\\\\\/g'`"
-build_group="`id -ng | sed -e 's/\\\\/\\\\\\\\/g'`"
-build_machine="`uname -n | sed -e 's/\\\\/\\\\\\\\/g'`"
+build_person="root"
+build_group="root"
+build_machine="localhost"
 AC_SUBST([build_machine])
 AC_SUBST([build_person])
 AC_SUBST([build_group])
@@ -1656,10 +1656,13 @@ CFLAGS="${__saved_CFLAGS}"
 AC_LANG_POP
 AC_SUBST(has_128bit_cas)
 
+case "$host_cpu" in
+    amd64|x86_64|i*86)
 AS_IF([test "x$needs_mcx16_for_cas" = "x1"], [
     TS_ADDTO(AM_CFLAGS, [-mcx16])
     TS_ADDTO(AM_CXXFLAGS, [-mcx16])
 ])
+esac
 
 # Check for POSIX capabilities library.
 # If we don't find it, disable checking for header.

@@ -604,6 +604,12 @@ LogField::unmarshal(char **buf, char *dest, int len, LogEscapeType escape_type)
         } else if (m_unmarshal_func == reinterpret_cast<UnmarshalFunc>(LogAccess::unmarshal_http_text)) {
           func = reinterpret_cast<UnmarshalFuncWithSlice>(LogAccess::unmarshal_http_text_json);
         }
+      } else if (escape_type == LOG_ESCAPE_LTSV) {
+        if (m_unmarshal_func == reinterpret_cast<UnmarshalFunc>(LogAccess::unmarshal_str)) {
+          func = reinterpret_cast<UnmarshalFuncWithSlice>(LogAccess::unmarshal_str_ltsv);
+        } else if (m_unmarshal_func == reinterpret_cast<UnmarshalFunc>(LogAccess::unmarshal_http_text)) {
+          func = reinterpret_cast<UnmarshalFuncWithSlice>(LogAccess::unmarshal_http_text_ltsv);
+        }
       }
       return (*func)(buf, dest, len, &m_slice);
     }
