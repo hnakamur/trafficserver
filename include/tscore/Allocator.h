@@ -209,6 +209,7 @@ public:
       symbol = callstack[2];
     }
 
+    Debug("iobuf.TrackerClassAllocator", "[%s] symbol=%p, name=%s, size=%" PRId64, symbol, this->fl->name, (int64_t)sizeof(C));
     tracker.increment(symbol, (int64_t)sizeof(C), this->fl->name);
     ink_mutex_acquire(&trackerLock);
     reverse_lookup[ptr] = symbol;
@@ -224,6 +225,8 @@ public:
     ink_mutex_acquire(&trackerLock);
     std::map<void *, const void *>::iterator it = reverse_lookup.find(ptr);
     if (it != reverse_lookup.end()) {
+      Debug("iobuf.TrackerClassAllocator", "[%s] symbol=%p, name=%s, size=%" PRId64, (const void *)it->second, this->fl->name,
+            (int64_t)sizeof(C) * -1);
       tracker.increment((const void *)it->second, (int64_t)sizeof(C) * -1, nullptr);
       reverse_lookup.erase(it);
     }
