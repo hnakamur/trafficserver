@@ -141,7 +141,7 @@ public:
   alloc(Args &&... args)
   {
     void *ptr = ink_freelist_new(this->fl);
-    Debug("iobuf.ClassAllocator", "[%s] allocated ptr=%p", __FUNCTION__, ptr);
+    Debug("iobuf.ClassAllocator", "[%s] allocated ptr=%p, fl_name=%s", __FUNCTION__, ptr, this->fl->name);
 
     ::new (ptr) C(std::forward<Args>(args)...);
     return (C *)ptr;
@@ -157,7 +157,7 @@ public:
   {
     destroy_if_enabled(ptr);
 
-    Debug("iobuf.ClassAllocator", "[%s] calling ink_freelist_free ptr=%p", __FUNCTION__, ptr);
+    Debug("iobuf.ClassAllocator", "[%s] calling ink_freelist_free ptr=%p, fl_name=%s", __FUNCTION__, ptr, this->fl->name);
     ink_freelist_free(this->fl, ptr);
   }
 
@@ -170,7 +170,10 @@ public:
   */
   ClassAllocator(const char *name, unsigned int chunk_size = 128, unsigned int alignment = 16)
   {
-    Debug("iobuf.ClassAllocator", "[%s] init name=%s, chunk_size=%d, alignment=%d", __FUNCTION__, name, chunk_size, alignment);
+    Debug("iobuf.ClassAllocator", "[%s] init name=%s, chunk_size=%d, alignment=%d, type_size=%ld", __FUNCTION__, name, chunk_size,
+          alignment, RND16(sizeof(C)));
+    fprintf(stderr, "iobuf.ClassAllocator [%s] init name=%s, chunk_size=%d, alignment=%d, type_size=%ld\n", __FUNCTION__, name,
+            chunk_size, alignment, RND16(sizeof(C)));
     ink_freelist_init(&this->fl, name, RND16(sizeof(C)), chunk_size, RND16(alignment));
   }
 

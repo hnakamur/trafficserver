@@ -145,6 +145,8 @@ ink_freelist_init(InkFreeList **fl, const char *name, uint32_t type_size, uint32
   // Make sure we align *all* the objects in the allocation, not just the first one
   f->type_size = INK_ALIGN(type_size, f->alignment);
   Debug(DEBUG_TAG "_init", "<%s> Type Size request/actual (%" PRIu32 "/%" PRIu32 ")", name, type_size, f->type_size);
+  fprintf(stderr, "freelist [ink_freelist_init] name=%s, type_size=%d, chunk_size=%d, alignment=%d, f->type_size=%d\n", name,
+          type_size, chunk_size, alignment, f->type_size);
   if (ats_hugepage_enabled()) {
     f->chunk_size = INK_ALIGN(chunk_size * f->type_size, ats_hugepage_size()) / f->type_size;
   } else {
@@ -185,7 +187,9 @@ ink_freelist_new(InkFreeList *f)
   void *ptr;
 
   if (likely(ptr = freelist_global_ops->fl_new(f))) {
-    ink_atomic_increment(reinterpret_cast<int *>(&f->used), 1);
+    int old_used = ink_atomic_increment(reinterpret_cast<int *>(&f->used), 1);
+    fprintf(stderr, "freelist [ink_freelist_new], ptr=%p, fl_name=%s, used=%d\n", ptr, f->name, old_used + 1);
+    Debug("freelist", "[ink_freelist_new] ptr=%p, fl_name=%s, used=%d", ptr, f->name, old_used + 1);
   }
 
   return ptr;
@@ -279,7 +283,9 @@ ink_freelist_free(InkFreeList *f, void *item)
   if (likely(item != nullptr)) {
     ink_assert(f->used != 0);
     freelist_global_ops->fl_free(f, item);
-    ink_atomic_decrement(reinterpret_cast<int *>(&f->used), 1);
+    int old_used = ink_atomic_decrement(reinterpret_cast<int *>(&f->used), 1);
+    fprintf(stderr, "freelist [ink_freelist_free] ptr=%p, fl_name=%s, used=%d\n", item, f->name, old_used - 1);
+    Debug("freelist", "[ink_freelist_free] ptr=%p, fl_name=%s, used=%d", item, f->name, old_used - 1);
   }
 }
 
@@ -340,7 +346,11 @@ ink_freelist_free_bulk(InkFreeList *f, void *head, void *tail, size_t num_item)
   ink_assert(f->used >= num_item);
 
   freelist_global_ops->fl_bulkfree(f, head, tail, num_item);
-  ink_atomic_decrement(reinterpret_cast<int *>(&f->used), num_item);
+  int old_used = ink_atomic_decrement(reinterpret_cast<int *>(&f->used), num_item);
+  fprintf(stderr, "freelist [ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64 "\n", head,
+          tail, num_item, f->name, old_used - ssize_t(num_item));
+  Debug("freelist", "[ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64, head, tail,
+        num_item, f->name, old_used - ssize_t(num_item));
 }
 
 static void
