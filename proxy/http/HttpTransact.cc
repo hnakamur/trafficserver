@@ -1576,6 +1576,7 @@ HttpTransact::HandleRequest(State *s)
   }
 
   if (s->state_machine->plugin_tunnel_type == HTTP_PLUGIN_AS_INTERCEPT) {
+    Debug("http_track", "[%s] calling setup_plugin_request_intercept", __FUNCTION__);
     setup_plugin_request_intercept(s);
     return;
   }
@@ -1696,6 +1697,7 @@ HttpTransact::setup_plugin_request_intercept(State *s)
   //  NetVCs so nuke the connection header
   s->hdr_info.server_request.field_delete(MIME_FIELD_CONNECTION, MIME_LEN_CONNECTION);
 
+  Debug("http_track", "[%s] calling TRANSACT_RETURN(SM_ACTION_ORIGIN_SERVER_OPEN, nullptr)", __FUNCTION__);
   TRANSACT_RETURN(SM_ACTION_ORIGIN_SERVER_OPEN, nullptr);
 }
 
