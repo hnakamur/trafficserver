@@ -188,8 +188,7 @@ ink_freelist_new(InkFreeList *f)
 
   if (likely(ptr = freelist_global_ops->fl_new(f))) {
     int old_used = ink_atomic_increment(reinterpret_cast<int *>(&f->used), 1);
-    fprintf(stderr, "freelist [ink_freelist_new], ptr=%p, fl_name=%s, used=%d\n", ptr, f->name, old_used + 1);
-    Debug("freelist", "[ink_freelist_new] ptr=%p, fl_name=%s, used=%d", ptr, f->name, old_used + 1);
+    fprintf(stderr, "freelist [ink_freelist_new], ptr=%p, fl_name=%s, used=%d, fl=%p\n", ptr, f->name, old_used + 1, f);
   }
 
   return ptr;
@@ -284,8 +283,7 @@ ink_freelist_free(InkFreeList *f, void *item)
     ink_assert(f->used != 0);
     freelist_global_ops->fl_free(f, item);
     int old_used = ink_atomic_decrement(reinterpret_cast<int *>(&f->used), 1);
-    fprintf(stderr, "freelist [ink_freelist_free] ptr=%p, fl_name=%s, used=%d\n", item, f->name, old_used - 1);
-    Debug("freelist", "[ink_freelist_free] ptr=%p, fl_name=%s, used=%d", item, f->name, old_used - 1);
+    fprintf(stderr, "freelist [ink_freelist_free] ptr=%p, fl_name=%s, used=%d, fl=%p\n", item, f->name, old_used - 1, f);
   }
 }
 
@@ -347,10 +345,8 @@ ink_freelist_free_bulk(InkFreeList *f, void *head, void *tail, size_t num_item)
 
   freelist_global_ops->fl_bulkfree(f, head, tail, num_item);
   int old_used = ink_atomic_decrement(reinterpret_cast<int *>(&f->used), num_item);
-  fprintf(stderr, "freelist [ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64 "\n", head,
-          tail, num_item, f->name, old_used - ssize_t(num_item));
-  Debug("freelist", "[ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64, head, tail,
-        num_item, f->name, old_used - ssize_t(num_item));
+  fprintf(stderr, "freelist [ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64 ", fl=%p\n",
+          head, tail, num_item, f->name, old_used - ssize_t(num_item), f);
 }
 
 static void
@@ -468,13 +464,12 @@ ink_freelists_dump(FILE *f)
   uint64_t total_used      = 0;
   fll                      = freelists;
   while (fll) {
-    int used = ink_atomic_increment(reinterpret_cast<int *>(&fll->fl->used), 0);
     fprintf(f, " %18" PRIu64 " | %18" PRIu64 " | %10u | memory/%s fl=%p, used=%d\n",
             static_cast<uint64_t>(fll->fl->allocated) * static_cast<uint64_t>(fll->fl->type_size),
-            static_cast<uint64_t>(used) * static_cast<uint64_t>(fll->fl->type_size), fll->fl->type_size,
-            fll->fl->name ? fll->fl->name : "<unknown>", fll->fl, used);
+            static_cast<uint64_t>(fll->fl->used) * static_cast<uint64_t>(fll->fl->type_size), fll->fl->type_size,
+            fll->fl->name ? fll->fl->name : "<unknown>", fll->fl, fll->fl->used);
     total_allocated += static_cast<uint64_t>(fll->fl->allocated) * static_cast<uint64_t>(fll->fl->type_size);
-    total_used += static_cast<uint64_t>(used) * static_cast<uint64_t>(fll->fl->type_size);
+    total_used += static_cast<uint64_t>(fll->fl->used) * static_cast<uint64_t>(fll->fl->type_size);
     fll = fll->next;
   }
   fprintf(f, " %18" PRIu64 " | %18" PRIu64 " |            | TOTAL\n", total_allocated, total_used);
