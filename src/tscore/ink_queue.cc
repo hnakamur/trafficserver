@@ -187,7 +187,7 @@ ink_freelist_new(InkFreeList *f)
   void *ptr;
 
   if (likely(ptr = freelist_global_ops->fl_new(f))) {
-    int old_used = ink_atomic_increment(reinterpret_cast<int *>(&f->used), 1);
+    uint32_t old_used = f->used.fetch_add(1, std::memory_order_relaxed);
     fprintf(stderr, "freelist [ink_freelist_new], ptr=%p, fl_name=%s, used=%d\n", ptr, f->name, old_used + 1);
     Debug("freelist", "[ink_freelist_new] ptr=%p, fl_name=%s, used=%d", ptr, f->name, old_used + 1);
   }
@@ -283,7 +283,7 @@ ink_freelist_free(InkFreeList *f, void *item)
   if (likely(item != nullptr)) {
     ink_assert(f->used != 0);
     freelist_global_ops->fl_free(f, item);
-    int old_used = ink_atomic_decrement(reinterpret_cast<int *>(&f->used), 1);
+    uint32_t old_used = f->used.fetch_sub(1, std::memory_order_relaxed);
     fprintf(stderr, "freelist [ink_freelist_free] ptr=%p, fl_name=%s, used=%d\n", item, f->name, old_used - 1);
     Debug("freelist", "[ink_freelist_free] ptr=%p, fl_name=%s, used=%d", item, f->name, old_used - 1);
   }
@@ -343,10 +343,10 @@ malloc_free(InkFreeList *f, void *item)
 void
 ink_freelist_free_bulk(InkFreeList *f, void *head, void *tail, size_t num_item)
 {
-  ink_assert(f->used >= num_item);
+  ink_assert(f->used.load(std::memory_order_acquire) >= num_item);
 
   freelist_global_ops->fl_bulkfree(f, head, tail, num_item);
-  int old_used = ink_atomic_decrement(reinterpret_cast<int *>(&f->used), num_item);
+  uint32_t old_used = f->used.fetch_sub(num_item, std::memory_order_relaxed);
   fprintf(stderr, "freelist [ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64 "\n", head,
           tail, num_item, f->name, old_used - ssize_t(num_item));
   Debug("freelist", "[ink_freelist_free_bulk] head=%p, tail=%p, num_item=%" PRIu64 ", fl_name=%s, used=%" PRId64, head, tail,
@@ -422,7 +422,7 @@ ink_freelists_snap_baseline()
   fll = freelists;
   while (fll) {
     fll->fl->allocated_base = fll->fl->allocated;
-    fll->fl->used_base      = fll->fl->used;
+    fll->fl->used_base      = fll->fl->used.load(std::memory_order_acquire);
     fll                     = fll->next;
   }
 }
@@ -443,10 +443,11 @@ ink_freelists_dump_baselinerel(FILE *f)
   while (fll) {
     int a = fll->fl->allocated - fll->fl->allocated_base;
     if (a != 0) {
+      int32_t used = fll->fl->used.load(std::memory_order_acquire);
       fprintf(f, " %18" PRIu64 " | %18" PRIu64 " | %7u | %10u | memory/%s\n",
               static_cast<uint64_t>(fll->fl->allocated - fll->fl->allocated_base) * static_cast<uint64_t>(fll->fl->type_size),
-              static_cast<uint64_t>(fll->fl->used - fll->fl->used_base) * static_cast<uint64_t>(fll->fl->type_size),
-              fll->fl->used - fll->fl->used_base, fll->fl->type_size, fll->fl->name ? fll->fl->name : "<unknown>");
+              static_cast<uint64_t>(used - fll->fl->used_base) * static_cast<uint64_t>(fll->fl->type_size),
+              used - fll->fl->used_base, fll->fl->type_size, fll->fl->name ? fll->fl->name : "<unknown>");
     }
     fll = fll->next;
   }
@@ -468,7 +469,7 @@ ink_freelists_dump(FILE *f)
   uint64_t total_used      = 0;
   fll                      = freelists;
   while (fll) {
-    int used = ink_atomic_increment(reinterpret_cast<int *>(&fll->fl->used), 0);
+    int32_t used = fll->fl->used.load(std::memory_order_acquire);
     fprintf(f, " %18" PRIu64 " | %18" PRIu64 " | %10u | memory/%s fl=%p, used=%d\n",
             static_cast<uint64_t>(fll->fl->allocated) * static_cast<uint64_t>(fll->fl->type_size),
             static_cast<uint64_t>(used) * static_cast<uint64_t>(fll->fl->type_size), fll->fl->type_size,

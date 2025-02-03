@@ -33,6 +33,7 @@
 
 ***********************************************************************/
 
+#include <atomic>
 #include "tscore/ink_platform.h"
 #include "tscore/ink_defs.h"
 #include "tscore/ink_apidefs.h"
@@ -189,7 +190,9 @@ union head_p {
 struct _InkFreeList {
   head_p head;
   const char *name;
-  uint32_t type_size, chunk_size, used, allocated, alignment;
+  uint32_t type_size, chunk_size;
+  std::atomic<uint32_t> used;
+  uint32_t allocated, alignment;
   uint32_t allocated_base, used_base;
   int advice;
 };
