@@ -56,8 +56,10 @@ Http1ServerSession::destroy()
 
   mutex.clear();
   if (httpSessionManager.get_pool_type() == TS_SERVER_SESSION_SHARING_POOL_THREAD) {
+    Debug("iobuf.httpServerSessionAllocator", "calling THREAD_FREE Http1ServerSession=%p", this);
     THREAD_FREE(this, httpServerSessionAllocator, this_thread());
   } else {
+    Debug("iobuf.httpServerSessionAllocator", "calling free Http1ServerSession=%p", this);
     httpServerSessionAllocator.free(this);
   }
 }
@@ -65,6 +67,7 @@ Http1ServerSession::destroy()
 void
 Http1ServerSession::free()
 {
+  Debug("iobuf.httpServerSessionAllocator", "Http1ServerSession.free called, Http1ServerSession=%p", this);
   // Unlike Http1ClientSession, Http1ServerSession is freed in destroy()
 }
 

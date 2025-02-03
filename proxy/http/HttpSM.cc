@@ -1830,6 +1830,7 @@ HttpSM::create_server_session(NetVConnection *netvc)
 {
   HttpTransact::State &s  = this->t_state;
   PoolableSession *retval = httpServerSessionAllocator.alloc();
+  Debug("iobuf.httpServerSessionAllocator", "allocated session=%p", retval);
 
   retval->sharing_pool         = static_cast<TSServerSessionSharingPoolType>(s.http_config_param->server_session_sharing_pool);
   retval->sharing_match        = static_cast<TSServerSessionSharingMatchMask>(s.txn_conf->server_session_sharing_match);
