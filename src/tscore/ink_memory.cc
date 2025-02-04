@@ -120,7 +120,7 @@ ats_malloc(size_t size)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s, size=%" PRIu64 ", ptr=%p, caller=%s\n", __FUNCTION__, size, ptr,
+  fprintf(stderr, "[memdebug] %s, ptr=%p, size=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, size,
           caller(callerbuf, sizeof(callerbuf)));
 
   return ptr;
@@ -135,7 +135,7 @@ ats_calloc(size_t nelem, size_t elsize)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s, nelem=%" PRIu64 ", elsize=%" PRIu64 ", ptr=%p, caller=%s\n", __FUNCTION__, nelem, elsize, ptr,
+  fprintf(stderr, "[memdebug] %s, ptr=%p, nelem=%" PRIu64 ", elsize=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, nelem, elsize,
           caller(callerbuf, sizeof(callerbuf)));
 
   return ptr;
@@ -150,7 +150,7 @@ ats_realloc(void *ptr, size_t size)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s, ptr=%p, size=%" PRIu64 ", newptr=%p, caller=%s\n", __FUNCTION__, ptr, size, newptr,
+  fprintf(stderr, "[memdebug] %s, ptr=%p, newptr=%p, size=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, newptr, size,
           caller(callerbuf, sizeof(callerbuf)));
 
   return newptr;
@@ -185,7 +185,7 @@ ats_memalign(size_t alignment, size_t size)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s, alignment=%" PRIu64 ", size=%" PRIu64 ", ptr=%p, caller=%s\n", __FUNCTION__, alignment, size, ptr,
+  fprintf(stderr, "[memdebug] %s, ptr=%p, alignment=%" PRIu64 ", size=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, alignment, size,
           caller(callerbuf, sizeof(callerbuf)));
 
   return ptr;
