@@ -46,6 +46,59 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <stdio.h>
+#include <string.h>
+#define UNW_LOCAL_ONLY
+#include <libunwind.h>
+
+static char *
+caller(char *buf, size_t len)
+{
+  if (len > 0) {
+    buf[0] = '\0';
+  }
+
+  unw_cursor_t cursor;
+  unw_context_t context;
+
+  unw_getcontext(&context);
+  unw_init_local(&cursor, &context);
+
+  if (unw_step(&cursor) <= 0) {
+    return buf;
+  }
+
+  size_t rest = len;
+  char *p     = buf;
+  for (int i = 0;; i++) {
+    if (unw_step(&cursor) <= 0) {
+      break;
+    }
+
+    unw_word_t offset, pc;
+    char fname[64] = {0};
+    unw_get_reg(&cursor, UNW_REG_IP, &pc);
+    (void)unw_get_proc_name(&cursor, fname, sizeof(fname), &offset);
+
+    const char *fmt = i == 0 ? "%s" : "<%s";
+    int n           = snprintf(p, rest, fmt, fname);
+    if ((size_t)n >= rest) {
+      buf[len - 1] = '\0';
+      break;
+    }
+    p += n;
+    rest -= n;
+    if (rest <= 1) {
+      buf[len - 1] = '\0';
+      break;
+    }
+    if (!strcmp(fname, "main")) {
+      break;
+    }
+  }
+  return buf;
+}
+
 void *
 ats_malloc(size_t size)
 {
@@ -65,6 +118,11 @@ ats_malloc(size_t size)
       ink_abort("couldn't allocate %zu bytes", size);
     }
   }
+
+  char callerbuf[256] = {0};
+  fprintf(stderr, "[memdebug] %s:%d<%s, size=%" PRIu64 ", ptr=%p\n", __FUNCTION__, __LINE__, caller(callerbuf, sizeof(callerbuf)),
+          size, ptr);
+
   return ptr;
 } /* End ats_malloc */
 
@@ -75,6 +133,11 @@ ats_calloc(size_t nelem, size_t elsize)
   if (unlikely(ptr == nullptr)) {
     ink_abort("couldn't allocate %zu %zu byte elements", nelem, elsize);
   }
+
+  char callerbuf[256] = {0};
+  fprintf(stderr, "[memdebug] %s:%d<%s, nelem=%" PRIu64 ", elsize=%" PRIu64 ", ptr=%p\n", __FUNCTION__, __LINE__,
+          caller(callerbuf, sizeof(callerbuf)), nelem, elsize, ptr);
+
   return ptr;
 } /* End ats_calloc */
 
@@ -85,6 +148,11 @@ ats_realloc(void *ptr, size_t size)
   if (unlikely(newptr == nullptr)) {
     ink_abort("couldn't reallocate %zu bytes", size);
   }
+
+  char callerbuf[256] = {0};
+  fprintf(stderr, "[memdebug] %s:%d<%s, ptr=%p, size=%" PRIu64 ", newptr=%p\n", __FUNCTION__, __LINE__,
+          caller(callerbuf, sizeof(callerbuf)), ptr, size, newptr);
+
   return newptr;
 } /* End ats_realloc */
 
@@ -116,12 +184,19 @@ ats_memalign(size_t alignment, size_t size)
     }
   }
 
+  char callerbuf[256] = {0};
+  fprintf(stderr, "[memdebug] %s:%d<%s, alignment=%" PRIu64 ", size=%" PRIu64 ", ptr=%p\n", __FUNCTION__, __LINE__,
+          caller(callerbuf, sizeof(callerbuf)), alignment, size, ptr);
+
   return ptr;
 } /* End ats_memalign */
 
 void
 ats_free(void *ptr)
 {
+  char callerbuf[256] = {0};
+  fprintf(stderr, "[memdebug] %s:%d<%s, ptr=%p\n", __FUNCTION__, __LINE__, caller(callerbuf, sizeof(callerbuf)), ptr);
+
   if (likely(ptr != nullptr)) {
     free(ptr);
   }
@@ -130,6 +205,9 @@ ats_free(void *ptr)
 void *
 ats_free_null(void *ptr)
 {
+  char callerbuf[256] = {0};
+  fprintf(stderr, "[memdebug] %s:%d<%s, ptr=%p\n", __FUNCTION__, __LINE__, caller(callerbuf, sizeof(callerbuf)), ptr);
+
   if (likely(ptr != nullptr)) {
     free(ptr);
   }
