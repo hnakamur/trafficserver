@@ -120,8 +120,8 @@ ats_malloc(size_t size)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s:%d<%s, size=%" PRIu64 ", ptr=%p\n", __FUNCTION__, __LINE__, caller(callerbuf, sizeof(callerbuf)),
-          size, ptr);
+  fprintf(stderr, "[memdebug] %s, size=%" PRIu64 ", ptr=%p, caller=%s\n", __FUNCTION__, size, ptr,
+          caller(callerbuf, sizeof(callerbuf)));
 
   return ptr;
 } /* End ats_malloc */
@@ -135,8 +135,8 @@ ats_calloc(size_t nelem, size_t elsize)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s:%d<%s, nelem=%" PRIu64 ", elsize=%" PRIu64 ", ptr=%p\n", __FUNCTION__, __LINE__,
-          caller(callerbuf, sizeof(callerbuf)), nelem, elsize, ptr);
+  fprintf(stderr, "[memdebug] %s, nelem=%" PRIu64 ", elsize=%" PRIu64 ", ptr=%p, caller=%s\n", __FUNCTION__, nelem, elsize, ptr,
+          caller(callerbuf, sizeof(callerbuf)));
 
   return ptr;
 } /* End ats_calloc */
@@ -150,8 +150,8 @@ ats_realloc(void *ptr, size_t size)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s:%d<%s, ptr=%p, size=%" PRIu64 ", newptr=%p\n", __FUNCTION__, __LINE__,
-          caller(callerbuf, sizeof(callerbuf)), ptr, size, newptr);
+  fprintf(stderr, "[memdebug] %s, ptr=%p, size=%" PRIu64 ", newptr=%p, caller=%s\n", __FUNCTION__, ptr, size, newptr,
+          caller(callerbuf, sizeof(callerbuf)));
 
   return newptr;
 } /* End ats_realloc */
@@ -185,8 +185,8 @@ ats_memalign(size_t alignment, size_t size)
   }
 
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s:%d<%s, alignment=%" PRIu64 ", size=%" PRIu64 ", ptr=%p\n", __FUNCTION__, __LINE__,
-          caller(callerbuf, sizeof(callerbuf)), alignment, size, ptr);
+  fprintf(stderr, "[memdebug] %s, alignment=%" PRIu64 ", size=%" PRIu64 ", ptr=%p, caller=%s\n", __FUNCTION__, alignment, size, ptr,
+          caller(callerbuf, sizeof(callerbuf)));
 
   return ptr;
 } /* End ats_memalign */
@@ -195,7 +195,7 @@ void
 ats_free(void *ptr)
 {
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s:%d<%s, ptr=%p\n", __FUNCTION__, __LINE__, caller(callerbuf, sizeof(callerbuf)), ptr);
+  fprintf(stderr, "[memdebug] %s, ptr=%p, caller=%s\n", __FUNCTION__, ptr, caller(callerbuf, sizeof(callerbuf)));
 
   if (likely(ptr != nullptr)) {
     free(ptr);
@@ -206,7 +206,7 @@ void *
 ats_free_null(void *ptr)
 {
   char callerbuf[256] = {0};
-  fprintf(stderr, "[memdebug] %s:%d<%s, ptr=%p\n", __FUNCTION__, __LINE__, caller(callerbuf, sizeof(callerbuf)), ptr);
+  fprintf(stderr, "[memdebug] %s, ptr=%p, caller=%s\n", __FUNCTION__, ptr, caller(callerbuf, sizeof(callerbuf)));
 
   if (likely(ptr != nullptr)) {
     free(ptr);
