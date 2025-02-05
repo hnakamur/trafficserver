@@ -119,7 +119,7 @@ ats_malloc(size_t size)
     }
   }
 
-  char callerbuf[256] = {0};
+  char callerbuf[1024] = {0};
   fprintf(stderr, "[memdebug] %s, ptr=%p, size=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, size,
           caller(callerbuf, sizeof(callerbuf)));
 
@@ -134,7 +134,7 @@ ats_calloc(size_t nelem, size_t elsize)
     ink_abort("couldn't allocate %zu %zu byte elements", nelem, elsize);
   }
 
-  char callerbuf[256] = {0};
+  char callerbuf[1024] = {0};
   fprintf(stderr, "[memdebug] %s, ptr=%p, nelem=%" PRIu64 ", elsize=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, nelem, elsize,
           caller(callerbuf, sizeof(callerbuf)));
 
@@ -149,7 +149,7 @@ ats_realloc(void *ptr, size_t size)
     ink_abort("couldn't reallocate %zu bytes", size);
   }
 
-  char callerbuf[256] = {0};
+  char callerbuf[1024] = {0};
   fprintf(stderr, "[memdebug] %s, ptr=%p, newptr=%p, size=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, newptr, size,
           caller(callerbuf, sizeof(callerbuf)));
 
@@ -184,7 +184,7 @@ ats_memalign(size_t alignment, size_t size)
     }
   }
 
-  char callerbuf[256] = {0};
+  char callerbuf[1024] = {0};
   fprintf(stderr, "[memdebug] %s, ptr=%p, alignment=%" PRIu64 ", size=%" PRIu64 ", caller=%s\n", __FUNCTION__, ptr, alignment, size,
           caller(callerbuf, sizeof(callerbuf)));
 
@@ -194,7 +194,7 @@ ats_memalign(size_t alignment, size_t size)
 void
 ats_free(void *ptr)
 {
-  char callerbuf[256] = {0};
+  char callerbuf[1024] = {0};
   fprintf(stderr, "[memdebug] %s, ptr=%p, caller=%s\n", __FUNCTION__, ptr, caller(callerbuf, sizeof(callerbuf)));
 
   if (likely(ptr != nullptr)) {
@@ -205,7 +205,7 @@ ats_free(void *ptr)
 void *
 ats_free_null(void *ptr)
 {
-  char callerbuf[256] = {0};
+  char callerbuf[1024] = {0};
   fprintf(stderr, "[memdebug] %s, ptr=%p, caller=%s\n", __FUNCTION__, ptr, caller(callerbuf, sizeof(callerbuf)));
 
   if (likely(ptr != nullptr)) {
