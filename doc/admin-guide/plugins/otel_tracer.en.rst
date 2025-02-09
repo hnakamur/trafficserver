@@ -55,41 +55,42 @@ nlohmann-json:
 ::
 
   cd
-  wget https://github.com/nlohmann/json/archive/refs/tags/v3.9.1.tar.gz
-  tar zxvf v3.9.1.tar.gz
-  cd json-3.9.1
-  mkdir build
-  cd build
-  cmake .. -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON
-  make
-  make install
+  git clone --branch v3.11.3 --depth 1 https://github.com/nlohmann/json json-3.11.3
+  cd json-3.11.3
+  cmake -B build -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON
+  cmake --build build --parallel --verbose
+  sudo cmake --build build --target install
 
 protobuf:
 
 ::
 
   cd
-  wget https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.19.4.tar.gz
-  tar zxvf v3.19.4.tar.gz
-  cd protobuf-3.19.4
-  ./autogen.sh
-  ./configure --enable-shared=no --enable-static=yes CXXFLAGS="-std=c++17 -fPIC" CFLAGS="-fPIC"
-  make
-  make install
+  git clone --branch v29.3 --depth 1 --recursive --shallow-submodules https://github.com/protocolbuffers/protobuf protobuf-29.3
+  cd protobuf-29.3
+  cmake -B build -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release \
+    -Dprotobuf_BUILD_SHARED_LIBS=OFF -Dprotobuf_BUILD_TESTS=OFF \
+    -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  cmake --build build --parallel --verbose
+  sudo cmake --build build --target install
 
 opentelemetry-cpp
 
 ::
 
   cd
-  wget https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v1.3.0.tar.gz
-  tar zxvf v1.3.0.tar.gz
-  cd opentelemetry-cpp-1.3.0
-  mkdir build
-  cd build
-  cmake .. -DBUILD_TESTING=OFF -DWITH_EXAMPLES=OFF -DWITH_JAEGER=OFF -DWITH_OTLP=ON -DWITH_OTLP_GRPC=OFF -DWITH_OTLP_HTTP=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON
-  cmake --build . --target all
-  cmake --install . --config Debug --prefix /usr/local/
+  git clone --branch v1.19.0 --depth 1 --recursive --shallow-submodules https://github.com/open-telemetry/opentelemetry-cpp opentelemetry-cpp-1.19.0
+  cd opentelemetry-cpp-1.19.0
+  cmake -B build -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=OFF -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DBUILD_TESTING=OFF -DWITH_EXAMPLES=ON -DWITH_OTLP_HTTP=ON -DWITH_OTLP_GRPC=OFF \
+    -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  cmake --build build --parallel --verbose
+  sudo cmake --build build --target install
 
 Installation
 ============
