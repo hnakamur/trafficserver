@@ -28,34 +28,24 @@
 #     protobuf::protobuf
 #
 
-set(PROTOBUF_LIBS
-    protobuf
-)
+set(PROTOBUF_LIBS protobuf)
 
+find_library(protobuf_LIBRARY NAMES protobuf)
 find_path(protobuf_INCLUDE_DIR NAMES google/protobuf/any.h)
 
-foreach(PROTOBUFLIB ${PROTOBUF_LIBS})
-  set(PROTOBUFLIB_NAME ${PROTOBUFLIB}_LIBRARY)
-  find_library(${PROTOBUFLIB_NAME} NAMES ${PROTOBUFLIB})
-  list(APPEND PROTOBUF_LIBRARIES ${PROTOBUFLIB_NAME})
-endforeach()
+mark_as_advanced(protobuf_FOUND protobuf_INCLUDE_DIR protobuf_INCLUDE_DIR)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(protobuf REQUIRED_VARS protobuf_INCLUDE_DIR ${PROTOBUF_LIBRARIES})
 
 if(protobuf_FOUND)
-  mark_as_advanced(protobuf_FOUND ${PROTOBUF_LIBRARIES})
   set(protobuf_INCLUDE_DIRS "${protobuf_INCLUDE_DIR}")
+endif()
 
-  foreach(OTELLIB ${PROTOBUF_LIBRARIES})
-    list(APPEND protobuf_LIBRARIES ${${OTELLIB}})
-  endforeach()
-  message(STATUS "protobuf found: ${protobuf_LIBRARIES}")
-  message(STATUS "protobuf include: ${protobuf_INCLUDE_DIRS}")
-
-  if(NOT TARGET protobuf::protobuf)
-    add_library(protobuf::protobuf INTERFACE IMPORTED)
-    target_include_directories(protobuf::protobuf INTERFACE ${protobuf_INCLUDE_DIRS})
-    target_link_libraries(protobuf::protobuf INTERFACE ${protobuf_LIBRARIES})
-  endif()
+if(protobuf_FOUND AND NOT TARGET protobuf::protobuf)
+  add_library(protobuf::protobuf STATIC IMPORTED)
+  set_target_properties(
+    protobuf::protobuf PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${protobuf_INCLUDE_DIRS}" IMPORTED_LOCATION
+                                                                                           "${protobuf_LIBRARY}"
+  )
 endif()

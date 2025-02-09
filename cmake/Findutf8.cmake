@@ -20,43 +20,40 @@
 # This will define the following variables
 #
 #     utf8_FOUND
-#     utf8_LIBRARY
+#     utf8_range_LIBRARY
+#     utf8_validity_LIBRARY
 #     utf8_INCLUDE_DIRS
 #
 # and the following imported targets
 #
-#     utf8::utf8
+#     utf8::utf8_range
+#     utf8::utf8_validity
 #
 
-set(UTF8_LIBS
-    utf8_range
-    utf8_validity
-)
-
+find_library(utf8_range_LIBRARY NAMES utf8_range)
+find_library(utf8_validity_LIBRARY NAMES utf8_validity)
 find_path(utf8_INCLUDE_DIR NAMES utf8_validity.h)
 
-foreach(UTF8LIB ${UTF8_LIBS})
-  set(UTF8LIB_NAME ${UTF8LIB}_LIBRARY)
-  find_library(${UTF8LIB_NAME} NAMES ${UTF8LIB})
-  list(APPEND UTF8_LIBRARIES ${UTF8LIB_NAME})
-endforeach()
+mark_as_advanced(utf8_FOUND utf8_range_LIBRARY utf8_validity_LIBRARY utf8_INCLUDE_DIR)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(utf8 REQUIRED_VARS utf8_INCLUDE_DIR ${UTF8_LIBRARIES})
 
 if(utf8_FOUND)
-  mark_as_advanced(utf8_FOUND ${UTF8_LIBRARIES})
   set(utf8_INCLUDE_DIRS "${utf8_INCLUDE_DIR}")
+endif()
 
-  foreach(OTELLIB ${UTF8_LIBRARIES})
-    list(APPEND utf8_LIBRARIES ${${OTELLIB}})
-  endforeach()
-  message(STATUS "utf8 found: ${utf8_LIBRARIES}")
-  message(STATUS "utf8 include: ${utf8_INCLUDE_DIRS}")
-
-  if(NOT TARGET utf8::utf8)
-    add_library(utf8::utf8 INTERFACE IMPORTED)
-    target_include_directories(utf8::utf8 INTERFACE ${utf8_INCLUDE_DIRS})
-    target_link_libraries(utf8::utf8 INTERFACE ${utf8_LIBRARIES})
-  endif()
+if(utf8_FOUND AND NOT TARGET utf8::utf8_range)
+  add_library(utf8::utf8_range STATIC IMPORTED)
+  set_target_properties(
+    utf8::utf8_range PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${utf8_INCLUDE_DIR}" IMPORTED_LOCATION
+                                                                                    "${utf8_range_LIBRARY}"
+  )
+endif()
+if(utf8_FOUND AND NOT TARGET utf8::utf8_validity)
+  add_library(utf8::utf8_validity STATIC IMPORTED)
+  set_target_properties(
+    utf8::utf8_validity PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${utf8_INCLUDE_DIR}" IMPORTED_LOCATION
+                                                                                       "${utf8_validity_LIBRARY}"
+  )
 endif()

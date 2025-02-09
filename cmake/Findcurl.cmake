@@ -28,34 +28,21 @@
 #     curl::curl
 #
 
-set(CURL_LIBS
-    curl
-)
-
+find_library(curl_LIBRARY NAMES curl)
 find_path(curl_INCLUDE_DIR NAMES curl/curl.h)
 
-foreach(CURLLIB ${CURL_LIBS})
-  set(CURLLIB_NAME ${CURLLIB}_LIBRARY)
-  find_library(${CURLLIB_NAME} NAMES ${CURLLIB})
-  list(APPEND CURL_LIBRARIES ${CURLLIB_NAME})
-endforeach()
+mark_as_advanced(curl_FOUND curl_LIBRARY curl_INCLUDE_DIR)
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(curl REQUIRED_VARS curl_INCLUDE_DIR ${CURL_LIBRARIES})
+find_package_handle_standard_args(curl REQUIRED_VARS curl_LIBRARY curl_INCLUDE_DIR)
 
 if(curl_FOUND)
-  mark_as_advanced(curl_FOUND ${CURL_LIBRARIES})
   set(curl_INCLUDE_DIRS "${curl_INCLUDE_DIR}")
+endif()
 
-  foreach(OTELLIB ${CURL_LIBRARIES})
-    list(APPEND curl_LIBRARIES ${${OTELLIB}})
-  endforeach()
-  message(STATUS "curl found: ${curl_LIBRARIES}")
-  message(STATUS "curl include: ${curl_INCLUDE_DIRS}")
-
-  if(NOT TARGET curl::curl)
-    add_library(curl::curl INTERFACE IMPORTED)
-    target_include_directories(curl::curl INTERFACE ${curl_INCLUDE_DIRS})
-    target_link_libraries(curl::curl INTERFACE ${curl_LIBRARIES})
-  endif()
+if(curl_FOUND AND NOT TARGET curl::curl)
+  add_library(curl::curl STATIC IMPORTED)
+  set_target_properties(
+    curl::curl PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${curl_INCLUDE_DIRS}" IMPORTED_LOCATION "${curl_LIBRARY}"
+  )
 endif()

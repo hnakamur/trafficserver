@@ -28,34 +28,21 @@
 #     upb::upb
 #
 
-set(UPB_LIBS
-    upb
-)
-
+find_library(upb_LIBRARY NAMES upb)
 find_path(upb_INCLUDE_DIR NAMES upb/generated_code_support.h)
 
-foreach(UPBLIB ${UPB_LIBS})
-  set(UPBLIB_NAME ${UPBLIB}_LIBRARY)
-  find_library(${UPBLIB_NAME} NAMES ${UPBLIB})
-  list(APPEND UPB_LIBRARIES ${UPBLIB_NAME})
-endforeach()
+mark_as_advanced(upb_FOUND upb_LIBRARY upb_INCLUDE_DIR)
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(upb REQUIRED_VARS upb_INCLUDE_DIR ${UPB_LIBRARIES})
+find_package_handle_standard_args(upb REQUIRED_VARS upb_LIBRARY upb_INCLUDE_DIR)
 
 if(upb_FOUND)
-  mark_as_advanced(upb_FOUND ${UPB_LIBRARIES})
   set(upb_INCLUDE_DIRS "${upb_INCLUDE_DIR}")
+endif()
 
-  foreach(OTELLIB ${UPB_LIBRARIES})
-    list(APPEND upb_LIBRARIES ${${OTELLIB}})
-  endforeach()
-  message(STATUS "upb found: ${upb_LIBRARIES}")
-  message(STATUS "upb include: ${upb_INCLUDE_DIRS}")
-
-  if(NOT TARGET upb::upb)
-    add_library(upb::upb INTERFACE IMPORTED)
-    target_include_directories(upb::upb INTERFACE ${upb_INCLUDE_DIRS})
-    target_link_libraries(upb::upb INTERFACE ${upb_LIBRARIES})
-  endif()
+if(upb_FOUND AND NOT TARGET upb::upb)
+  add_library(upb::upb STATIC IMPORTED)
+  set_target_properties(
+    upb::upb PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${upb_INCLUDE_DIRS}" IMPORTED_LOCATION "${upb_LIBRARY}"
+  )
 endif()
