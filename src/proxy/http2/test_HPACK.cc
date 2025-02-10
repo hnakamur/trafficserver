@@ -137,22 +137,27 @@ compare_header_fields(HTTPHdr *a, HTTPHdr *b)
   auto b_spot = b->begin(), b_limit = b->end();
 
   while (a_spot != a_limit && b_spot != b_limit) {
-    int a_str_len, b_str_len;
     // compare header name
-    const char *a_str = a_spot->name_get(&a_str_len);
-    const char *b_str = b_spot->name_get(&b_str_len);
-    if (a_str_len != b_str_len) {
-      if (memcmp(a_str, b_str, a_str_len) != 0) {
-        print_difference(a_str, a_str_len, b_str, b_str_len);
+    auto a_str{a_spot->name_get()};
+    auto b_str{b_spot->name_get()};
+    // NOTE: Two lines below should changed to if (a_str != b_str)
+    //       since print_difference should be called for differenct strings
+    //       of the same length.
+    if (a_str.length() != b_str.length()) {
+      if (memcmp(a_str.data(), b_str.data(), a_str.length()) != 0) {
+        print_difference(a_str.data(), a_str.length(), b_str.data(), b_str.length());
         return -1;
       }
     }
     // compare header value
-    a_str = a_spot->value_get(&a_str_len);
-    b_str = b_spot->value_get(&b_str_len);
-    if (a_str_len != b_str_len) {
-      if (memcmp(a_str, b_str, a_str_len) != 0) {
-        print_difference(a_str, a_str_len, b_str, b_str_len);
+    a_str = a_spot->value_get();
+    b_str = b_spot->value_get();
+    // NOTE: Two lines below should changed to if (a_str != b_str)
+    //       since print_difference should be called for differenct strings
+    //       of the same length.
+    if (a_str.length() != b_str.length()) {
+      if (memcmp(a_str.data(), b_str.data(), a_str.length()) != 0) {
+        print_difference(a_str.data(), a_str.length(), b_str.data(), b_str.length());
         return -1;
       }
     }

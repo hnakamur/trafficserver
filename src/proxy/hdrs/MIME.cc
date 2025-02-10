@@ -1870,7 +1870,9 @@ mime_field_value_get_comma_val(const MIMEField *field, int *length, int idx)
   // some fields (like Date) contain commas but should not be ripped apart
   if (!field->supports_commas()) {
     if (idx == 0) {
-      return field->value_get(length);
+      auto value{field->value_get()};
+      *length = static_cast<int>(value.size());
+      return value.data();
     }
     return nullptr;
   } else {

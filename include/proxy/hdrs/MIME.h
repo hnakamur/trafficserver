@@ -991,7 +991,7 @@ inline const char *
 MIMEField::value_get(int *length) const
 {
   auto value{this->value_get()};
-  *length = int(value.size());
+  *length = static_cast<int>(value.length());
   return value.data();
 }
 
@@ -1448,7 +1448,9 @@ MIMEHdr::value_get(const char *name, int name_length, int *value_length_return) 
   const MIMEField *field = field_find(name, name_length);
 
   if (field) {
-    return field->value_get(value_length_return);
+    auto value{field->value_get()};
+    *value_length_return = static_cast<int>(value.length());
+    return value.data();
   }
   return nullptr;
 }
