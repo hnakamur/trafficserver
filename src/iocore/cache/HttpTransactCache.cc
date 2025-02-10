@@ -1333,15 +1333,12 @@ HttpTransactCache::match_response_to_request_conditionals(HTTPHdr *request, HTTP
 
   // If-None-Match: may match weakly //
   if (request->presence(MIME_PRESENCE_IF_NONE_MATCH)) {
-    int         raw_etags_len, comma_sep_tag_list_len;
-    const char *raw_etags          = response->value_get(MIME_FIELD_ETAG, MIME_LEN_ETAG, &raw_etags_len);
-    const char *comma_sep_tag_list = nullptr;
-
-    if (raw_etags) {
-      comma_sep_tag_list = request->value_get(MIME_FIELD_IF_NONE_MATCH, MIME_LEN_IF_NONE_MATCH, &comma_sep_tag_list_len);
-      if (!comma_sep_tag_list) {
-        comma_sep_tag_list     = "";
-        comma_sep_tag_list_len = 0;
+    std::string_view raw_etags = response->value_get(std::string_view{MIME_FIELD_ETAG, static_cast<size_t>(MIME_LEN_ETAG)});
+    if (raw_etags.data()) {
+      std::string_view comma_sep_tag_list =
+        request->value_get(std::string_view{MIME_FIELD_IF_NONE_MATCH, static_cast<size_t>(MIME_LEN_IF_NONE_MATCH)});
+      if (!comma_sep_tag_list.data()) {
+        comma_sep_tag_list = std::string_view{"", 0};
       }
 
       ////////////////////////////////////////////////////////////////////////
@@ -1349,7 +1346,7 @@ HttpTransactCache::match_response_to_request_conditionals(HTTPHdr *request, HTTP
       // who is doing a 1.1 revalidate. Since this is a GET request with no //
       // sub-ranges, we can do a weak validation.                           //
       ////////////////////////////////////////////////////////////////////////
-      if (do_strings_match_weakly(raw_etags, raw_etags_len, comma_sep_tag_list, comma_sep_tag_list_len)) {
+      if (do_strings_match_weakly(raw_etags.data(), raw_etags.length(), comma_sep_tag_list.data(), comma_sep_tag_list.length())) {
         return HTTP_STATUS_NOT_MODIFIED;
       } else {
         return response->status_get();

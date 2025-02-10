@@ -1162,8 +1162,9 @@ public:
   int parse(MIMEParser *parser, const char **start, const char *end, bool must_copy_strs, bool eof, bool remove_ws_from_field_name,
             size_t max_hdr_field_size = UINT16_MAX);
 
-  int              value_get_index(const char *name, int name_length, const char *value, int value_length) const;
-  const char      *value_get(const char *name, int name_length, int *value_length) const;
+  int value_get_index(const char *name, int name_length, const char *value, int value_length) const;
+  [[deprecated("Use value_get() returns std::string_view")]] const char *value_get(const char *name, int name_length,
+                                                                                   int *value_length) const;
   std::string_view value_get(std::string_view const &name) const; // Convenience overload.
   int32_t          value_get_int(const char *name, int name_length) const;
   uint32_t         value_get_uint(const char *name, int name_length) const;
