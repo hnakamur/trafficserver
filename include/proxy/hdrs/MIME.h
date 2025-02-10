@@ -160,8 +160,8 @@ struct MIMEField {
   int value_get_index(const char *value, int length) const;
 
   /// @return The value of @a this field.
-  std::string_view value_get() const;
-  const char      *value_get(int *length) const;
+  std::string_view                                                       value_get() const;
+  [[deprecated("Use value_get() returns std::string_view")]] const char *value_get(int *length) const;
 
   int32_t  value_get_int() const;
   uint32_t value_get_uint() const;
@@ -1083,11 +1083,10 @@ MIMEField::value_append(HdrHeap *heap, MIMEHdrImpl *mh, const char *value, int l
 inline bool
 MIMEField::value_is_valid(uint32_t invalid_char_bits) const
 {
-  const char *value;
-  int         length;
+  std::string_view value = value_get();
 
-  for (value = value_get(&length); length > 0; length--) {
-    if (ParseRules::is_type(value[length - 1], invalid_char_bits)) {
+  for (char c : value) {
+    if (ParseRules::is_type(c, invalid_char_bits)) {
       return false;
     }
   }
@@ -1581,12 +1580,11 @@ MIMEHdr::field_combine_dups(MIMEField *field, bool prepend_comma, const char sep
   MIMEField *current = field->m_next_dup;
 
   while (current) {
-    int         value_len = 0;
-    const char *value_str = current->value_get(&value_len);
+    std::string_view value = current->value_get();
 
-    if (value_len > 0) {
-      HdrHeap::HeapGuard guard(m_heap, value_str); // reference count the source string so it doesn't get moved
-      field->value_append(m_heap, m_mime, value_str, value_len, prepend_comma, separator);
+    if (value.length() > 0) {
+      HdrHeap::HeapGuard guard(m_heap, value.data()); // reference count the source string so it doesn't get moved
+      field->value_append(m_heap, m_mime, value.data(), value.length(), prepend_comma, separator);
     }
     field_delete(current, false); // don't delete duplicates
     current = field->m_next_dup;

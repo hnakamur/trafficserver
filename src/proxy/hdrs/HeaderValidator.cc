@@ -27,18 +27,15 @@
 bool
 HeaderValidator::is_h2_h3_header_valid(const HTTPHdr &hdr, bool is_response, bool is_trailing_header)
 {
-  const MIMEField *field     = nullptr;
-  const char      *name      = nullptr;
-  int              name_len  = 0;
-  const char      *value     = nullptr;
-  int              value_len = 0;
+  const MIMEField *field    = nullptr;
+  const char      *name     = nullptr;
+  int              name_len = 0;
   MIMEFieldIter    iter;
   auto             method_field       = hdr.field_find(PSEUDO_HEADER_METHOD.data(), PSEUDO_HEADER_METHOD.size());
   bool             has_connect_method = false;
   if (method_field) {
-    int         method_len;
-    const char *method_value = method_field->value_get(&method_len);
-    has_connect_method       = method_len == HTTP_LEN_CONNECT && strncmp(HTTP_METHOD_CONNECT, method_value, HTTP_LEN_CONNECT) == 0;
+    std::string_view method = method_field->value_get();
+    has_connect_method = method.length() == HTTP_LEN_CONNECT && strncmp(HTTP_METHOD_CONNECT, method.data(), HTTP_LEN_CONNECT) == 0;
   }
   unsigned int expected_pseudo_header_count = is_response ? 1 : has_connect_method ? 2 : 4;
   unsigned int pseudo_header_count          = 0;
@@ -75,8 +72,8 @@ HeaderValidator::is_h2_h3_header_valid(const HTTPHdr &hdr, bool is_response, boo
   // :path pseudo header MUST NOT empty for http or https URIs
   field = hdr.field_find(PSEUDO_HEADER_PATH.data(), PSEUDO_HEADER_PATH.size());
   if (field) {
-    field->value_get(&value_len);
-    if (value_len == 0) {
+    std::string_view value = field->value_get();
+    if (value.length() == 0) {
       return false;
     }
   }
@@ -85,8 +82,8 @@ HeaderValidator::is_h2_h3_header_valid(const HTTPHdr &hdr, bool is_response, boo
   // value other than "trailers".
   field = hdr.field_find(MIME_FIELD_TE, MIME_LEN_TE);
   if (field) {
-    value = field->value_get(&value_len);
-    if (!(value_len == 8 && memcmp(value, "trailers", 8) == 0)) {
+    std::string_view value = field->value_get();
+    if (!(value.length() == 8 && memcmp(value.data(), "trailers", 8) == 0)) {
       return false;
     }
   }
