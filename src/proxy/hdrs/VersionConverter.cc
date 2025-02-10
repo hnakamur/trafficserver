@@ -161,13 +161,12 @@ VersionConverter::_convert_req_from_2_to_1(HTTPHdr &header) const
   // :method
   if (MIMEField *field = header.field_find(PSEUDO_HEADER_METHOD.data(), PSEUDO_HEADER_METHOD.size());
       field != nullptr && field->value_is_valid(is_control_BIT | is_ws_BIT)) {
-    int         method_len;
-    const char *method = field->value_get(&method_len);
-    if (method_len == HTTP_LEN_CONNECT && strncmp(HTTP_METHOD_CONNECT, method, HTTP_LEN_CONNECT) == 0) {
+    std::string_view method = field->value_get();
+    if (method.length() == HTTP_LEN_CONNECT && strncmp(HTTP_METHOD_CONNECT, method.data(), HTTP_LEN_CONNECT) == 0) {
       is_connect_method = true;
     }
 
-    header.method_set(method, method_len);
+    header.method_set(method.data(), method.length());
     header.field_delete(field);
   } else {
     return PARSE_RESULT_ERROR;
