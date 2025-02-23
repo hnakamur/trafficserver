@@ -309,6 +309,27 @@ TEST_CASE("LocalBufferWriter discard/restore", "[BWD]") {
   REQUIRE(bw.view() == "aaabbbccc");
 }
 
+TEST_CASE("LocalBufferWriter benchmark", "[BWD]")
+{
+  BENCHMARK("LocalBufferWriter")
+  {
+    swoc::LocalBufferWriter<512> bw;
+    bw.write("http/1.1 sv01 (ApacheTrafficServer/10.0.3 [uScMsSfWpSeN:t cCMp sS]");
+    bw.write(", ");
+    bw.write("http/1.1 sv01 (ApacheTrafficServer/10.0.3 [uScMsSfWpSeN:t cCMp sS]");
+  };
+
+  BENCHMARK("std::pmr")
+  {
+    std::array<std::byte, 512>          raw;
+    std::pmr::monotonic_buffer_resource buffer{raw.data(), raw.size(), std::pmr::null_memory_resource()};
+    std::pmr::vector<std::pmr::string>  strings{&buffer};
+    strings.emplace_back("http/1.1 sv01 (ApacheTrafficServer/10.0.3 [uScMsSfWpSeN:t cCMp sS]");
+    strings.emplace_back(", ");
+    strings.emplace_back("http/1.1 sv01 (ApacheTrafficServer/10.0.3 [uScMsSfWpSeN:t cCMp sS]");
+  };
+}
+
 TEST_CASE("Writing", "[BW]") {
   swoc::LocalBufferWriter<1024> bw;
 
