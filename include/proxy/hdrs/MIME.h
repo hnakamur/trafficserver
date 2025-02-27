@@ -169,10 +169,10 @@ struct MIMEField {
   time_t   value_get_date() const;
   int      value_get_comma_list(StrList *list) const;
 
-  void name_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view name);
+  void name_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view const &name);
   bool name_is_valid(uint32_t invalid_char_bits = is_control_BIT) const;
 
-  void value_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view value);
+  void value_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view const &value);
   void value_set_int(HdrHeap *heap, MIMEHdrImpl *mh, int32_t value);
   void value_set_uint(HdrHeap *heap, MIMEHdrImpl *mh, uint32_t value);
   void value_set_int64(HdrHeap *heap, MIMEHdrImpl *mh, int64_t value);
@@ -943,7 +943,7 @@ bool     mime_parse_integer(const char *&buf, const char *end, int *integer);
   -------------------------------------------------------------------------*/
 
 inline void
-MIMEField::name_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view name)
+MIMEField::name_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view const &name)
 {
   const char *name_wks;
   int         length = static_cast<int>(name.length());
@@ -1008,7 +1008,7 @@ MIMEField::value_get_comma_list(StrList *list) const
   -------------------------------------------------------------------------*/
 
 inline void
-MIMEField::value_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view value)
+MIMEField::value_set(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view const &value)
 {
   mime_field_value_set(heap, mh, this, value.data(), static_cast<int>(value.length()), true);
 }
