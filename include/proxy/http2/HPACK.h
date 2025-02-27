@@ -72,15 +72,15 @@ class MIMEFieldWrapper
 public:
   MIMEFieldWrapper(MIMEField *f, HdrHeap *hh, MIMEHdrImpl *impl) : _field(f), _heap(hh), _mh(impl) {}
   void
-  name_set(const char *name, int name_len)
+  name_set(std::string_view name)
   {
-    _field->name_set(_heap, _mh, name, name_len);
+    _field->name_set(_heap, _mh, name);
   }
 
   void
-  value_set(const char *value, int value_len)
+  value_set(std::string_view value)
   {
-    _field->value_set(_heap, _mh, value, value_len);
+    _field->value_set(_heap, _mh, value);
   }
 
   std::string_view

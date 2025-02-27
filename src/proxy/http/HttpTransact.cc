@@ -5112,7 +5112,8 @@ HttpTransact::merge_warning_header(HTTPHdr *cached_header, HTTPHdr *response_hea
 
     // Add in the new header if it has anything in it
     if (new_cwarn) {
-      new_cwarn->name_set(cached_header->m_heap, cached_header->m_mime, MIME_FIELD_WARNING, MIME_LEN_WARNING);
+      new_cwarn->name_set(cached_header->m_heap, cached_header->m_mime,
+                          std::string_view{MIME_FIELD_WARNING, static_cast<std::string_view::size_type>(MIME_LEN_WARNING)});
       cached_header->field_attach(new_cwarn);
     }
   }
@@ -5863,8 +5864,9 @@ HttpTransact::initialize_state_variables_from_response(State *s, HTTPHdr *incomi
         // If there is a new field (ie: there was more than one
         //   transfer-encoding), insert it to the list
         if (new_enc_field) {
-          new_enc_field->name_set(incoming_response->m_heap, incoming_response->m_mime, MIME_FIELD_TRANSFER_ENCODING,
-                                  MIME_LEN_TRANSFER_ENCODING);
+          new_enc_field->name_set(
+            incoming_response->m_heap, incoming_response->m_mime,
+            std::string_view{MIME_FIELD_TRANSFER_ENCODING, static_cast<std::string_view::size_type>(MIME_LEN_TRANSFER_ENCODING)});
           incoming_response->field_attach(new_enc_field);
         }
 
@@ -8869,7 +8871,8 @@ HttpTransact::delete_warning_value(HTTPHdr *to_warn, HTTPWarningCode warning_cod
 
         to_warn->field_delete(MIME_FIELD_WARNING, MIME_LEN_WARNING);
         if (new_field) {
-          new_field->name_set(to_warn->m_heap, to_warn->m_mime, MIME_FIELD_WARNING, MIME_LEN_WARNING);
+          new_field->name_set(to_warn->m_heap, to_warn->m_mime,
+                              std::string_view{MIME_FIELD_WARNING, static_cast<std::string_view::size_type>(MIME_LEN_WARNING)});
           to_warn->field_attach(new_field);
         }
 
@@ -8918,7 +8921,7 @@ HttpTransact::change_response_header_because_of_range_request(State *s, HTTPHdr 
       field = header->field_create(MIME_FIELD_CONTENT_RANGE, MIME_LEN_CONTENT_RANGE);
       snprintf(numbers, sizeof(numbers), "bytes %" PRId64 "-%" PRId64 "/%" PRId64, s->ranges[0]._start, s->ranges[0]._end,
                s->cache_info.object_read->object_size_get());
-      field->value_set(header->m_heap, header->m_mime, numbers, strlen(numbers));
+      field->value_set(header->m_heap, header->m_mime, std::string_view{numbers});
       header->field_attach(field);
     }
     // Always update the Content-Length: header.

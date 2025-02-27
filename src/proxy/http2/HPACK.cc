@@ -339,8 +339,8 @@ HpackIndexingTable::get_header_field(uint32_t index, MIMEFieldWrapper &field) co
 
   if (index < TS_HPACK_STATIC_TABLE_ENTRY_NUM) {
     // static table
-    field.name_set(STATIC_TABLE[index].name.data(), STATIC_TABLE[index].name.size());
-    field.value_set(STATIC_TABLE[index].value.data(), STATIC_TABLE[index].value.size());
+    field.name_set(STATIC_TABLE[index].name);
+    field.value_set(STATIC_TABLE[index].value);
   } else if (index < (TS_HPACK_STATIC_TABLE_ENTRY_NUM + _dynamic_table.count())) {
     // dynamic table
     size_t      name_len, value_len;
@@ -352,8 +352,8 @@ HpackIndexingTable::get_header_field(uint32_t index, MIMEFieldWrapper &field) co
       return HPACK_ERROR_COMPRESSION_ERROR;
     }
 
-    field.name_set(name, name_len);
-    field.value_set(value, value_len);
+    field.name_set(std::string_view{name, name_len});
+    field.value_set(std::string_view{value, value_len});
   } else {
     // [RFC 7541] 2.3.3. Index Address Space
     // Indices strictly greater than the sum of the lengths of both tables
@@ -618,7 +618,7 @@ decode_literal_header_field(MIMEFieldWrapper &header, const uint8_t *buf_start, 
     }
 
     p += len;
-    header.name_set(name_str, name_str_len);
+    header.name_set(std::string_view{name_str, name_str_len});
     indexing_table.arena.str_free(name_str);
   }
 
@@ -632,7 +632,7 @@ decode_literal_header_field(MIMEFieldWrapper &header, const uint8_t *buf_start, 
   }
 
   p += len;
-  header.value_set(value_str, value_str_len);
+  header.value_set(std::string_view{value_str, value_str_len});
   indexing_table.arena.str_free(value_str);
 
   // Incremental Indexing adds header to header table as new entry
