@@ -1142,8 +1142,7 @@ public:
             size_t max_hdr_field_size = UINT16_MAX);
 
   int              value_get_index(const char *name, int name_length, const char *value, int value_length) const;
-  const char      *value_get(const char *name, int name_length, int *value_length) const;
-  std::string_view value_get(std::string_view const &name) const; // Convenience overload.
+  std::string_view value_get(std::string_view const &name) const;
   int32_t          value_get_int(const char *name, int name_length) const;
   uint32_t         value_get_uint(const char *name, int name_length) const;
   int64_t          value_get_int64(const char *name, int name_length) const;
@@ -1419,19 +1418,6 @@ MIMEHdr::value_get_index(const char *name, int name_length, const char *value, i
 
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
-
-inline const char *
-MIMEHdr::value_get(const char *name, int name_length, int *value_length_return) const
-{
-  const MIMEField *field = field_find(name, name_length);
-
-  if (field) {
-    auto value{field->value_get()};
-    *value_length_return = static_cast<int>(value.length());
-    return value.data();
-  }
-  return nullptr;
-}
 
 inline std::string_view
 MIMEHdr::value_get(std::string_view const &name) const

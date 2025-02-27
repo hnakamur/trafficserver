@@ -1324,15 +1324,14 @@ HttpTransactCache::match_response_to_request_conditionals(HTTPHdr *request, HTTP
 
   // If-None-Match: may match weakly //
   if (request->presence(MIME_PRESENCE_IF_NONE_MATCH)) {
-    int         raw_etags_len, comma_sep_tag_list_len;
-    const char *raw_etags          = response->value_get(MIME_FIELD_ETAG, MIME_LEN_ETAG, &raw_etags_len);
-    const char *comma_sep_tag_list = nullptr;
+    auto raw_etags{response->value_get(std::string_view{MIME_FIELD_ETAG, static_cast<std::string_view::size_type>(MIME_LEN_ETAG)})};
+    std::string_view comma_sep_tag_list;
 
-    if (raw_etags) {
-      comma_sep_tag_list = request->value_get(MIME_FIELD_IF_NONE_MATCH, MIME_LEN_IF_NONE_MATCH, &comma_sep_tag_list_len);
-      if (!comma_sep_tag_list) {
-        comma_sep_tag_list     = "";
-        comma_sep_tag_list_len = 0;
+    if (!raw_etags.empty()) {
+      comma_sep_tag_list = request->value_get(
+        std::string_view{MIME_FIELD_IF_NONE_MATCH, static_cast<std::string_view::size_type>(MIME_LEN_IF_NONE_MATCH)});
+      if (comma_sep_tag_list.empty()) {
+        comma_sep_tag_list = ""sv;
       }
 
       ////////////////////////////////////////////////////////////////////////
@@ -1340,7 +1339,7 @@ HttpTransactCache::match_response_to_request_conditionals(HTTPHdr *request, HTTP
       // who is doing a 1.1 revalidate. Since this is a GET request with no //
       // sub-ranges, we can do a weak validation.                           //
       ////////////////////////////////////////////////////////////////////////
-      if (do_strings_match_weakly(raw_etags, raw_etags_len, comma_sep_tag_list, comma_sep_tag_list_len)) {
+      if (do_strings_match_weakly(raw_etags.data(), raw_etags.length(), comma_sep_tag_list.data(), comma_sep_tag_list.length())) {
         return HTTP_STATUS_NOT_MODIFIED;
       } else {
         return response->status_get();
@@ -1386,26 +1385,23 @@ HttpTransactCache::match_response_to_request_conditionals(HTTPHdr *request, HTTP
 
   // If-Match: must match strongly //
   if (request->presence(MIME_PRESENCE_IF_MATCH)) {
-    int         raw_etags_len          = 0;
-    int         comma_sep_tag_list_len = 0;
-    const char *raw_etags              = response->value_get(MIME_FIELD_ETAG, MIME_LEN_ETAG, &raw_etags_len);
-    const char *comma_sep_tag_list     = nullptr;
+    auto raw_etags{response->value_get(std::string_view{MIME_FIELD_ETAG, static_cast<std::string_view::size_type>(MIME_LEN_ETAG)})};
+    std::string_view comma_sep_tag_list;
 
-    if (raw_etags) {
-      comma_sep_tag_list = request->value_get(MIME_FIELD_IF_MATCH, MIME_LEN_IF_MATCH, &comma_sep_tag_list_len);
+    if (!raw_etags.empty()) {
+      comma_sep_tag_list =
+        request->value_get(std::string_view{MIME_FIELD_IF_MATCH, static_cast<std::string_view::size_type>(MIME_LEN_IF_MATCH)});
     }
 
-    if (!comma_sep_tag_list) {
-      comma_sep_tag_list     = "";
-      comma_sep_tag_list_len = 0;
+    if (comma_sep_tag_list.empty()) {
+      comma_sep_tag_list = ""sv;
     }
 
-    if (!raw_etags) {
-      raw_etags     = "";
-      raw_etags_len = 0;
+    if (raw_etags.empty()) {
+      raw_etags = ""sv;
     }
 
-    if (do_strings_match_strongly(raw_etags, raw_etags_len, comma_sep_tag_list, comma_sep_tag_list_len)) {
+    if (do_strings_match_strongly(raw_etags.data(), raw_etags.length(), comma_sep_tag_list.data(), comma_sep_tag_list.length())) {
       return response->status_get();
     } else {
       return HTTP_STATUS_PRECONDITION_FAILED;
@@ -1449,25 +1445,22 @@ HttpTransactCache::validate_ifrange_header_if_any(HTTPHdr *request, HTTPHdr *res
     return true;
   }
 
-  int raw_len, comma_sep_list_len;
-
-  const char *if_value = request->value_get(MIME_FIELD_IF_RANGE, MIME_LEN_IF_RANGE, &comma_sep_list_len);
+  auto if_value{
+    request->value_get(std::string_view{MIME_FIELD_IF_RANGE, static_cast<std::string_view::size_type>(MIME_LEN_IF_RANGE)})};
 
   // this is an ETag, similar to If-Match
-  if (!if_value || if_value[0] == '"' || (comma_sep_list_len > 1 && if_value[1] == '/')) {
-    if (!if_value) {
-      if_value           = "";
-      comma_sep_list_len = 0;
+  if (if_value.empty() || if_value.starts_with("\"/"sv)) {
+    if (if_value.empty()) {
+      if_value = ""sv;
     }
 
-    const char *raw_etags = response->value_get(MIME_FIELD_ETAG, MIME_LEN_ETAG, &raw_len);
+    auto raw_etags{response->value_get(std::string_view{MIME_FIELD_ETAG, static_cast<std::string_view::size_type>(MIME_LEN_ETAG)})};
 
-    if (!raw_etags) {
-      raw_etags = "";
-      raw_len   = 0;
+    if (raw_etags.empty()) {
+      raw_etags = ""sv;
     }
 
-    return do_strings_match_strongly(raw_etags, raw_len, if_value, comma_sep_list_len);
+    return do_strings_match_strongly(raw_etags.data(), raw_etags.length(), if_value.data(), if_value.length());
   }
 
   // this a Date, similar to If-Unmodified-Since but must be an exact match
