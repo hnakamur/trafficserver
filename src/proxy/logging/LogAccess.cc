@@ -252,8 +252,8 @@ LogAccess::marshal_record(char *record, char *buf)
       // so that a 64 bit integer will fit (including sign and eos)
       //
       ink_assert(max_chars > 21);
-
-      int64_t val = static_cast<int64_t>(LOG_INTEGER == stype ? REC_readInteger(record, &found) : REC_readCounter(record, &found));
+      int64_t val;
+      found = (LOG_INTEGER == stype ? RecGetRecordInt(record, &val) : RecGetRecordCounter(record, &val)) == REC_ERR_OKAY;
 
       if (found) {
         out_buf = int64_to_str(ascii_buf, max_chars, val, &num_chars);
@@ -269,7 +269,8 @@ LogAccess::marshal_record(char *record, char *buf)
       //
       ink_assert(sizeof(double) >= sizeof(RecFloat));
 
-      RecFloat val = REC_readFloat(record, &found);
+      RecFloat val;
+      found = RecGetRecordFloat(record, &val) == REC_ERR_OKAY;
 
       if (found) {
         // snprintf does not support "%e" in the format

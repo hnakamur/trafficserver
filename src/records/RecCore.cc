@@ -945,61 +945,6 @@ REC_ConfigReadFloat(const char *name)
 }
 
 //-------------------------------------------------------------------------
-// Backwards compatibility. TODO: Should remove these.
-//-------------------------------------------------------------------------
-RecInt
-REC_readInteger(const char *name, bool *found, bool lock)
-{
-  ink_assert(name);
-  RecInt _tmp   = 0;
-  bool   _found = (RecGetRecordInt(name, &_tmp, lock) == REC_ERR_OKAY);
-
-  if (found) {
-    *found = _found;
-  }
-  return _tmp;
-}
-
-RecFloat
-REC_readFloat(char *name, bool *found, bool lock)
-{
-  ink_assert(name);
-  RecFloat _tmp   = 0.0;
-  bool     _found = (RecGetRecordFloat(name, &_tmp, lock) == REC_ERR_OKAY);
-
-  if (found) {
-    *found = _found;
-  }
-  return _tmp;
-}
-
-RecCounter
-REC_readCounter(char *name, bool *found, bool lock)
-{
-  ink_assert(name);
-  RecCounter _tmp   = 0;
-  bool       _found = (RecGetRecordCounter(name, &_tmp, lock) == REC_ERR_OKAY);
-
-  if (found) {
-    *found = _found;
-  }
-  return _tmp;
-}
-
-RecString
-REC_readString(const char *name, bool *found, bool lock)
-{
-  ink_assert(name);
-  RecString _tmp   = nullptr;
-  bool      _found = (RecGetRecordString_Xmalloc(name, &_tmp, lock) == REC_ERR_OKAY);
-
-  if (found) {
-    *found = _found;
-  }
-  return _tmp;
-}
-
-//-------------------------------------------------------------------------
 // RecConfigReadConfigDir
 //-------------------------------------------------------------------------
 std::string

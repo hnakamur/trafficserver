@@ -41,7 +41,8 @@
 void
 DiagsConfig::reconfigure_diags()
 {
-  int              i, e;
+  int              i;
+  RecInt           e;
   char            *p, *dt, *at;
   DiagsConfigState c;
   bool             found, all_found;
@@ -77,19 +78,19 @@ DiagsConfig::reconfigure_diags()
 
   // enabled if records.yaml set
 
-  e = static_cast<int>(REC_readInteger("proxy.config.diags.debug.enabled", &found));
+  found = RecGetRecordInt("proxy.config.diags.debug.enabled", &e) == REC_ERR_OKAY;
   if (e && found) {
     c.enabled(DiagsTagType_Debug, e); // implement OR logic
   }
   all_found = all_found && found;
 
-  e = static_cast<int>(REC_readInteger("proxy.config.diags.action.enabled", &found));
+  found = RecGetRecordInt("proxy.config.diags.action.enabled", &e) == REC_ERR_OKAY;
   if (e && found) {
     c.enabled(DiagsTagType_Action, 1); // implement OR logic
   }
   all_found = all_found && found;
 
-  e                     = static_cast<int>(REC_readInteger("proxy.config.diags.show_location", &found));
+  found                 = RecGetRecordInt("proxy.config.diags.show_location", &e) == REC_ERR_OKAY;
   _diags->show_location = ((e == 1 && found) ? SHOW_LOCATION_DEBUG : ((e == 2 && found) ? SHOW_LOCATION_ALL : SHOW_LOCATION_NONE));
   all_found             = all_found && found;
 
@@ -102,7 +103,7 @@ DiagsConfig::reconfigure_diags()
       break;
     }
 
-    p         = REC_readString(record_name, &found);
+    found     = RecGetRecordString_Xmalloc(record_name, &p) == REC_ERR_OKAY;
     all_found = all_found && found;
 
     if (found) {
@@ -113,11 +114,11 @@ DiagsConfig::reconfigure_diags()
     }
   }
 
-  p         = REC_readString("proxy.config.diags.debug.tags", &found);
+  found     = RecGetRecordString_Xmalloc("proxy.config.diags.debug.tags", &p) == REC_ERR_OKAY;
   dt        = (found ? p : nullptr); // NOTE: needs to be freed
   all_found = all_found && found;
 
-  p         = REC_readString("proxy.config.diags.action.tags", &found);
+  found     = RecGetRecordString_Xmalloc("proxy.config.diags.action.tags", &p) == REC_ERR_OKAY;
   at        = (found ? p : nullptr); // NOTE: needs to be freed
   all_found = all_found && found;
 
