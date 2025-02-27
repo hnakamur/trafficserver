@@ -180,7 +180,8 @@ struct MIMEField {
   void value_clear(HdrHeap *heap, MIMEHdrImpl *mh);
   // MIME standard separator ',' is used as the default value
   // Other separators (e.g. ';' in Set-cookie/Cookie) are also possible
-  void value_append(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view value, bool prepend_comma = false, const char separator = ',');
+  void value_append(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view const &value, bool prepend_comma = false,
+                    const char separator = ',');
   bool value_is_valid(uint32_t invalid_char_bits = is_control_BIT) const;
   int  has_dups() const;
 };
@@ -1050,7 +1051,7 @@ MIMEField::value_clear(HdrHeap *heap, MIMEHdrImpl *mh)
   -------------------------------------------------------------------------*/
 
 inline void
-MIMEField::value_append(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view value, bool prepend_comma, const char separator)
+MIMEField::value_append(HdrHeap *heap, MIMEHdrImpl *mh, std::string_view const &value, bool prepend_comma, const char separator)
 {
   mime_field_value_append(heap, mh, this, value.data(), static_cast<int>(value.length()), prepend_comma, separator);
 }
