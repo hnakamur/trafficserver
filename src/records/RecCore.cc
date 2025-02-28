@@ -846,9 +846,10 @@ template RecErrT RecGetRecordIntOrZero<unsigned long>(const char *name, unsigned
 RecErrT
 RecGetRecordFloatOrZero(const char *name, RecFloat *rec_float, bool lock)
 {
-  RecFloat tmp = 0;
-  RecErrT  err = RecGetRecordFloat(name, &tmp, lock);
-  *rec_float   = tmp;
+  RecErrT err = RecGetRecordFloat(name, rec_float, lock);
+  if (err != REC_ERR_OKAY) {
+    *rec_float = 0;
+  }
   return err;
 }
 
