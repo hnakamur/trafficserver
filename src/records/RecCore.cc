@@ -814,7 +814,7 @@ RecGetRecord_Xmalloc(const char *name, RecDataT data_type, RecData *data, bool l
 // However we cannot do so since it depends on RecGetRecord_Xmalloc
 // which depends on the global variable g_records_ht.
 //-------------------------------------------------------------------------
-template <std::integral IntegerType>
+template <typename IntegerType>
 RecErrT
 RecGetRecordIntOrZero(const char *name, IntegerType *rec_int, bool lock)
 {

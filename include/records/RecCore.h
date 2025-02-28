@@ -23,7 +23,6 @@
 
 #pragma once
 
-#include <concepts>
 #include <functional>
 
 #include "tscore/Diags.h"
@@ -177,7 +176,7 @@ RecErrT RecGetRecordBool(const char *name, RecBool *rec_byte, bool lock = true);
 // Convenience to allow us to treat the RecInt as various integer types internally.
 // Note we must do explicit instantiation for each type actually used in RecCore.cc.
 // Also this version sets rec_int to zero if the config is not found.
-template <std::integral IntegerType> RecErrT RecGetRecordIntOrZero(const char *name, IntegerType *rec_int, bool lock = true);
+template <typename IntegerType> RecErrT RecGetRecordIntOrZero(const char *name, IntegerType *rec_int, bool lock = true);
 // Convenience to allow us to set rec_float to zero if the config is not found
 RecErrT RecGetRecordFloatOrZero(const char *name, RecFloat *rec_float, bool lock = true);
 // Convenience to allow us to set rec_string to nullptr if the config is not found
