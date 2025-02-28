@@ -343,7 +343,12 @@ class ParentSelectionStrategy
 public:
   int max_retriers = 0;
 
-  ParentSelectionStrategy() { REC_ReadConfigInteger(max_retriers, "proxy.config.http.parent_proxy.max_trans_retries"); }
+  ParentSelectionStrategy()
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.http.parent_proxy.max_trans_retries", &val);
+    max_retriers = static_cast<int>(val);
+  }
   //
   // Return the pRecord.
   virtual pRecord *getParents(ParentResult *result) = 0;
