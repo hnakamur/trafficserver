@@ -181,6 +181,8 @@ template <std::integral IntegerType> RecErrT RecGetRecordIntOrZero(const char *n
 RecErrT RecGetRecordFloatOrZero(const char *name, RecFloat *rec_float, bool lock = true);
 // Convinience to link and get a config of RecInt type
 RecErrT RecLinkGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
+// Convinience to link and get a config of int32_t type
+RecErrT RecLinkGetRecordInt32(const char *name, int32_t *rec_int, bool lock = true);
 
 //------------------------------------------------------------------------
 // Record Attributes Reading
@@ -201,12 +203,6 @@ void RecConfigWarnIfUnregistered();
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_EstablishStaticConfigInt32(_var, _config_var_name) \
-  do {                                                         \
-    RecLinkConfigInt32(_config_var_name, &_var);               \
-    _var = (int32_t)REC_ConfigReadInteger(_config_var_name);   \
-  } while (0)
-
 #define REC_EstablishStaticConfigInt32U(_var, _config_var_name) \
   do {                                                          \
     RecLinkConfigUInt32(_config_var_name, &_var);               \
