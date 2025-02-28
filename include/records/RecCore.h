@@ -164,16 +164,19 @@ RecErrT RecSetRecordFloat(const char *name, RecFloat rec_float, RecSourceT sourc
 RecErrT RecSetRecordString(const char *name, const RecString rec_string, RecSourceT source, bool lock = true);
 RecErrT RecSetRecordCounter(const char *name, RecCounter rec_counter, RecSourceT source, bool lock = true);
 
-template <std::integral IntegerType> RecErrT RecGetRecordInteger(const char *name, IntegerType *rec_int, bool lock = true);
-RecErrT                                      RecGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
-RecErrT                                      RecGetRecordFloat(const char *name, RecFloat *rec_float, bool lock = true);
-RecErrT                                      RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
-RecErrT                                      RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock = true);
-RecErrT                                      RecGetRecordCounter(const char *name, RecCounter *rec_counter, bool lock = true);
+RecErrT RecGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
+RecErrT RecGetRecordFloat(const char *name, RecFloat *rec_float, bool lock = true);
+RecErrT RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
+RecErrT RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock = true);
+RecErrT RecGetRecordCounter(const char *name, RecCounter *rec_counter, bool lock = true);
 // Convenience to allow us to treat the RecInt as a single byte internally
 RecErrT RecGetRecordByte(const char *name, RecByte *rec_byte, bool lock = true);
 // Convenience to allow us to treat the RecInt as a bool internally
 RecErrT RecGetRecordBool(const char *name, RecBool *rec_byte, bool lock = true);
+// Convenience to allow us to treat the RecInt as various integer types internally.
+// Note we must do explicit instantiation for each type actually used in RecCore.cc.
+// Also this version sets rec_int to zero if the config is not found.
+template <std::integral IntegerType> RecErrT RecGetRecordIntOrZero(const char *name, IntegerType *rec_int, bool lock = true);
 
 //------------------------------------------------------------------------
 // Record Attributes Reading
@@ -194,13 +197,6 @@ void RecConfigWarnIfUnregistered();
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_ReadConfigInteger(_var, _config_var_name) \
-  do {                                                \
-    RecInt tmp = 0;                                   \
-    RecGetRecordInt(_config_var_name, &tmp);          \
-    _var = tmp;                                       \
-  } while (0)
-
 #define REC_ReadConfigFloat(_var, _config_var_name) \
   do {                                              \
     RecFloat tmp = 0;                               \
