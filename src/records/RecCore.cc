@@ -838,6 +838,19 @@ template RecErrT RecGetRecordIntOrZero<long>(const char *name, long *rec_int, bo
 template RecErrT RecGetRecordIntOrZero<unsigned long>(const char *name, unsigned long *rec_int, bool lock);
 
 //-------------------------------------------------------------------------
+// RecGetRecordFloatOrZero
+//-------------------------------------------------------------------------
+
+RecErrT
+RecGetRecordFloatOrZero(const char *name, RecFloat *rec_float, bool lock)
+{
+  RecFloat tmp = 0;
+  RecErrT  err = RecGetRecordFloat(name, &tmp, lock);
+  *rec_float   = tmp;
+  return err;
+}
+
+//-------------------------------------------------------------------------
 // RecForceInsert
 //-------------------------------------------------------------------------
 RecRecord *
