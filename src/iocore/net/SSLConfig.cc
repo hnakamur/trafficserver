@@ -275,7 +275,11 @@ SSLConfigParams::initialize()
   //+++++++++++++++++++++++++ Server part +++++++++++++++++++++++++++++++++
   verify_depth = 7;
 
-  REC_ReadConfigInt32(clientCertLevel, "proxy.config.ssl.client.certification_level");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.ssl.client.certification_level", &val);
+    clientCertLevel = static_cast<int>(val);
+  }
   REC_ReadConfigStringAlloc(cipherSuite, "proxy.config.ssl.server.cipher_suite");
   REC_ReadConfigStringAlloc(client_cipherSuite, "proxy.config.ssl.client.cipher_suite");
   REC_ReadConfigStringAlloc(server_tls13_cipher_suites, "proxy.config.ssl.server.TLSv1_3.cipher_suites");
@@ -419,7 +423,7 @@ SSLConfigParams::initialize()
 #endif
 
   REC_ReadConfigInteger(server_max_early_data, "proxy.config.ssl.server.max_early_data");
-  REC_ReadConfigInt32(server_allow_early_data_params, "proxy.config.ssl.server.allow_early_data_params");
+  RecGetRecordBool("proxy.config.ssl.server.allow_early_data_params", &server_allow_early_data_params);
 
   // we keep it unless "server_max_early_data" is higher.
   server_recv_max_early_data = std::max(server_max_early_data, TLSEarlyDataSupport::DEFAULT_MAX_EARLY_DATA_SIZE);
@@ -472,9 +476,9 @@ SSLConfigParams::initialize()
   REC_EstablishStaticConfigInt32(ssl_maxrecord, "proxy.config.ssl.max_record_size");
 
   // SSL OCSP Stapling configurations
-  REC_ReadConfigInt32(ssl_ocsp_enabled, "proxy.config.ssl.ocsp.enabled");
+  RecGetRecordBool("proxy.config.ssl.ocsp.enabled", &ssl_ocsp_enabled);
   REC_EstablishStaticConfigInt32(ssl_ocsp_cache_timeout, "proxy.config.ssl.ocsp.cache_timeout");
-  REC_ReadConfigInt32(ssl_ocsp_request_mode, "proxy.config.ssl.ocsp.request_mode");
+  RecGetRecordBool("proxy.config.ssl.ocsp.request_mode", &ssl_ocsp_request_mode);
   REC_EstablishStaticConfigInt32(ssl_ocsp_request_timeout, "proxy.config.ssl.ocsp.request_timeout");
   REC_EstablishStaticConfigInt32(ssl_ocsp_update_period, "proxy.config.ssl.ocsp.update_period");
   REC_ReadConfigStringAlloc(ssl_ocsp_response_path, "proxy.config.ssl.ocsp.response.path");
@@ -482,9 +486,17 @@ SSLConfigParams::initialize()
   ats_free(ssl_ocsp_response_path);
   REC_ReadConfigStringAlloc(ssl_ocsp_user_agent, "proxy.config.http.request_via_str");
 
-  REC_ReadConfigInt32(ssl_handshake_timeout_in, "proxy.config.ssl.handshake_timeout_in");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.ssl.handshake_timeout_in", &val);
+    ssl_handshake_timeout_in = static_cast<int>(val);
+  }
 
-  REC_ReadConfigInt32(async_handshake_enabled, "proxy.config.ssl.async.handshake.enabled");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.ssl.async.handshake.enabled", &val);
+    async_handshake_enabled = static_cast<int>(val);
+  }
   REC_ReadConfigStringAlloc(engine_conf_file, "proxy.config.ssl.engine.conf_file");
 
   REC_ReadConfigStringAlloc(server_groups_list, "proxy.config.ssl.server.groups_list");
@@ -534,16 +546,20 @@ SSLConfigParams::initialize()
     TLSKeyLogger::enable_keylogging(keylog_file);
   }
 
-  REC_ReadConfigInt32(ssl_ktls_enabled, "proxy.config.ssl.ktls.enabled");
+  RecGetRecordBool("proxy.config.ssl.ktls.enabled", &ssl_ktls_enabled);
 #ifndef SSL_OP_ENABLE_KTLS
   if (ssl_ktls_enabled) {
     Error("kTLS configured but not supported by OpenSSL library");
   }
 #endif
 
-  REC_ReadConfigInt32(ssl_allow_client_renegotiation, "proxy.config.ssl.allow_client_renegotiation");
+  RecGetRecordBool("proxy.config.ssl.allow_client_renegotiation", &ssl_allow_client_renegotiation);
 
-  REC_ReadConfigInt32(ssl_misc_max_iobuffer_size_index, "proxy.config.ssl.misc.io.max_buffer_index");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.ssl.misc.io.max_buffer_index", &val);
+    ssl_misc_max_iobuffer_size_index = static_cast<int>(val);
+  }
 
   // Enable client regardless of config file settings as remap file
   // can cause HTTP layer to connect using SSL. But only if SSL

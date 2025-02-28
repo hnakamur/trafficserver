@@ -175,23 +175,52 @@ void
 NetHandler::init_for_process()
 {
   // read configuration values and setup callbacks for when they change
-  REC_ReadConfigInt32(global_config.max_connections_in, "proxy.config.net.max_connections_in");
-  REC_ReadConfigInt32(global_config.max_requests_in, "proxy.config.net.max_requests_in");
-  REC_ReadConfigInt32(global_config.inactive_threshold_in, "proxy.config.net.inactive_threshold_in");
-  REC_ReadConfigInt32(global_config.transaction_no_activity_timeout_in, "proxy.config.net.transaction_no_activity_timeout_in");
-  REC_ReadConfigInt32(global_config.keep_alive_no_activity_timeout_in, "proxy.config.net.keep_alive_no_activity_timeout_in");
-  REC_ReadConfigInt32(global_config.default_inactivity_timeout, "proxy.config.net.default_inactivity_timeout");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.max_connections_in", &val);
+    global_config.max_connections_in = static_cast<uint32_t>(val);
+  }
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.max_requests_in", &val);
+    global_config.max_requests_in = static_cast<uint32_t>(val);
+  }
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.inactive_threshold_in", &val);
+    global_config.inactive_threshold_in = static_cast<uint32_t>(val);
+  }
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.inactive_threshold_in", &val);
+    global_config.inactive_threshold_in = static_cast<uint32_t>(val);
+  }
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.transaction_no_activity_timeout_in", &val);
+    global_config.transaction_no_activity_timeout_in = static_cast<uint32_t>(val);
+  }
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.keep_alive_no_activity_timeout_in", &val);
+    global_config.keep_alive_no_activity_timeout_in = static_cast<uint32_t>(val);
+  }
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.default_inactivity_timeout", &val);
+    global_config.default_inactivity_timeout = static_cast<uint32_t>(val);
+  }
 
   // Atomic configurations.
   {
-    int32_t val = 0;
-    REC_ReadConfigInt32(val, "proxy.config.net.additional_accepts");
-    additional_accepts.store(val, std::memory_order_relaxed);
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.additional_accepts", &val);
+    additional_accepts.store(static_cast<int>(val), std::memory_order_relaxed);
   }
   {
-    uint32_t val = 0;
-    REC_ReadConfigInt32(val, "proxy.config.net.per_client.max_connections_in");
-    per_client_max_connections_in.store(val, std::memory_order_relaxed);
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.net.per_client.max_connections_in", &val);
+    per_client_max_connections_in.store(static_cast<unsigned int>(val), std::memory_order_relaxed);
   }
 
   RecRegisterConfigUpdateCb("proxy.config.net.max_connections_in", update_nethandler_config, nullptr);

@@ -121,7 +121,11 @@ void
 SplitDNSConfig::startup()
 {
   // startup just check gsplit_dns_enabled
-  REC_ReadConfigInt32(gsplit_dns_enabled, "proxy.config.dns.splitDNS.enabled");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.dns.splitDNS.enabled", &val);
+    gsplit_dns_enabled = static_cast<int>(val);
+  }
   SplitDNSConfig::splitDNSUpdate = new ConfigUpdateHandler<SplitDNSConfig>();
   SplitDNSConfig::splitDNSUpdate->attach("proxy.config.cache.splitdns.filename");
 }

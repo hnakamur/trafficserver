@@ -266,17 +266,28 @@ initialize_thread_for_udp_net(EThread *thread)
 
   // This variable controls how often we cleanup the cancelled packets.
   // If it is set to 0, then cleanup never occurs.
-  REC_ReadConfigInt32(g_udp_periodicFreeCancelledPkts, "proxy.config.udp.free_cancelled_pkts_sec");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.udp.free_cancelled_pkts_sec", &val);
+    g_udp_periodicFreeCancelledPkts = static_cast<int32_t>(val);
+  }
 
   // This variable controls how many "slots" of the udp calendar queue we cleanup.
   // If it is set to 0, then cleanup never occurs.  This value makes sense
   // only if the above variable is set.
-  REC_ReadConfigInt32(g_udp_periodicCleanupSlots, "proxy.config.udp.periodic_cleanup");
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.udp.periodic_cleanup", &val);
+    g_udp_periodicCleanupSlots = static_cast<int32_t>(val);
+  }
 
   // UDP sends can fail with errno=EAGAIN.  This variable determines the # of
   // times the UDP thread retries before giving up.  Set to 0 to keep trying forever.
-  REC_ReadConfigInt32(g_udp_numSendRetries, "proxy.config.udp.send_retries");
-  g_udp_numSendRetries = g_udp_numSendRetries < 0 ? 0 : g_udp_numSendRetries;
+  {
+    RecInt val = 0;
+    RecGetRecordInt("proxy.config.udp.send_retries", &val);
+    g_udp_numSendRetries = static_cast<int32_t>(val);
+  }
 
   thread->set_tail_handler(nh);
 #if HAVE_EVENTFD
