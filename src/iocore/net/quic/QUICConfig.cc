@@ -106,10 +106,8 @@ QUICConfigParams::initialize()
   RecLinkGetRecordUInt32("proxy.config.quic.server.stateless_retry_enabled", &this->_stateless_retry);
   RecLinkGetRecordUInt32("proxy.config.quic.client.vn_exercise_enabled", &this->_vn_exercise_enabled);
   RecLinkGetRecordUInt32("proxy.config.quic.client.cm_exercise_enabled", &this->_cm_exercise_enabled);
-  REC_EstablishStaticConfigInt32U(this->_quantum_readiness_test_enabled_out,
-                                  "proxy.config.quic.client.quantum_readiness_test_enabled");
-  REC_EstablishStaticConfigInt32U(this->_quantum_readiness_test_enabled_in,
-                                  "proxy.config.quic.server.quantum_readiness_test_enabled");
+  RecLinkGetRecordUInt32("proxy.config.quic.client.quantum_readiness_test_enabled", &this->_quantum_readiness_test_enabled_out);
+  RecLinkGetRecordUInt32("proxy.config.quic.server.quantum_readiness_test_enabled", &this->_quantum_readiness_test_enabled_in);
 
   RecGetRecordString_Xmalloc("proxy.config.quic.server.supported_groups", &this->_server_supported_groups);
   RecGetRecordString_Xmalloc("proxy.config.quic.client.supported_groups", &this->_client_supported_groups);
@@ -121,24 +119,23 @@ QUICConfigParams::initialize()
   // Transport Parameters
   RecLinkGetRecordUInt32("proxy.config.quic.no_activity_timeout_in", &this->_no_activity_timeout_in);
   RecLinkGetRecordUInt32("proxy.config.quic.no_activity_timeout_out", &this->_no_activity_timeout_out);
-  RecGetRecordString_Xmalloc("proxy.config.quic.preferred_address_ipv4", &this->_preferred_address_ipv4);
+  RecGetRecordString_Xmalloc("proxy.config.quic.preferred_address_ipv4", const_cast<char **>(&this->_preferred_address_ipv4));
   if (this->_preferred_address_ipv4) {
     ats_ip_pton(this->_preferred_address_ipv4, &this->_preferred_endpoint_ipv4);
   }
-  RecGetRecordString_Xmalloc("proxy.config.quic.preferred_address_ipv6", &this->_preferred_address_ipv6);
+  RecGetRecordString_Xmalloc("proxy.config.quic.preferred_address_ipv6", const_cast<char **>(&this->_preferred_address_ipv6));
   if (this->_preferred_address_ipv6) {
     ats_ip_pton(this->_preferred_address_ipv6, &this->_preferred_endpoint_ipv6);
   }
   RecLinkGetRecordUInt32("proxy.config.quic.initial_max_data_in", &this->_initial_max_data_in);
   RecLinkGetRecordUInt32("proxy.config.quic.initial_max_data_out", &this->_initial_max_data_out);
-  REC_EstablishStaticConfigInt32U(this->_initial_max_stream_data_bidi_local_in,
-                                  "proxy.config.quic.initial_max_stream_data_bidi_local_in");
-  REC_EstablishStaticConfigInt32U(this->_initial_max_stream_data_bidi_local_out,
-                                  "proxy.config.quic.initial_max_stream_data_bidi_local_out");
-  REC_EstablishStaticConfigInt32U(this->_initial_max_stream_data_bidi_remote_in,
-                                  "proxy.config.quic.initial_max_stream_data_bidi_remote_in");
-  REC_EstablishStaticConfigInt32U(this->_initial_max_stream_data_bidi_remote_out,
-                                  "proxy.config.quic.initial_max_stream_data_bidi_remote_out");
+  RecLinkGetRecordUInt32("proxy.config.quic.initial_max_stream_data_bidi_local_in", &this->_initial_max_stream_data_bidi_local_in);
+  RecLinkGetRecordUInt32("proxy.config.quic.initial_max_stream_data_bidi_local_out",
+                         &this->_initial_max_stream_data_bidi_local_out);
+  RecLinkGetRecordUInt32("proxy.config.quic.initial_max_stream_data_bidi_remote_in",
+                         &this->_initial_max_stream_data_bidi_remote_in);
+  RecLinkGetRecordUInt32("proxy.config.quic.initial_max_stream_data_bidi_remote_out",
+                         &this->_initial_max_stream_data_bidi_remote_out);
   RecLinkGetRecordUInt32("proxy.config.quic.initial_max_stream_data_uni_in", &this->_initial_max_stream_data_uni_in);
   RecLinkGetRecordUInt32("proxy.config.quic.initial_max_stream_data_uni_out", &this->_initial_max_stream_data_uni_out);
   RecLinkGetRecordUInt32("proxy.config.quic.initial_max_streams_bidi_in", &this->_initial_max_streams_bidi_in);
