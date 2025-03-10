@@ -163,11 +163,11 @@ RecErrT RecSetRecordFloat(const char *name, RecFloat rec_float, RecSourceT sourc
 RecErrT RecSetRecordString(const char *name, const RecString rec_string, RecSourceT source, bool lock = true);
 RecErrT RecSetRecordCounter(const char *name, RecCounter rec_counter, RecSourceT source, bool lock = true);
 
-RecErrT RecGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
-RecErrT RecGetRecordFloat(const char *name, RecFloat *rec_float, bool lock = true);
-RecErrT RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
-RecErrT RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock = true);
-RecErrT RecGetRecordCounter(const char *name, RecCounter *rec_counter, bool lock = true);
+RecErrT                      RecGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
+std::pair<RecFloat, RecErrT> RecGetRecordFloat(const char *name, bool lock = true);
+RecErrT                      RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
+RecErrT                      RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock = true);
+RecErrT                      RecGetRecordCounter(const char *name, RecCounter *rec_counter, bool lock = true);
 // Convenience to allow us to treat the RecInt as a single byte internally
 RecErrT RecGetRecordByte(const char *name, RecByte *rec_byte, bool lock = true);
 // Convenience to allow us to treat the RecInt as a bool internally
@@ -206,11 +206,9 @@ void RecConfigWarnIfUnregistered();
     _var = tmp;                                       \
   } while (0)
 
-#define REC_ReadConfigFloat(_var, _config_var_name) \
-  do {                                              \
-    RecFloat tmp = 0;                               \
-    RecGetRecordFloat(_config_var_name, &tmp);      \
-    _var = tmp;                                     \
+#define REC_ReadConfigFloat(_var, _config_var_name)   \
+  do {                                                \
+    _var = RecGetRecordFloat(_config_var_name).first; \
   } while (0)
 
 #define REC_ReadConfigStringAlloc(_var, _config_var_name) RecGetRecordString_Xmalloc(_config_var_name, (RecString *)&_var)

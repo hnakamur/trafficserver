@@ -284,9 +284,11 @@ RecLinkConfigUInt32(const char *name, uint32_t *p_uint32)
 RecErrT
 RecLinkConfigFloat(const char *name, RecFloat *rec_float)
 {
-  if (RecGetRecordFloat(name, rec_float) == REC_ERR_FAIL) {
+  auto [tmp, err]{RecGetRecordFloat(name)};
+  if (err == REC_ERR_FAIL) {
     return REC_ERR_FAIL;
   }
+  *rec_float = tmp;
   return RecRegisterConfigUpdateCb(name, link_float, (void *)rec_float);
 }
 
@@ -416,16 +418,19 @@ RecGetRecordInt(const char *name, RecInt *rec_int, bool lock)
   return err;
 }
 
-RecErrT
-RecGetRecordFloat(const char *name, RecFloat *rec_float, bool lock)
+std::pair<RecFloat, RecErrT>
+RecGetRecordFloat(const char *name, bool lock)
 {
-  RecErrT err;
-  RecData data;
+  RecErrT  err;
+  RecData  data;
+  RecFloat rec_float;
 
   if ((err = RecGetRecord_Xmalloc(name, RECD_FLOAT, &data, lock)) == REC_ERR_OKAY) {
-    *rec_float = data.rec_float;
+    rec_float = data.rec_float;
+  } else {
+    rec_float = 0;
   }
-  return err;
+  return std::make_pair(rec_float, err);
 }
 
 RecErrT
@@ -939,9 +944,7 @@ REC_ConfigReadString(const char *name)
 RecFloat
 REC_ConfigReadFloat(const char *name)
 {
-  RecFloat t = 0;
-  RecGetRecordFloat(name, &t);
-  return t;
+  return RecGetRecordFloat(name).first;
 }
 
 //-------------------------------------------------------------------------
@@ -964,8 +967,8 @@ RecFloat
 REC_readFloat(char *name, bool *found, bool lock)
 {
   ink_assert(name);
-  RecFloat _tmp   = 0.0;
-  bool     _found = (RecGetRecordFloat(name, &_tmp, lock) == REC_ERR_OKAY);
+  auto [_tmp, err]{RecGetRecordFloat(name, lock)};
+  bool _found{err == REC_ERR_OKAY};
 
   if (found) {
     *found = _found;
