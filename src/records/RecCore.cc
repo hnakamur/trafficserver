@@ -263,9 +263,11 @@ RecCoreInit(Diags *_diags)
 RecErrT
 RecLinkConfigInt(const char *name, RecInt *rec_int)
 {
-  if (RecGetRecordInt(name, rec_int) == REC_ERR_FAIL) {
+  auto [tmp, err]{RecGetRecordInt(name)};
+  if (err == REC_ERR_FAIL) {
     return REC_ERR_FAIL;
   }
+  *rec_int = tmp;
   return RecRegisterConfigUpdateCb(name, link_int, (void *)rec_int);
 }
 
@@ -406,16 +408,19 @@ Enable_Config_Var(std::string_view const &name, RecContextCb record_cb, RecConfi
 //-------------------------------------------------------------------------
 // RecGetRecordXXX
 //-------------------------------------------------------------------------
-RecErrT
-RecGetRecordInt(const char *name, RecInt *rec_int, bool lock)
+std::pair<RecInt, RecErrT>
+RecGetRecordInt(const char *name, bool lock)
 {
   RecErrT err;
   RecData data;
+  RecInt  rec_int;
 
   if ((err = RecGetRecord_Xmalloc(name, RECD_INT, &data, lock)) == REC_ERR_OKAY) {
-    *rec_int = data.rec_int;
+    rec_int = data.rec_int;
+  } else {
+    rec_int = 0;
   }
-  return err;
+  return std::make_pair(rec_int, err);
 }
 
 std::pair<RecFloat, RecErrT>
@@ -928,9 +933,7 @@ RecDumpRecordsHt(RecT rec_type)
 RecInt
 REC_ConfigReadInteger(const char *name)
 {
-  RecInt t = 0;
-  RecGetRecordInt(name, &t);
-  return t;
+  return RecGetRecordInt(name).first;
 }
 
 char *
@@ -954,8 +957,8 @@ RecInt
 REC_readInteger(const char *name, bool *found, bool lock)
 {
   ink_assert(name);
-  RecInt _tmp   = 0;
-  bool   _found = (RecGetRecordInt(name, &_tmp, lock) == REC_ERR_OKAY);
+  auto [_tmp, err]{RecGetRecordInt(name, lock)};
+  auto _found{err == REC_ERR_OKAY};
 
   if (found) {
     *found = _found;
