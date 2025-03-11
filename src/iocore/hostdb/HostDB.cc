@@ -305,7 +305,7 @@ HostDBCache::start(int flags)
   // Max number of items
   hostdb_max_count = RecGetRecordInt("proxy.config.hostdb.max_count").first;
   // max size allowed to use
-  REC_ReadConfigInteger(hostdb_max_size, "proxy.config.hostdb.max_size");
+  hostdb_max_size = RecGetRecordInt("proxy.config.hostdb.max_size").first;
   // number of partitions
   hostdb_partitions = RecGetRecordInt("proxy.config.hostdb.partitions").first;
 
@@ -371,7 +371,7 @@ HostDBProcessor::init()
   {
     RecInt tmp_interval{};
 
-    REC_ReadConfigInteger(tmp_interval, interval_config);
+    tmp_interval                   = RecGetRecordInt(interval_config).first;
     hostdb_hostfile_check_interval = std::chrono::seconds(tmp_interval);
   }
   RecRegisterConfigUpdateCb(
