@@ -192,11 +192,6 @@ void RecConfigWarnIfUnregistered();
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_ReadConfigInt32(_var, _config_var_name) \
-  do {                                              \
-    _var = RecGetRecordInt(_config_var_name).first; \
-  } while (0)
-
 #define REC_ReadConfigInteger(_var, _config_var_name) \
   do {                                                \
     _var = RecGetRecordInt(_config_var_name).first;   \

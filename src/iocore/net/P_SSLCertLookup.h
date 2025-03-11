@@ -51,8 +51,8 @@ enum class SSLCertContextOption {
 struct SSLMultiCertConfigParams {
   SSLMultiCertConfigParams() : opt(SSLCertContextOption::OPT_NONE)
   {
-    REC_ReadConfigInt32(session_ticket_enabled, "proxy.config.ssl.server.session_ticket.enable");
-    REC_ReadConfigInt32(session_ticket_number, "proxy.config.ssl.server.session_ticket.number");
+    session_ticket_enabled = RecGetRecordInt("proxy.config.ssl.server.session_ticket.enable").first;
+    session_ticket_number  = RecGetRecordInt("proxy.config.ssl.server.session_ticket.number").first;
   }
 
   int                  session_ticket_enabled; ///< session ticket enabled
