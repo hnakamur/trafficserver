@@ -236,8 +236,8 @@ void
 initialize_thread_for_udp_net(EThread *thread)
 {
   int enable_gso, enable_gro;
-  REC_ReadConfigInteger(enable_gso, "proxy.config.udp.enable_gso");
-  REC_ReadConfigInteger(enable_gro, "proxy.config.udp.enable_gro");
+  enable_gso = RecGetRecordInt("proxy.config.udp.enable_gso").first;
+  enable_gro = RecGetRecordInt("proxy.config.udp.enable_gro").first;
 
   UDPNetHandler *nh = get_UDPNetHandler(thread);
 
@@ -261,7 +261,7 @@ initialize_thread_for_udp_net(EThread *thread)
   PollCont       *upc = get_UDPPollCont(thread);
   PollDescriptor *upd = upc->pollDescriptor;
 
-  REC_ReadConfigInteger(g_udp_pollTimeout, "proxy.config.udp.poll_timeout");
+  g_udp_pollTimeout = RecGetRecordInt("proxy.config.udp.poll_timeout").first;
   upc->poll_timeout = g_udp_pollTimeout;
 
   // This variable controls how often we cleanup the cancelled packets.

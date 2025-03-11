@@ -884,7 +884,7 @@ ink_cache_init(ts::ModuleVersion v)
 
   register_cache_stats(&cache_rsb, "proxy.process.cache");
 
-  REC_ReadConfigInteger(cacheProcessor.wait_for_cache, "proxy.config.http.wait_for_cache");
+  cacheProcessor.wait_for_cache = RecGetRecordInt("proxy.config.http.wait_for_cache").first;
 
   REC_EstablishStaticConfigInt32(cache_config_persist_bad_disks, "proxy.config.cache.persist_bad_disks");
   Dbg(dbg_ctl_cache_init, "proxy.config.cache.persist_bad_disks = %d", cache_config_persist_bad_disks);
