@@ -164,7 +164,7 @@ RecErrT RecSetRecordString(const char *name, const RecString rec_string, RecSour
 RecErrT RecSetRecordCounter(const char *name, RecCounter rec_counter, RecSourceT source, bool lock = true);
 
 RecErrT                      RecGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
-std::pair<RecFloat, RecErrT> RecGetRecordFloat(const char *name, bool lock = true);
+std::pair<RecFloat, RecErrT> RecGetRecordFloat(const std::string_view &name, bool lock = true);
 RecErrT                      RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
 RecErrT                      RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock = true);
 RecErrT                      RecGetRecordCounter(const char *name, RecCounter *rec_counter, bool lock = true);

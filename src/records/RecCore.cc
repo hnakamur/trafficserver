@@ -419,13 +419,13 @@ RecGetRecordInt(const char *name, RecInt *rec_int, bool lock)
 }
 
 std::pair<RecFloat, RecErrT>
-RecGetRecordFloat(const char *name, bool lock)
+RecGetRecordFloat(const std::string_view &name, bool lock)
 {
   RecErrT  err;
   RecData  data;
   RecFloat rec_float;
 
-  if ((err = RecGetRecord_Xmalloc(name, RECD_FLOAT, &data, lock)) == REC_ERR_OKAY) {
+  if ((err = RecGetRecord_Xmalloc(name.data(), RECD_FLOAT, &data, lock)) == REC_ERR_OKAY) {
     rec_float = data.rec_float;
   } else {
     rec_float = 0;
