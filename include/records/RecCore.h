@@ -163,7 +163,7 @@ RecErrT RecSetRecordFloat(const char *name, RecFloat rec_float, RecSourceT sourc
 RecErrT RecSetRecordString(const char *name, const RecString rec_string, RecSourceT source, bool lock = true);
 RecErrT RecSetRecordCounter(const char *name, RecCounter rec_counter, RecSourceT source, bool lock = true);
 
-RecErrT                      RecGetRecordInt(const char *name, RecInt *rec_int, bool lock = true);
+std::pair<RecInt, RecErrT>   RecGetRecordInt(const char *name, bool lock = true);
 std::pair<RecFloat, RecErrT> RecGetRecordFloat(const char *name, bool lock = true);
 RecErrT                      RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
 RecErrT                      RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock = true);
@@ -192,18 +192,14 @@ void RecConfigWarnIfUnregistered();
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_ReadConfigInt32(_var, _config_var_name)    \
-  do {                                                 \
-    RecInt tmp = 0;                                    \
-    RecGetRecordInt(_config_var_name, (RecInt *)&tmp); \
-    _var = (int32_t)tmp;                               \
+#define REC_ReadConfigInt32(_var, _config_var_name) \
+  do {                                              \
+    _var = RecGetRecordInt(_config_var_name).first; \
   } while (0)
 
 #define REC_ReadConfigInteger(_var, _config_var_name) \
   do {                                                \
-    RecInt tmp = 0;                                   \
-    RecGetRecordInt(_config_var_name, &tmp);          \
-    _var = tmp;                                       \
+    _var = RecGetRecordInt(_config_var_name).first;   \
   } while (0)
 
 #define REC_ReadConfigStringAlloc(_var, _config_var_name) RecGetRecordString_Xmalloc(_config_var_name, (RecString *)&_var)
