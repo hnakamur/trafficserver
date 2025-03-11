@@ -276,10 +276,18 @@ SSLConfigParams::initialize()
   verify_depth = 7;
 
   clientCertLevel = RecGetRecordInt("proxy.config.ssl.client.certification_level").first;
-  REC_ReadConfigStringAlloc(cipherSuite, "proxy.config.ssl.server.cipher_suite");
-  REC_ReadConfigStringAlloc(client_cipherSuite, "proxy.config.ssl.client.cipher_suite");
-  REC_ReadConfigStringAlloc(server_tls13_cipher_suites, "proxy.config.ssl.server.TLSv1_3.cipher_suites");
-  REC_ReadConfigStringAlloc(client_tls13_cipher_suites, "proxy.config.ssl.client.TLSv1_3.cipher_suites");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.cipher_suite")}; err == REC_ERR_OKAY) {
+    cipherSuite = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.cipher_suite")}; err == REC_ERR_OKAY) {
+    client_cipherSuite = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.TLSv1_3.cipher_suites")}; err == REC_ERR_OKAY) {
+    server_tls13_cipher_suites = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.TLSv1_3.cipher_suites")}; err == REC_ERR_OKAY) {
+    client_tls13_cipher_suites = const_cast<char *>(rec_str.data());
+  }
 
   dhparamsFile = ats_stringdup(RecConfigReadConfigPath("proxy.config.ssl.server.dhparams_file"));
 
@@ -367,7 +375,9 @@ SSLConfigParams::initialize()
 
   // Read in the protocol string for ALPN to origin
   char *clientALPNProtocols = nullptr;
-  REC_ReadConfigStringAlloc(clientALPNProtocols, "proxy.config.ssl.client.alpn_protocols");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.alpn_protocols")}; err == REC_ERR_OKAY) {
+    clientALPNProtocols = const_cast<char *>(rec_str.data());
+  }
 
   if (clientALPNProtocols) {
     this->alpn_protocols_array_size = MAX_ALPN_STRING;
@@ -424,20 +434,30 @@ SSLConfigParams::initialize()
   // we keep it unless "server_max_early_data" is higher.
   server_recv_max_early_data = std::max(server_max_early_data, TLSEarlyDataSupport::DEFAULT_MAX_EARLY_DATA_SIZE);
 
-  REC_ReadConfigStringAlloc(serverCertChainFilename, "proxy.config.ssl.server.cert_chain.filename");
-  REC_ReadConfigStringAlloc(serverCertRelativePath, "proxy.config.ssl.server.cert.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.cert_chain.filename")}; err == REC_ERR_OKAY) {
+    serverCertChainFilename = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.cert.path")}; err == REC_ERR_OKAY) {
+    serverCertRelativePath = const_cast<char *>(rec_str.data());
+  }
   set_paths_helper(serverCertRelativePath, nullptr, &serverCertPathOnly, nullptr);
   ats_free(serverCertRelativePath);
 
   configFilePath        = ats_stringdup(RecConfigReadConfigPath("proxy.config.ssl.server.multicert.filename"));
   configExitOnLoadError = RecGetRecordInt("proxy.config.ssl.server.multicert.exit_on_load_fail").first;
 
-  REC_ReadConfigStringAlloc(ssl_server_private_key_path, "proxy.config.ssl.server.private_key.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.private_key.path")}; err == REC_ERR_OKAY) {
+    ssl_server_private_key_path = const_cast<char *>(rec_str.data());
+  }
   set_paths_helper(ssl_server_private_key_path, nullptr, &serverKeyPathOnly, nullptr);
   ats_free(ssl_server_private_key_path);
 
-  REC_ReadConfigStringAlloc(ssl_server_ca_cert_filename, "proxy.config.ssl.CA.cert.filename");
-  REC_ReadConfigStringAlloc(CACertRelativePath, "proxy.config.ssl.CA.cert.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.CA.cert.filename")}; err == REC_ERR_OKAY) {
+    ssl_server_ca_cert_filename = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.CA.cert.path")}; err == REC_ERR_OKAY) {
+    CACertRelativePath = const_cast<char *>(rec_str.data());
+  }
 
   set_paths_helper(CACertRelativePath, ssl_server_ca_cert_filename, &serverCACertPath, &serverCACertFilename);
   ats_free(ssl_server_ca_cert_filename);
@@ -477,57 +497,85 @@ SSLConfigParams::initialize()
   ssl_ocsp_request_mode = RecGetRecordInt("proxy.config.ssl.ocsp.request_mode").first;
   REC_EstablishStaticConfigInt32(ssl_ocsp_request_timeout, "proxy.config.ssl.ocsp.request_timeout");
   REC_EstablishStaticConfigInt32(ssl_ocsp_update_period, "proxy.config.ssl.ocsp.update_period");
-  REC_ReadConfigStringAlloc(ssl_ocsp_response_path, "proxy.config.ssl.ocsp.response.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.ocsp.response.path")}; err == REC_ERR_OKAY) {
+    ssl_ocsp_response_path = const_cast<char *>(rec_str.data());
+  }
   set_paths_helper(ssl_ocsp_response_path, nullptr, &ssl_ocsp_response_path_only, nullptr);
   ats_free(ssl_ocsp_response_path);
-  REC_ReadConfigStringAlloc(ssl_ocsp_user_agent, "proxy.config.http.request_via_str");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.http.request_via_str")}; err == REC_ERR_OKAY) {
+    ssl_ocsp_user_agent = const_cast<char *>(rec_str.data());
+  }
 
   ssl_handshake_timeout_in = RecGetRecordInt("proxy.config.ssl.handshake_timeout_in").first;
 
   async_handshake_enabled = RecGetRecordInt("proxy.config.ssl.async.handshake.enabled").first;
-  REC_ReadConfigStringAlloc(engine_conf_file, "proxy.config.ssl.engine.conf_file");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.engine.conf_file")}; err == REC_ERR_OKAY) {
+    engine_conf_file = const_cast<char *>(rec_str.data());
+  }
 
-  REC_ReadConfigStringAlloc(server_groups_list, "proxy.config.ssl.server.groups_list");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.groups_list")}; err == REC_ERR_OKAY) {
+    server_groups_list = const_cast<char *>(rec_str.data());
+  }
 
   // ++++++++++++++++++++++++ Client part ++++++++++++++++++++
   client_verify_depth = 7;
 
   char *verify_server_policy = nullptr;
-  REC_ReadConfigStringAlloc(verify_server_policy, "proxy.config.ssl.client.verify.server.policy");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.verify.server.policy")}; err == REC_ERR_OKAY) {
+    verify_server_policy = const_cast<char *>(rec_str.data());
+  }
   this->SetServerPolicy(verify_server_policy);
   ats_free(verify_server_policy);
   REC_RegisterConfigUpdateFunc("proxy.config.ssl.client.verify.server.policy", UpdateServerPolicy, nullptr);
 
   char *verify_server_properties = nullptr;
-  REC_ReadConfigStringAlloc(verify_server_properties, "proxy.config.ssl.client.verify.server.properties");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.verify.server.properties")}; err == REC_ERR_OKAY) {
+    verify_server_properties = const_cast<char *>(rec_str.data());
+  }
   this->SetServerPolicyProperties(verify_server_properties);
   ats_free(verify_server_properties);
   REC_RegisterConfigUpdateFunc("proxy.config.ssl.client.verify.server.properties", UpdateServerPolicyProperties, nullptr);
 
   ssl_client_cert_filename = nullptr;
   ssl_client_cert_path     = nullptr;
-  REC_ReadConfigStringAlloc(ssl_client_cert_filename, "proxy.config.ssl.client.cert.filename");
-  REC_ReadConfigStringAlloc(ssl_client_cert_path, "proxy.config.ssl.client.cert.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.cert.filename")}; err == REC_ERR_OKAY) {
+    ssl_client_cert_filename = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.cert.path")}; err == REC_ERR_OKAY) {
+    ssl_client_cert_path = const_cast<char *>(rec_str.data());
+  }
   clientCertExitOnLoadError = RecGetRecordInt("proxy.config.ssl.client.cert.exit_on_load_fail").first;
   set_paths_helper(ssl_client_cert_path, ssl_client_cert_filename, &clientCertPathOnly, &clientCertPath);
   ats_free_null(ssl_client_cert_filename);
   ats_free_null(ssl_client_cert_path);
 
-  REC_ReadConfigStringAlloc(ssl_client_private_key_filename, "proxy.config.ssl.client.private_key.filename");
-  REC_ReadConfigStringAlloc(ssl_client_private_key_path, "proxy.config.ssl.client.private_key.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.private_key.filename")}; err == REC_ERR_OKAY) {
+    ssl_client_private_key_filename = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.private_key.path")}; err == REC_ERR_OKAY) {
+    ssl_client_private_key_path = const_cast<char *>(rec_str.data());
+  }
   set_paths_helper(ssl_client_private_key_path, ssl_client_private_key_filename, &clientKeyPathOnly, &clientKeyPath);
   ats_free_null(ssl_client_private_key_filename);
   ats_free_null(ssl_client_private_key_path);
 
-  REC_ReadConfigStringAlloc(ssl_client_ca_cert_filename, "proxy.config.ssl.client.CA.cert.filename");
-  REC_ReadConfigStringAlloc(clientCACertRelativePath, "proxy.config.ssl.client.CA.cert.path");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.CA.cert.filename")}; err == REC_ERR_OKAY) {
+    ssl_client_ca_cert_filename = const_cast<char *>(rec_str.data());
+  }
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.CA.cert.path")}; err == REC_ERR_OKAY) {
+    clientCACertRelativePath = const_cast<char *>(rec_str.data());
+  }
   set_paths_helper(clientCACertRelativePath, ssl_client_ca_cert_filename, &clientCACertPath, &clientCACertFilename);
   ats_free(clientCACertRelativePath);
   ats_free(ssl_client_ca_cert_filename);
 
-  REC_ReadConfigStringAlloc(client_groups_list, "proxy.config.ssl.client.groups_list");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.groups_list")}; err == REC_ERR_OKAY) {
+    client_groups_list = const_cast<char *>(rec_str.data());
+  }
 
-  REC_ReadConfigStringAlloc(keylog_file, "proxy.config.ssl.keylog_file");
+  if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.keylog_file")}; err == REC_ERR_OKAY) {
+    keylog_file = const_cast<char *>(rec_str.data());
+  }
   if (keylog_file == nullptr) {
     TLSKeyLogger::disable_keylogging();
   } else {
@@ -731,8 +779,8 @@ SSLTicketParams::LoadTicket(bool &nochange)
   elevate_setting          = RecGetRecordInt("proxy.config.ssl.cert.load_elevated").first;
   ElevateAccess elevate_access(elevate_setting ? ElevateAccess::FILE_PRIVILEGE : 0); // destructor will demote for us
 
-  if (REC_ReadConfigStringAlloc(ticket_key_filename, "proxy.config.ssl.server.ticket_key.filename") == REC_ERR_OKAY &&
-      ticket_key_filename != nullptr) {
+  auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.server.ticket_key.filename")};
+  if (err == REC_ERR_OKAY && (ticket_key_filename = const_cast<char *>(rec_str.data())) != nullptr) {
     ats_scoped_str ticket_key_path(Layout::relative_to(params->serverCertPathOnly, ticket_key_filename));
     // See if the file changed since we last loaded
     struct stat sdata;

@@ -306,9 +306,11 @@ RecLinkConfigCounter(const char *name, RecCounter *rec_counter)
 RecErrT
 RecLinkConfigString(const char *name, RecString *rec_string)
 {
-  if (RecGetRecordString_Xmalloc(name, rec_string) == REC_ERR_FAIL) {
+  auto [tmp, err]{RecGetRecordString_Xmalloc(name)};
+  if (err == REC_ERR_FAIL) {
     return REC_ERR_FAIL;
   }
+  *rec_string = const_cast<char *>(tmp.data());
   return RecRegisterConfigUpdateCb(name, link_string_alloc, (void *)rec_string);
 }
 
@@ -469,16 +471,17 @@ RecGetRecordString(const char *name, char *buf, int buf_len, bool lock)
   return err;
 }
 
-RecErrT
-RecGetRecordString_Xmalloc(const char *name, RecString *rec_string, bool lock)
+std::pair<std::string_view, RecErrT>
+RecGetRecordString_Xmalloc(const char *name, bool lock)
 {
-  RecErrT err;
-  RecData data;
+  RecErrT          err;
+  RecData          data;
+  std::string_view rec_string{nullptr, 0};
 
   if ((err = RecGetRecord_Xmalloc(name, RECD_STRING, &data, lock)) == REC_ERR_OKAY) {
-    *rec_string = data.rec_string;
+    rec_string = std::string_view{data.rec_string};
   }
-  return err;
+  return std::make_pair(rec_string, err);
 }
 
 RecErrT
@@ -939,9 +942,7 @@ REC_ConfigReadInteger(const char *name)
 char *
 REC_ConfigReadString(const char *name)
 {
-  char *t = nullptr;
-  RecGetRecordString_Xmalloc(name, static_cast<RecString *>(&t));
-  return t;
+  return const_cast<char *>(RecGetRecordString_Xmalloc(name).first.data());
 }
 
 RecFloat
@@ -996,13 +997,13 @@ RecString
 REC_readString(const char *name, bool *found, bool lock)
 {
   ink_assert(name);
-  RecString _tmp   = nullptr;
-  bool      _found = (RecGetRecordString_Xmalloc(name, &_tmp, lock) == REC_ERR_OKAY);
+  auto [_tmp, err]{RecGetRecordString_Xmalloc(name, lock)};
+  auto _found{err == REC_ERR_OKAY};
 
   if (found) {
     *found = _found;
   }
-  return _tmp;
+  return const_cast<char *>(_tmp.data());
 }
 
 //-------------------------------------------------------------------------
