@@ -1124,7 +1124,7 @@ Log::create_threads()
   preproc_notify = new EventNotify[preproc_threads];
 
   size_t stacksize;
-  REC_ReadConfigInteger(stacksize, "proxy.config.thread.default.stacksize");
+  stacksize = RecGetRecordInt("proxy.config.thread.default.stacksize").first;
 
   // start the preproc threads
   //
