@@ -206,11 +206,6 @@ void RecConfigWarnIfUnregistered();
     _var = tmp;                                       \
   } while (0)
 
-#define REC_ReadConfigFloat(_var, _config_var_name)   \
-  do {                                                \
-    _var = RecGetRecordFloat(_config_var_name).first; \
-  } while (0)
-
 #define REC_ReadConfigStringAlloc(_var, _config_var_name) RecGetRecordString_Xmalloc(_config_var_name, (RecString *)&_var)
 
 #define REC_ReadConfigString(_var, _config_var_name, _len) RecGetRecordString(_config_var_name, _var, _len)

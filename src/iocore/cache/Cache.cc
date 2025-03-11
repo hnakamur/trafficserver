@@ -45,6 +45,8 @@
 #include <string>
 #include <filesystem>
 
+using namespace std::literals;
+
 #define SCAN_BUF_SIZE              RECOVERY_SIZE
 #define SCAN_WRITER_LOCK_MAX_RETRY 5
 
@@ -128,9 +130,7 @@ static int
 validate_rww(int new_value)
 {
   if (new_value) {
-    float http_bg_fill;
-
-    REC_ReadConfigFloat(http_bg_fill, "proxy.config.http.background_fill_completed_threshold");
+    auto http_bg_fill{RecGetRecordFloat("proxy.config.http.background_fill_completed_threshold"sv).first};
     if (http_bg_fill > 0.0) {
       Note("to enable reading while writing a document, %s should be 0.0: read while writing disabled",
            "proxy.config.http.background_fill_completed_threshold");

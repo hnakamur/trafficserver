@@ -55,6 +55,8 @@
 #include <list>
 #include <string>
 
+using namespace std::literals;
+
 #if !defined(__linux__)
 #include <sys/lock.h>
 #endif
@@ -1381,9 +1383,10 @@ adjust_sys_settings()
 
   maxfiles = ink_get_max_files();
   if (maxfiles != RLIM_INFINITY) {
-    float file_max_pct = 0.9;
-
-    REC_ReadConfigFloat(file_max_pct, "proxy.config.system.file_max_pct");
+    auto [file_max_pct, err]{RecGetRecordFloat("proxy.config.system.file_max_pct"sv)};
+    if (err != REC_ERR_OKAY) {
+      file_max_pct = 0.9;
+    }
     if (file_max_pct > 1.0) {
       file_max_pct = 1.0;
     }
@@ -1634,9 +1637,8 @@ chdir_root()
 int
 adjust_num_of_net_threads(int nthreads)
 {
-  float autoconfig_scale   = 1.0;
-  int   nth_auto_config    = 1;
-  int   num_of_threads_tmp = 1;
+  int nth_auto_config    = 1;
+  int num_of_threads_tmp = 1;
 
   REC_ReadConfigInteger(nth_auto_config, "proxy.config.exec_thread.autoconfig.enabled");
 
@@ -1655,7 +1657,10 @@ adjust_num_of_net_threads(int nthreads)
     nthreads = num_of_threads_tmp;
   } else { /* autoconfig is enabled */
     num_of_threads_tmp = nthreads;
-    REC_ReadConfigFloat(autoconfig_scale, "proxy.config.exec_thread.autoconfig.scale");
+    auto [autoconfig_scale, err]{RecGetRecordFloat("proxy.config.exec_thread.autoconfig.scale"sv)};
+    if (err != REC_ERR_OKAY) {
+      autoconfig_scale = 1.0;
+    }
     num_of_threads_tmp = static_cast<int>(static_cast<float>(num_of_threads_tmp) * autoconfig_scale);
 
     if (unlikely(num_of_threads_tmp > MAX_EVENT_THREADS)) {
