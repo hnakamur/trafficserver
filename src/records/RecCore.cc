@@ -478,7 +478,7 @@ RecGetRecordString_Xmalloc(const char *name, bool lock)
   RecData          data;
   std::string_view rec_string{nullptr, 0};
 
-  if ((err = RecGetRecord_Xmalloc(name, RECD_STRING, &data, lock)) == REC_ERR_OKAY) {
+  if ((err = RecGetRecord_Xmalloc(name, RECD_STRING, &data, lock)) == REC_ERR_OKAY && data.rec_string) {
     rec_string = std::string_view{data.rec_string};
   }
   return std::make_pair(rec_string, err);
