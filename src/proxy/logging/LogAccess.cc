@@ -256,7 +256,14 @@ LogAccess::marshal_record(char *record, char *buf)
       //
       ink_assert(max_chars > 21);
 
-      int64_t val = static_cast<int64_t>(LOG_INTEGER == stype ? REC_readInteger(record, &found) : REC_readCounter(record, &found));
+      int64_t val;
+      if (LOG_INTEGER == stype) {
+        auto [tmp, err]{RecGetRecordInt(record)};
+        found = err == REC_ERR_OKAY;
+        val   = tmp;
+      } else {
+        val = static_cast<int64_t>(REC_readCounter(record, &found));
+      }
 
       if (found) {
         out_buf = int64_to_str(ascii_buf, max_chars, val, &num_chars);
