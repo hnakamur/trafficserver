@@ -167,7 +167,7 @@ std::pair<RecInt, RecErrT>           RecGetRecordInt(const char *name, bool lock
 std::pair<RecFloat, RecErrT>         RecGetRecordFloat(const char *name, bool lock = true);
 RecErrT                              RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
 std::pair<std::string_view, RecErrT> RecGetRecordString_Xmalloc(const char *name, bool lock = true);
-RecErrT                              RecGetRecordCounter(const char *name, RecCounter *rec_counter, bool lock = true);
+std::pair<RecCounter, RecErrT>       RecGetRecordCounter(const char *name, bool lock = true);
 // Convenience to allow us to treat the RecInt as a single byte internally
 RecErrT RecGetRecordByte(const char *name, RecByte *rec_byte, bool lock = true);
 // Convenience to allow us to treat the RecInt as a bool internally
