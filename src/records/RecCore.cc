@@ -503,18 +503,6 @@ RecGetRecordCounter(const char *name, bool lock)
   return std::make_pair(rec_counter, err);
 }
 
-RecErrT
-RecGetRecordBool(const char *name, RecBool *rec_bool, bool lock)
-{
-  RecErrT err;
-  RecData data;
-
-  if ((err = RecGetRecord_Xmalloc(name, RECD_INT, &data, lock)) == REC_ERR_OKAY) {
-    *rec_bool = 0 != data.rec_int;
-  }
-  return err;
-}
-
 //-------------------------------------------------------------------------
 // RecGetRec Attributes
 //-------------------------------------------------------------------------
