@@ -239,7 +239,6 @@ char    *REC_ConfigReadString(const char *name);
 RecFloat REC_ConfigReadFloat(const char *name);
 
 // MGMT2 Marco's -- converting lmgmt->record_data->readXXX
-RecFloat   REC_readFloat(char *name, bool *found, bool lock = true);
 RecCounter REC_readCounter(char *name, bool *found, bool lock = true);
 RecString  REC_readString(const char *name, bool *found, bool lock = true);
 
