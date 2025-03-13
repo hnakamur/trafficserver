@@ -43,6 +43,7 @@ DiagsConfig::reconfigure_diags()
 {
   int              i;
   char            *p, *dt, *at;
+  std::string_view s;
   DiagsConfigState c;
   bool             found, all_found;
 
@@ -105,8 +106,10 @@ DiagsConfig::reconfigure_diags()
       break;
     }
 
-    p         = REC_readString(record_name, &found);
-    all_found = all_found && found;
+    std::tie(s, err) = RecGetRecordString_Xmalloc(record_name);
+    p                = const_cast<char *>(s.data());
+    found            = err == REC_ERR_OKAY;
+    all_found        = all_found && found;
 
     if (found) {
       parse_output_string(p, &(c.outputs[l]));
@@ -116,13 +119,17 @@ DiagsConfig::reconfigure_diags()
     }
   }
 
-  p         = REC_readString("proxy.config.diags.debug.tags", &found);
-  dt        = (found ? p : nullptr); // NOTE: needs to be freed
-  all_found = all_found && found;
+  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.debug.tags");
+  p                = const_cast<char *>(s.data());
+  found            = err == REC_ERR_OKAY;
+  dt               = (found ? p : nullptr); // NOTE: needs to be freed
+  all_found        = all_found && found;
 
-  p         = REC_readString("proxy.config.diags.action.tags", &found);
-  at        = (found ? p : nullptr); // NOTE: needs to be freed
-  all_found = all_found && found;
+  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.action.tags");
+  p                = const_cast<char *>(s.data());
+  found            = err == REC_ERR_OKAY;
+  at               = (found ? p : nullptr); // NOTE: needs to be freed
+  all_found        = all_found && found;
 
   ///////////////////////////////////////////////////////////////////
   // if couldn't read all values, return without changing config,  //
