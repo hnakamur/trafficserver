@@ -168,8 +168,6 @@ std::pair<RecFloat, RecErrT>         RecGetRecordFloat(const char *name, bool lo
 RecErrT                              RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
 std::pair<std::string_view, RecErrT> RecGetRecordString_Xmalloc(const char *name, bool lock = true);
 std::pair<RecCounter, RecErrT>       RecGetRecordCounter(const char *name, bool lock = true);
-// Convenience to allow us to treat the RecInt as a bool internally
-RecErrT RecGetRecordBool(const char *name, RecBool *rec_byte, bool lock = true);
 
 //------------------------------------------------------------------------
 // Record Attributes Reading
