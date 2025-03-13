@@ -227,7 +227,6 @@ LogAccess::marshal_record(char *record, char *buf)
 #define LOG_STRING  RECD_STRING
 
   RecDataT stype = RECD_NULL;
-  bool     found = false;
 
   // Since, for now at least, String metrics are still in librecords, do that lookup
   // first, and only do the new metrics lookup on a miss.
@@ -256,16 +255,7 @@ LogAccess::marshal_record(char *record, char *buf)
       //
       ink_assert(max_chars > 21);
 
-      int64_t val;
-      if (LOG_INTEGER == stype) {
-        auto [tmp, err]{RecGetRecordInt(record)};
-        found = err == REC_ERR_OKAY;
-        val   = tmp;
-      } else {
-        val = static_cast<int64_t>(REC_readCounter(record, &found));
-      }
-
-      if (found) {
+      if (auto [val, err]{LOG_INTEGER == stype ? RecGetRecordInt(record) : RecGetRecordCounter(record)}; err == REC_ERR_OKAY) {
         out_buf = int64_to_str(ascii_buf, max_chars, val, &num_chars);
         ink_assert(out_buf);
       } else {
