@@ -279,9 +279,7 @@ LogAccess::marshal_record(char *record, char *buf)
       //
       ink_assert(sizeof(double) >= sizeof(RecFloat));
 
-      RecFloat val = REC_readFloat(record, &found);
-
-      if (found) {
+      if (auto [val, err]{RecGetRecordFloat(record)}; err == REC_ERR_OKAY) {
         // snprintf does not support "%e" in the format
         // and we want to use "%e" because it is the most concise
         // notation

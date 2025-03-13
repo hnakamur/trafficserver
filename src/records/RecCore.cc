@@ -937,19 +937,6 @@ REC_ConfigReadFloat(const char *name)
 //-------------------------------------------------------------------------
 // Backwards compatibility. TODO: Should remove these.
 //-------------------------------------------------------------------------
-RecFloat
-REC_readFloat(char *name, bool *found, bool lock)
-{
-  ink_assert(name);
-  auto [_tmp, err]{RecGetRecordFloat(name, lock)};
-  bool _found{err == REC_ERR_OKAY};
-
-  if (found) {
-    *found = _found;
-  }
-  return _tmp;
-}
-
 RecCounter
 REC_readCounter(char *name, bool *found, bool lock)
 {
