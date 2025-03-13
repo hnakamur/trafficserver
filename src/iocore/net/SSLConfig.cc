@@ -526,7 +526,7 @@ SSLConfigParams::initialize()
   }
   this->SetServerPolicy(verify_server_policy);
   ats_free(verify_server_policy);
-  REC_RegisterConfigUpdateFunc("proxy.config.ssl.client.verify.server.policy", UpdateServerPolicy, nullptr);
+  RecRegisterConfigUpdateCb("proxy.config.ssl.client.verify.server.policy", UpdateServerPolicy, nullptr);
 
   char *verify_server_properties = nullptr;
   if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.client.verify.server.properties")}; err == REC_ERR_OKAY) {
@@ -534,7 +534,7 @@ SSLConfigParams::initialize()
   }
   this->SetServerPolicyProperties(verify_server_properties);
   ats_free(verify_server_properties);
-  REC_RegisterConfigUpdateFunc("proxy.config.ssl.client.verify.server.properties", UpdateServerPolicyProperties, nullptr);
+  RecRegisterConfigUpdateCb("proxy.config.ssl.client.verify.server.properties", UpdateServerPolicyProperties, nullptr);
 
   ssl_client_cert_filename = nullptr;
   ssl_client_cert_path     = nullptr;
