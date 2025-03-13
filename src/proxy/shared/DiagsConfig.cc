@@ -105,7 +105,9 @@ DiagsConfig::reconfigure_diags()
       break;
     }
 
-    p         = REC_readString(record_name, &found);
+    auto [s, rec_err]{RecGetRecordString_Xmalloc(record_name)};
+    p         = const_cast<char *>(s.data());
+    found     = rec_err == REC_ERR_OKAY;
     all_found = all_found && found;
 
     if (found) {
@@ -116,11 +118,15 @@ DiagsConfig::reconfigure_diags()
     }
   }
 
-  p         = REC_readString("proxy.config.diags.debug.tags", &found);
+  auto [dt_str, dt_err]{RecGetRecordString_Xmalloc("proxy.config.diags.debug.tags")};
+  p         = const_cast<char *>(dt_str.data());
+  found     = dt_err == REC_ERR_OKAY;
   dt        = (found ? p : nullptr); // NOTE: needs to be freed
   all_found = all_found && found;
 
-  p         = REC_readString("proxy.config.diags.action.tags", &found);
+  auto [at_str, at_err]{RecGetRecordString_Xmalloc("proxy.config.diags.action.tags")};
+  p         = const_cast<char *>(at_str.data());
+  found     = at_err == REC_ERR_OKAY;
   at        = (found ? p : nullptr); // NOTE: needs to be freed
   all_found = all_found && found;
 

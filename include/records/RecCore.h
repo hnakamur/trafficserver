@@ -238,9 +238,6 @@ RecInt   REC_ConfigReadInteger(const char *name);
 char    *REC_ConfigReadString(const char *name);
 RecFloat REC_ConfigReadFloat(const char *name);
 
-// MGMT2 Marco's -- converting lmgmt->record_data->readXXX
-RecString REC_readString(const char *name, bool *found, bool lock = true);
-
 //------------------------------------------------------------------------
 // Set RecRecord attributes
 //------------------------------------------------------------------------

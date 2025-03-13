@@ -1538,14 +1538,11 @@ struct ShowStats : public Continuation {
 void
 syslog_log_configure()
 {
-  bool  found        = false;
-  char  sys_var[]    = "proxy.config.syslog_facility";
-  char *facility_str = REC_readString(sys_var, &found);
+  char sys_var[] = "proxy.config.syslog_facility";
+  if (auto [facility_str, err]{RecGetRecordString_Xmalloc(sys_var)}; err == REC_ERR_OKAY) {
+    int facility = facility_string_to_int(facility_str.data());
 
-  if (found) {
-    int facility = facility_string_to_int(facility_str);
-
-    ats_free(facility_str);
+    ats_free(const_cast<char *>(facility_str.data()));
     if (facility < 0) {
       syslog(LOG_WARNING, "Bad syslog facility in %s. Keeping syslog at LOG_DAEMON", ts::filename::RECORDS);
     } else {

@@ -935,22 +935,6 @@ REC_ConfigReadFloat(const char *name)
 }
 
 //-------------------------------------------------------------------------
-// Backwards compatibility. TODO: Should remove these.
-//-------------------------------------------------------------------------
-RecString
-REC_readString(const char *name, bool *found, bool lock)
-{
-  ink_assert(name);
-  auto [_tmp, err]{RecGetRecordString_Xmalloc(name, lock)};
-  auto _found{err == REC_ERR_OKAY};
-
-  if (found) {
-    *found = _found;
-  }
-  return const_cast<char *>(_tmp.data());
-}
-
-//-------------------------------------------------------------------------
 // RecConfigReadConfigDir
 //-------------------------------------------------------------------------
 std::string
