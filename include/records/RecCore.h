@@ -163,11 +163,11 @@ RecErrT RecSetRecordFloat(const char *name, RecFloat rec_float, RecSourceT sourc
 RecErrT RecSetRecordString(const char *name, const RecString rec_string, RecSourceT source, bool lock = true);
 RecErrT RecSetRecordCounter(const char *name, RecCounter rec_counter, RecSourceT source, bool lock = true);
 
-std::pair<RecInt, RecErrT>           RecGetRecordInt(const char *name, bool lock = true);
-std::pair<RecFloat, RecErrT>         RecGetRecordFloat(const char *name, bool lock = true);
-RecErrT                              RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
-std::pair<std::string_view, RecErrT> RecGetRecordString_Xmalloc(const char *name, bool lock = true);
-std::pair<RecCounter, RecErrT>       RecGetRecordCounter(const char *name, bool lock = true);
+std::pair<RecInt, RecErrT>     RecGetRecordInt(const char *name, bool lock = true);
+std::pair<RecFloat, RecErrT>   RecGetRecordFloat(const char *name, bool lock = true);
+RecErrT                        RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
+std::pair<RecString, RecErrT>  RecGetRecordStringAlloc(const char *name, bool lock = true);
+std::pair<RecCounter, RecErrT> RecGetRecordCounter(const char *name, bool lock = true);
 
 //------------------------------------------------------------------------
 // Record Attributes Reading
@@ -215,7 +215,7 @@ RecEstablishStaticConfigStringAlloc(const char *name, RecString *rec_string)
   if (RecLinkConfigString(name, rec_string) == REC_ERR_OKAY) {
     ats_free(*rec_string);
   }
-  *rec_string = const_cast<RecString>(RecGetRecordString_Xmalloc(name).first.data());
+  *rec_string = RecGetRecordStringAlloc(name).first;
 }
 
 inline void

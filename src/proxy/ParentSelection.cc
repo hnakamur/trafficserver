@@ -81,7 +81,7 @@ ParentSelectionPolicy::ParentSelectionPolicy()
 ParentConfigParams::ParentConfigParams(P_table *_parent_table) : parent_table(_parent_table), DefaultParent(nullptr), policy()
 {
   // Handle default parent
-  auto default_val{const_cast<char *>(RecGetRecordString_Xmalloc(default_var).first.data())};
+  auto default_val{RecGetRecordStringAlloc(default_var).first};
   DefaultParent = createDefaultParent(default_val);
   ats_free(default_val);
 }
@@ -966,7 +966,7 @@ SocksServerConfig::reconfigure()
   ink_assert(params != nullptr);
 
   // Handle default parent
-  auto default_val{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.socks.default_servers").first.data())};
+  auto default_val{RecGetRecordStringAlloc("proxy.config.socks.default_servers").first};
   params->DefaultParent = createDefaultParent(default_val);
   ats_free(default_val);
 

@@ -283,11 +283,11 @@ HttpProxyPort::checkPrefix(const char *src, char const *prefix, size_t prefix_le
 bool
 HttpProxyPort::loadConfig(std::vector<self> &entries)
 {
-  auto [text, err]{RecGetRecordString_Xmalloc(PORTS_CONFIG_NAME)};
+  auto [text, err]{RecGetRecordStringAlloc(PORTS_CONFIG_NAME)};
   if (err == REC_ERR_OKAY) {
-    self::loadValue(entries, text.data());
+    self::loadValue(entries, text);
   }
-  ats_free(const_cast<char *>(text.data()));
+  ats_free(text);
 
   return 0 < entries.size();
 }
@@ -740,7 +740,7 @@ ts_host_res_global_init()
 {
   // Global configuration values.
   host_res_default_preference_order = HOST_RES_DEFAULT_PREFERENCE_ORDER;
-  auto ip_resolve{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.hostdb.ip_resolve").first.data())};
+  auto ip_resolve{RecGetRecordStringAlloc("proxy.config.hostdb.ip_resolve").first};
   if (ip_resolve) {
     parse_host_res_preference(ip_resolve, host_res_default_preference_order);
   }

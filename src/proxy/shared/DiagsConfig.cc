@@ -106,8 +106,7 @@ DiagsConfig::reconfigure_diags()
       break;
     }
 
-    std::tie(s, err) = RecGetRecordString_Xmalloc(record_name);
-    p                = const_cast<char *>(s.data());
+    std::tie(p, err) = RecGetRecordStringAlloc(record_name);
     found            = err == REC_ERR_OKAY;
     all_found        = all_found && found;
 
@@ -119,14 +118,12 @@ DiagsConfig::reconfigure_diags()
     }
   }
 
-  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.debug.tags");
-  p                = const_cast<char *>(s.data());
+  std::tie(p, err) = RecGetRecordStringAlloc("proxy.config.diags.debug.tags");
   found            = err == REC_ERR_OKAY;
   dt               = (found ? p : nullptr); // NOTE: needs to be freed
   all_found        = all_found && found;
 
-  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.action.tags");
-  p                = const_cast<char *>(s.data());
+  std::tie(p, err) = RecGetRecordStringAlloc("proxy.config.diags.action.tags");
   found            = err == REC_ERR_OKAY;
   at               = (found ? p : nullptr); // NOTE: needs to be freed
   all_found        = all_found && found;
@@ -311,8 +308,8 @@ DiagsConfig::DiagsConfig(std::string_view prefix_string, const char *filename, c
   int diags_log_roll_enable  = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_enabled").first);
 
   // Grab some perms for the actual files on disk
-  auto diags_perm{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.diags.logfile_perm").first.data())};
-  auto output_perm{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.output.logfile_perm").first.data())};
+  auto diags_perm{RecGetRecordStringAlloc("proxy.config.diags.logfile_perm").first};
+  auto output_perm{RecGetRecordStringAlloc("proxy.config.output.logfile_perm").first};
   int  diags_perm_parsed  = diags_perm ? ink_fileperm_parse(diags_perm) : -1;
   int  output_perm_parsed = diags_perm ? ink_fileperm_parse(output_perm) : -1;
 
