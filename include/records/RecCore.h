@@ -209,23 +209,18 @@ RecEstablishStaticConfigUInt32(const char *name, uint32_t *p_uint32)
   *p_uint32 = RecGetRecordInt(name).first;
 }
 
+inline void
+RecEstablishStaticConfigStringAlloc(const char *name, RecString *rec_string)
+{
+  if (RecLinkConfigString(name, rec_string) == REC_ERR_OKAY) {
+    ats_free(*rec_string);
+  }
+  *rec_string = const_cast<RecString>(RecGetRecordString_Xmalloc(name).first.data());
+}
+
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-/*
- * RecLinkConfigString allocates the RecString and stores the ptr to it (&var).
- * So before changing _var (the RecString) we have to free the original one.
- * Really, we somehow need to know whether RecLinkConfigString allocated _var.
- * For now, we're using the return value to indicate this, even though it's
- * not always the case.  If we're wrong, we'll leak the RecString.
- */
-#define REC_EstablishStaticConfigStringAlloc(_var, _config_var_name)             \
-  do {                                                                           \
-    if (RecLinkConfigString(_config_var_name, &_var) == REC_ERR_OKAY)            \
-      ats_free(_var);                                                            \
-    _var = (RecString)RecGetRecordString_Xmalloc(_config_var_name).first.data(); \
-  } while (0)
-
 #define REC_EstablishStaticConfigFloat(_var, _config_var_name)  \
   do {                                                          \
     RecLinkConfigFloat(_config_var_name, &_var);                \
