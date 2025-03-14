@@ -411,10 +411,8 @@ public:
   {
     SET_HANDLER(&DiagsLogContinuation::periodic);
 
-    auto configured_traffic_out_name{
-      const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.output.logfile.name").first.data())};
+    ats_scoped_str configured_traffic_out_name{RecGetRecordStringAlloc("proxy.config.output.logfile.name").first};
     traffic_out_name = std::string(configured_traffic_out_name);
-    ats_free(configured_traffic_out_name);
   }
 
   int
@@ -1540,10 +1538,10 @@ void
 syslog_log_configure()
 {
   char sys_var[] = "proxy.config.syslog_facility";
-  if (auto [facility_str, err]{RecGetRecordString_Xmalloc(sys_var)}; err == REC_ERR_OKAY) {
-    int facility = facility_string_to_int(facility_str.data());
+  if (auto [facility_str, err]{RecGetRecordStringAlloc(sys_var)}; err == REC_ERR_OKAY) {
+    int facility = facility_string_to_int(facility_str);
 
-    ats_free(const_cast<char *>(facility_str.data()));
+    ats_free(facility_str);
     if (facility < 0) {
       syslog(LOG_WARNING, "Bad syslog facility in %s. Keeping syslog at LOG_DAEMON", ts::filename::RECORDS);
     } else {
@@ -2044,7 +2042,7 @@ main(int /* argc ATS_UNUSED */, const char **argv)
   } else if (HttpConfig::m_master.inbound.has_ip6()) {
     machine_addr.assign(HttpConfig::m_master.inbound.ip6());
   }
-  auto hostname{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.log.hostname").first.data())};
+  auto hostname{RecGetRecordStringAlloc("proxy.config.log.hostname").first};
   if (hostname != nullptr && std::string_view(hostname) == "localhost") {
     // The default value was used. Let Machine::init derive the hostname.
     ats_free(hostname);
@@ -2154,10 +2152,12 @@ main(int /* argc ATS_UNUSED */, const char **argv)
   RecRegisterConfigUpdateCb("proxy.config.dump_mem_info_frequency", init_memory_tracker, nullptr);
   init_memory_tracker(nullptr, RECD_NULL, RecData(), nullptr);
 
-  auto p{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.diags.debug.client_ip").first.data())};
-  if (p) {
-    // Translate string to IpAddr
-    set_debug_ip(p);
+  {
+    ats_scoped_str p{RecGetRecordStringAlloc("proxy.config.diags.debug.client_ip").first};
+    if (p) {
+      // Translate string to IpAddr
+      set_debug_ip(p);
+    }
   }
   RecRegisterConfigUpdateCb("proxy.config.diags.debug.client_ip", update_debug_client_ip, nullptr);
 

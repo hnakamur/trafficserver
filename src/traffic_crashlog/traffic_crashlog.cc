@@ -174,10 +174,9 @@ main(int /* argc ATS_UNUSED */, const char **argv)
   if (syslog_mode) {
     int facility = -1;
 
-    if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.syslog_facility")}; err == REC_ERR_OKAY) {
-      auto name{const_cast<char *>(rec_str.data())};
+    if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.syslog_facility")}; err == REC_ERR_OKAY) {
+      ats_scoped_str name{rec_str};
       facility = facility_string_to_int(name);
-      ats_free(name);
     }
 
     if (facility < 0) {

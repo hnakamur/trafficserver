@@ -44,14 +44,14 @@ ink_event_system_init(ts::ModuleVersion v)
 
   RecEstablishStaticConfigInt32("proxy.config.allocator.thread_freelist_low_watermark", &thread_freelist_low_watermark);
 
-  int   chunk_sizes[DEFAULT_BUFFER_SIZES] = {0};
-  char *chunk_sizes_string =
-    const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.allocator.iobuf_chunk_sizes").first.data());
-  if (chunk_sizes_string && !parse_buffer_chunk_sizes(chunk_sizes_string, chunk_sizes)) {
-    // If we can't parse the string then we can't be sure of the chunk sizes so just exit
-    Fatal("Failed to parse proxy.config.allocator.iobuf_chunk_sizes");
+  int chunk_sizes[DEFAULT_BUFFER_SIZES] = {0};
+  {
+    ats_scoped_str chunk_sizes_string{RecGetRecordStringAlloc("proxy.config.allocator.iobuf_chunk_sizes").first};
+    if (chunk_sizes_string && !parse_buffer_chunk_sizes(chunk_sizes_string, chunk_sizes)) {
+      // If we can't parse the string then we can't be sure of the chunk sizes so just exit
+      Fatal("Failed to parse proxy.config.allocator.iobuf_chunk_sizes");
+    }
   }
-  ats_free(chunk_sizes_string);
 
   bool use_hugepages = ats_hugepage_enabled();
 
