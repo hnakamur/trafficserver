@@ -186,14 +186,18 @@ RecErrT RecGetRecordSource(const char *name, RecSourceT *source, bool lock = tru
 void RecConfigWarnIfUnregistered();
 
 //-------------------------------------------------------------------------
+// RecEstablishStaticConfigXXX
+//-------------------------------------------------------------------------
+inline void
+RecEstablishStaticConfigInt(const char *name, RecInt *rec_int)
+{
+  RecLinkConfigInt(name, rec_int);
+  *rec_int = RecGetRecordInt(name).first;
+}
+
+//-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_EstablishStaticConfigInteger(_var, _config_var_name) \
-  do {                                                           \
-    RecLinkConfigInt(_config_var_name, &_var);                   \
-    _var = (int64_t)RecGetRecordInt(_config_var_name).first;     \
-  } while (0)
-
 #define REC_EstablishStaticConfigInt32(_var, _config_var_name) \
   do {                                                         \
     RecLinkConfigInt32(_config_var_name, &_var);               \
