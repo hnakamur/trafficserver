@@ -93,8 +93,7 @@ LogConfig::register_rolled_log_auto_delete(std::string_view logname, int rolling
 void
 LogConfig::read_configuration_variables()
 {
-  int   val;
-  char *ptr;
+  int val;
 
   val = static_cast<int>(RecGetRecordInt("proxy.config.log.log_buffer_size").first);
   if (val > 0) {
@@ -126,14 +125,14 @@ LogConfig::read_configuration_variables()
     logbuffer_max_iobuf_index = val;
   }
 
-  ptr                     = REC_ConfigReadString("proxy.config.log.logfile_perm");
-  int logfile_perm_parsed = ink_fileperm_parse(ptr);
+  auto ptr{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.log.logfile_perm").first.data())};
+  int  logfile_perm_parsed = ink_fileperm_parse(ptr);
   if (logfile_perm_parsed != -1) {
     logfile_perm = logfile_perm_parsed;
   }
   ats_free(ptr);
 
-  ptr = REC_ConfigReadString("proxy.config.log.hostname");
+  ptr = const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.log.hostname").first.data());
   if (ptr != nullptr) {
     if (std::string_view(ptr) != "localhost") {
       ats_free(hostname);
@@ -143,7 +142,7 @@ LogConfig::read_configuration_variables()
     }
   }
 
-  ptr = REC_ConfigReadString("proxy.config.error.logfile.filename");
+  ptr = const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.error.logfile.filename").first.data());
   if (ptr != nullptr) {
     ats_free(error_log_filename);
     error_log_filename = ptr;
@@ -213,7 +212,7 @@ LogConfig::read_configuration_variables()
     register_rolled_log_auto_delete(MANAGER_LOG_FILENAME, val);
 
     // For traffic.out
-    char       *configured_name(REC_ConfigReadString("proxy.config.output.logfile.name"));
+    auto        configured_name{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.output.logfile.name").first.data())};
     const char *traffic_logname = configured_name ? configured_name : "traffic.out";
     val                         = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_min_count").first);
     register_rolled_log_auto_delete(traffic_logname, val);

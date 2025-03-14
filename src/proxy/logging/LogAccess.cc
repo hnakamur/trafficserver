@@ -184,13 +184,12 @@ LogAccess::marshal_config_int_var(char *config_var, char *buf)
 int
 LogAccess::marshal_config_str_var(char *config_var, char *buf)
 {
-  char *str = nullptr;
-  str       = REC_ConfigReadString(config_var);
-  int len   = LogAccess::strlen(str);
+  auto str{RecGetRecordString_Xmalloc(config_var).first};
+  auto len{static_cast<int>(str.length())};
   if (buf) {
-    marshal_str(buf, str, len);
+    marshal_str(buf, str.data(), len);
   }
-  ats_free(str);
+  ats_free(const_cast<char *>(str.data()));
   return len;
 }
 
