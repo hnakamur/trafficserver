@@ -191,19 +191,19 @@ void RecConfigWarnIfUnregistered();
 #define REC_EstablishStaticConfigInteger(_var, _config_var_name) \
   do {                                                           \
     RecLinkConfigInt(_config_var_name, &_var);                   \
-    _var = (int64_t)REC_ConfigReadInteger(_config_var_name);     \
+    _var = (int64_t)RecGetRecordInt(_config_var_name).first;     \
   } while (0)
 
 #define REC_EstablishStaticConfigInt32(_var, _config_var_name) \
   do {                                                         \
     RecLinkConfigInt32(_config_var_name, &_var);               \
-    _var = (int32_t)REC_ConfigReadInteger(_config_var_name);   \
+    _var = (int32_t)RecGetRecordInt(_config_var_name).first;   \
   } while (0)
 
 #define REC_EstablishStaticConfigInt32U(_var, _config_var_name) \
   do {                                                          \
     RecLinkConfigUInt32(_config_var_name, &_var);               \
-    _var = (int32_t)REC_ConfigReadInteger(_config_var_name);    \
+    _var = (int32_t)RecGetRecordInt(_config_var_name).first;    \
   } while (0)
 
 /*
@@ -231,10 +231,9 @@ void RecConfigWarnIfUnregistered();
 #define REC_EstablishStaticConfigByte(_var, _config_var_name) \
   do {                                                        \
     RecLinkConfigByte(_config_var_name, &_var);               \
-    _var = (RecByte)REC_ConfigReadInteger(_config_var_name);  \
+    _var = (RecByte)RecGetRecordInt(_config_var_name).first;  \
   } while (0)
 
-RecInt   REC_ConfigReadInteger(const char *name);
 char    *REC_ConfigReadString(const char *name);
 RecFloat REC_ConfigReadFloat(const char *name);
 

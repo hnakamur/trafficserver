@@ -303,12 +303,12 @@ DiagsConfig::DiagsConfig(std::string_view prefix_string, const char *filename, c
 
   // Grab rolling intervals from configuration
   // TODO error check these values
-  int output_log_roll_int    = static_cast<int>(REC_ConfigReadInteger("proxy.config.output.logfile.rolling_interval_sec"));
-  int output_log_roll_size   = static_cast<int>(REC_ConfigReadInteger("proxy.config.output.logfile.rolling_size_mb"));
-  int output_log_roll_enable = static_cast<int>(REC_ConfigReadInteger("proxy.config.output.logfile.rolling_enabled"));
-  int diags_log_roll_int     = static_cast<int>(REC_ConfigReadInteger("proxy.config.diags.logfile.rolling_interval_sec"));
-  int diags_log_roll_size    = static_cast<int>(REC_ConfigReadInteger("proxy.config.diags.logfile.rolling_size_mb"));
-  int diags_log_roll_enable  = static_cast<int>(REC_ConfigReadInteger("proxy.config.diags.logfile.rolling_enabled"));
+  int output_log_roll_int    = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_interval_sec").first);
+  int output_log_roll_size   = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_size_mb").first);
+  int output_log_roll_enable = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_enabled").first);
+  int diags_log_roll_int     = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_interval_sec").first);
+  int diags_log_roll_size    = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_size_mb").first);
+  int diags_log_roll_enable  = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_enabled").first);
 
   // Grab some perms for the actual files on disk
   char *diags_perm         = REC_ConfigReadString("proxy.config.diags.logfile_perm");
