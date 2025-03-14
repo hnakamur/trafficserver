@@ -220,10 +220,10 @@ void RecConfigWarnIfUnregistered();
     _var = (RecString)RecGetRecordString_Xmalloc(_config_var_name).first.data(); \
   } while (0)
 
-#define REC_EstablishStaticConfigFloat(_var, _config_var_name) \
-  do {                                                         \
-    RecLinkConfigFloat(_config_var_name, &_var);               \
-    _var = (RecFloat)REC_ConfigReadFloat(_config_var_name);    \
+#define REC_EstablishStaticConfigFloat(_var, _config_var_name)  \
+  do {                                                          \
+    RecLinkConfigFloat(_config_var_name, &_var);                \
+    _var = (RecFloat)RecGetRecordFloat(_config_var_name).first; \
   } while (0)
 
 // Allow to treat our "INT" configs as a byte type internally. Note
@@ -233,8 +233,6 @@ void RecConfigWarnIfUnregistered();
     RecLinkConfigByte(_config_var_name, &_var);               \
     _var = (RecByte)RecGetRecordInt(_config_var_name).first;  \
   } while (0)
-
-RecFloat REC_ConfigReadFloat(const char *name);
 
 //------------------------------------------------------------------------
 // Set RecRecord attributes
