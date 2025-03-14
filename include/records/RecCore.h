@@ -218,15 +218,16 @@ RecEstablishStaticConfigStringAlloc(const char *name, RecString *rec_string)
   *rec_string = const_cast<RecString>(RecGetRecordString_Xmalloc(name).first.data());
 }
 
+inline void
+RecEstablishStaticConfigFloat(const char *name, RecFloat *rec_float)
+{
+  RecLinkConfigFloat(name, rec_float);
+  *rec_float = RecGetRecordFloat(name).first;
+}
+
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_EstablishStaticConfigFloat(_var, _config_var_name)  \
-  do {                                                          \
-    RecLinkConfigFloat(_config_var_name, &_var);                \
-    _var = (RecFloat)RecGetRecordFloat(_config_var_name).first; \
-  } while (0)
-
 // Allow to treat our "INT" configs as a byte type internally. Note
 // that the byte type is just a wrapper around RECD_INT.
 #define REC_EstablishStaticConfigByte(_var, _config_var_name) \
