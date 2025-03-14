@@ -916,12 +916,6 @@ RecDumpRecordsHt(RecT rec_type)
 //-------------------------------------------------------------------------
 // Backwards compatibility ... TODO: Should eliminate these
 //-------------------------------------------------------------------------
-char *
-REC_ConfigReadString(const char *name)
-{
-  return const_cast<char *>(RecGetRecordString_Xmalloc(name).first.data());
-}
-
 RecFloat
 REC_ConfigReadFloat(const char *name)
 {
