@@ -106,7 +106,7 @@ DiagsConfig::reconfigure_diags()
       break;
     }
 
-    std::tie(s, err) = RecGetRecordString_Xmalloc(record_name);
+    std::tie(s, err) = RecGetRecordStringAlloc(record_name);
     p                = const_cast<char *>(s.data());
     found            = err == REC_ERR_OKAY;
     all_found        = all_found && found;
@@ -119,13 +119,13 @@ DiagsConfig::reconfigure_diags()
     }
   }
 
-  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.debug.tags");
+  std::tie(s, err) = RecGetRecordStringAlloc("proxy.config.diags.debug.tags");
   p                = const_cast<char *>(s.data());
   found            = err == REC_ERR_OKAY;
   dt               = (found ? p : nullptr); // NOTE: needs to be freed
   all_found        = all_found && found;
 
-  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.action.tags");
+  std::tie(s, err) = RecGetRecordStringAlloc("proxy.config.diags.action.tags");
   p                = const_cast<char *>(s.data());
   found            = err == REC_ERR_OKAY;
   at               = (found ? p : nullptr); // NOTE: needs to be freed
@@ -311,17 +311,16 @@ DiagsConfig::DiagsConfig(std::string_view prefix_string, const char *filename, c
   int diags_log_roll_enable  = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_enabled").first);
 
   // Grab some perms for the actual files on disk
-  auto diags_perm{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.diags.logfile_perm").first.data())};
-  auto output_perm{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.output.logfile_perm").first.data())};
-  int  diags_perm_parsed  = diags_perm ? ink_fileperm_parse(diags_perm) : -1;
-  int  output_perm_parsed = diags_perm ? ink_fileperm_parse(output_perm) : -1;
+  {
+    ats_scoped_str diags_perm{RecGetRecordStringAlloc("proxy.config.diags.logfile_perm").first};
+    ats_scoped_str output_perm{RecGetRecordStringAlloc("proxy.config.output.logfile_perm").first};
+    int            diags_perm_parsed  = diags_perm ? ink_fileperm_parse(diags_perm) : -1;
+    int            output_perm_parsed = diags_perm ? ink_fileperm_parse(output_perm) : -1;
 
-  ats_free(diags_perm);
-  ats_free(output_perm);
-
-  // Set up diags, FILE streams are opened in Diags constructor
-  diags_log = new BaseLogFile(diags_logpath.c_str());
-  _diags    = new Diags(prefix_string, tags, actions, diags_log, diags_perm_parsed, output_perm_parsed);
+    // Set up diags, FILE streams are opened in Diags constructor
+    diags_log = new BaseLogFile(diags_logpath.c_str());
+    _diags    = new Diags(prefix_string, tags, actions, diags_log, diags_perm_parsed, output_perm_parsed);
+  }
   DiagsPtr::set(_diags);
   _diags->config_roll_diagslog(static_cast<RollingEnabledValues>(diags_log_roll_enable), diags_log_roll_int, diags_log_roll_size);
   _diags->config_roll_outputlog(static_cast<RollingEnabledValues>(output_log_roll_enable), output_log_roll_int,

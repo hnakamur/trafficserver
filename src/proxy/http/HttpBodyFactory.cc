@@ -281,10 +281,9 @@ HttpBodyFactory::reconfigure()
 
   ats_scoped_str directory_of_template_sets;
 
-  std::string_view rec_str;
-  std::tie(rec_str, rec_err) = RecGetRecordString_Xmalloc("proxy.config.body_factory.template_sets_dir");
-  RecString s                = const_cast<char *>(rec_str.data());
-  all_found                  = all_found && (rec_err == REC_ERR_OKAY);
+  RecString s;
+  std::tie(s, rec_err) = RecGetRecordStringAlloc("proxy.config.body_factory.template_sets_dir");
+  all_found            = all_found && (rec_err == REC_ERR_OKAY);
   if (rec_err == REC_ERR_OKAY) {
     directory_of_template_sets = Layout::get()->relative(s);
     if (access(directory_of_template_sets, R_OK) < 0) {

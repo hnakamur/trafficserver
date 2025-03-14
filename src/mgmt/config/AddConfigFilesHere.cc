@@ -38,8 +38,8 @@ static constexpr bool NOT_REQUIRED{false};
 void
 registerFile(const char *configName, const char *defaultName, bool isRequired)
 {
-  auto [tmp, err]{RecGetRecordString_Xmalloc(configName)};
-  ats_scoped_str fname{tmp.data()};
+  auto [tmp, err]{RecGetRecordStringAlloc(configName)};
+  ats_scoped_str fname{tmp};
   FileManager::instance().addFile(err == REC_ERR_OKAY ? fname : defaultName, configName, false, isRequired);
 }
 
