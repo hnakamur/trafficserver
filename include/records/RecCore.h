@@ -195,15 +195,16 @@ RecEstablishStaticConfigInt(const char *name, RecInt *rec_int)
   *rec_int = RecGetRecordInt(name).first;
 }
 
+inline void
+RecEstablishStaticConfigInt32(const char *name, int32_t *p_int32)
+{
+  RecLinkConfigInt32(name, p_int32);
+  *p_int32 = RecGetRecordInt(name).first;
+}
+
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_EstablishStaticConfigInt32(_var, _config_var_name) \
-  do {                                                         \
-    RecLinkConfigInt32(_config_var_name, &_var);               \
-    _var = (int32_t)RecGetRecordInt(_config_var_name).first;   \
-  } while (0)
-
 #define REC_EstablishStaticConfigInt32U(_var, _config_var_name) \
   do {                                                          \
     RecLinkConfigUInt32(_config_var_name, &_var);               \

@@ -49,8 +49,8 @@ configure_net()
   RecRegisterConfigUpdateCb("proxy.config.net.connections_throttle", change_net_connections_throttle, nullptr);
   fds_throttle = RecGetRecordInt("proxy.config.net.connections_throttle").first;
 
-  REC_EstablishStaticConfigInt32(net_retry_delay, "proxy.config.net.retry_delay");
-  REC_EstablishStaticConfigInt32(net_throttle_delay, "proxy.config.net.throttle_delay");
+  RecEstablishStaticConfigInt32("proxy.config.net.retry_delay", &net_retry_delay);
+  RecEstablishStaticConfigInt32("proxy.config.net.throttle_delay", &net_throttle_delay);
 
   // These are not reloadable
   net_event_period  = RecGetRecordInt("proxy.config.net.event_period").first;
