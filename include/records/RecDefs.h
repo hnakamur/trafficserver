@@ -44,7 +44,7 @@ enum RecErrT {
 
 using RecInt         = int64_t;
 using RecFloat       = float;
-using RecString      = char *;
+using RecString      = std::string;
 using RecStringConst = const char *;
 using RecCounter     = int64_t;
 using RecByte        = int8_t;
