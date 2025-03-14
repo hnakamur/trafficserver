@@ -916,12 +916,6 @@ RecDumpRecordsHt(RecT rec_type)
 //-------------------------------------------------------------------------
 // Backwards compatibility ... TODO: Should eliminate these
 //-------------------------------------------------------------------------
-RecInt
-REC_ConfigReadInteger(const char *name)
-{
-  return RecGetRecordInt(name).first;
-}
-
 char *
 REC_ConfigReadString(const char *name)
 {

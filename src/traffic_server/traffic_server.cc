@@ -422,9 +422,9 @@ public:
     Dbg(dbg_ctl_log, "in DiagsLogContinuation, checking on diags.log");
 
     // First, let us update the rolling config values for diagslog.
-    int diags_log_roll_int    = static_cast<int>(REC_ConfigReadInteger("proxy.config.diags.logfile.rolling_interval_sec"));
-    int diags_log_roll_size   = static_cast<int>(REC_ConfigReadInteger("proxy.config.diags.logfile.rolling_size_mb"));
-    int diags_log_roll_enable = static_cast<int>(REC_ConfigReadInteger("proxy.config.diags.logfile.rolling_enabled"));
+    int diags_log_roll_int    = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_interval_sec").first);
+    int diags_log_roll_size   = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_size_mb").first);
+    int diags_log_roll_enable = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_enabled").first);
     diags()->config_roll_diagslog(static_cast<RollingEnabledValues>(diags_log_roll_enable), diags_log_roll_int,
                                   diags_log_roll_size);
 
@@ -432,9 +432,9 @@ public:
       Note("Rolled %s", diags_log_filename);
     }
 
-    int output_log_roll_int    = static_cast<int>(REC_ConfigReadInteger("proxy.config.output.logfile.rolling_interval_sec"));
-    int output_log_roll_size   = static_cast<int>(REC_ConfigReadInteger("proxy.config.output.logfile.rolling_size_mb"));
-    int output_log_roll_enable = static_cast<int>(REC_ConfigReadInteger("proxy.config.output.logfile.rolling_enabled"));
+    int output_log_roll_int    = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_interval_sec").first);
+    int output_log_roll_size   = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_size_mb").first);
+    int output_log_roll_enable = static_cast<int>(RecGetRecordInt("proxy.config.output.logfile.rolling_enabled").first);
     diags()->config_roll_outputlog(static_cast<RollingEnabledValues>(output_log_roll_enable), output_log_roll_int,
                                    output_log_roll_size);
 
@@ -471,7 +471,7 @@ public:
     }
 
     // "reload" the setting, we don't do this often so not expensive
-    _memory_limit = REC_ConfigReadInteger("proxy.config.memory.max_usage");
+    _memory_limit = RecGetRecordInt("proxy.config.memory.max_usage").first;
     _memory_limit = _memory_limit >> 10; // divide by 1024
 
     if (getrusage(RUSAGE_SELF, &_usage) == 0) {
@@ -575,7 +575,7 @@ init_memory_tracker(const char *config_var, RecDataT /* type ATS_UNUSED */, RecD
   if (config_var) {
     dump_mem_info_frequency = data.rec_int;
   } else {
-    dump_mem_info_frequency = REC_ConfigReadInteger("proxy.config.dump_mem_info_frequency");
+    dump_mem_info_frequency = RecGetRecordInt("proxy.config.dump_mem_info_frequency").first;
   }
 
   Dbg(dbg_ctl_tracker, "init_memory_tracker called [%d]", dump_mem_info_frequency);
