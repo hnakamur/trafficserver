@@ -489,14 +489,14 @@ SSLConfigParams::initialize()
   }
 
   // SSL record size
-  REC_EstablishStaticConfigInt32(ssl_maxrecord, "proxy.config.ssl.max_record_size");
+  RecEstablishStaticConfigInt32("proxy.config.ssl.max_record_size", &ssl_maxrecord);
 
   // SSL OCSP Stapling configurations
   ssl_ocsp_enabled = RecGetRecordInt("proxy.config.ssl.ocsp.enabled").first;
-  REC_EstablishStaticConfigInt32(ssl_ocsp_cache_timeout, "proxy.config.ssl.ocsp.cache_timeout");
+  RecEstablishStaticConfigInt32("proxy.config.ssl.ocsp.cache_timeout", &ssl_ocsp_cache_timeout);
   ssl_ocsp_request_mode = RecGetRecordInt("proxy.config.ssl.ocsp.request_mode").first;
-  REC_EstablishStaticConfigInt32(ssl_ocsp_request_timeout, "proxy.config.ssl.ocsp.request_timeout");
-  REC_EstablishStaticConfigInt32(ssl_ocsp_update_period, "proxy.config.ssl.ocsp.update_period");
+  RecEstablishStaticConfigInt32("proxy.config.ssl.ocsp.request_timeout", &ssl_ocsp_request_timeout);
+  RecEstablishStaticConfigInt32("proxy.config.ssl.ocsp.update_period", &ssl_ocsp_update_period);
   if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.ssl.ocsp.response.path")}; err == REC_ERR_OKAY) {
     ssl_ocsp_response_path = const_cast<char *>(rec_str.data());
   }

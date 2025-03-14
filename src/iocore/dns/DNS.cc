@@ -226,15 +226,15 @@ DNSProcessor::start(int, size_t stacksize)
   //
   // Read configuration
   //
-  REC_EstablishStaticConfigInt32(dns_retries, "proxy.config.dns.retries");
-  REC_EstablishStaticConfigInt32(dns_timeout, "proxy.config.dns.lookup_timeout");
-  REC_EstablishStaticConfigInt32(dns_search, "proxy.config.dns.search_default_domains");
-  REC_EstablishStaticConfigInt32(dns_failover_number, "proxy.config.dns.failover_number");
-  REC_EstablishStaticConfigInt32(dns_failover_period, "proxy.config.dns.failover_period");
-  REC_EstablishStaticConfigInt32(dns_max_dns_in_flight, "proxy.config.dns.max_dns_in_flight");
-  REC_EstablishStaticConfigInt32(dns_validate_qname, "proxy.config.dns.validate_query_name");
-  REC_EstablishStaticConfigInt32(dns_ns_rr, "proxy.config.dns.round_robin_nameservers");
-  REC_EstablishStaticConfigInt32(dns_max_tcp_continuous_failures, "proxy.config.dns.max_tcp_continuous_failures");
+  RecEstablishStaticConfigInt32("proxy.config.dns.retries", &dns_retries);
+  RecEstablishStaticConfigInt32("proxy.config.dns.lookup_timeout", &dns_timeout);
+  RecEstablishStaticConfigInt32("proxy.config.dns.search_default_domains", &dns_search);
+  RecEstablishStaticConfigInt32("proxy.config.dns.failover_number", &dns_failover_number);
+  RecEstablishStaticConfigInt32("proxy.config.dns.failover_period", &dns_failover_period);
+  RecEstablishStaticConfigInt32("proxy.config.dns.max_dns_in_flight", &dns_max_dns_in_flight);
+  RecEstablishStaticConfigInt32("proxy.config.dns.validate_query_name", &dns_validate_qname);
+  RecEstablishStaticConfigInt32("proxy.config.dns.round_robin_nameservers", &dns_ns_rr);
+  RecEstablishStaticConfigInt32("proxy.config.dns.max_tcp_continuous_failures", &dns_max_tcp_continuous_failures);
   if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.dns.nameservers")}; err == REC_ERR_OKAY) {
     dns_ns_list = const_cast<char *>(rec_str.data());
   }
@@ -247,9 +247,9 @@ DNSProcessor::start(int, size_t stacksize)
   if (auto [rec_str, err]{RecGetRecordString_Xmalloc("proxy.config.dns.resolv_conf")}; err == REC_ERR_OKAY) {
     dns_resolv_conf = const_cast<char *>(rec_str.data());
   }
-  REC_EstablishStaticConfigInt32(dns_thread, "proxy.config.dns.dedicated_thread");
+  RecEstablishStaticConfigInt32("proxy.config.dns.dedicated_thread", &dns_thread);
   int dns_conn_mode_i = 0;
-  REC_EstablishStaticConfigInt32(dns_conn_mode_i, "proxy.config.dns.connection_mode");
+  RecEstablishStaticConfigInt32("proxy.config.dns.connection_mode", &dns_conn_mode_i);
   dns_conn_mode = static_cast<DNS_CONN_MODE>(dns_conn_mode_i);
 
   if (dns_thread > 0) {
