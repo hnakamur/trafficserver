@@ -202,15 +202,16 @@ RecEstablishStaticConfigInt32(const char *name, int32_t *p_int32)
   *p_int32 = RecGetRecordInt(name).first;
 }
 
+inline void
+RecEstablishStaticConfigUInt32(const char *name, uint32_t *p_uint32)
+{
+  RecLinkConfigUInt32(name, p_uint32);
+  *p_uint32 = RecGetRecordInt(name).first;
+}
+
 //-------------------------------------------------------------------------
 // Backwards Compatibility Items (REC_ prefix)
 //-------------------------------------------------------------------------
-#define REC_EstablishStaticConfigInt32U(_var, _config_var_name) \
-  do {                                                          \
-    RecLinkConfigUInt32(_config_var_name, &_var);               \
-    _var = (int32_t)RecGetRecordInt(_config_var_name).first;    \
-  } while (0)
-
 /*
  * RecLinkConfigString allocates the RecString and stores the ptr to it (&var).
  * So before changing _var (the RecString) we have to free the original one.
