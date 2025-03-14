@@ -225,16 +225,12 @@ RecEstablishStaticConfigFloat(const char *name, RecFloat *rec_float)
   *rec_float = RecGetRecordFloat(name).first;
 }
 
-//-------------------------------------------------------------------------
-// Backwards Compatibility Items (REC_ prefix)
-//-------------------------------------------------------------------------
-// Allow to treat our "INT" configs as a byte type internally. Note
-// that the byte type is just a wrapper around RECD_INT.
-#define REC_EstablishStaticConfigByte(_var, _config_var_name) \
-  do {                                                        \
-    RecLinkConfigByte(_config_var_name, &_var);               \
-    _var = (RecByte)RecGetRecordInt(_config_var_name).first;  \
-  } while (0)
+inline void
+RecEstablishStaticConfigByte(const char *name, RecByte *rec_byte)
+{
+  RecLinkConfigByte(name, rec_byte);
+  *rec_byte = RecGetRecordInt(name).first;
+}
 
 //------------------------------------------------------------------------
 // Set RecRecord attributes
