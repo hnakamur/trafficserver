@@ -914,15 +914,6 @@ RecDumpRecordsHt(RecT rec_type)
 }
 
 //-------------------------------------------------------------------------
-// Backwards compatibility ... TODO: Should eliminate these
-//-------------------------------------------------------------------------
-RecFloat
-REC_ConfigReadFloat(const char *name)
-{
-  return RecGetRecordFloat(name).first;
-}
-
-//-------------------------------------------------------------------------
 // RecConfigReadConfigDir
 //-------------------------------------------------------------------------
 std::string
