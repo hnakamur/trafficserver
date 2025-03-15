@@ -1180,10 +1180,10 @@ ParseResult
 validate_hdr_request_target(int method_wk_idx, URLImpl *url)
 {
   ParseResult ret = PARSE_RESULT_DONE;
-  int         host_len{static_cast<int>(url->get_host().length())};
-  int         path_len;
-  const char *path = url->get_path(&path_len);
-  int         scheme_len{static_cast<int>(url->get_scheme().length())};
+  auto        host_len{url->get_host().length()};
+  auto        path{url->get_path()};
+  auto        path_len{path.length()};
+  auto        scheme_len{url->get_scheme().length()};
 
   if (host_len == 0) {
     if (path_len == 1 && path[0] == '*') { // asterisk-form
