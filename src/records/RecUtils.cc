@@ -122,6 +122,18 @@ RecDataSet(RecDataT data_type, RecData *data_dst, RecData *data_src)
 
   switch (data_type) {
   case RECD_STRING:
+#if 0
+    if (data_src->rec_string != nullptr) {
+      // Chop trailing spaces
+      char *end = data_src->rec_string + strlen(data_src->rec_string) - 1;
+
+      while (end >= data_src->rec_string && isspace(*end)) {
+        end--;
+      }
+      int len = end + 1 - data_src->rec_string;
+
+    }
+#endif
     if (data_src->rec_string == nullptr) {
       if (data_dst->rec_string != nullptr) {
         ats_free(data_dst->rec_string);

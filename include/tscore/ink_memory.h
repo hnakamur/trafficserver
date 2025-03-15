@@ -617,3 +617,24 @@ struct ats_unique_buf_deleter {
 };
 using ats_unique_buf = std::unique_ptr<uint8_t[], ats_unique_buf_deleter>;
 ats_unique_buf ats_unique_malloc(size_t size);
+
+struct ats_unique_str_deleter {
+  void
+  operator()(char *p)
+  {
+    ats_free(p);
+  }
+};
+using ats_unique_str = std::unique_ptr<char[], ats_unique_str_deleter>;
+
+inline ats_unique_str
+ats_unique_str_malloc(size_t size)
+{
+  return ats_unique_str{static_cast<char *>(ats_malloc(size))};
+}
+
+inline ats_unique_str
+ats_unique_str_dup(const char *s)
+{
+  return ats_unique_str{ats_strdup(s)};
+}
