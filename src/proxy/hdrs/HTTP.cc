@@ -1180,8 +1180,7 @@ ParseResult
 validate_hdr_request_target(int method_wk_idx, URLImpl *url)
 {
   ParseResult ret = PARSE_RESULT_DONE;
-  int         host_len;
-  url->get_host(&host_len);
+  int         host_len{static_cast<int>(url->get_host().length())};
   int         path_len;
   const char *path = url->get_path(&path_len);
   int         scheme_len{static_cast<int>(url->get_scheme().length())};

@@ -88,7 +88,7 @@ public:
   void             set_user(HdrHeap *heap, const char *value, int length, bool copy_string);
   std::string_view get_password();
   void             set_password(HdrHeap *heap, const char *value, int length, bool copy_string);
-  const char      *get_host(int *length);
+  std::string_view get_host();
   void             set_host(HdrHeap *heap, const char *value, int length, bool copy_string);
   int              get_port();
   void             set_port(HdrHeap *heap, unsigned int port);
@@ -593,7 +593,9 @@ inline const char *
 URL::host_get(int *length)
 {
   ink_assert(valid());
-  return m_url_impl->get_host(length);
+  auto tmp{m_url_impl->get_host()};
+  *length = static_cast<int>(tmp.length());
+  return tmp.data();
 }
 
 /*-------------------------------------------------------------------------
