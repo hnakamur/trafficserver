@@ -775,11 +775,10 @@ URLImpl::get_query()
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-const char *
-URLImpl::get_fragment(int *length)
+std::string_view
+URLImpl::get_fragment()
 {
-  *length = this->m_len_fragment;
-  return this->m_ptr_fragment;
+  return {this->m_ptr_fragment, this->m_len_fragment};
 }
 
 /*-------------------------------------------------------------------------

@@ -103,7 +103,7 @@ public:
   void             set_params(HdrHeap *heap, const char *value, int length, bool copy_string);
   std::string_view get_query();
   void             set_query(HdrHeap *heap, const char *value, int length, bool copy_string);
-  const char      *get_fragment(int *length);
+  std::string_view get_fragment();
   void             set_fragment(HdrHeap *heap, const char *value, int length, bool copy_string);
 
   // Marshaling Functions
@@ -709,7 +709,9 @@ inline const char *
 URL::fragment_get(int *length)
 {
   ink_assert(valid());
-  return m_url_impl->get_fragment(length);
+  auto tmp{m_url_impl->get_fragment()};
+  *length = static_cast<int>(tmp.length());
+  return tmp.data();
 }
 
 /*-------------------------------------------------------------------------
