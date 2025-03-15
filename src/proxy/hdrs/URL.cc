@@ -730,11 +730,10 @@ URLImpl::get_user()
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-const char *
-URLImpl::get_password(int *length)
+std::string_view
+URLImpl::get_password()
 {
-  *length = this->m_len_password;
-  return this->m_ptr_password;
+  return {this->m_ptr_password, this->m_len_password};
 }
 
 /*-------------------------------------------------------------------------
