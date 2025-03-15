@@ -721,11 +721,10 @@ URLImpl::get_scheme()
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-const char *
-URLImpl::get_user(int *length)
+std::string_view
+URLImpl::get_user()
 {
-  *length = this->m_len_user;
-  return this->m_ptr_user;
+  return {this->m_ptr_user, this->m_len_user};
 }
 
 /*-------------------------------------------------------------------------

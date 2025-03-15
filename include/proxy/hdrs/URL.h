@@ -84,7 +84,7 @@ public:
   // Accessors
   std::string_view get_scheme();
   const char      *set_scheme(HdrHeap *heap, const char *value, int value_wks_idx, int length, bool copy_string);
-  const char      *get_user(int *length);
+  std::string_view get_user();
   void             set_user(HdrHeap *heap, const char *value, int length, bool copy_string);
   const char      *get_password(int *length);
   void             set_password(HdrHeap *heap, const char *value, int length, bool copy_string);
@@ -549,7 +549,9 @@ inline const char *
 URL::user_get(int *length)
 {
   ink_assert(valid());
-  return m_url_impl->get_user(length);
+  auto tmp{m_url_impl->get_user()};
+  *length = static_cast<int>(tmp.length());
+  return tmp.data();
 }
 
 /*-------------------------------------------------------------------------
