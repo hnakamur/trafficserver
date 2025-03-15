@@ -969,12 +969,8 @@ remap_load_plugin(const char *const *argv, int argc, url_mapping *mp, char *errb
 static bool
 process_regex_mapping_config(const char *from_host_lower, url_mapping *new_mapping, UrlRewrite::RegexMapping *reg_map)
 {
-  const char *str;
-  int         str_index;
-  const char *to_host;
-  int         to_host_len;
-  int         substitution_id;
-  int         captures;
+  int substitution_id;
+  int captures;
 
   reg_map->to_url_host_template     = nullptr;
   reg_map->to_url_host_template_len = 0;
@@ -1000,27 +996,33 @@ process_regex_mapping_config(const char *from_host_lower, url_mapping *new_mappi
     goto lFail;
   }
 
-  to_host = new_mapping->toURL.host_get(&to_host_len);
-  for (int i = 0; i < (to_host_len - 1); ++i) {
-    if (to_host[i] == '$') {
-      substitution_id = to_host[i + 1] - '0';
-      if ((substitution_id < 0) || (substitution_id > captures)) {
-        Warning("Substitution id [%c] has no corresponding capture pattern in regex [%s]", to_host[i + 1], from_host_lower);
-        goto lFail;
+  {
+    auto to_host{new_mapping->toURL.host_get()};
+    for (int i = 0; i < (static_cast<int>(to_host.length()) - 1); ++i) {
+      if (to_host[i] == '$') {
+        substitution_id = to_host[i + 1] - '0';
+        if ((substitution_id < 0) || (substitution_id > captures)) {
+          Warning("Substitution id [%c] has no corresponding capture pattern in regex [%s]", to_host[i + 1], from_host_lower);
+          goto lFail;
+        }
+        reg_map->substitution_markers[reg_map->n_substitutions] = i;
+        reg_map->substitution_ids[reg_map->n_substitutions]     = substitution_id;
+        ++reg_map->n_substitutions;
       }
-      reg_map->substitution_markers[reg_map->n_substitutions] = i;
-      reg_map->substitution_ids[reg_map->n_substitutions]     = substitution_id;
-      ++reg_map->n_substitutions;
     }
   }
 
   // so the regex itself is stored in fromURL.host; string to match
   // will be in the request; string to use for substitutions will be
   // in this buffer
-  str                               = new_mapping->toURL.host_get(&str_index); // reusing str and str_index
-  reg_map->to_url_host_template_len = str_index;
-  reg_map->to_url_host_template     = static_cast<char *>(ats_malloc(str_index));
-  memcpy(reg_map->to_url_host_template, str, str_index);
+  {
+    auto str{new_mapping->toURL.host_get()};
+    auto str_index{static_cast<int>(str.length())};
+
+    reg_map->to_url_host_template_len = str_index;
+    reg_map->to_url_host_template     = static_cast<char *>(ats_malloc(str_index));
+    memcpy(reg_map->to_url_host_template, str.data(), str_index);
+  }
 
   return true;
 
@@ -1048,8 +1050,8 @@ remap_parse_config_bti(const char *path, BUILD_TABLE_INFO *bti)
   // Vars to build the mapping
   const char   *fromScheme, *toScheme;
   int           fromSchemeLen, toSchemeLen;
-  const char   *fromHost, *toHost;
-  int           fromHostLen, toHostLen;
+  const char   *fromHost;
+  int           fromHostLen;
   char         *map_from, *map_from_start;
   char         *map_to, *map_to_start;
   const char   *tmp; // Appease the DEC compiler
@@ -1311,8 +1313,12 @@ remap_parse_config_bti(const char *path, BUILD_TABLE_INFO *bti)
     }
 
     // Check to see the fromHost remapping is a relative one
-    fromHost = new_mapping->fromURL.host_get(&fromHostLen);
-    if (fromHost == nullptr || fromHostLen <= 0) {
+    {
+      auto fromHostStr{new_mapping->fromURL.host_get()};
+      fromHost    = fromHostStr.data();
+      fromHostLen = static_cast<int>(fromHostStr.length());
+    }
+    if (fromHostLen == 0) {
       if (maptype == FORWARD_MAP || maptype == FORWARD_MAP_REFERER || maptype == FORWARD_MAP_WITH_RECV_PORT) {
         if (*map_from_start != '/') {
           errStr = "relative remappings must begin with a /";
@@ -1327,8 +1333,7 @@ remap_parse_config_bti(const char *path, BUILD_TABLE_INFO *bti)
       }
     }
 
-    toHost = new_mapping->toURL.host_get(&toHostLen);
-    if (toHost == nullptr || toHostLen <= 0) {
+    if (auto toHost{new_mapping->toURL.host_get()}; toHost.empty()) {
       errStr = "The remap destinations require a hostname";
       goto MAP_ERROR;
     }

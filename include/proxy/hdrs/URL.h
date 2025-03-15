@@ -280,32 +280,32 @@ public:
   void  hash_get(CryptoHash *hash, bool ignore_query = false, cache_generation_t generation = -1) const;
   void  host_hash_get(CryptoHash *hash) const;
 
-  const char            *scheme_get(int *length);
-  const std::string_view scheme_get();
-  int                    scheme_get_wksidx() const;
-  void                   scheme_set(const char *value, int length);
+  const char      *scheme_get(int *length);
+  std::string_view scheme_get();
+  int              scheme_get_wksidx() const;
+  void             scheme_set(const char *value, int length);
 
-  const char *user_get(int *length);
-  void        user_set(const char *value, int length);
-  const char *password_get(int *length);
-  void        password_set(const char *value, int length);
-  const char *host_get(int *length);
-  void        host_set(const char *value, int length);
+  std::string_view user_get();
+  void             user_set(const char *value, int length);
+  std::string_view password_get();
+  void             password_set(const char *value, int length);
+  std::string_view host_get();
+  void             host_set(const char *value, int length);
 
   int  port_get() const;
   int  port_get_raw() const;
   void port_set(int port);
 
-  const char *path_get(int *length);
-  void        path_set(const char *value, int length);
+  std::string_view path_get();
+  void             path_set(const char *value, int length);
 
   int  type_code_get();
   void type_code_set(int type);
 
-  const char *query_get(int *length);
-  void        query_set(const char *value, int length);
-  const char *fragment_get(int *length);
-  void        fragment_set(const char *value, int length);
+  std::string_view query_get();
+  void             query_set(const char *value, int length);
+  std::string_view fragment_get();
+  void             fragment_set(const char *value, int length);
 
   /**
    * Parse the given URL string and populate URL state with the parts.
@@ -509,7 +509,7 @@ URL::host_hash_get(CryptoHash *hash) const
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const std::string_view
+inline std::string_view
 URL::scheme_get()
 {
   ink_assert(valid());
@@ -545,13 +545,11 @@ URL::scheme_set(const char *value, int length)
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const char *
-URL::user_get(int *length)
+inline std::string_view
+URL::user_get()
 {
   ink_assert(valid());
-  auto tmp{m_url_impl->get_user()};
-  *length = static_cast<int>(tmp.length());
-  return tmp.data();
+  return m_url_impl->get_user();
 }
 
 /*-------------------------------------------------------------------------
@@ -567,13 +565,11 @@ URL::user_set(const char *value, int length)
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const char *
-URL::password_get(int *length)
+inline std::string_view
+URL::password_get()
 {
   ink_assert(valid());
-  auto tmp{m_url_impl->get_password()};
-  *length = static_cast<int>(tmp.length());
-  return tmp.data();
+  return m_url_impl->get_password();
 }
 
 /*-------------------------------------------------------------------------
@@ -589,13 +585,11 @@ URL::password_set(const char *value, int length)
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const char *
-URL::host_get(int *length)
+inline std::string_view
+URL::host_get()
 {
   ink_assert(valid());
-  auto tmp{m_url_impl->get_host()};
-  *length = static_cast<int>(tmp.length());
-  return tmp.data();
+  return m_url_impl->get_host();
 }
 
 /*-------------------------------------------------------------------------
@@ -641,13 +635,11 @@ URL::port_set(int port)
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const char *
-URL::path_get(int *length)
+inline std::string_view
+URL::path_get()
 {
   ink_assert(valid());
-  auto tmp{m_url_impl->get_path()};
-  *length = static_cast<int>(tmp.length());
-  return tmp.data();
+  return m_url_impl->get_path();
 }
 
 /*-------------------------------------------------------------------------
@@ -683,13 +675,11 @@ URL::type_code_set(int typecode)
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const char *
-URL::query_get(int *length)
+inline std::string_view
+URL::query_get()
 {
   ink_assert(valid());
-  auto tmp{m_url_impl->get_query()};
-  *length = static_cast<int>(tmp.length());
-  return tmp.data();
+  return m_url_impl->get_query();
 }
 
 /*-------------------------------------------------------------------------
@@ -705,13 +695,11 @@ URL::query_set(const char *value, int length)
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-inline const char *
-URL::fragment_get(int *length)
+inline std::string_view
+URL::fragment_get()
 {
   ink_assert(valid());
-  auto tmp{m_url_impl->get_fragment()};
-  *length = static_cast<int>(tmp.length());
-  return tmp.data();
+  return m_url_impl->get_fragment();
 }
 
 /*-------------------------------------------------------------------------

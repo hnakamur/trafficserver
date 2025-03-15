@@ -141,7 +141,7 @@ RemapProcessor::finish_remap(HttpTransact::State *s, UrlRewrite *table)
   char        **redirect_url   = &s->remap_redirect;
   char          tmp_referer_buf[4096], tmp_redirect_buf[4096], tmp_buf[2048];
   const char   *remapped_host;
-  int           remapped_host_len, tmp;
+  int           tmp;
   int           from_len;
   referer_info *ri;
 
@@ -250,7 +250,9 @@ RemapProcessor::finish_remap(HttpTransact::State *s, UrlRewrite *table)
     // Create the new host header field being careful that our
     //   temporary buffer has adequate length
     //
-    remapped_host = request_url->host_get(&remapped_host_len);
+    auto remapped_host_str{request_url->host_get()};
+    remapped_host = remapped_host_str.data();
+    auto remapped_host_len{static_cast<int>(remapped_host_str.length())};
 
     int remapped_port = request_url->port_get_raw();
 

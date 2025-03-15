@@ -522,12 +522,11 @@ PrefixMod::name() const
 bool
 PrefixMod::check(HttpRequestData *req) const
 {
-  int         path_len;
-  const char *path = req->hdr->url_get()->path_get(&path_len);
-  bool        zret = path_len >= static_cast<int>(text.size()) && 0 == memcmp(path, text.data(), text.size());
+  auto path{req->hdr->url_get()->path_get()};
+  bool zret{path.length() >= text.size() && 0 == memcmp(path.data(), text.data(), text.size())};
   /*
     Dbg(dbg_ctl_cache_control, "Prefix check: URL=%0.*s Mod=%0.*s Z=%s",
-        path_len, path, text.size(), text.data(),
+        static_cast<int>(path.length()), path.data(), text.size(), text.data(),
         zret ? "Match" : "Fail"
     );
   */
@@ -569,8 +568,8 @@ SuffixMod::name() const
 bool
 SuffixMod::check(HttpRequestData *req) const
 {
-  int         path_len;
-  const char *path = req->hdr->url_get()->path_get(&path_len);
+  auto path{req->hdr->url_get()->path_get()};
+  auto path_len{static_cast<int>(path.length())};
 
   if (1 == this->text_vec.size() && 1 == this->text_vec[0].size() && this->text_vec[0][0] == '*') {
     return true;
@@ -578,7 +577,7 @@ SuffixMod::check(HttpRequestData *req) const
 
   for (auto text_iter : this->text_vec) {
     if (path_len >= static_cast<int>(text_iter.size()) &&
-        0 == strncasecmp(path + path_len - text_iter.size(), text_iter.data(), text_iter.size())) {
+        0 == strncasecmp(path.data() + path_len - text_iter.size(), text_iter.data(), text_iter.size())) {
       return true;
     }
   }

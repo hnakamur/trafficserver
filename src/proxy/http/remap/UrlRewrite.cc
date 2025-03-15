@@ -48,11 +48,10 @@ DbgCtl dbg_ctl_url_rewrite{"url_rewrite"};
 void
 SetHomePageRedirectFlag(url_mapping *new_mapping, URL &new_to_url)
 {
-  int         fromLen, toLen;
-  const char *from_path = new_mapping->fromURL.path_get(&fromLen);
-  const char *to_path   = new_to_url.path_get(&toLen);
+  auto from_path{new_mapping->fromURL.path_get()};
+  auto to_path{new_to_url.path_get()};
 
-  new_mapping->homePageRedirect = (from_path && !to_path) ? true : false;
+  new_mapping->homePageRedirect = !from_path.empty() && to_path.empty();
 }
 } // end anonymous namespace
 
@@ -312,43 +311,35 @@ UrlRewrite::_tableLookup(std::unique_ptr<URLTable> &h_table, URL *request_url, i
 void
 url_rewrite_remap_request(const UrlMappingContainer &mapping_container, URL *request_url, int method)
 {
-  URL        *map_to   = mapping_container.getToURL();
-  URL        *map_from = mapping_container.getFromURL();
-  const char *toHost;
-  int         toHostLen;
+  URL *map_to   = mapping_container.getToURL();
+  URL *map_from = mapping_container.getFromURL();
 
-  toHost = map_to->host_get(&toHostLen);
+  auto toHost{map_to->host_get()};
 
   Dbg(dbg_ctl_url_rewrite, "%s: Remapping rule id: %d matched", __func__, mapping_container.getMapping()->map_id);
 
-  request_url->host_set(toHost, toHostLen);
+  request_url->host_set(toHost.data(), static_cast<int>(toHost.length()));
   request_url->port_set(map_to->port_get_raw());
 
   // With the CONNECT method, we have to avoid messing with the scheme and path, because it's not part of
   // the CONNECT request (only host and port is).
   if (HTTP_WKSIDX_CONNECT != method) {
-    const char *toScheme;
-    int         toSchemeLen;
-    const char *requestPath;
-    int         requestPathLen = 0;
-    int         fromPathLen    = 0;
-    const char *toPath;
-    int         toPathLen;
+    auto toScheme{map_to->scheme_get()};
+    request_url->scheme_set(toScheme.data(), static_cast<int>(toScheme.length()));
 
-    toScheme = map_to->scheme_get(&toSchemeLen);
-    request_url->scheme_set(toScheme, toSchemeLen);
-
-    map_from->path_get(&fromPathLen);
-    toPath      = map_to->path_get(&toPathLen);
-    requestPath = request_url->path_get(&requestPathLen);
+    auto fromPathLen{static_cast<int>(map_from->path_get().length())};
+    auto toPath{map_to->path_get()};
+    auto toPathLen{static_cast<int>(toPath.length())};
+    auto requestPath{request_url->path_get()};
+    auto requestPathLen{static_cast<int>(requestPath.length())};
 
     // Should be +3, little extra padding won't hurt.
     char newPath[(requestPathLen - fromPathLen) + toPathLen + 8];
     int  newPathLen = 0;
 
     *newPath = 0;
-    if (toPath) {
-      memcpy(newPath, toPath, toPathLen);
+    if (!toPath.empty()) {
+      memcpy(newPath, toPath.data(), toPathLen);
       newPathLen += toPathLen;
     }
 
@@ -359,21 +350,21 @@ url_rewrite_remap_request(const UrlMappingContainer &mapping_container, URL *req
       newPathLen++;
     }
 
-    if (requestPath) {
+    if (!requestPath.empty()) {
       // avoid adding another trailing slash if the requestPath already had one and so does the toPath
       if (requestPathLen < fromPathLen) {
-        if (toPath && requestPath[requestPathLen - 1] == '/' && toPath[toPathLen - 1] == '/') {
+        if (!toPath.empty() && requestPath[requestPathLen - 1] == '/' && toPath[toPathLen - 1] == '/') {
           fromPathLen++;
         }
       } else {
-        if (toPath && requestPath[fromPathLen] == '/' && toPath[toPathLen - 1] == '/') {
+        if (!toPath.empty() && requestPath[fromPathLen] == '/' && toPath[toPathLen - 1] == '/') {
           fromPathLen++;
         }
       }
 
       // copy the end of the path past what has been mapped
       if ((requestPathLen - fromPathLen) > 0) {
-        memcpy(newPath + newPathLen, requestPath + fromPathLen, requestPathLen - fromPathLen);
+        memcpy(newPath + newPathLen, requestPath.data() + fromPathLen, requestPathLen - fromPathLen);
         newPathLen += (requestPathLen - fromPathLen);
       }
     }
@@ -396,8 +387,6 @@ UrlRewrite::ReverseMap(HTTPHdr *response_header)
   URL         location_url;
   int         loc_length;
   bool        remap_found = false;
-  const char *host;
-  int         host_len;
   char       *new_loc_hdr;
   int         new_loc_length;
   int         i;
@@ -426,11 +415,12 @@ UrlRewrite::ReverseMap(HTTPHdr *response_header)
     location_url.create(nullptr);
     location_url.parse(location_hdr, loc_length);
 
-    host = location_url.host_get(&host_len);
+    auto host{location_url.host_get()};
+    auto host_len{static_cast<int>(host.length())};
 
     UrlMappingContainer reverse_mapping(response_header->m_heap);
 
-    if (reverseMappingLookup(&location_url, location_url.port_get(), host, host_len, reverse_mapping)) {
+    if (reverseMappingLookup(&location_url, location_url.port_get(), host.data(), host_len, reverse_mapping)) {
       if (i == 0) {
         remap_found = true;
       }
@@ -619,8 +609,8 @@ UrlRewrite::Remap_redirect(HTTPHdr *request_header, URL *redirect_url)
 {
   URL         *request_url;
   mapping_type mappingType;
-  const char  *host     = nullptr;
-  int          host_len = 0, request_port = 0;
+  const char  *host         = nullptr;
+  int          request_port = 0;
   bool         prt, trt; // existence of permanent and temporary redirect tables, respectively
 
   prt = (num_rules_redirect_permanent != 0);
@@ -644,7 +634,9 @@ UrlRewrite::Remap_redirect(HTTPHdr *request_header, URL *redirect_url)
     return NONE;
   }
 
-  host         = request_url->host_get(&host_len);
+  auto host_str{request_url->host_get()};
+  host = host_str.data();
+  auto host_len{static_cast<int>(host_str.length())};
   request_port = request_url->port_get();
 
   if (host_len == 0 && reverse_proxy != 0) { // Server request.  Use the host header to figure out where
@@ -1000,17 +992,16 @@ UrlRewrite::_regexMappingLookup(RegexMappingList &regex_mappings, URL *request_u
     Dbg(dbg_ctl_url_rewrite_regex, "Going to match regexes with rank <= %d", rank_ceiling);
   }
 
-  int         request_scheme_len, reg_map_scheme_len;
-  const char *request_scheme = request_url->scheme_get(&request_scheme_len), *reg_map_scheme;
-
-  int         request_path_len, reg_map_path_len;
-  const char *request_path = request_url->path_get(&request_path_len), *reg_map_path;
+  auto request_scheme{request_url->scheme_get()};
+  auto request_path{request_url->path_get()};
 
   // If the scheme is empty (e.g. because of a CONNECT method), guess it based on port
   // This is equivalent to the logic in UrlMappingPathIndex::_GetTrie().
-  if (request_scheme_len == 0) {
-    request_scheme     = request_port == 80 ? URL_SCHEME_HTTP : URL_SCHEME_HTTPS;
-    request_scheme_len = hdrtoken_wks_to_length(request_scheme);
+  if (request_scheme.empty()) {
+    request_scheme =
+      request_port == 80 ?
+        std::string_view{URL_SCHEME_HTTP, static_cast<std::string_view::size_type>(hdrtoken_wks_to_length(URL_SCHEME_HTTP))} :
+        std::string_view{URL_SCHEME_HTTPS, static_cast<std::string_view::size_type>(hdrtoken_wks_to_length(URL_SCHEME_HTTPS))};
   }
 
   // Loop over the entire linked list, or until we're satisfied
@@ -1022,8 +1013,7 @@ UrlRewrite::_regexMappingLookup(RegexMappingList &regex_mappings, URL *request_u
       break;
     }
 
-    reg_map_scheme = list_iter->url_map->fromURL.scheme_get(&reg_map_scheme_len);
-    if ((request_scheme_len != reg_map_scheme_len) || strncmp(request_scheme, reg_map_scheme, request_scheme_len)) {
+    if (auto reg_map_scheme{list_iter->url_map->fromURL.scheme_get()}; strcasecmp(request_scheme, reg_map_scheme)) {
       Dbg(dbg_ctl_url_rewrite_regex, "Skipping regex with rank %d as scheme does not match request scheme", reg_map_rank);
       continue;
     }
@@ -1036,9 +1026,9 @@ UrlRewrite::_regexMappingLookup(RegexMappingList &regex_mappings, URL *request_u
       continue;
     }
 
-    reg_map_path = list_iter->url_map->fromURL.path_get(&reg_map_path_len);
-    if ((request_path_len < reg_map_path_len) ||
-        strncmp(reg_map_path, request_path, reg_map_path_len)) { // use the shorter path length here
+    if (auto reg_map_path{list_iter->url_map->fromURL.path_get()};
+        (request_path.length() < reg_map_path.length()) ||
+        strncmp(reg_map_path.data(), request_path.data(), reg_map_path.length())) { // use the shorter path length here
       Dbg(dbg_ctl_url_rewrite_regex, "Skipping regex with rank %d as path does not cover request path", reg_map_rank);
       continue;
     }

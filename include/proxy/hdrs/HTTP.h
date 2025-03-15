@@ -779,7 +779,9 @@ HTTPHdr::host_get(int *length) const
 {
   this->_test_and_fill_target_cache();
   if (m_target_in_url) {
-    return url_get()->host_get(length);
+    auto tmp{url_get()->host_get()};
+    *length = static_cast<int>(tmp.length());
+    return tmp.data();
   } else if (m_host_mime) {
     if (length)
       *length = m_host_length;
@@ -1205,28 +1207,48 @@ inline const char *
 HTTPHdr::path_get(int *length)
 {
   URL *url = this->url_get();
-  return url ? url->path_get(length) : nullptr;
+  if (url) {
+    auto tmp{url->path_get()};
+    *length = static_cast<int>(tmp.length());
+    return tmp.data();
+  }
+  return nullptr;
 }
 
 inline const char *
 HTTPHdr::query_get(int *length)
 {
   URL *url = this->url_get();
-  return url ? url->query_get(length) : nullptr;
+  if (url) {
+    auto tmp{url->query_get()};
+    *length = static_cast<int>(tmp.length());
+    return tmp.data();
+  }
+  return nullptr;
 }
 
 inline const char *
 HTTPHdr::fragment_get(int *length)
 {
   URL *url = this->url_get();
-  return url ? url->fragment_get(length) : nullptr;
+  if (url) {
+    auto tmp{url->fragment_get()};
+    *length = static_cast<int>(tmp.length());
+    return tmp.data();
+  }
+  return nullptr;
 }
 
 inline const char *
 HTTPHdr::scheme_get(int *length)
 {
   URL *url = this->url_get();
-  return url ? url->scheme_get(length) : nullptr;
+  if (url) {
+    auto tmp{url->scheme_get()};
+    *length = static_cast<int>(tmp.length());
+    return tmp.data();
+  }
+  return nullptr;
 }
 
 /*-------------------------------------------------------------------------

@@ -202,38 +202,38 @@ NextHopConsistentHash::getHashKey(uint64_t sm_id, const HttpRequestData &hrdata,
     }
     break;
   // hostname hash
-  case NH_HOSTNAME_HASH_KEY:
-    url_string_ref = url->host_get(&len);
-    if (url_string_ref && len > 0) {
-      h->update(url_string_ref, len);
+  case NH_HOSTNAME_HASH_KEY: {
+    auto host{url->host_get()};
+    if (!host.empty()) {
+      h->update(host.data(), host.length());
     }
-    break;
+  } break;
   // path + query string
-  case NH_PATH_QUERY_HASH_KEY:
-    url_string_ref = url->path_get(&len);
+  case NH_PATH_QUERY_HASH_KEY: {
+    auto path{url->path_get()};
     h->update("/", 1);
-    if (url_string_ref && len > 0) {
-      h->update(url_string_ref, len);
+    if (!path.empty()) {
+      h->update(path.data(), path.length());
     }
-    url_string_ref = url->query_get(&len);
-    if (url_string_ref && len > 0) {
+    auto query{url->query_get()};
+    if (!query.empty()) {
       h->update("?", 1);
-      h->update(url_string_ref, len);
+      h->update(query.data(), query.length());
     }
-    break;
+  } break;
   // path + fragment hash
-  case NH_PATH_FRAGMENT_HASH_KEY:
-    url_string_ref = url->path_get(&len);
+  case NH_PATH_FRAGMENT_HASH_KEY: {
+    auto path{url->path_get()};
     h->update("/", 1);
-    if (url_string_ref && len > 0) {
-      h->update(url_string_ref, len);
+    if (!path.empty()) {
+      h->update(path.data(), path.length());
     }
-    url_string_ref = url->fragment_get(&len);
-    if (url_string_ref && len > 0) {
+    auto fragment{url->fragment_get()};
+    if (!fragment.empty()) {
       h->update("?", 1);
-      h->update(url_string_ref, len);
+      h->update(fragment.data(), fragment.length());
     }
-    break;
+  } break;
   // use the cache key created by the TSCacheUrlSet() API (e.g. the cachekey plugin)
   // ToDo: Deprecated in 10.0.x, remove in 11.0.0
   case NH_CACHE_HASH_KEY:
@@ -246,24 +246,24 @@ NextHopConsistentHash::getHashKey(uint64_t sm_id, const HttpRequestData &hrdata,
       }
     } else {
       // URL defaults to hrdata.hdr->url_get() above
-      url_string_ref = url->path_get(&len);
+      auto path{url->path_get()};
       h->update("/", 1);
-      if (url_string_ref && len > 0) {
-        NH_Dbg(NH_DBG_CTL, "[%" PRIu64 "] the parent selection over-ride url is not set, using default path: %s.", sm_id,
-               url_string_ref);
-        h->update(url_string_ref, len);
+      if (!path.empty()) {
+        NH_Dbg(NH_DBG_CTL, "[%" PRIu64 "] the parent selection over-ride url is not set, using default path: %.*s.", sm_id,
+               static_cast<int>(path.length()), path.data());
+        h->update(path.data(), path.length());
       }
     }
     break;
   // use the path as the hash, default.
   case NH_PATH_HASH_KEY:
-  default:
-    url_string_ref = url->path_get(&len);
+  default: {
+    auto path{url->path_get()};
     h->update("/", 1);
-    if (url_string_ref && len > 0) {
-      h->update(url_string_ref, len);
+    if (!path.empty()) {
+      h->update(path.data(), path.length());
     }
-    break;
+  } break;
   }
 
   h->final();
