@@ -101,7 +101,7 @@ public:
   void             set_type_code(unsigned int typecode);
   std::string_view get_params();
   void             set_params(HdrHeap *heap, const char *value, int length, bool copy_string);
-  const char      *get_query(int *length);
+  std::string_view get_query();
   void             set_query(HdrHeap *heap, const char *value, int length, bool copy_string);
   const char      *get_fragment(int *length);
   void             set_fragment(HdrHeap *heap, const char *value, int length, bool copy_string);
@@ -687,7 +687,9 @@ inline const char *
 URL::query_get(int *length)
 {
   ink_assert(valid());
-  return m_url_impl->get_query(length);
+  auto tmp{m_url_impl->get_query()};
+  *length = static_cast<int>(tmp.length());
+  return tmp.data();
 }
 
 /*-------------------------------------------------------------------------

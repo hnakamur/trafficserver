@@ -766,11 +766,10 @@ URLImpl::get_path()
 /*-------------------------------------------------------------------------
   -------------------------------------------------------------------------*/
 
-const char *
-URLImpl::get_query(int *length)
+std::string_view
+URLImpl::get_query()
 {
-  *length = this->m_len_query;
-  return this->m_ptr_query;
+  return {this->m_ptr_query, this->m_len_query};
 }
 
 /*-------------------------------------------------------------------------
