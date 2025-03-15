@@ -88,12 +88,12 @@ RecMessageMarshal_Realloc(RecMessage *msg, const RecRecord *record)
     msg_ele_size += rec_name_len;
   }
   if (record->data_type == RECD_STRING) {
-    if (record->data.rec_string) {
-      rec_data_str_len  = strlen(record->data.rec_string) + 1;
+    if (!record->data.rec_string.empty()) {
+      rec_data_str_len  = static_cast<int>(record->data.rec_string.length()) + 1;
       msg_ele_size     += rec_data_str_len;
     }
-    if (record->data_default.rec_string) {
-      rec_data_def_str_len  = strlen(record->data_default.rec_string) + 1;
+    if (!record->data_default.rec_string.empty()) {
+      rec_data_def_str_len  = static_cast<int>(record->data_default.rec_string.length()) + 1;
       msg_ele_size         += rec_data_def_str_len;
     }
   }
@@ -135,14 +135,14 @@ RecMessageMarshal_Realloc(RecMessage *msg, const RecRecord *record)
   }
   if (rec_data_str_len != -1) {
     ink_assert((msg->o_end - ((uintptr_t)p - (uintptr_t)msg)) >= (uintptr_t)rec_data_str_len);
-    memcpy(p, record->data.rec_string, rec_data_str_len);
-    r->data.rec_string  = (char *)((uintptr_t)p - (uintptr_t)r);
+    memcpy(p, record->data.rec_string.data(), rec_data_str_len);
+    r->data.rec_string  = std::string{(char *)((uintptr_t)p - (uintptr_t)r)};
     p                  += rec_data_str_len;
   }
   if (rec_data_def_str_len != -1) {
     ink_assert((msg->o_end - ((uintptr_t)p - (uintptr_t)msg)) >= (uintptr_t)rec_data_def_str_len);
-    memcpy(p, record->data_default.rec_string, rec_data_def_str_len);
-    r->data_default.rec_string  = (char *)((uintptr_t)p - (uintptr_t)r);
+    memcpy(p, record->data_default.rec_string.data(), rec_data_def_str_len);
+    r->data_default.rec_string  = std::string{(char *)((uintptr_t)p - (uintptr_t)r)};
     p                          += rec_data_def_str_len;
   }
   if (rec_cfg_chk_len != -1) {
@@ -208,7 +208,8 @@ RecMessageUnmarshalNext(RecMessage *msg, RecMessageItr *itr, RecRecord **record)
     r->name = reinterpret_cast<char *>(r) + (intptr_t)(r->name);
   }
   if (r->data_type == RECD_STRING) {
-    if (r->data.rec_string) {
+    if (!r->data.rec_string.empty()) {
+      // FIXME: I don't know what to do with the following expression after change rec_string type to
       r->data.rec_string = reinterpret_cast<char *>(r) + (intptr_t)(r->data.rec_string);
     }
     if (r->data_default.rec_string) {

@@ -212,10 +212,8 @@ RecEstablishStaticConfigUInt32(const char *name, uint32_t *p_uint32)
 inline void
 RecEstablishStaticConfigStringAlloc(const char *name, RecString *rec_string)
 {
-  if (RecLinkConfigString(name, rec_string) == REC_ERR_OKAY) {
-    ats_free(*rec_string);
-  }
-  *rec_string = const_cast<RecString>(RecGetRecordString_Xmalloc(name).first.data());
+  RecLinkConfigString(name, rec_string);
+  *rec_string = std::move(RecGetRecordString_Xmalloc(name).first);
 }
 
 inline void

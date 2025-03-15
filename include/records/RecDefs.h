@@ -28,6 +28,7 @@
 #include "records/RecMutex.h"
 
 #include <functional>
+#include <string>
 
 //-------------------------------------------------------------------------
 // Error Values

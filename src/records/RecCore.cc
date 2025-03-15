@@ -175,19 +175,7 @@ link_byte(const char * /* name */, RecDataT /* data_type */, RecData data, void 
 static int
 link_string_alloc(const char * /* name */, RecDataT /* data_type */, RecData data, void *cookie)
 {
-  RecString _ss        = data.rec_string;
-  RecString _new_value = nullptr;
-
-  if (_ss) {
-    _new_value = ats_strdup(_ss);
-  }
-
-  // set new string for DEFAULT_xxx_str tp point to
-  RecString _temp2                    = *(static_cast<RecString *>(cookie));
-  *(static_cast<RecString *>(cookie)) = _new_value;
-  // free previous string DEFAULT_xxx_str points to
-  ats_free(_temp2);
-
+  *(static_cast<RecString *>(cookie)) = data.rec_string;
   return REC_ERR_OKAY;
 }
 
@@ -312,7 +300,7 @@ RecLinkConfigString(const char *name, RecString *rec_string)
   if (err == REC_ERR_FAIL) {
     return REC_ERR_FAIL;
   }
-  *rec_string = const_cast<char *>(tmp.data());
+  *rec_string = std::move(tmp);
   return RecRegisterConfigUpdateCb(name, link_string_alloc, (void *)rec_string);
 }
 
