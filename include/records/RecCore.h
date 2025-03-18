@@ -189,47 +189,47 @@ void RecConfigWarnIfUnregistered();
 // RecEstablishStaticConfigXXX
 //-------------------------------------------------------------------------
 inline void
-RecEstablishStaticConfigInt(const char *name, RecInt *rec_int)
+RecEstablishStaticConfigInt(RecInt &rec_int, const char *name)
 {
-  RecLinkConfigInt(name, rec_int);
-  *rec_int = RecGetRecordInt(name).first;
+  RecLinkConfigInt(name, &rec_int);
+  rec_int = RecGetRecordInt(name).first;
 }
 
 inline void
-RecEstablishStaticConfigInt32(const char *name, int32_t *p_int32)
+RecEstablishStaticConfigInt32(int32_t &p_int32, const char *name)
 {
-  RecLinkConfigInt32(name, p_int32);
-  *p_int32 = RecGetRecordInt(name).first;
+  RecLinkConfigInt32(name, &p_int32);
+  p_int32 = RecGetRecordInt(name).first;
 }
 
 inline void
-RecEstablishStaticConfigUInt32(const char *name, uint32_t *p_uint32)
+RecEstablishStaticConfigUInt32(uint32_t &p_uint32, const char *name)
 {
-  RecLinkConfigUInt32(name, p_uint32);
-  *p_uint32 = RecGetRecordInt(name).first;
+  RecLinkConfigUInt32(name, &p_uint32);
+  p_uint32 = RecGetRecordInt(name).first;
 }
 
 inline void
-RecEstablishStaticConfigStringAlloc(const char *name, RecString *rec_string)
+RecEstablishStaticConfigStringAlloc(RecString &rec_string, const char *name)
 {
-  if (RecLinkConfigString(name, rec_string) == REC_ERR_OKAY) {
-    ats_free(*rec_string);
+  if (RecLinkConfigString(name, &rec_string) == REC_ERR_OKAY) {
+    ats_free(rec_string);
   }
-  *rec_string = const_cast<RecString>(RecGetRecordString_Xmalloc(name).first.data());
+  rec_string = const_cast<RecString>(RecGetRecordString_Xmalloc(name).first.data());
 }
 
 inline void
-RecEstablishStaticConfigFloat(const char *name, RecFloat *rec_float)
+RecEstablishStaticConfigFloat(RecFloat &rec_float, const char *name)
 {
-  RecLinkConfigFloat(name, rec_float);
-  *rec_float = RecGetRecordFloat(name).first;
+  RecLinkConfigFloat(name, &rec_float);
+  rec_float = RecGetRecordFloat(name).first;
 }
 
 inline void
-RecEstablishStaticConfigByte(const char *name, RecByte *rec_byte)
+RecEstablishStaticConfigByte(RecByte &rec_byte, const char *name)
 {
-  RecLinkConfigByte(name, rec_byte);
-  *rec_byte = RecGetRecordInt(name).first;
+  RecLinkConfigByte(name, &rec_byte);
+  rec_byte = RecGetRecordInt(name).first;
 }
 
 //------------------------------------------------------------------------

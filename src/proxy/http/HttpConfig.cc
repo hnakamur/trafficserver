@@ -39,19 +39,19 @@
 #include "proxy/http/HttpSessionManager.h"
 
 #define HttpEstablishStaticConfigStringAlloc(_ix, _n) \
-  RecEstablishStaticConfigStringAlloc(_n, &_ix);      \
+  RecEstablishStaticConfigStringAlloc(_ix, _n);       \
   RecRegisterConfigUpdateCb(_n, http_config_cb, NULL)
 
 #define HttpEstablishStaticConfigLongLong(_ix, _n) \
-  RecEstablishStaticConfigInt(_n, &_ix);           \
+  RecEstablishStaticConfigInt(_ix, _n);            \
   RecRegisterConfigUpdateCb(_n, http_config_cb, NULL)
 
 #define HttpEstablishStaticConfigFloat(_ix, _n) \
-  RecEstablishStaticConfigFloat(_n, &_ix);      \
+  RecEstablishStaticConfigFloat(_ix, _n);       \
   RecRegisterConfigUpdateCb(_n, http_config_cb, NULL)
 
 #define HttpEstablishStaticConfigByte(_ix, _n) \
-  RecEstablishStaticConfigByte(_n, &_ix);      \
+  RecEstablishStaticConfigByte(_ix, _n);       \
   RecRegisterConfigUpdateCb(_n, http_config_cb, NULL)
 
 namespace
