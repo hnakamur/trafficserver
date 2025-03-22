@@ -41,10 +41,9 @@
 void
 DiagsConfig::reconfigure_diags()
 {
-  int              i;
-  char            *p, *dt, *at;
-  std::string_view s;
+  int              i, e;
   DiagsConfigState c;
+  RecErrT          err;
   bool             found, all_found;
 
   static struct {
@@ -78,8 +77,8 @@ DiagsConfig::reconfigure_diags()
 
   // enabled if records.yaml set
 
-  auto [e, err]{RecGetRecordInt("proxy.config.diags.debug.enabled")};
-  found = err == REC_ERR_OKAY;
+  std::tie(e, err) = RecGetRecordInt("proxy.config.diags.debug.enabled");
+  found            = err == REC_ERR_OKAY;
   if (e && found) {
     c.enabled(DiagsTagType_Debug, e); // implement OR logic
   }
@@ -106,30 +105,27 @@ DiagsConfig::reconfigure_diags()
       break;
     }
 
-    std::tie(s, err) = RecGetRecordString_Xmalloc(record_name);
-    p                = const_cast<char *>(s.data());
-    found            = err == REC_ERR_OKAY;
-    all_found        = all_found && found;
+    std::string rec_str;
+    std::tie(rec_str, err) = RecGetRecordStringAlloc(record_name);
+    found                  = err == REC_ERR_OKAY;
+    all_found              = all_found && found;
 
     if (found) {
-      parse_output_string(p, &(c.outputs[l]));
-      ats_free(p);
+      parse_output_string(rec_str.c_str(), &(c.outputs[l]));
     } else {
       Error("can't find config variable '%s'", record_name);
     }
   }
 
-  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.debug.tags");
-  p                = const_cast<char *>(s.data());
-  found            = err == REC_ERR_OKAY;
-  dt               = (found ? p : nullptr); // NOTE: needs to be freed
-  all_found        = all_found && found;
+  std::string dt;
+  std::tie(dt, err) = RecGetRecordStringAlloc("proxy.config.diags.debug.tags");
+  found             = err == REC_ERR_OKAY;
+  all_found         = all_found && found;
 
-  std::tie(s, err) = RecGetRecordString_Xmalloc("proxy.config.diags.action.tags");
-  p                = const_cast<char *>(s.data());
-  found            = err == REC_ERR_OKAY;
-  at               = (found ? p : nullptr); // NOTE: needs to be freed
-  all_found        = all_found && found;
+  std::string at;
+  std::tie(at, err) = RecGetRecordStringAlloc("proxy.config.diags.action.tags");
+  found             = err == REC_ERR_OKAY;
+  all_found         = all_found && found;
 
   ///////////////////////////////////////////////////////////////////
   // if couldn't read all values, return without changing config,  //
@@ -150,8 +146,8 @@ DiagsConfig::reconfigure_diags()
     // add new tag tables from records.yaml or command line overrides //
     //////////////////////////////////////////////////////////////////////
 
-    _diags->activate_taglist((_diags->base_debug_tags ? _diags->base_debug_tags : dt), DiagsTagType_Debug);
-    _diags->activate_taglist((_diags->base_action_tags ? _diags->base_action_tags : at), DiagsTagType_Action);
+    _diags->activate_taglist((_diags->base_debug_tags ? _diags->base_debug_tags : dt.c_str()), DiagsTagType_Debug);
+    _diags->activate_taglist((_diags->base_action_tags ? _diags->base_action_tags : at.c_str()), DiagsTagType_Action);
 
     ////////////////////////////////////
     // change the diags config values //
@@ -159,12 +155,6 @@ DiagsConfig::reconfigure_diags()
     _diags->config = c;
     Note("updated diags config");
   }
-
-  ////////////////////////////////////
-  // free the record.config strings //
-  ////////////////////////////////////
-  ats_free(dt);
-  ats_free(at);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -203,7 +193,7 @@ diags_config_callback(const char * /* name ATS_UNUSED */, RecDataT /* data_type 
 //////////////////////////////////////////////////////////////////////////////
 
 void
-DiagsConfig::parse_output_string(char *s, DiagsModeOutput *o)
+DiagsConfig::parse_output_string(const char *s, DiagsModeOutput *o)
 {
   o->to_stdout   = (s && strchr(s, 'O'));
   o->to_stderr   = (s && strchr(s, 'E'));
@@ -311,17 +301,16 @@ DiagsConfig::DiagsConfig(std::string_view prefix_string, const char *filename, c
   int diags_log_roll_enable  = static_cast<int>(RecGetRecordInt("proxy.config.diags.logfile.rolling_enabled").first);
 
   // Grab some perms for the actual files on disk
-  auto diags_perm{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.diags.logfile_perm").first.data())};
-  auto output_perm{const_cast<char *>(RecGetRecordString_Xmalloc("proxy.config.output.logfile_perm").first.data())};
-  int  diags_perm_parsed  = diags_perm ? ink_fileperm_parse(diags_perm) : -1;
-  int  output_perm_parsed = diags_perm ? ink_fileperm_parse(output_perm) : -1;
+  {
+    auto diags_perm{RecGetRecordStringAlloc("proxy.config.diags.logfile_perm").first};
+    auto output_perm{RecGetRecordStringAlloc("proxy.config.output.logfile_perm").first};
+    int  diags_perm_parsed  = diags_perm.empty() ? -1 : ink_fileperm_parse(diags_perm.c_str());
+    int  output_perm_parsed = diags_perm.empty() ? -1 : ink_fileperm_parse(output_perm.c_str());
 
-  ats_free(diags_perm);
-  ats_free(output_perm);
-
-  // Set up diags, FILE streams are opened in Diags constructor
-  diags_log = new BaseLogFile(diags_logpath.c_str());
-  _diags    = new Diags(prefix_string, tags, actions, diags_log, diags_perm_parsed, output_perm_parsed);
+    // Set up diags, FILE streams are opened in Diags constructor
+    diags_log = new BaseLogFile(diags_logpath.c_str());
+    _diags    = new Diags(prefix_string, tags, actions, diags_log, diags_perm_parsed, output_perm_parsed);
+  }
   DiagsPtr::set(_diags);
   _diags->config_roll_diagslog(static_cast<RollingEnabledValues>(diags_log_roll_enable), diags_log_roll_int, diags_log_roll_size);
   _diags->config_roll_outputlog(static_cast<RollingEnabledValues>(output_log_roll_enable), output_log_roll_int,
