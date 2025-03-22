@@ -163,11 +163,11 @@ RecErrT RecSetRecordFloat(const char *name, RecFloat rec_float, RecSourceT sourc
 RecErrT RecSetRecordString(const char *name, const RecString rec_string, RecSourceT source, bool lock = true);
 RecErrT RecSetRecordCounter(const char *name, RecCounter rec_counter, RecSourceT source, bool lock = true);
 
-std::pair<RecInt, RecErrT>     RecGetRecordInt(const char *name, bool lock = true);
-std::pair<RecFloat, RecErrT>   RecGetRecordFloat(const char *name, bool lock = true);
-RecErrT                        RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
-std::pair<RecString, RecErrT>  RecGetRecordStringAlloc(const char *name, bool lock = true);
-std::pair<RecCounter, RecErrT> RecGetRecordCounter(const char *name, bool lock = true);
+std::pair<RecInt, RecErrT>         RecGetRecordInt(const char *name, bool lock = true);
+std::pair<RecFloat, RecErrT>       RecGetRecordFloat(const char *name, bool lock = true);
+RecErrT                            RecGetRecordString(const char *name, char *buf, int buf_len, bool lock = true);
+std::pair<ats_scoped_str, RecErrT> RecGetRecordStringAlloc(const char *name, bool lock = true);
+std::pair<RecCounter, RecErrT>     RecGetRecordCounter(const char *name, bool lock = true);
 
 //------------------------------------------------------------------------
 // Record Attributes Reading

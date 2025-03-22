@@ -312,7 +312,7 @@ RecLinkConfigString(const char *name, RecString *rec_string)
   if (err == REC_ERR_FAIL) {
     return REC_ERR_FAIL;
   }
-  *rec_string = tmp;
+  *rec_string = tmp.release();
   return RecRegisterConfigUpdateCb(name, link_string_alloc, (void *)rec_string);
 }
 
@@ -475,12 +475,12 @@ RecGetRecordString(const char *name, char *buf, int buf_len, bool lock)
   return err;
 }
 
-std::pair<RecString, RecErrT>
+std::pair<ats_scoped_str, RecErrT>
 RecGetRecordStringAlloc(const char *name, bool lock)
 {
-  RecErrT   err;
-  RecData   data;
-  RecString rec_string{nullptr};
+  RecErrT        err;
+  RecData        data;
+  ats_scoped_str rec_string{nullptr};
 
   if ((err = RecGetRecord_Xmalloc(name, RECD_STRING, &data, lock)) == REC_ERR_OKAY && data.rec_string) {
     rec_string = data.rec_string;

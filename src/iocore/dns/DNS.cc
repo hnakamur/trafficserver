@@ -236,16 +236,16 @@ DNSProcessor::start(int, size_t stacksize)
   RecEstablishStaticConfigInt32("proxy.config.dns.round_robin_nameservers", &dns_ns_rr);
   RecEstablishStaticConfigInt32("proxy.config.dns.max_tcp_continuous_failures", &dns_max_tcp_continuous_failures);
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.dns.nameservers")}; err == REC_ERR_OKAY) {
-    dns_ns_list = rec_str;
+    dns_ns_list = rec_str.release();
   }
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.dns.local_ipv4")}; err == REC_ERR_OKAY) {
-    dns_local_ipv4 = rec_str;
+    dns_local_ipv4 = rec_str.release();
   }
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.dns.local_ipv6")}; err == REC_ERR_OKAY) {
-    dns_local_ipv6 = rec_str;
+    dns_local_ipv6 = rec_str.release();
   }
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.dns.resolv_conf")}; err == REC_ERR_OKAY) {
-    dns_resolv_conf = rec_str;
+    dns_resolv_conf = rec_str.release();
   }
   RecEstablishStaticConfigInt32("proxy.config.dns.dedicated_thread", &dns_thread);
   int dns_conn_mode_i = 0;

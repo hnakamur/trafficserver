@@ -62,7 +62,7 @@ configure_net()
   RecString ccp{nullptr};
 
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.net.tcp_congestion_control_in")}; err == REC_ERR_OKAY) {
-    ccp = rec_str;
+    ccp = rec_str.release();
   }
   if (ccp && *ccp != '\0') {
     net_ccp_in = ccp;
@@ -71,7 +71,7 @@ configure_net()
   }
 
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.net.tcp_congestion_control_out")}; err == REC_ERR_OKAY) {
-    ccp = rec_str;
+    ccp = rec_str.release();
   }
   if (ccp && *ccp != '\0') {
     net_ccp_out = ccp;

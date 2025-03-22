@@ -46,7 +46,7 @@ ink_event_system_init(ts::ModuleVersion v)
 
   int chunk_sizes[DEFAULT_BUFFER_SIZES] = {0};
   {
-    ats_scoped_str chunk_sizes_string{RecGetRecordStringAlloc("proxy.config.allocator.iobuf_chunk_sizes").first};
+    auto chunk_sizes_string{RecGetRecordStringAlloc("proxy.config.allocator.iobuf_chunk_sizes").first};
     if (chunk_sizes_string && !parse_buffer_chunk_sizes(chunk_sizes_string, chunk_sizes)) {
       // If we can't parse the string then we can't be sure of the chunk sizes so just exit
       Fatal("Failed to parse proxy.config.allocator.iobuf_chunk_sizes");
