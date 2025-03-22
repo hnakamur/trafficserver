@@ -872,6 +872,7 @@ inline HttpConfigParams::~HttpConfigParams()
   ats_free(oride.ssl_client_cert_filename);
   ats_free(oride.ssl_client_private_key_filename);
   ats_free(oride.ssl_client_ca_cert_filename);
+  fprintf(stderr, "HttpConfigParams::~HttpConfigParams free connect_ports_string=%p, params=%p\n", connect_ports_string, this);
   ats_free(connect_ports_string);
   ats_free(reverse_proxy_no_host_redirect);
   ats_free(redirect_actions_string);

@@ -984,6 +984,8 @@ HttpConfig::startup()
   HttpEstablishStaticConfigByte(c.oride.cache_range_write, "proxy.config.http.cache.range.write");
 
   HttpEstablishStaticConfigStringAlloc(c.connect_ports_string, "proxy.config.http.connect_ports");
+  fprintf(stderr, "HttpConfig::startup &HttpConfig::m_master=%p, connect_ports_string=%p\n", &HttpConfig::m_master,
+          c.connect_ports_string);
 
   HttpEstablishStaticConfigLongLong(c.oride.request_hdr_max_size, "proxy.config.http.request_header_max_size");
   HttpEstablishStaticConfigLongLong(c.oride.response_hdr_max_size, "proxy.config.http.response_header_max_size");
@@ -1289,7 +1291,8 @@ HttpConfig::reconfigure()
   params->oride.allow_multi_range      = m_master.oride.allow_multi_range;
 
   params->connect_ports_string = ats_strdup(m_master.connect_ports_string);
-  params->connect_ports        = parse_ports_list(params->connect_ports_string);
+  fprintf(stderr, "HttpConfig::reconfigure set connect_ports_string=%p, params=%p\n", params->connect_ports_string, params);
+  params->connect_ports = parse_ports_list(params->connect_ports_string);
 
   params->oride.request_hdr_max_size  = m_master.oride.request_hdr_max_size;
   params->oride.response_hdr_max_size = m_master.oride.response_hdr_max_size;
@@ -1344,6 +1347,7 @@ HttpConfig::reconfigure()
   params->oride.plugin_vc_default_buffer_index      = m_master.oride.plugin_vc_default_buffer_index;
   params->oride.plugin_vc_default_buffer_water_mark = m_master.oride.plugin_vc_default_buffer_water_mark;
 
+  fprintf(stderr, "[dbg_ctl_config] calling onfigProcessor.set for m_id=%d params=%p\n", m_id, params);
   m_id = configProcessor.set(m_id, params);
 }
 
