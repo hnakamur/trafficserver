@@ -77,19 +77,23 @@ DiagsConfig::reconfigure_diags()
 
   // enabled if records.yaml set
 
-  found = e = RecGetRecordInt("proxy.config.diags.debug.enabled").first == REC_ERR_OKAY;
+  RecErrT err;
+  std::tie(e, err) = RecGetRecordInt("proxy.config.diags.debug.enabled");
+  found            = err == REC_ERR_OKAY;
   if (e && found) {
     c.enabled(DiagsTagType_Debug, e); // implement OR logic
   }
   all_found = all_found && found;
 
-  found = e = RecGetRecordInt("proxy.config.diags.action.enabled").first == REC_ERR_OKAY;
+  std::tie(e, err) = RecGetRecordInt("proxy.config.diags.action.enabled");
+  found            = err == REC_ERR_OKAY;
   if (e && found) {
     c.enabled(DiagsTagType_Action, 1); // implement OR logic
   }
   all_found = all_found && found;
 
-  found = e             = RecGetRecordInt("proxy.config.diags.show_location").first == REC_ERR_OKAY;
+  std::tie(e, err)      = RecGetRecordInt("proxy.config.diags.show_location");
+  found                 = err == REC_ERR_OKAY;
   _diags->show_location = ((e == 1 && found) ? SHOW_LOCATION_DEBUG : ((e == 2 && found) ? SHOW_LOCATION_ALL : SHOW_LOCATION_NONE));
   all_found             = all_found && found;
 
