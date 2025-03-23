@@ -189,7 +189,7 @@ set_paths_helper(std::string_view path, std::string_view filename, char **final_
     }
   }
 
-  if (final_filename && path.empty()) {
+  if (final_filename && !path.empty()) {
     *final_filename = filename.empty() ? nullptr : ats_stringdup(Layout::get()->relative_to(path, filename));
   }
 }
