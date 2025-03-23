@@ -46,6 +46,7 @@
 #include <openssl/pem.h>
 #include <cstring>
 #include <cmath>
+#include <iostream>
 
 int                SSLConfig::config_index                                = 0;
 int                SSLConfig::configids[]                                 = {0, 0};
@@ -460,6 +461,9 @@ SSLConfigParams::initialize()
   }
 
   set_paths_helper(CACertRelativePath, ssl_server_ca_cert_filename, &serverCACertPath, &serverCACertFilename);
+  std::cout << "[myDebug] SSLConfigParams::initialize, CACertRelativePath=" << CACertRelativePath
+            << ", ssl_server_ca_cert_filename=" << ssl_server_ca_cert_filename << ", serverCACertPath=" << serverCACertPath
+            << ", serverCACertFilename=" << serverCACertFilename << "\n";
   ats_free(ssl_server_ca_cert_filename);
   ats_free(CACertRelativePath);
 
@@ -566,6 +570,9 @@ SSLConfigParams::initialize()
     clientCACertRelativePath = const_cast<char *>(rec_str.data());
   }
   set_paths_helper(clientCACertRelativePath, ssl_client_ca_cert_filename, &clientCACertPath, &clientCACertFilename);
+  std::cout << "[myDebug] SSLConfigParams::initialize, clientCACertRelativePath=" << clientCACertRelativePath
+            << ", ssl_client_ca_cert_filename=" << ssl_client_ca_cert_filename << ", clientCACertPath=" << clientCACertPath
+            << ", clientCACertFilename=" << clientCACertFilename << "\n";
   ats_free(clientCACertRelativePath);
   ats_free(ssl_client_ca_cert_filename);
 
