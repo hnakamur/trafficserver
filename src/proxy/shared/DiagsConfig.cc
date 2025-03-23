@@ -120,12 +120,14 @@ DiagsConfig::reconfigure_diags()
   std::string dt;
   std::tie(dt, err) = RecGetRecordStringAlloc("proxy.config.diags.debug.tags");
   found             = err == REC_ERR_OKAY;
-  all_found         = all_found && found;
+  auto dt_c_str{found ? dt.c_str() : nullptr};
+  all_found = all_found && found;
 
   std::string at;
   std::tie(at, err) = RecGetRecordStringAlloc("proxy.config.diags.action.tags");
   found             = err == REC_ERR_OKAY;
-  all_found         = all_found && found;
+  auto at_c_str{found ? at.c_str() : nullptr};
+  all_found = all_found && found;
 
   ///////////////////////////////////////////////////////////////////
   // if couldn't read all values, return without changing config,  //
@@ -146,8 +148,8 @@ DiagsConfig::reconfigure_diags()
     // add new tag tables from records.yaml or command line overrides //
     //////////////////////////////////////////////////////////////////////
 
-    _diags->activate_taglist((_diags->base_debug_tags ? _diags->base_debug_tags : dt.c_str()), DiagsTagType_Debug);
-    _diags->activate_taglist((_diags->base_action_tags ? _diags->base_action_tags : at.c_str()), DiagsTagType_Action);
+    _diags->activate_taglist((_diags->base_debug_tags ? _diags->base_debug_tags : dt_c_str), DiagsTagType_Debug);
+    _diags->activate_taglist((_diags->base_action_tags ? _diags->base_action_tags : at_c_str), DiagsTagType_Action);
 
     ////////////////////////////////////
     // change the diags config values //
