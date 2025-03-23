@@ -46,7 +46,6 @@
 #include <openssl/pem.h>
 #include <cstring>
 #include <cmath>
-#include <iostream>
 
 int                SSLConfig::config_index                                = 0;
 int                SSLConfig::configids[]                                 = {0, 0};
@@ -448,9 +447,6 @@ SSLConfigParams::initialize()
     auto [filename_str, filename_err]{RecGetRecordStringAlloc("proxy.config.ssl.CA.cert.path")};
     auto CACertRelativePath{filename_err == REC_ERR_OKAY ? filename_str.c_str() : nullptr};
     set_paths_helper(CACertRelativePath, ssl_server_ca_cert_filename, &serverCACertPath, &serverCACertFilename);
-    std::cout << "[myDebug] SSLConfigParams::initialize, CACertRelativePath=" << CACertRelativePath
-              << ", ssl_server_ca_cert_filename=" << ssl_server_ca_cert_filename << ", serverCACertPath=" << serverCACertPath
-              << ", serverCACertFilename=" << serverCACertFilename << "\n";
   }
 
   // SSL session cache configurations
@@ -547,9 +543,6 @@ SSLConfigParams::initialize()
     auto [path_str, path_err]{RecGetRecordStringAlloc("proxy.config.ssl.client.CA.cert.path")};
     auto clientCACertRelativePath{path_err == REC_ERR_OKAY ? path_str.c_str() : nullptr};
     set_paths_helper(clientCACertRelativePath, ssl_client_ca_cert_filename, &clientCACertPath, &clientCACertFilename);
-    std::cout << "[myDebug] SSLConfigParams::initialize, clientCACertRelativePath=" << clientCACertRelativePath
-              << ", ssl_client_ca_cert_filename=" << ssl_client_ca_cert_filename << ", clientCACertPath=" << clientCACertPath
-              << ", clientCACertFilename=" << clientCACertFilename << "\n";
   }
 
   if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.ssl.client.groups_list")}; err == REC_ERR_OKAY) {
