@@ -183,7 +183,7 @@ int
 LogAccess::marshal_config_str_var(char *config_var, char *buf)
 {
   char *str = nullptr;
-  RecEstablishStaticConfigStringAlloc(str, config_var);
+  RecEstablishStaticConfigString(str, config_var);
   int len = LogAccess::strlen(str);
   if (buf) {
     marshal_str(buf, str, len);

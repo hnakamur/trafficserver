@@ -285,7 +285,7 @@ HttpProxyPort::loadConfig(std::vector<self> &entries)
   char *text;
   bool  found_p;
 
-  found_p = RecEstablishStaticConfigStringAlloc(text, PORTS_CONFIG_NAME) == REC_ERR_OKAY;
+  found_p = RecEstablishStaticConfigString(text, PORTS_CONFIG_NAME) == REC_ERR_OKAY;
   if (found_p) {
     self::loadValue(entries, text);
   }
