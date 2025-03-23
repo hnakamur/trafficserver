@@ -503,20 +503,18 @@ SSLConfigParams::initialize()
   // ++++++++++++++++++++++++ Client part ++++++++++++++++++++
   client_verify_depth = 7;
 
-  char *verify_server_policy = nullptr;
-  if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.policy")}; err == REC_ERR_OKAY) {
-    verify_server_policy = ats_stringdup(rec_str);
+  {
+    auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.policy")};
+    auto verify_server_policy{err == REC_ERR_OKAY ? rec_str.c_str() : nullptr};
+    this->SetServerPolicy(verify_server_policy);
   }
-  this->SetServerPolicy(verify_server_policy);
-  ats_free(verify_server_policy);
   RecRegisterConfigUpdateCb("proxy.config.ssl.client.verify.server.policy", UpdateServerPolicy, nullptr);
 
-  char *verify_server_properties = nullptr;
-  if (auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.properties")}; err == REC_ERR_OKAY) {
-    verify_server_properties = ats_stringdup(rec_str);
+  {
+    auto [rec_str, err]{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.properties")};
+    auto verify_server_properties{err == REC_ERR_OKAY ? rec_str.c_str() : nullptr};
+    this->SetServerPolicyProperties(verify_server_properties);
   }
-  this->SetServerPolicyProperties(verify_server_properties);
-  ats_free(verify_server_properties);
   RecRegisterConfigUpdateCb("proxy.config.ssl.client.verify.server.properties", UpdateServerPolicyProperties, nullptr);
 
   {
