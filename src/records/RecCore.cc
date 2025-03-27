@@ -477,13 +477,13 @@ RecGetRecordString(const char *name, char *buf, int buf_len, bool lock)
   return err;
 }
 
-std::pair<std::string, RecErrT>
+std::pair<std::optional<std::string>, RecErrT>
 RecGetRecordStringAlloc(const char *name, bool lock)
 {
   // Must use this indirection because the API requires a pure function, therefore no values can
   // be bound in the lambda.
-  using Context = std::pair<std::string, RecErrT>;
-  Context ret{{}, REC_ERR_FAIL};
+  using Context = std::pair<std::optional<std::string>, RecErrT>;
+  Context ret{std::nullopt, REC_ERR_FAIL};
 
   RecLookupRecord(
     name,
@@ -491,8 +491,13 @@ RecGetRecordStringAlloc(const char *name, bool lock)
       auto &&[str, err] = *static_cast<Context *>(ctx);
       if (r->registered && r->data_type == RECD_STRING) {
         err = REC_ERR_OKAY;
-        if (r->data.rec_string) {
-          str = r->data.rec_string;
+        if (auto rec_str{r->data.rec_string}; rec_str) {
+          // Chop trailing spaces
+          auto end{rec_str + strlen(rec_str) - 1};
+          while (end >= rec_str && isspace(*end)) {
+            end--;
+          }
+          str = std::string{rec_str, static_cast<std::string::size_type>(end - rec_str)};
         }
       }
     },
