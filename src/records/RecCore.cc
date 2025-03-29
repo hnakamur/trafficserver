@@ -486,6 +486,7 @@ RecGetRecordStringAlloc(const char *name, bool lock)
   using Context = std::optional<std::string>;
   Context ret{};
 
+  fprintf(stderr, "[myDebug] RecGetRecordStringAlloc name=%s\n", name);
   RecLookupRecord(
     name,
     [](RecRecord const *r, void *ctx) -> void {
@@ -502,7 +503,13 @@ RecGetRecordStringAlloc(const char *name, bool lock)
             len = static_cast<std::string::size_type>(end + 1 - rec_str);
           }
           str = len ? std::string{rec_str, len} : std::string{};
+          fprintf(stderr, "[myDebug] RecGetRecordStringAlloc return string=[%s]\n", str.value().c_str());
+        } else {
+          fprintf(stderr, "[myDebug] RecGetRecordStringAlloc rec_string is null\n");
         }
+      } else {
+        fprintf(stderr, "[myDebug] RecGetRecordStringAlloc registered=%d, type_is_STRING=%d\n", r->registered,
+                r->data_type == RECD_STRING);
       }
     },
     &ret, lock);
