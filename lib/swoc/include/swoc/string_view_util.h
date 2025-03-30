@@ -93,3 +93,12 @@ string_view_value_or(const std::optional<std::string> s, std::string_view defaul
 {
   return s ? s.value() : default_value;
 }
+
+inline std::optional<std::string_view>
+as_optional_string_view(const std::optional<std::string> s)
+{
+  if (s) {
+    return std::string_view{s.value()};
+  }
+  return std::nullopt;
+}
