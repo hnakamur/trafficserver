@@ -201,7 +201,7 @@ extern void ats_force_order_by_family(sa_family_t family, HostResPreferenceOrder
 struct HostResData {
   HostResPreferenceOrder order;
   // keep the configuration value to satisfy the API(TSHttpTxnConfigStringSet)
-  char *conf_value{nullptr};
+  ats_scoped_str conf_value{nullptr};
 };
 
 #ifndef NS_GET16

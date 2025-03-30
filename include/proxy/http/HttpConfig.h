@@ -456,16 +456,16 @@ struct OverridableHttpConfigParams {
   MgmtByte keep_alive_enabled_out = 1;
   MgmtByte keep_alive_post_out    = 1; // share server sessions for post
 
-  MgmtInt  server_min_keep_alive_conns        = 0;
-  MgmtByte server_session_sharing_match       = 0;
-  char    *server_session_sharing_match_str   = nullptr;
-  MgmtByte auth_server_session_private        = 1;
-  MgmtByte fwd_proxy_auth_to_parent           = 0;
-  MgmtByte uncacheable_requests_bypass_parent = 1;
-  MgmtByte attach_server_session_to_client    = 0;
-  MgmtInt  max_proxy_cycles                   = 0;
-  MgmtInt  tunnel_activity_check_period       = 0;
-  MgmtInt  default_inactivity_timeout         = 24 * 60 * 60;
+  MgmtInt        server_min_keep_alive_conns        = 0;
+  MgmtByte       server_session_sharing_match       = 0;
+  ats_scoped_str server_session_sharing_match_str   = nullptr;
+  MgmtByte       auth_server_session_private        = 1;
+  MgmtByte       fwd_proxy_auth_to_parent           = 0;
+  MgmtByte       uncacheable_requests_bypass_parent = 1;
+  MgmtByte       attach_server_session_to_client    = 0;
+  MgmtInt        max_proxy_cycles                   = 0;
+  MgmtInt        tunnel_activity_check_period       = 0;
+  MgmtInt        default_inactivity_timeout         = 24 * 60 * 60;
 
   MgmtByte forward_connect_method = 0;
 
@@ -576,9 +576,9 @@ struct OverridableHttpConfigParams {
   //////////////////////////////
   // server verification mode //
   //////////////////////////////
-  char *ssl_client_verify_server_policy     = nullptr;
-  char *ssl_client_verify_server_properties = nullptr;
-  char *ssl_client_sni_policy               = nullptr;
+  char          *ssl_client_verify_server_policy     = nullptr;
+  char          *ssl_client_verify_server_properties = nullptr;
+  ats_scoped_str ssl_client_sni_policy               = nullptr;
 
   MgmtInt proxy_response_hsts_max_age = -1;
 
@@ -675,25 +675,25 @@ struct OverridableHttpConfigParams {
   ///////////////////////////////////////////////////////////////////
   // Server header                                                 //
   ///////////////////////////////////////////////////////////////////
-  char  *body_factory_template_base       = nullptr;
-  size_t body_factory_template_base_len   = 0;
-  char  *proxy_response_server_string     = nullptr; // This does not get free'd by us!
-  size_t proxy_response_server_string_len = 0;       // Updated when server_string is set.
+  ats_scoped_str body_factory_template_base       = nullptr;
+  size_t         body_factory_template_base_len   = 0;
+  ats_scoped_str proxy_response_server_string     = nullptr; // This does not get free'd by us!
+  size_t         proxy_response_server_string_len = 0;       // Updated when server_string is set.
 
   ///////////////////////////////////////////////////////////////////
   // Global User Agent header                                      //
   ///////////////////////////////////////////////////////////////////
-  char  *global_user_agent_header      = nullptr; // This does not get free'd by us!
-  size_t global_user_agent_header_size = 0;       // Updated when user_agent is set.
+  ats_scoped_str global_user_agent_header      = nullptr; // This does not get free'd by us!
+  size_t         global_user_agent_header_size = 0;       // Updated when user_agent is set.
 
   MgmtFloat cache_heuristic_lm_factor = 0.10;
   MgmtFloat background_fill_threshold = 0.5;
 
   // Various strings, good place for them here ...
-  char *ssl_client_cert_filename        = nullptr;
-  char *ssl_client_private_key_filename = nullptr;
-  char *ssl_client_ca_cert_filename     = nullptr;
-  char *ssl_client_alpn_protocols       = nullptr;
+  char          *ssl_client_cert_filename        = nullptr;
+  char          *ssl_client_private_key_filename = nullptr;
+  char          *ssl_client_ca_cert_filename     = nullptr;
+  ats_scoped_str ssl_client_alpn_protocols       = nullptr;
 
   // Host Resolution order
   HostResData host_res_data;
@@ -734,28 +734,28 @@ public:
   MgmtInt server_max_connections    = 0;
   MgmtInt max_websocket_connections = -1;
 
-  char *proxy_request_via_string      = nullptr;
-  char *proxy_response_via_string     = nullptr;
-  int   proxy_request_via_string_len  = 0;
-  int   proxy_response_via_string_len = 0;
+  ats_scoped_str proxy_request_via_string      = nullptr;
+  ats_scoped_str proxy_response_via_string     = nullptr;
+  int            proxy_request_via_string_len  = 0;
+  int            proxy_response_via_string_len = 0;
 
   MgmtInt accept_no_activity_timeout = 120;
 
   ///////////////////////////////////////////////////////////////////
   // Privacy: fields which are removed from the user agent request //
   ///////////////////////////////////////////////////////////////////
-  char *anonymize_other_header_list = nullptr;
+  ats_scoped_str anonymize_other_header_list = nullptr;
 
   ////////////////////////////////////////////
   // CONNECT ports (used to be == ssl_ports //
   ////////////////////////////////////////////
-  char                *connect_ports_string = nullptr;
+  ats_scoped_str       connect_ports_string = nullptr;
   HttpConfigPortRange *connect_ports        = nullptr;
 
-  char *reverse_proxy_no_host_redirect     = nullptr;
-  char *proxy_hostname                     = nullptr;
-  int   reverse_proxy_no_host_redirect_len = 0;
-  int   proxy_hostname_len                 = 0;
+  char          *reverse_proxy_no_host_redirect     = nullptr;
+  ats_scoped_str proxy_hostname                     = nullptr;
+  int            reverse_proxy_no_host_redirect_len = 0;
+  int            proxy_hostname_len                 = 0;
 
   MgmtInt post_copy_size = 2048;
   MgmtInt max_post_size  = 0;
@@ -763,7 +763,7 @@ public:
   MgmtInt max_payload_iobuf_index = BUFFER_SIZE_INDEX_32K;
   MgmtInt max_msg_iobuf_index     = BUFFER_SIZE_INDEX_32K;
 
-  char                       *redirect_actions_string      = nullptr;
+  ats_scoped_str              redirect_actions_string      = nullptr;
   RedirectEnabled::ActionMap *redirect_actions_map         = nullptr;
   RedirectEnabled::Action     redirect_actions_self_action = RedirectEnabled::Action::INVALID;
 
@@ -875,10 +875,6 @@ inline HttpConfigParams::~HttpConfigParams()
   ats_free(oride.ssl_client_ca_cert_filename);
   ats_free(connect_ports_string);
   ats_free(reverse_proxy_no_host_redirect);
-  ats_free(redirect_actions_string);
-  ats_free(oride.ssl_client_sni_policy);
-  ats_free(oride.ssl_client_alpn_protocols);
-  ats_free(oride.host_res_data.conf_value);
 
   delete connect_ports;
   delete redirect_actions_map;
