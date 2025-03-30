@@ -13,6 +13,7 @@
 #include <string_view>
 #include <memory>
 #include <limits>
+#include <optional>
 
 /** Compare views with ordering, ignoring case.
  *
@@ -85,4 +86,10 @@ strcmp(const std::string_view &lhs, const std::string_view &rhs) {
 inline void *
 memcpy(void *dst, const std::string_view &src) {
   return memcpy(dst, src.data(), src.size());
+}
+
+inline std::string_view
+string_view_value_or(const std::optional<std::string> s, std::string_view default_value)
+{
+  return s ? s.value() : default_value;
 }

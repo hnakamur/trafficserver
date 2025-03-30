@@ -171,8 +171,8 @@ struct SSLConfigParams : public ConfigInfo {
   void cleanup();
   void reset();
   void SSLConfigInit(swoc::IPRangeSet *global);
-  void SetServerPolicy(const char *);
-  void SetServerPolicyProperties(const char *);
+  void SetServerPolicy(std::string_view);
+  void SetServerPolicyProperties(std::string_view);
 
 private:
   // c_str() of string passed to in-progess call to updateCTX().

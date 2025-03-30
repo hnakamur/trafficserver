@@ -47,6 +47,8 @@
 #include <cstring>
 #include <cmath>
 
+using namespace std::literals;
+
 int                SSLConfig::config_index                                = 0;
 int                SSLConfig::configids[]                                 = {0, 0};
 int                SSLCertificateConfig::configid                         = 0;
@@ -220,37 +222,39 @@ UpdateServerPolicyProperties(const char * /* name ATS_UNUSED */, RecDataT /* dat
 }
 
 void
-SSLConfigParams::SetServerPolicyProperties(const char *verify_server)
+SSLConfigParams::SetServerPolicyProperties(std::string_view verify_server)
 {
-  if (strcmp(verify_server, "SIGNATURE") == 0) {
+  if (verify_server == "SIGNATURE"sv) {
     verifyServerProperties = YamlSNIConfig::Property::SIGNATURE_MASK;
-  } else if (strcmp(verify_server, "NAME") == 0) {
+  } else if (verify_server == "NAME"sv) {
     verifyServerProperties = YamlSNIConfig::Property::NAME_MASK;
-  } else if (strcmp(verify_server, "ALL") == 0) {
+  } else if (verify_server == "ALL"sv) {
     verifyServerProperties = YamlSNIConfig::Property::ALL_MASK;
-  } else if (strcmp(verify_server, "NONE") == 0) {
+  } else if (verify_server == "NONE"sv) {
     verifyServerProperties = YamlSNIConfig::Property::NONE;
   } else {
-    Warning("%s is invalid for proxy.config.ssl.client.verify.server.properties.  Should be one of ALL, SIGNATURE, NAME, or NONE. "
-            "Default is ALL",
-            verify_server);
+    Warning(
+      "%.*s is invalid for proxy.config.ssl.client.verify.server.properties.  Should be one of ALL, SIGNATURE, NAME, or NONE. "
+      "Default is ALL",
+      static_cast<int>(verify_server.length()), verify_server.data());
     verifyServerProperties = YamlSNIConfig::Property::NONE;
   }
 }
 
 void
-SSLConfigParams::SetServerPolicy(const char *verify_server)
+SSLConfigParams::SetServerPolicy(std::string_view verify_server)
 {
-  if (strcmp(verify_server, "DISABLED") == 0) {
+  if (verify_server == "DISABLED"sv) {
     verifyServerPolicy = YamlSNIConfig::Policy::DISABLED;
-  } else if (strcmp(verify_server, "PERMISSIVE") == 0) {
+  } else if (verify_server == "PERMISSIVE"sv) {
     verifyServerPolicy = YamlSNIConfig::Policy::PERMISSIVE;
-  } else if (strcmp(verify_server, "ENFORCED") == 0) {
+  } else if (verify_server == "ENFORCED"sv) {
     verifyServerPolicy = YamlSNIConfig::Policy::ENFORCED;
   } else {
-    Warning("%s is invalid for proxy.config.ssl.client.verify.server.policy.  Should be one of DISABLED, PERMISSIVE, or ENFORCED. "
-            "Default is DISABLED",
-            verify_server);
+    Warning(
+      "%.*s is invalid for proxy.config.ssl.client.verify.server.policy.  Should be one of DISABLED, PERMISSIVE, or ENFORCED. "
+      "Default is DISABLED",
+      static_cast<int>(verify_server.length()), verify_server.data());
     verifyServerPolicy = YamlSNIConfig::Policy::DISABLED;
   }
 }
@@ -508,16 +512,14 @@ SSLConfigParams::initialize()
   client_verify_depth = 7;
 
   {
-    auto rec_str{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.policy")};
-    auto verify_server_policy{ats_as_c_str(rec_str)};
-    this->SetServerPolicy(verify_server_policy);
+    auto verify_server_policy{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.policy")};
+    this->SetServerPolicy(string_view_value_or(verify_server_policy, ""sv));
   }
   RecRegisterConfigUpdateCb("proxy.config.ssl.client.verify.server.policy", UpdateServerPolicy, nullptr);
 
   {
-    auto rec_str{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.properties")};
-    auto verify_server_properties{ats_as_c_str(rec_str)};
-    this->SetServerPolicyProperties(verify_server_properties);
+    auto verify_server_properties{RecGetRecordStringAlloc("proxy.config.ssl.client.verify.server.properties")};
+    this->SetServerPolicyProperties(string_view_value_or(verify_server_properties, ""sv));
   }
 
   RecRegisterConfigUpdateCb("proxy.config.ssl.client.verify.server.properties", UpdateServerPolicyProperties, nullptr);
