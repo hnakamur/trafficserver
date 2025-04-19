@@ -68,7 +68,8 @@ class Test_remap_acl:
         :param tr: The TestRun object to associate the server process with.
         """
         name = f"server-{Test_remap_acl._server_counter}"
-        server = tr.AddVerifierServerProcess(name, self._replay_file)
+        context = {"url_prefix": ""}
+        server = tr.AddVerifierServerProcess(name, self._replay_file, context=context)
         Test_remap_acl._server_counter += 1
         self._server = server
 
@@ -79,6 +80,7 @@ class Test_remap_acl:
         """
 
         name = f"ts-{Test_remap_acl._ts_counter}"
+        url_prefix = f"/{Test_remap_acl._ts_counter}"
         ts = tr.MakeATSProcess(name, enable_cache=False, enable_tls=True)
         Test_remap_acl._ts_counter += 1
         self._ts = ts
@@ -103,7 +105,8 @@ class Test_remap_acl:
         for name, _ in self._named_acls:
             remap_config_lines.append(f'.activatefilter {name}')
 
-        remap_config_lines.append(f'map / http://127.0.0.1:{self._server.Variables.http_port} {self._acl_configuration}')
+        remap_config_lines.append(
+            f'map http://example.com{url_prefix}/ http://127.0.0.1:{self._server.Variables.http_port} {self._acl_configuration}')
         ts.Disk.remap_config.AddLines(remap_config_lines)
         ts.Disk.ip_allow_yaml.AddLines(self._ip_allow_content.split("\n"))
 
@@ -114,7 +117,8 @@ class Test_remap_acl:
         """
 
         name = f"client-{Test_remap_acl._client_counter}"
-        p = tr.AddVerifierClientProcess(name, self._replay_file, http_ports=[self._ts.Variables.port])
+        context = {"url_prefix": f"/{Test_remap_acl._client_counter}"}
+        p = tr.AddVerifierClientProcess(name, self._replay_file, http_ports=[self._ts.Variables.port], context=context)
         Test_remap_acl._client_counter += 1
         p.StartBefore(self._server)
         p.StartBefore(self._ts)

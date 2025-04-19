@@ -29,9 +29,10 @@ sessions:
   - client-request:
       method: GET
       version: '1.1'
-      url: /test/ip_allow/test_get
+      url: ${url_prefix}/test/ip_allow/test_get
       headers:
         fields:
+        - [ Host, example.com ]
         - [ Content-Length, 0 ]
         - [ uuid, get ]
         - [ X-Request, get ]
@@ -49,9 +50,10 @@ sessions:
   - client-request:
       method: POST
       version: '1.1'
-      url: /test/ip_allow/test_post
+      url: ${url_prefix}/test/ip_allow/test_post
       headers:
         fields:
+        - [ Host, example.com ]
         - [ Content-Length, 10 ]
         - [ uuid, post ]
         - [ X-Request, post ]
