@@ -43,7 +43,7 @@ sessions:
         fields:
         - [ Host, example.com ]
         - [ Content-Length, 0 ]
-        - [ uuid, get ]
+        - [ uuid, "${client_request_uuid_0}" ]
         - [ X-Request, get ]
 
     <<: *standard_response
@@ -59,7 +59,7 @@ sessions:
         fields:
         - [ Host, example.com ]
         - [ Content-Length, 0 ]
-        - [ uuid, head ]
+        - [ uuid, "${client_request_uuid_1}" ]
         - [ X-Request, head ]
 
     <<: *standard_response
@@ -76,7 +76,7 @@ sessions:
         fields:
         - [ Host, example.com ]
         - [Content-Length, 10]
-        - [ uuid, post ]
+        - [ uuid, "${client_request_uuid_2}" ]
         - [ X-Request, post ]
 
     <<: *standard_response
@@ -91,7 +91,7 @@ sessions:
       headers:
         fields:
         - [ Host, example.com ]
-        - [ uuid, delete ]
+        - [ uuid, "${client_request_uuid_3}" ]
         - [ X-Request, delete ]
         - [ Content-Length, 0 ]
 

@@ -20,9 +20,10 @@ import io
 import re
 import inspect
 import tempfile
+import uuid
 from yaml import load, dump
 from yaml import CLoader as Loader
-from typing import List, Tuple
+from typing import List, Mapping, Tuple
 
 Test.Summary = '''
 Verify remap.config acl behavior.
@@ -35,6 +36,7 @@ class Test_remap_acl:
     _ts_counter: int = 0
     _server_counter: int = 0
     _client_counter: int = 0
+    _max_requests_in_replay_file: int = 10
 
     def __init__(
             self, name: str, replay_file: str, ip_allow_content: str, deactivate_ip_allow: bool, acl_behavior_policy: int,
@@ -57,10 +59,14 @@ class Test_remap_acl:
         self._named_acls = named_acls
         self._expected_responses = expected_responses
 
+        self._uuids = self._generate_client_request_uuids(Test_remap_acl._max_requests_in_replay_file)
         tr = Test.AddTestRun(name)
         self._configure_server(tr)
         self._configure_traffic_server(tr)
         self._configure_client(tr)
+
+    def _generate_client_request_uuids(self, count: int) -> Mapping[str, str]:
+        return {f'client_request_uuid_{i}': uuid.uuid4() for i in range(count)}
 
     def _configure_server(self, tr: 'TestRun') -> None:
         """Configure the server.
@@ -68,7 +74,7 @@ class Test_remap_acl:
         :param tr: The TestRun object to associate the server process with.
         """
         name = f"server-{Test_remap_acl._server_counter}"
-        context = {"url_prefix": ""}
+        context = dict(self._uuids, url_prefix="")
         server = tr.AddVerifierServerProcess(name, self._replay_file, context=context)
         Test_remap_acl._server_counter += 1
         self._server = server
@@ -117,7 +123,7 @@ class Test_remap_acl:
         """
 
         name = f"client-{Test_remap_acl._client_counter}"
-        context = {"url_prefix": f"/{Test_remap_acl._client_counter}"}
+        context = dict(self._uuids, url_prefix=f"/{Test_remap_acl._client_counter}")
         p = tr.AddVerifierClientProcess(name, self._replay_file, http_ports=[self._ts.Variables.port], context=context)
         Test_remap_acl._client_counter += 1
         p.StartBefore(self._server)
