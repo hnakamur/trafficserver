@@ -20,7 +20,7 @@ Implement the Proxy Verifier test server extension.
 import os
 
 from ports import get_port
-from verifier_common import create_address_argument, substitute_context_in_replay_file
+from verifier_common import create_address_argument, substitute_context_in_replay_file, substitute_context_in_replay_files
 
 
 def _configure_server(
@@ -35,7 +35,8 @@ def _configure_server(
         ca_cert='',
         verbose=True,
         other_args='',
-        context=None):
+        context=None,
+        replay_path_with_context_list=None):
     """
     Configure the provided process to run a verifier-server command.
 
@@ -127,6 +128,14 @@ def _configure_server(
             process.Setup.Copy(ca_cert, run_ca_cert, CopyLogic.SoftFiles)
             command += ' --ca-certs "{}" '.format(run_ca_cert)
 
+    if replay_path_with_context_list:
+        if replay_path:
+            raise ValueError("Tried to use both of replay_path and replay_path_with_context_list")
+        if context:
+            raise ValueError("Tried to use both of context and replay_path_with_context_list")
+
+        replay_path = substitute_context_in_replay_files(process, replay_path_with_context_list)
+
     if replay_path:
         if context:
             # replace the passed replay file with the new one generated using the passed
@@ -162,7 +171,8 @@ def MakeVerifierServerProcess(
         ca_cert='',
         verbose=True,
         other_args='',
-        context=None):
+        context=None,
+        replay_path_with_context_list=None):
     """
     Create a verifier-server process for the Test.
 
@@ -201,6 +211,9 @@ def MakeVerifierServerProcess(
                  replay file.
                  You can refer to https://docs.python.org/3/library/string.html#template-strings
                  for more information how to add template strings to the replay file.
+    
+        replay_path_with_context_list: (List[Replay_file_with_context]) The set
+                 of replay file with substitusion context.
     Raises:
         ValueError if https_ports is non-empty and a valid ssl_cert could not
             be derived.
@@ -212,7 +225,8 @@ def MakeVerifierServerProcess(
     """
     server = test.Processes.Process(name)
     _configure_server(
-        test, server, name, replay_path, http_ports, https_ports, http3_ports, ssl_cert, ca_cert, verbose, other_args, context)
+        test, server, name, replay_path, http_ports, https_ports, http3_ports, ssl_cert, ca_cert, verbose, other_args, context,
+        replay_path_with_context_list)
     return server
 
 
@@ -227,7 +241,8 @@ def AddVerifierServerProcess(
         ca_cert='',
         verbose=True,
         other_args='',
-        context=None):
+        context=None,
+        replay_path_with_context_list=None):
     """
     Create a verifier-server process and configure it for the given TestRun.
 
@@ -242,7 +257,8 @@ def AddVerifierServerProcess(
 
     server = run.Processes.Process(name)
     _configure_server(
-        run, server, name, replay_path, http_ports, https_ports, http3_ports, ssl_cert, ca_cert, verbose, other_args, context)
+        run, server, name, replay_path, http_ports, https_ports, http3_ports, ssl_cert, ca_cert, verbose, other_args, context,
+        replay_path_with_context_list)
 
     client = run.Processes.Default
     client.StartBefore(server)

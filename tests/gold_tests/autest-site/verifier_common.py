@@ -19,6 +19,7 @@ Common utilities for the Proxy Verifier extensions.
 import os
 import tempfile
 from string import Template
+from typing import List, Mapping, TypedDict
 
 
 def create_address_argument(ports):
@@ -56,4 +57,34 @@ def substitute_context_in_replay_file(process, replay_path, context):
             new_replay_file.write(replay_content)
 
     # use this as replay_path
+    return replay_path
+
+
+class Replay_file_with_context(TypedDict):
+    """Replay file with substitusion context
+
+    Attributes:
+        replay_path: The replay file to be used.
+        context: The context for substitution in the replay file.
+    """
+    replay_path: str
+    context: Mapping[str, str]
+
+
+def substitute_context_in_replay_files(process, replay_path_with_context_list: List[Replay_file_with_context]):
+    '''
+    Perform substitution base on the passed context dict.
+    This function will return the new replay_path directory after substituion.
+    '''
+    tf = tempfile.TemporaryDirectory(delete=False, dir=process.RunDirectory, prefix="replay_")
+    replay_path = tf.name
+    for i, item in enumerate(replay_path_with_context_list):
+        src_path = item["replay_file"]
+        context = item["context"]
+        with open(os.path.join(process.TestDirectory, src_path), 'r') as src_file:
+            replay_template = Template(src_file.read())
+            replay_content = replay_template.substitute(context)
+            dest_path = os.path.join(replay_path, f"{i:04}-{os.path.basename(src_path)}")
+            with open(dest_path, "w") as dest_file:
+                dest_file.write(replay_content)
     return replay_path

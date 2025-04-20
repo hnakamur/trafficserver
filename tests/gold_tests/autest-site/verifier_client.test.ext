@@ -18,7 +18,7 @@ Implement the Proxy Verifier client extensions.
 #  limitations under the License.
 
 import os
-from verifier_common import create_address_argument, substitute_context_in_replay_file
+from verifier_common import create_address_argument, substitute_context_in_replay_file, substitute_context_in_replay_files
 
 
 def _configure_client(
@@ -34,7 +34,8 @@ def _configure_client(
         ca_cert='',
         verbose=True,
         other_args='',
-        context=None):
+        context=None,
+        replay_path_with_context_list=None):
     """
     Configure the process for running the verifier-client.
 
@@ -62,6 +63,15 @@ def _configure_client(
 
     # Configure the verifier-client command line arguments.
     command = "verifier-client run "
+
+    if replay_path_with_context_list:
+        if replay_path:
+            raise ValueError("Tried to use both of replay_path and replay_path_with_context_list")
+        if context:
+            raise ValueError("Tried to use both of context and replay_path_with_context_list")
+
+        replay_path = substitute_context_in_replay_files(process, replay_path_with_context_list)
+
     if replay_path:
         if context:
             # replace the passed replay file with the new one generated using the passed
@@ -154,7 +164,9 @@ def AddVerifierClientProcess(
         ca_cert='',
         verbose=True,
         other_args='',
-        context=None):
+        context=None,
+        default=True,
+        replay_path_with_context_list=None):
     """
     Set the Default process of the test run to a verifier-client Process.
 
@@ -189,6 +201,11 @@ def AddVerifierClientProcess(
                  Template strings support $-based substitutions in the replay file.
                  You can refer to https://docs.python.org/3/library/string.html#template-strings
                  for more information how to add template strings to the replay file.
+    
+        default: (bool) Whether to set the Default process or to create a new process
+
+        replay_path_with_context_list: (List[Replay_file_with_context]) The set
+                 of replay file with substitusion context.
     Returns:
         The newly constructed verifier-client for the test run, which is also the
         Default Process of the test run.
@@ -201,9 +218,10 @@ def AddVerifierClientProcess(
         KeyError if placeholders are missing from the mapping between context and the replay file.
     """
 
-    p = run.Processes.Default
+    p = run.Processes.Default if default else run.Processes.Process(name)
     _configure_client(
-        run, p, name, replay_path, http_ports, https_ports, http3_ports, keys, ssl_cert, ca_cert, verbose, other_args, context)
+        run, p, name, replay_path, http_ports, https_ports, http3_ports, keys, ssl_cert, ca_cert, verbose, other_args, context,
+        replay_path_with_context_list)
     return p
 
 
