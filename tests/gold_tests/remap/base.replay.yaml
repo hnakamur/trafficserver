@@ -36,9 +36,10 @@ sessions:
         - [ Content-Length, 0 ]
         - [ uuid, "${client_request_uuid_0}" ]
         - [ X-Request, get ]
+        - [ X-Combo-Index, ${combo_index} ]
 
     proxy-response:
-      status: 200
+      status: ${get_proxy_response_status}
 
     server-response:
       status: 200
@@ -57,9 +58,10 @@ sessions:
         - [ Content-Length, 10 ]
         - [ uuid, "${client_request_uuid_1}" ]
         - [ X-Request, post ]
+        - [ X-Combo-Index, ${combo_index} ]
 
     proxy-response:
-      status: 200
+      status: ${post_proxy_response_status}
 
     server-response:
       status: 200
