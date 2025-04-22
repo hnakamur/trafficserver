@@ -69,6 +69,7 @@ class Test_remap_acl_multi_map:
 
     _test_counter: int = -1
     _max_requests_in_replay_file: int = 10
+    _log_flush_seconds: int = 1
 
     def __init__(self, name: str, acl_behavior_policy: int, ip_allow_content: str, test_cases: List[Remap_acl_test_case]):
         """Initialize the test.
@@ -139,8 +140,8 @@ class Test_remap_acl_multi_map:
                 'proxy.config.http.connect_ports': self._server.Variables.http_port,
                 'proxy.config.url_remap.acl_behavior_policy': self._acl_behavior_policy,
                 # flush log files every second.
-                'proxy.config.log.max_secs_per_buffer': 1,
-                'proxy.config.log.periodic_tasks_interval': 1,
+                'proxy.config.log.max_secs_per_buffer': Test_remap_acl_multi_map._log_flush_seconds,
+                'proxy.config.log.periodic_tasks_interval': Test_remap_acl_multi_map._log_flush_seconds,
             })
 
         self.diags_log = self._ts.Disk.diags_log.AbsPath
@@ -159,7 +160,8 @@ class Test_remap_acl_multi_map:
             for name, _ in item["named_acls"]:
                 remap_config_lines.append(f'.activatefilter {name}')
 
-            url_prefix = f"/{i}"
+            combo_index = item.get("combo_index")
+            url_prefix = f"/{i}" if combo_index == None else f"/{combo_index}"
             remap_config_lines.append(
                 f'map http://example.com{url_prefix}/ http://127.0.0.1:{self._server.Variables.http_port} {item["acl_configuration"]}'
             )
@@ -190,7 +192,7 @@ class Test_remap_acl_multi_map:
                     "mv {} {}".format(self.diags_log, rotated_diags_log))
                 logging.debug(f"rotate_diags.log mv {self.diags_log} {rotated_diags_log}")
                 rotate_diags_log.ReturnCode = 0
-                rotate_diags_log.StartBefore(client_ready, ready=1.5)
+                rotate_diags_log.StartBefore(client_ready, ready=Test_remap_acl_multi_map._log_flush_seconds + 0.1)
 
                 send_pkill = tr.Processes.Process(
                     f"Send_SIGUSR2-{Test_remap_acl_multi_map._test_counter}-{i}", self.get_sigusr2_signal_command())
@@ -205,12 +207,15 @@ class Test_remap_acl_multi_map:
                 send_pkill_ready.StartBefore(send_pkill)
 
             name = f"client-{Test_remap_acl_multi_map._test_counter}-{i}"
-            replay_path = self._test_cases[i]["replay_file"]
+            test_case = self._test_cases[i]
+            replay_path = test_case["replay_file"]
+            combo_index = test_case.get("combo_index")
+            url_prefix = f"/{i}" if combo_index == None else f"/{combo_index}"
             context = {
-                **uuids, "url_prefix": f"/{i}",
-                "combo_index": self._test_cases[i].get("combo_index"),
-                "get_proxy_response_status": self._test_cases[i].get("get_proxy_response_status"),
-                "post_proxy_response_status": self._test_cases[i].get("post_proxy_response_status")
+                **uuids, "url_prefix": url_prefix,
+                "combo_index": test_case.get("combo_index"),
+                "get_proxy_response_status": test_case.get("get_proxy_response_status"),
+                "post_proxy_response_status": test_case.get("post_proxy_response_status")
             }
             logging.debug(f"_configure_client replay_path={replay_path}, context={context}, i={i}, len={len(self._uuids_list)}")
             p = tr.AddVerifierClientProcess(name, replay_path, http_ports=[self._ts.Variables.port], context=context, default=False)
@@ -220,7 +225,7 @@ class Test_remap_acl_multi_map:
             else:
                 p.StartBefore(send_pkill_ready)
 
-            expected_responses = self._test_cases[i]["expected_responses"]
+            expected_responses = test_case["expected_responses"]
             if expected_responses == [None, None]:
                 # If there are no expected responses, expect the Warning about the rejected ip.
                 self._ts.Disk.diags_log.Content += Testers.ContainsExpression(
@@ -239,7 +244,7 @@ class Test_remap_acl_multi_map:
             client_ready.StartBefore(p)
             # In the autest environment, it can take more than 10 seconds for the log file to be created.
             client_ready.StartupTimeout = 30
-            client_ready.Ready = When.FileContains(self.traffic_out, f"/{i}/test/ip_allow/")
+            client_ready.Ready = When.FileContains(self.traffic_out, f"{url_prefix}/test/ip_allow/")
 
         tr.Processes.Default.Command = "echo waiting for test processes to be done"
         tr.Processes.Default.Return = 0
@@ -459,10 +464,10 @@ ip_allow:
       - GET
 '''
 
-#Test_old_action("Verify allow is reject in modern policy", "@action=allow @method=GET", IP_ALLOW_CONTENT)
-#Test_old_action("Verify deny is reject in modern policy", "@action=deny @method=GET", IP_ALLOW_CONTENT)
-#Test_old_action("Verify deny is reject in modern policy", "", IP_ALLOW_OLD_ACTION)
-#
+Test_old_action("Verify allow is reject in modern policy", "@action=allow @method=GET", IP_ALLOW_CONTENT)
+Test_old_action("Verify deny is reject in modern policy", "@action=deny @method=GET", IP_ALLOW_CONTENT)
+Test_old_action("Verify deny is reject in modern policy", "", IP_ALLOW_OLD_ACTION)
+
 Test_remap_acl_multi_map(
     "test_ip_allow_optional_methods",
     acl_behavior_policy=1,
@@ -642,61 +647,64 @@ Test_remap_acl_multi_map(
         }
     ])
 
-#from deactivate_ip_allow import all_deactivate_ip_allow_tests
-#from all_acl_combinations import all_acl_combination_tests
-#"""
-#Test all acl combinations
-#"""
-#
-#grouped_all_acl_combination_tests = defaultdict(list)
-#for test in all_acl_combination_tests:
-#    key = (test["ip_allow"], test["policy"])
-#    grouped_all_acl_combination_tests[key].append(test)
-#
-#for key, group in grouped_all_acl_combination_tests.items():
-#    print(f"Group {key}:")
-#    for member in group:
-#        print(" ", member)
+from all_acl_combinations import all_acl_combination_tests
+"""
+Test all acl combinations
+"""
+grouped_all_acl_combination_tests = defaultdict(list)
+for test in all_acl_combination_tests:
+    key = (test["ip_allow"], test["policy"])
+    grouped_all_acl_combination_tests[key].append(test)
 
-#for idx, test in enumerate(all_acl_combination_tests):
-#    (_, replay_file_name) = tempfile.mkstemp(suffix="acl_table_test_{}.replay".format(idx))
-#    replay_proxy_response(
-#        "base.replay.yaml",
-#        replay_file_name,
-#        test["GET response"],
-#        test["POST response"],
-#    )
-#    Test_remap_acl(
-#        "allcombo-{0} {1} {2} {3}".format(idx, test["inline"], test["named_acl"], test["ip_allow"]),
-#        replay_file=replay_file_name,
-#        ip_allow_content=test["ip_allow"],
-#        deactivate_ip_allow=False,
-#        acl_behavior_policy=0 if test["policy"] == "legacy" else 1,
-#        acl_configuration=test["inline"],
-#        named_acls=[("acl", test["named_acl"])] if test["named_acl"] != "" else [],
-#        expected_responses=[test["GET response"], test["POST response"]],
-#    )
+for key, group in grouped_all_acl_combination_tests.items():
+    ip_allow, policy = key
+    test_cases = [
+        {
+            "name": f"test_case{test['index']}",
+            "replay_file": "base.replay.yaml",
+            "deactivate_ip_allow": False,
+            "acl_configuration": test["inline"],
+            "named_acls": [(f"acl{test['index']}", test["named_acl"])] if test["named_acl"] != "" else [],
+            "expected_responses": [test["GET response"], test["POST response"]],
+            "get_proxy_response_status": 403 if test["GET response"] == None else test["GET response"],
+            "post_proxy_response_status": 403 if test["POST response"] == None else test["POST response"],
+            "combo_index": test["index"],
+        } for test in group
+    ]
+    Test_remap_acl_multi_map(
+        f"allcombo-group-{policy} {ip_allow}",
+        acl_behavior_policy=0 if policy == "legacy" else 1,
+        ip_allow_content=ip_allow,
+        test_cases=test_cases)
+
+#from deactivate_ip_allow import all_deactivate_ip_allow_tests
 #"""
 #Test all ACL combinations
 #"""
-#for idx, test in enumerate(all_deactivate_ip_allow_tests):
-#    try:
-#        test["deactivate_ip_allow"]
-#    except:
-#        print(test)
-#    (_, replay_file_name) = tempfile.mkstemp(suffix="deactivate_ip_allow_table_test_{}.replay".format(idx))
-#    replay_proxy_response(
-#        "base.replay.yaml",
-#        replay_file_name,
-#        test["GET response"],
-#        test["POST response"],
-#    )
-#    Test_remap_acl(
-#        "ipallow-{0} {1} {2} {3}".format(idx, test["inline"], test["named_acl"], test["ip_allow"]),
-#        replay_file=replay_file_name,
-#        ip_allow_content=test["ip_allow"],
-#        deactivate_ip_allow=test["deactivate_ip_allow"],
-#        acl_behavior_policy=0 if test["policy"] == "legacy" else 1,
-#        acl_configuration=test["inline"],
-#        named_acls=[("acl", test["named_acl"])] if test["named_acl"] != "" else [],
-#        expected_responses=[test["GET response"], test["POST response"]])
+#grouped_all_deactivate_ip_allow_tests = defaultdict(list)
+#for test in all_deactivate_ip_allow_tests:
+#    key = (test["ip_allow"], test["policy"])
+#    grouped_all_deactivate_ip_allow_tests[key].append(test)
+#
+#group_idx = -1
+#for key, group in grouped_all_deactivate_ip_allow_tests.items():
+#    group_idx += 1
+#    ip_allow, policy = key
+#    test_cases = [
+#        {
+#            "name": f"test_case{test['index']}",
+#            "replay_file": "base.replay.yaml",
+#            "deactivate_ip_allow": test["deactivate_ip_allow"],
+#            "acl_configuration": test["inline"],
+#            "named_acls": [(f"acl{test['index']}", test["named_acl"])] if test["named_acl"] != "" else [],
+#            "expected_responses": [test["GET response"], test["POST response"]],
+#            "get_proxy_response_status": 403 if test["GET response"] == None else test["GET response"],
+#            "post_proxy_response_status": 403 if test["POST response"] == None else test["POST response"],
+#            "combo_index": test["index"],
+#        } for i, test in enumerate(group)
+#    ]
+#    Test_remap_acl_multi_map(
+#        f"ipallow-group-{policy} {ip_allow}",
+#        acl_behavior_policy=0 if policy == "legacy" else 1,
+#        ip_allow_content=ip_allow,
+#        test_cases=test_cases)
