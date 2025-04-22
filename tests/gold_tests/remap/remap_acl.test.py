@@ -27,10 +27,6 @@ from yaml import load, dump
 from yaml import CLoader as Loader
 from typing import List, Mapping, Tuple, TypedDict
 
-import logging
-
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s.%(msecs)03d %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-
 Test.Summary = '''
 Verify remap.config acl behavior.
 '''
@@ -85,8 +81,6 @@ class Test_remap_acl_multi_map:
         Test_remap_acl_multi_map._test_counter += 1
 
         self._uuids_list = self._generate_client_request_uuids_list(len(test_cases))
-        logging.debug(f"test_cases={self._test_cases}")
-        logging.debug(f"uuids_list={self._uuids_list}")
         tr = Test.AddTestRun(name)
         self._configure_server(tr)
         self._configure_traffic_server(tr)
@@ -116,7 +110,6 @@ class Test_remap_acl_multi_map:
                     }
             } for i, uuids in enumerate(self._uuids_list)
         ]
-        logging.debug(f"_configure_server replay_path_with_context_list={replay_path_with_context_list}")
         server = tr.AddVerifierServerProcess(name, None, replay_path_with_context_list=replay_path_with_context_list)
         self._server = server
 
@@ -127,7 +120,6 @@ class Test_remap_acl_multi_map:
         """
 
         name = f"ts-{Test_remap_acl_multi_map._test_counter}"
-        logging.debug(f'_configure_traffic_server name={name}')
         ts = tr.MakeATSProcess(name, enable_cache=False, enable_tls=True)
         self._ts = ts
         self._ts_name = name
@@ -145,7 +137,6 @@ class Test_remap_acl_multi_map:
             })
 
         self.diags_log = self._ts.Disk.diags_log.AbsPath
-        self.log_dir = os.path.dirname(self.diags_log)
         self.traffic_out = self._ts.Disk.traffic_out.AbsPath
 
         remap_config_lines = []
@@ -190,18 +181,15 @@ class Test_remap_acl_multi_map:
                 rotate_diags_log = tr.Processes.Process(
                     f"rotate_diags_log_{Test_remap_acl_multi_map._test_counter}_{i}",
                     "mv {} {}".format(self.diags_log, rotated_diags_log))
-                logging.debug(f"rotate_diags.log mv {self.diags_log} {rotated_diags_log}")
                 rotate_diags_log.ReturnCode = 0
                 rotate_diags_log.StartBefore(client_ready, ready=Test_remap_acl_multi_map._log_flush_seconds + 0.1)
 
                 send_pkill = tr.Processes.Process(
                     f"Send_SIGUSR2-{Test_remap_acl_multi_map._test_counter}-{i}", self.get_sigusr2_signal_command())
-                logging.debug(f"process Send_SIGUSR2-{Test_remap_acl_multi_map._test_counter}-{i}")
                 send_pkill.StartBefore(rotate_diags_log)
 
                 send_pkill_ready = tr.Processes.Process(
                     f"send_pkill_ready-{Test_remap_acl_multi_map._test_counter}-{i}", 'sleep 30')
-                logging.debug(f"process send_pkill_ready-{Test_remap_acl_multi_map._test_counter}-{i}")
                 send_pkill_ready.StartupTimeout = 30
                 send_pkill_ready.Ready = When.FileExists(self.diags_log)
                 send_pkill_ready.StartBefore(send_pkill)
@@ -217,7 +205,6 @@ class Test_remap_acl_multi_map:
                 "get_proxy_response_status": test_case.get("get_proxy_response_status"),
                 "post_proxy_response_status": test_case.get("post_proxy_response_status")
             }
-            logging.debug(f"_configure_client replay_path={replay_path}, context={context}, i={i}, len={len(self._uuids_list)}")
             p = tr.AddVerifierClientProcess(name, replay_path, http_ports=[self._ts.Variables.port], context=context, default=False)
             if i == 0:
                 p.StartBefore(self._server)
@@ -226,7 +213,6 @@ class Test_remap_acl_multi_map:
                 p.StartBefore(send_pkill_ready)
 
             client_ready = tr.Processes.Process(f"client_ready-{Test_remap_acl_multi_map._test_counter}-{i}", 'sleep 30')
-            logging.debug(f"process client_ready-{Test_remap_acl_multi_map._test_counter}-{i}")
             client_ready.StartBefore(p)
             # In the autest environment, it can take more than 10 seconds for the log file to be created.
             client_ready.StartupTimeout = 30
@@ -258,117 +244,6 @@ class Test_remap_acl_multi_map:
         """
         return (f"{sys.executable} {TS_PID_SCRIPT} "
                 f"--signal SIGUSR2 {self._ts_name}")
-
-
-class Test_remap_acl:
-    """Configure a test to verify remap.config acl behavior."""
-
-    _ts_counter: int = 0
-    _server_counter: int = 0
-    _client_counter: int = 0
-
-    def __init__(
-            self, name: str, replay_file: str, ip_allow_content: str, deactivate_ip_allow: bool, acl_behavior_policy: int,
-            acl_configuration: str, named_acls: List[Tuple[str, str]], expected_responses: List[int]):
-        """Initialize the test.
-
-        :param name: The name of the test.
-        :param replay_file: The replay file to be used.
-        :param ip_allow_content: The ip_allow configuration to be used.
-        :param deactivate_ip_allow: Whether to deactivate the ip_allow filter.
-        :param acl_configuration: The ACL configuration to be used.
-        :param named_acls: The set of named ACLs to configure and use.
-        :param expect_responses: The in-order expected responses from the proxy.
-        """
-        self._replay_file = replay_file
-        self._ip_allow_content = ip_allow_content
-        self._deactivate_ip_allow = deactivate_ip_allow
-        self._acl_behavior_policy = acl_behavior_policy
-        self._acl_configuration = acl_configuration
-        self._named_acls = named_acls
-        self._expected_responses = expected_responses
-
-        tr = Test.AddTestRun(name)
-        self._configure_server(tr)
-        self._configure_traffic_server(tr)
-        self._configure_client(tr)
-
-    def _configure_server(self, tr: 'TestRun') -> None:
-        """Configure the server.
-
-        :param tr: The TestRun object to associate the server process with.
-        """
-        name = f"server-{Test_remap_acl._server_counter}"
-        logging.debug(f'_configure_server name={name}')
-        context = {"url_prefix": ""}
-        server = tr.AddVerifierServerProcess(name, self._replay_file, context=context)
-        Test_remap_acl._server_counter += 1
-        self._server = server
-
-    def _configure_traffic_server(self, tr: 'TestRun') -> None:
-        """Configure Traffic Server.
-
-        :param tr: The TestRun object to associate the Traffic Server process with.
-        """
-
-        name = f"ts-{Test_remap_acl._ts_counter}"
-        logging.debug(f'_configure_traffic_server name={name}')
-        url_prefix = f"/{Test_remap_acl._ts_counter}"
-        ts = tr.MakeATSProcess(name, enable_cache=False, enable_tls=True)
-        Test_remap_acl._ts_counter += 1
-        self._ts = ts
-
-        ts.Disk.records_config.update(
-            {
-                'proxy.config.diags.debug.enabled': 1,
-                'proxy.config.diags.debug.tags': 'http|url|remap|ip_allow',
-                'proxy.config.http.push_method_enabled': 1,
-                'proxy.config.http.connect_ports': self._server.Variables.http_port,
-                'proxy.config.url_remap.acl_behavior_policy': self._acl_behavior_policy,
-            })
-
-        remap_config_lines = []
-        if self._deactivate_ip_allow:
-            remap_config_lines.append('.deactivatefilter ip_allow')
-
-        # First, define the name ACLs (filters).
-        for name, definition in self._named_acls:
-            remap_config_lines.append(f'.definefilter {name} {definition}')
-        # Now activate them.
-        for name, _ in self._named_acls:
-            remap_config_lines.append(f'.activatefilter {name}')
-
-        remap_config_lines.append(
-            f'map http://example.com{url_prefix}/ http://127.0.0.1:{self._server.Variables.http_port} {self._acl_configuration}')
-        ts.Disk.remap_config.AddLines(remap_config_lines)
-        ts.Disk.ip_allow_yaml.AddLines(self._ip_allow_content.split("\n"))
-
-    def _configure_client(self, tr: 'TestRun') -> None:
-        """Run the test.
-
-        :param tr: The TestRun object to associate the client process with.
-        """
-
-        name = f"client-{Test_remap_acl._client_counter}"
-        context = {"url_prefix": f"/{Test_remap_acl._client_counter}"}
-        p = tr.AddVerifierClientProcess(name, self._replay_file, http_ports=[self._ts.Variables.port], context=context)
-        logging.debug(f'_configure_client name={name}, command={p.Command}')
-        Test_remap_acl._client_counter += 1
-        p.StartBefore(self._server)
-        p.StartBefore(self._ts)
-
-        if self._expected_responses == [None, None]:
-            # If there are no expected responses, expect the Warning about the rejected ip.
-            self._ts.Disk.diags_log.Content += Testers.ContainsExpression(
-                "client '127.0.0.1' prohibited by ip-allow policy", "Verify the client rejection warning message.")
-
-            # Also, the client will complain about the broken connections.
-            p.ReturnCode = 1
-
-        else:
-            codes = [str(code) for code in self._expected_responses]
-            p.Streams.stdout += Testers.ContainsExpression(
-                '.*'.join(codes), "Verifying the expected order of responses", reflags=re.DOTALL | re.MULTILINE)
 
 
 class Test_old_action:
@@ -687,9 +562,7 @@ for test in all_deactivate_ip_allow_tests:
     key = (test["ip_allow"], test["policy"])
     grouped_all_deactivate_ip_allow_tests[key].append(test)
 
-group_idx = -1
 for key, group in grouped_all_deactivate_ip_allow_tests.items():
-    group_idx += 1
     ip_allow, policy = key
     test_cases = [
         {

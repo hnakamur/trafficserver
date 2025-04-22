@@ -211,7 +211,7 @@ def MakeVerifierServerProcess(
                  replay file.
                  You can refer to https://docs.python.org/3/library/string.html#template-strings
                  for more information how to add template strings to the replay file.
-    
+
         replay_path_with_context_list: (List[Replay_file_with_context]) The set
                  of replay file with substitusion context.
     Raises:
