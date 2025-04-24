@@ -34,7 +34,7 @@ sessions:
         fields:
         - [ Host, example.com ]
         - [ Content-Length, 0 ]
-        - [ uuid, "${client_request_uuid_0}" ]
+        - [ uuid, "${client_request_uuid_get}" ]
         - [ X-Request, get ]
 
     proxy-response:
@@ -55,7 +55,7 @@ sessions:
         fields:
         - [ Host, example.com ]
         - [ Content-Length, 10 ]
-        - [ uuid, "${client_request_uuid_1}" ]
+        - [ uuid, "${client_request_uuid_post}" ]
         - [ X-Request, post ]
 
     proxy-response:
