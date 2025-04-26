@@ -73,7 +73,6 @@ class Test_remap_acl_multi:
         self._ip_allow_content = ip_allow_content
         self._play_list = play_list
         Test_remap_acl_multi._test_counter += 1
-        print(f'[myDebug] Test_remap_acl_multi counter={Test_remap_acl_multi._test_counter}, play_list={play_list}')
 
         self._uuids_list = self._generate_client_request_uuids_list(play_list)
         tr = Test.AddTestRun(name)
@@ -82,14 +81,16 @@ class Test_remap_acl_multi:
         self._configure_client(tr)
 
     def _generate_client_request_uuids_list(self, play_list: int) -> List[Mapping[str, str]]:
-        return [{
-            "client_request_uuid_get": f"{play["play_id"]}-get",
-            "client_request_uuid_head": f"{play["play_id"]}-head",
-            "client_request_uuid_post": f"{play["play_id"]}-post",
-            "client_request_uuid_put": f"{play["play_id"]}-put",
-            "client_request_uuid_delete": f"{play["play_id"]}-delete",
-            "client_request_uuid_push": f"{play["play_id"]}-push",
-        } for play in play_list]
+        return [
+            {
+                "client_request_uuid_get": f"{play['play_id']}-get",
+                "client_request_uuid_head": f"{play['play_id']}-head",
+                "client_request_uuid_post": f"{play['play_id']}-post",
+                "client_request_uuid_put": f"{play['play_id']}-put",
+                "client_request_uuid_delete": f"{play['play_id']}-delete",
+                "client_request_uuid_push": f"{play['play_id']}-push",
+            } for play in play_list
+        ]
 
     def _configure_server(self, tr: 'TestRun') -> None:
         """Configure the server.
@@ -102,8 +103,7 @@ class Test_remap_acl_multi:
                 "replay_file": play["replay_file"],
                 "context":
                     {
-                        **uuids,
-                        "url_prefix": "",
+                        **uuids, "url_prefix": "",
                         "play_id": play["play_id"],
                         "get_proxy_response_status": play.get("get_proxy_response_status"),
                         "post_proxy_response_status": play.get("post_proxy_response_status")
@@ -173,7 +173,6 @@ class Test_remap_acl_multi:
         """
 
         client_ready = None
-        print(f'[myDebug] client-{Test_remap_acl_multi._test_counter}, len(uuids_list)={len(self._uuids_list)}, len(play_list)={len(self._play_list)}')
         for i, uuids in enumerate(self._uuids_list):
             send_pkill_ready = None
             if i > 0:
@@ -189,8 +188,7 @@ class Test_remap_acl_multi:
                     f"Send_SIGUSR2-{Test_remap_acl_multi._test_counter}-{i}", self.get_sigusr2_signal_command())
                 send_pkill.StartBefore(rotate_diags_log)
 
-                send_pkill_ready = tr.Processes.Process(
-                    f"send_pkill_ready-{Test_remap_acl_multi._test_counter}-{i}", 'sleep 30')
+                send_pkill_ready = tr.Processes.Process(f"send_pkill_ready-{Test_remap_acl_multi._test_counter}-{i}", 'sleep 30')
                 send_pkill_ready.StartupTimeout = 30
                 send_pkill_ready.Ready = When.FileExists(self.diags_log)
                 send_pkill_ready.StartBefore(send_pkill)
@@ -200,8 +198,7 @@ class Test_remap_acl_multi:
             play_id = play["play_id"]
             url_prefix = f"/{play_id}"
             context = {
-                **uuids,
-                "url_prefix": url_prefix,
+                **uuids, "url_prefix": url_prefix,
                 "play_id": play_id,
                 "get_proxy_response_status": play.get("get_proxy_response_status"),
                 "post_proxy_response_status": play.get("post_proxy_response_status")
@@ -555,10 +552,7 @@ for test in all_acl_combination_tests:
     key = (test["ip_allow"], test["policy"])
     grouped_all_acl_combination_tests[key].append(test)
 
-for key, group in grouped_all_acl_combination_tests.items():
-    ip_allow, policy = key
-    print(f'[myDebug] grouped_all_acl_combination_tests ip_allow={ip_allow}, policy={policy}')
-    # ip_allow, policy = key
+for (ip_allow, policy), group in grouped_all_acl_combination_tests.items():
     play_list = [
         {
             "play_id": test["index"],
@@ -588,7 +582,6 @@ for test in all_deactivate_ip_allow_tests:
     grouped_all_deactivate_ip_allow_tests[key].append(test)
 
 for (ip_allow, policy), group in grouped_all_deactivate_ip_allow_tests.items():
-    print(f'[myDebug] grouped_all_deactivate_ip_allow_tests ip_allow={ip_allow}, policy={policy}')
     play_list = [
         {
             "play_id": test["index"],
