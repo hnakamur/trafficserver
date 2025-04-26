@@ -16,7 +16,6 @@ Verify remap.config acl behavior.
 #  limitations under the License.
 
 import os
-import io
 import re
 import inspect
 import tempfile
@@ -25,7 +24,7 @@ from yaml import CLoader as Loader
 from typing import List, Tuple
 
 Test.Summary = '''
-Verify remap.config acl behavior.
+Verify remap.config acl behavior part 1.
 '''
 
 
@@ -444,76 +443,3 @@ test_named_acl_deny = Test_remap_acl(
     acl_configuration='',
     named_acls=[('deny', '@action=set_deny @method=HEAD @method=POST')],
     expected_responses=[200, 403, 403, 403])
-
-
-def replay_proxy_response(filename, replay_file, get_proxy_response, post_proxy_response):
-    """
-    replay_proxy_response writes the given replay file (which expects a single GET & POST client-request)
-    with the given proxy_response value. This is only used to support the tests in the combination table.
-    """
-
-    current_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
-    path = os.path.join(current_dir, filename)
-    data = None
-    with open(path) as f:
-        data = load(f, Loader=Loader)
-        for session in data["sessions"]:
-            for transaction in session["transactions"]:
-                method = transaction["client-request"]["method"]
-                if method == "GET":
-                    transaction["proxy-response"]["status"] = 403 if get_proxy_response == None else get_proxy_response
-                elif method == "POST":
-                    transaction["proxy-response"]["status"] = 403 if post_proxy_response == None else post_proxy_response
-                else:
-                    raise Exception("Expected to find GET or POST request, found %s", method)
-    with open(replay_file, "w") as f:
-        f.write(dump(data))
-
-
-from deactivate_ip_allow import all_deactivate_ip_allow_tests
-from all_acl_combinations import all_acl_combination_tests
-"""
-Test all acl combinations
-"""
-for idx, test in enumerate(all_acl_combination_tests):
-    (_, replay_file_name) = tempfile.mkstemp(suffix="acl_table_test_{}.replay".format(idx))
-    replay_proxy_response(
-        "base.replay.yaml",
-        replay_file_name,
-        test["GET response"],
-        test["POST response"],
-    )
-    Test_remap_acl(
-        "allcombo-{0} {1} {2} {3}".format(idx, test["inline"], test["named_acl"], test["ip_allow"]),
-        replay_file=replay_file_name,
-        ip_allow_content=test["ip_allow"],
-        deactivate_ip_allow=False,
-        acl_behavior_policy=0 if test["policy"] == "legacy" else 1,
-        acl_configuration=test["inline"],
-        named_acls=[("acl", test["named_acl"])] if test["named_acl"] != "" else [],
-        expected_responses=[test["GET response"], test["POST response"]],
-    )
-"""
-Test all ACL combinations
-"""
-for idx, test in enumerate(all_deactivate_ip_allow_tests):
-    try:
-        test["deactivate_ip_allow"]
-    except:
-        print(test)
-    (_, replay_file_name) = tempfile.mkstemp(suffix="deactivate_ip_allow_table_test_{}.replay".format(idx))
-    replay_proxy_response(
-        "base.replay.yaml",
-        replay_file_name,
-        test["GET response"],
-        test["POST response"],
-    )
-    Test_remap_acl(
-        "ipallow-{0} {1} {2} {3}".format(idx, test["inline"], test["named_acl"], test["ip_allow"]),
-        replay_file=replay_file_name,
-        ip_allow_content=test["ip_allow"],
-        deactivate_ip_allow=test["deactivate_ip_allow"],
-        acl_behavior_policy=0 if test["policy"] == "legacy" else 1,
-        acl_configuration=test["inline"],
-        named_acls=[("acl", test["named_acl"])] if test["named_acl"] != "" else [],
-        expected_responses=[test["GET response"], test["POST response"]])
