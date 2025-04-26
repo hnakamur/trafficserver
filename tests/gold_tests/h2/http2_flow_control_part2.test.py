@@ -1,5 +1,4 @@
-#! /usr/bin/env bash
-# vim: sw=4:ts=4:softtabstop=4:ai:et
+"""Verify HTTP/2 flow control behavior."""
 
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
@@ -17,25 +16,27 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly SCRIPT_DIR
+from http2_flow_control_common import Http2FlowControlTest
 
-fail()
-{
-    echo $1
-    exit 1
-}
+Test.Summary = __doc__
 
-cd "$SCRIPT_DIR"
+Http2FlowControlTest.Test = Test
+Http2FlowControlTest.Testers = Testers
 
-./prepare_proxy_verifier.sh || fail "Failed to install Proxy Verifier."
-export PYTHONPATH=$(pwd):$PYTHONPATH
-export PYTHONPATH=$(pwd)/gold_tests/remap:$PYTHONPATH
-export PYTHONPATH=$(pwd)/gold_tests/h2:$PYTHONPATH
-./test-env-check.sh || fail "Failed Python environment checks."
-hash nc 2>/dev/null || fail "Netcat is not installed."
-# this is for rhel or centos systems
-echo "Environment config finished. Running AuTest..."
-exec pipenv run env \
-    HTTP_PROXY= HTTPS_PROXY= NO_PROXY= http_proxy= https_proxy= no_proxy= \
-    autest -D gold_tests "$@"
+test = Http2FlowControlTest(
+    description="Flow control policy 0 (default): small initial_window_size",
+    initial_window_size=500,  # The default is 65 KB.
+    flow_control_policy=0)
+test.run()
+test = Http2FlowControlTest(
+    description="Flow control policy 1: 100 byte session, 10 byte streams",
+    max_concurrent_streams=10,
+    initial_window_size=10,
+    flow_control_policy=1)
+test.run()
+test = Http2FlowControlTest(
+    description="Flow control policy 2: 100 byte session, dynamic streams",
+    max_concurrent_streams=10,
+    initial_window_size=10,
+    flow_control_policy=2)
+test.run()
