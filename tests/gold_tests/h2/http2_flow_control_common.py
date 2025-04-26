@@ -20,8 +20,6 @@ import re
 from enum import Enum
 from typing import List, Optional
 
-Test.Summary = __doc__
-
 
 class Http2FlowControlTest:
     """Define an object to test HTTP/2 flow control behavior."""
@@ -46,6 +44,9 @@ class Http2FlowControlTest:
 
     IS_HTTP2_TO_ORIGIN = True
     IS_HTTP1_TO_ORIGIN = False
+
+    Test = None
+    Testers = None
 
     class ServerType(Enum):
         """Define the type of server to use in a TestRun."""
@@ -173,6 +174,7 @@ class Http2FlowControlTest:
                 configuration = 'proxy.config.http2.flow_control.policy_out'
             else:
                 configuration = 'proxy.config.http2.flow_control.policy_in'
+            Testers = Http2FlowControlTest.Testers
             ts.Disk.diags_log.Content = Testers.ContainsExpression(
                 f"ERROR.*{configuration}", "Expected an error about an invalid flow control policy.")
 
@@ -192,6 +194,7 @@ class Http2FlowControlTest:
 
     def _configure_log_expectations(self, host):
         """Configure the log expectations for the client or server."""
+        Testers = Http2FlowControlTest.Testers
         hostname = "server" if host == self._server else "client"
         if self._flow_control_policy_is_malformed:
             # Since we're just testing ATS configuration errors, there's no
@@ -300,6 +303,7 @@ class Http2FlowControlTest:
 
     def _configure_inbound_http1_to_origin_test_run(self) -> None:
         """Configure the TestRun for inbound stream configuration."""
+        Test = Http2FlowControlTest.Test
         tr = Test.AddTestRun(f'{self._description} - inbound, '
                              'HTTP/1 Content-Length origin')
         self._configure_test_run_common(tr, self.IS_INBOUND, self.ServerType.HTTP1_CONTENT_LENGTH)
@@ -312,12 +316,14 @@ class Http2FlowControlTest:
 
     def _configure_inbound_http2_to_origin_test_run(self) -> None:
         """Configure the TestRun for inbound stream configuration."""
+        Test = Http2FlowControlTest.Test
         tr = Test.AddTestRun(f'{self._description} - inbound, HTTP/2 origin')
         self._configure_test_run_common(tr, self.IS_INBOUND, self.ServerType.HTTP2)
         self._configure_log_expectations(tr.Processes.Default)
 
     def _configure_outbound_test_run(self) -> None:
         """Configure the TestRun outbound stream configuration."""
+        Test = Http2FlowControlTest.Test
         tr = Test.AddTestRun(f'{self._description} - outbound, HTTP/2 origin')
         self._configure_test_run_common(tr, self.IS_OUTBOUND, self.ServerType.HTTP2)
         self._configure_log_expectations(self._server)
@@ -327,46 +333,3 @@ class Http2FlowControlTest:
         self._configure_inbound_http1_to_origin_test_run()
         self._configure_inbound_http2_to_origin_test_run()
         self._configure_outbound_test_run()
-
-
-#
-# Default configuration.
-#
-test = Http2FlowControlTest("Default Configurations")
-test.run()
-
-#
-# Configuring max_concurrent_streams_(in|out).
-#
-test = Http2FlowControlTest(description="Configure max_concurrent_streams", max_concurrent_streams=53)
-test.run()
-
-#
-# Configuring initial_window_size.
-#
-test = Http2FlowControlTest(description="Configure a larger initial_window_size_(in|out)", initial_window_size=100123)
-test.run()
-
-#
-# Configuring flow_control_policy.
-#
-test = Http2FlowControlTest(description="Configure an unrecognized flow_control.in.policy", flow_control_policy=23)
-test.run()
-
-test = Http2FlowControlTest(
-    description="Flow control policy 0 (default): small initial_window_size",
-    initial_window_size=500,  # The default is 65 KB.
-    flow_control_policy=0)
-test.run()
-test = Http2FlowControlTest(
-    description="Flow control policy 1: 100 byte session, 10 byte streams",
-    max_concurrent_streams=10,
-    initial_window_size=10,
-    flow_control_policy=1)
-test.run()
-test = Http2FlowControlTest(
-    description="Flow control policy 2: 100 byte session, dynamic streams",
-    max_concurrent_streams=10,
-    initial_window_size=10,
-    flow_control_policy=2)
-test.run()
