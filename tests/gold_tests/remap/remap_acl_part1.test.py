@@ -28,23 +28,24 @@ Test_remap_acl.Testers = Testers
 
 from all_acl_combinations import all_acl_combination_tests
 """
-Test all acl combinations
+Test all acl combinations (first half: even indexes)
 """
 for idx, test in enumerate(all_acl_combination_tests):
-    (_, replay_file_name) = tempfile.mkstemp(suffix="acl_table_test_{}.replay".format(idx))
-    replay_proxy_response(
-        "base.replay.yaml",
-        replay_file_name,
-        test["GET response"],
-        test["POST response"],
-    )
-    Test_remap_acl(
-        "allcombo-{0} {1} {2} {3}".format(idx, test["inline"], test["named_acl"], test["ip_allow"]),
-        replay_file=replay_file_name,
-        ip_allow_content=test["ip_allow"],
-        deactivate_ip_allow=False,
-        acl_behavior_policy=0 if test["policy"] == "legacy" else 1,
-        acl_configuration=test["inline"],
-        named_acls=[("acl", test["named_acl"])] if test["named_acl"] != "" else [],
-        expected_responses=[test["GET response"], test["POST response"]],
-    )
+    if idx % 2 == 0:
+        (_, replay_file_name) = tempfile.mkstemp(suffix="acl_table_test_{}.replay".format(idx))
+        replay_proxy_response(
+            "base.replay.yaml",
+            replay_file_name,
+            test["GET response"],
+            test["POST response"],
+        )
+        Test_remap_acl(
+            "allcombo-{0} {1} {2} {3}".format(idx, test["inline"], test["named_acl"], test["ip_allow"]),
+            replay_file=replay_file_name,
+            ip_allow_content=test["ip_allow"],
+            deactivate_ip_allow=False,
+            acl_behavior_policy=0 if test["policy"] == "legacy" else 1,
+            acl_configuration=test["inline"],
+            named_acls=[("acl", test["named_acl"])] if test["named_acl"] != "" else [],
+            expected_responses=[test["GET response"], test["POST response"]],
+        )
