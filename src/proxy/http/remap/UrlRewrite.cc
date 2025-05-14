@@ -370,7 +370,7 @@ url_rewrite_remap_request(const UrlMappingContainer &mapping_container, URL *req
           fromPathLen++;
         }
       } else {
-        if (toPath && requestPath[fromPathLen] == '/' && toPath[toPathLen - 1] == '/') {
+        if (toPath && requestPath[fromPathLen - 1] == '/' && toPath[toPathLen - 1] == '/') {
           fromPathLen++;
         }
       }
