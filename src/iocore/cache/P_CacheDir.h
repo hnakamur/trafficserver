@@ -46,22 +46,41 @@ class CacheEvacuateDocVC;
 
 // Constants
 
-#define DIR_TAG_WIDTH         12
-#define DIR_MASK_TAG(_t)      ((_t) & ((1 << DIR_TAG_WIDTH) - 1))
-#define SIZEOF_DIR            10
-#define ESTIMATED_OBJECT_SIZE 8000
+static constexpr auto DIR_TAG_WIDTH = 12;
+inline auto
+DIR_MASK_TAG(auto _t)
+{
+  return _t & ((1 << DIR_TAG_WIDTH) - 1);
+}
+static constexpr auto SIZEOF_DIR            = 10;
+static constexpr auto ESTIMATED_OBJECT_SIZE = 8000;
 
-#define MAX_DIR_SEGMENTS        (32 * (1 << 16))
-#define DIR_DEPTH               4
-#define MAX_ENTRIES_PER_SEGMENT (1 << 16)
-#define MAX_BUCKETS_PER_SEGMENT (MAX_ENTRIES_PER_SEGMENT / DIR_DEPTH)
-#define DIR_SIZE_WIDTH          6
-#define DIR_BLOCK_SIZES         4
-#define DIR_BLOCK_SHIFT(_i)     (3 * (_i))
-#define DIR_BLOCK_SIZE(_i)      (CACHE_BLOCK_SIZE << DIR_BLOCK_SHIFT(_i))
-#define DIR_SIZE_WITH_BLOCK(_i) ((1 << DIR_SIZE_WIDTH) * DIR_BLOCK_SIZE(_i))
-#define DIR_OFFSET_BITS         40
-#define DIR_OFFSET_MAX          ((((off_t)1) << DIR_OFFSET_BITS) - 1)
+static constexpr auto MAX_DIR_SEGMENTS        = (32 * (1 << 16));
+static constexpr auto DIR_DEPTH               = 4;
+static constexpr auto MAX_ENTRIES_PER_SEGMENT = (1 << 16);
+static constexpr auto MAX_BUCKETS_PER_SEGMENT = (MAX_ENTRIES_PER_SEGMENT / DIR_DEPTH);
+static constexpr auto DIR_SIZE_WIDTH          = 6;
+static constexpr auto DIR_BLOCK_SIZES         = 4;
+
+inline uint32_t
+DIR_BLOCK_SHIFT(uint32_t i)
+{
+  return 3 * i;
+}
+static constexpr int CACHE_BLOCK_SHIFT = 9;
+static constexpr int CACHE_BLOCK_SIZE  = (1 << CACHE_BLOCK_SHIFT); // 512, smallest sector size
+inline uint32_t
+DIR_BLOCK_SIZE(uint32_t i)
+{
+  return CACHE_BLOCK_SIZE << DIR_BLOCK_SHIFT(i);
+}
+inline uint32_t
+DIR_SIZE_WITH_BLOCK(uint32_t i)
+{
+  return (1 << DIR_SIZE_WIDTH) * DIR_BLOCK_SIZE(i);
+}
+static constexpr auto DIR_OFFSET_BITS = 40;
+static constexpr auto DIR_OFFSET_MAX  = (static_cast<off_t>(1) << DIR_OFFSET_BITS) - 1;
 
 #define DO_NOT_REMOVE_THIS 0
 
@@ -151,25 +170,34 @@ struct Dir {
 #define dir_bit(_e, _w, _b)         ((uint32_t)(((_e)->w[_w] >> (_b)) & 1))
 #define dir_set_bit(_e, _w, _b, _v) (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)))
 #define dir_big(_e)                 ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
-#define dir_set_big(_e, _v)         (_e)->w[1] = (uint16_t)(((_e)->w[1] & 0xFCFF) | (((uint16_t)(_v)) & 0x3) << 8)
-#define dir_size(_e)                ((uint32_t)(((_e)->w[1]) >> 10))
-#define dir_set_size(_e, _v)        (_e)->w[1] = (uint16_t)(((_e)->w[1] & ((1 << 10) - 1)) | ((_v) << 10))
-#define dir_set_approx_size(_e, _s)                     \
-  do {                                                  \
-    if ((_s) <= DIR_SIZE_WITH_BLOCK(0)) {               \
-      dir_set_big(_e, 0);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(0)); \
-    } else if ((_s) <= DIR_SIZE_WITH_BLOCK(1)) {        \
-      dir_set_big(_e, 1);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(1)); \
-    } else if ((_s) <= DIR_SIZE_WITH_BLOCK(2)) {        \
-      dir_set_big(_e, 2);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(2)); \
-    } else {                                            \
-      dir_set_big(_e, 3);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(3)); \
-    }                                                   \
-  } while (0)
+inline void
+dir_set_big(Dir *e, uint16_t v)
+{
+  e->w[1] = static_cast<uint16_t>((e->w[1] & 0xFCFF) | ((static_cast<uint16_t>(v)) & 0x3) << 8);
+}
+#define dir_size(_e) ((uint32_t)(((_e)->w[1]) >> 10))
+inline void
+dir_set_size(Dir *e, uint16_t v)
+{
+  e->w[1] = static_cast<uint16_t>((e->w[1] & ((1 << 10) - 1)) | (v << 10));
+}
+inline void
+dir_set_approx_size(Dir *e, uint32_t s)
+{
+  if (s <= DIR_SIZE_WITH_BLOCK(0)) {
+    dir_set_big(e, 0);
+    dir_set_size(e, (s - 1) / DIR_BLOCK_SIZE(0));
+  } else if (s <= DIR_SIZE_WITH_BLOCK(1)) {
+    dir_set_big(e, 1);
+    dir_set_size(e, (s - 1) / DIR_BLOCK_SIZE(1));
+  } else if (s <= DIR_SIZE_WITH_BLOCK(2)) {
+    dir_set_big(e, 2);
+    dir_set_size(e, (s - 1) / DIR_BLOCK_SIZE(2));
+  } else {
+    dir_set_big(e, 3);
+    dir_set_size(e, (s - 1) / DIR_BLOCK_SIZE(3));
+  }
+}
 #define dir_approx_size(_e) ((dir_size(_e) + 1) * DIR_BLOCK_SIZE(dir_big(_e)))
 #define round_to_approx_dir_size(_s)      \
   (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
