@@ -46,24 +46,43 @@ class CacheEvacuateDocVC;
 
 // Constants
 
-#define DIR_TAG_WIDTH         12
-#define DIR_MASK_TAG(_t)      ((_t) & ((1 << DIR_TAG_WIDTH) - 1))
-#define SIZEOF_DIR            10
-#define ESTIMATED_OBJECT_SIZE 8000
+static constexpr auto DIR_TAG_WIDTH = 12;
+inline auto
+DIR_MASK_TAG(auto _t)
+{
+  return _t & ((1 << DIR_TAG_WIDTH) - 1);
+}
+static constexpr auto SIZEOF_DIR            = 10;
+static constexpr auto ESTIMATED_OBJECT_SIZE = 8000;
 
-#define MAX_DIR_SEGMENTS        (32 * (1 << 16))
-#define DIR_DEPTH               4
-#define MAX_ENTRIES_PER_SEGMENT (1 << 16)
-#define MAX_BUCKETS_PER_SEGMENT (MAX_ENTRIES_PER_SEGMENT / DIR_DEPTH)
-#define DIR_SIZE_WIDTH          6
-#define DIR_BLOCK_SIZES         4
-#define DIR_BLOCK_SHIFT(_i)     (3 * (_i))
-#define DIR_BLOCK_SIZE(_i)      (CACHE_BLOCK_SIZE << DIR_BLOCK_SHIFT(_i))
-#define DIR_SIZE_WITH_BLOCK(_i) ((1 << DIR_SIZE_WIDTH) * DIR_BLOCK_SIZE(_i))
-#define DIR_OFFSET_BITS         40
-#define DIR_OFFSET_MAX          ((((off_t)1) << DIR_OFFSET_BITS) - 1)
+static constexpr auto MAX_DIR_SEGMENTS        = (32 * (1 << 16));
+static constexpr auto DIR_DEPTH               = 4;
+static constexpr auto MAX_ENTRIES_PER_SEGMENT = (1 << 16);
+static constexpr auto MAX_BUCKETS_PER_SEGMENT = (MAX_ENTRIES_PER_SEGMENT / DIR_DEPTH);
+static constexpr auto DIR_SIZE_WIDTH          = 6;
+static constexpr auto DIR_BLOCK_SIZES         = 4;
+inline auto
+DIR_BLOCK_SHIFT(auto _i)
+{
+  return 3 * _i;
+}
+inline auto
+DIR_BLOCK_SIZE(auto _i)
+{
+  static constexpr int CACHE_BLOCK_SHIFT = 9;
+  static constexpr int CACHE_BLOCK_SIZE  = (1 << CACHE_BLOCK_SHIFT); // 512, smallest sector size
 
-#define DO_NOT_REMOVE_THIS 0
+  return CACHE_BLOCK_SIZE << DIR_BLOCK_SHIFT(_i);
+}
+inline auto
+DIR_SIZE_WITH_BLOCK(auto _i)
+{
+  return (1 << DIR_SIZE_WIDTH) * DIR_BLOCK_SIZE(_i);
+}
+static constexpr auto DIR_OFFSET_BITS = 40;
+static constexpr auto DIR_OFFSET_MAX  = ((static_cast<off_t>(1)) << DIR_OFFSET_BITS) - 1;
+
+static constexpr auto DO_NOT_REMOVE_THIS = 0;
 
 // Debugging Options
 
@@ -73,40 +92,25 @@ class CacheEvacuateDocVC;
 // Macros
 
 #ifdef DO_CHECK_DIR
-#define CHECK_DIR(_d) ink_assert(check_dir(_d))
+inline void
+CHECK_DIR(auto _d)
+{
+  ink_assert(check_dir(_d));
+}
 #else
-#define CHECK_DIR(_d) ((void)0)
+inline void
+CHECK_DIR(auto _d)
+{
+  ((void)0);
+}
 #endif
-
-#define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
-#define dir_assign(_e, _x)   \
-  do {                       \
-    (_e)->w[0] = (_x)->w[0]; \
-    (_e)->w[1] = (_x)->w[1]; \
-    (_e)->w[2] = (_x)->w[2]; \
-    (_e)->w[3] = (_x)->w[3]; \
-    (_e)->w[4] = (_x)->w[4]; \
-  } while (0)
-#define dir_assign_data(_e, _x)         \
-  do {                                  \
-    unsigned short next = dir_next(_e); \
-    dir_assign(_e, _x);                 \
-    dir_set_next(_e, next);             \
-  } while (0)
-#define dir_is_empty(_e) (!dir_offset(_e))
-#define dir_clear(_e) \
-  do {                \
-    (_e)->w[0] = 0;   \
-    (_e)->w[1] = 0;   \
-    (_e)->w[2] = 0;   \
-    (_e)->w[3] = 0;   \
-    (_e)->w[4] = 0;   \
-  } while (0)
-#define dir_clean(_e) dir_set_offset(_e, 0)
 
 // OpenDir
 
-#define OPEN_DIR_BUCKETS 256
+struct Dir;
+inline void dir_clear(Dir *_e);
+
+static constexpr auto OPEN_DIR_BUCKETS = 256;
 
 struct EvacuationBlock;
 
@@ -140,57 +144,182 @@ struct Dir {
 #endif
 };
 
-#define dir_offset(_e) \
-  ((int64_t)(((uint64_t)(_e)->w[0]) | (((uint64_t)((_e)->w[1] & 0xFF)) << 16) | (((uint64_t)(_e)->w[4]) << 24)))
-#define dir_set_offset(_e, _o)                                              \
-  do {                                                                      \
-    (_e)->w[0] = (uint16_t)_o;                                              \
-    (_e)->w[1] = (uint16_t)((((_o) >> 16) & 0xFF) | ((_e)->w[1] & 0xFF00)); \
-    (_e)->w[4] = (uint16_t)((_o) >> 24);                                    \
-  } while (0)
-#define dir_bit(_e, _w, _b)         ((uint32_t)(((_e)->w[_w] >> (_b)) & 1))
-#define dir_set_bit(_e, _w, _b, _v) (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)))
-#define dir_big(_e)                 ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
-#define dir_set_big(_e, _v)         (_e)->w[1] = (uint16_t)(((_e)->w[1] & 0xFCFF) | (((uint16_t)(_v)) & 0x3) << 8)
-#define dir_size(_e)                ((uint32_t)(((_e)->w[1]) >> 10))
-#define dir_set_size(_e, _v)        (_e)->w[1] = (uint16_t)(((_e)->w[1] & ((1 << 10) - 1)) | ((_v) << 10))
-#define dir_set_approx_size(_e, _s)                     \
-  do {                                                  \
-    if ((_s) <= DIR_SIZE_WITH_BLOCK(0)) {               \
-      dir_set_big(_e, 0);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(0)); \
-    } else if ((_s) <= DIR_SIZE_WITH_BLOCK(1)) {        \
-      dir_set_big(_e, 1);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(1)); \
-    } else if ((_s) <= DIR_SIZE_WITH_BLOCK(2)) {        \
-      dir_set_big(_e, 2);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(2)); \
-    } else {                                            \
-      dir_set_big(_e, 3);                               \
-      dir_set_size(_e, ((_s) - 1) / DIR_BLOCK_SIZE(3)); \
-    }                                                   \
-  } while (0)
-#define dir_approx_size(_e) ((dir_size(_e) + 1) * DIR_BLOCK_SIZE(dir_big(_e)))
-#define round_to_approx_dir_size(_s)      \
-  (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
-     ROUND_TO(_s, DIR_BLOCK_SIZE(0)) :    \
-     (_s <= DIR_SIZE_WITH_BLOCK(1) ?      \
-        ROUND_TO(_s, DIR_BLOCK_SIZE(1)) : \
-        (_s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(_s, DIR_BLOCK_SIZE(2)) : ROUND_TO(_s, DIR_BLOCK_SIZE(3)))))
-#define dir_tag(_e) ((uint32_t)((_e)->w[2] & ((1 << DIR_TAG_WIDTH) - 1)))
-#define dir_set_tag(_e, _t) \
-  (_e)->w[2] = (uint16_t)(((_e)->w[2] & ~((1 << DIR_TAG_WIDTH) - 1)) | ((_t) & ((1 << DIR_TAG_WIDTH) - 1)))
-#define dir_phase(_e)          dir_bit(_e, 2, 12)
-#define dir_set_phase(_e, _v)  dir_set_bit(_e, 2, 12, _v)
-#define dir_head(_e)           dir_bit(_e, 2, 13)
-#define dir_set_head(_e, _v)   dir_set_bit(_e, 2, 13, _v)
-#define dir_pinned(_e)         dir_bit(_e, 2, 14)
-#define dir_set_pinned(_e, _v) dir_set_bit(_e, 2, 14, _v)
+inline auto
+dir_offset(auto _e)
+{
+  return static_cast<int64_t>((static_cast<uint64_t>(_e->w[0]) | (static_cast<uint64_t>(_e->w[1]) & 0xFF) << 16) |
+                              (static_cast<uint64_t>(_e->w[4]) << 24));
+}
+inline void
+dir_set_offset(auto _e, auto _o)
+{
+  _e->w[0] = static_cast<uint16_t>(_o);
+  _e->w[1] = static_cast<uint16_t>(((_o >> 16) & 0xFF) | (_e->w[1] & 0xFF00));
+  _e->w[4] = static_cast<uint16_t>(_o >> 24);
+}
+inline auto
+dir_bit(auto _e, auto _w, auto _b)
+{
+  return static_cast<uint32_t>((_e->w[_w] >> _b) & 1);
+}
+inline void
+dir_set_bit(auto _e, auto _w, auto _b, auto _v)
+{
+  (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)));
+}
+inline auto
+dir_big(auto _e)
+{
+  return ((uint32_t)((((_e)->w[1]) >> 8) & 0x3));
+}
+inline void
+dir_set_big(auto _e, auto _v)
+{
+  (_e)->w[1] = (uint16_t)(((_e)->w[1] & 0xFCFF) | (((uint16_t)(_v)) & 0x3) << 8);
+}
+inline auto
+dir_size(auto _e)
+{
+  return ((uint32_t)(((_e)->w[1]) >> 10));
+}
+inline void
+dir_set_size(auto _e, auto _v)
+{
+  (_e)->w[1] = (uint16_t)(((_e)->w[1] & ((1 << 10) - 1)) | ((_v) << 10));
+}
+inline void
+dir_set_approx_size(auto _e, auto _s)
+{
+  if ((_s) <= DIR_SIZE_WITH_BLOCK(0)) {
+    dir_set_big(_e, 0);
+    dir_set_size(_e, ((_s)-1) / DIR_BLOCK_SIZE(0));
+  } else if ((_s) <= DIR_SIZE_WITH_BLOCK(1)) {
+    dir_set_big(_e, 1);
+    dir_set_size(_e, ((_s)-1) / DIR_BLOCK_SIZE(1));
+  } else if ((_s) <= DIR_SIZE_WITH_BLOCK(2)) {
+    dir_set_big(_e, 2);
+    dir_set_size(_e, ((_s)-1) / DIR_BLOCK_SIZE(2));
+  } else {
+    dir_set_big(_e, 3);
+    dir_set_size(_e, ((_s)-1) / DIR_BLOCK_SIZE(3));
+  }
+}
+inline void
+dir_approx_size(auto _e)
+{
+  return ((dir_size(_e) + 1) * DIR_BLOCK_SIZE(dir_big(_e)));
+}
+inline auto
+round_to_approx_dir_size(auto _s)
+{
+  return (_s <= DIR_SIZE_WITH_BLOCK(0) ?
+            ROUND_TO(_s, DIR_BLOCK_SIZE(0)) :
+            (_s <= DIR_SIZE_WITH_BLOCK(1) ?
+               ROUND_TO(_s, DIR_BLOCK_SIZE(1)) :
+               (_s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(_s, DIR_BLOCK_SIZE(2)) : ROUND_TO(_s, DIR_BLOCK_SIZE(3)))));
+}
+inline auto
+dir_tag(auto _e)
+{
+  return ((uint32_t)((_e)->w[2] & ((1 << DIR_TAG_WIDTH) - 1)));
+}
+inline void
+dir_set_tag(auto _e, auto _t)
+{
+  (_e)->w[2] = (uint16_t)(((_e)->w[2] & ~((1 << DIR_TAG_WIDTH) - 1)) | ((_t) & ((1 << DIR_TAG_WIDTH) - 1)));
+}
+inline auto
+dir_phase(auto _e)
+{
+  return dir_bit(_e, 2, 12);
+}
+inline void
+dir_set_phase(auto _e, auto _v)
+{
+  dir_set_bit(_e, 2, 12, _v);
+}
+inline auto
+dir_head(auto _e)
+{
+  return dir_bit(_e, 2, 13);
+}
+inline void
+dir_set_head(auto _e, auto _v)
+{
+  dir_set_bit(_e, 2, 13, _v);
+}
+inline auto
+dir_pinned(auto _e)
+{
+  return dir_bit(_e, 2, 14);
+}
+inline void
+dir_set_pinned(auto _e, auto _v)
+{
+  dir_set_bit(_e, 2, 14, _v);
+}
 // Bit 2:15 is unused.
-#define dir_next(_e)         (_e)->w[3]
-#define dir_set_next(_e, _o) (_e)->w[3] = (uint16_t)(_o)
-#define dir_prev(_e)         (_e)->w[2]
-#define dir_set_prev(_e, _o) (_e)->w[2] = (uint16_t)(_o)
+inline auto
+dir_next(auto _e)
+{
+  return (_e)->w[3];
+}
+inline void
+dir_set_next(auto _e, auto _o)
+{
+  (_e)->w[3] = (uint16_t)(_o);
+}
+inline auto
+dir_prev(auto _e)
+{
+  return (_e)->w[2];
+}
+inline void
+dir_set_prev(auto _e, auto _o)
+{
+  (_e)->w[2] = (uint16_t)(_o);
+}
+
+inline auto
+dir_index(auto _e, auto _i)
+{
+  return static_cast<Dir *>(static_cast<char *>(_e->directory.dir) + (SIZEOF_DIR * _i));
+}
+inline void
+dir_assign(auto _e, auto _x)
+{
+  _e->w[0] = _x->w[0];
+  _e->w[1] = _x->w[1];
+  _e->w[2] = _x->w[2];
+  _e->w[3] = _x->w[3];
+  _e->w[4] = _x->w[4];
+}
+inline void
+dir_assign_data(auto _e, auto _x)
+{
+  unsigned short next = dir_next(_e);
+  dir_assign(_e, _x);
+  dir_set_next(_e, next);
+}
+inline bool
+dir_is_empty(auto _e)
+{
+  return !dir_offset(_e);
+}
+inline void
+dir_clear(Dir *_e)
+{
+  _e->w[0] = 0;
+  _e->w[1] = 0;
+  _e->w[2] = 0;
+  _e->w[3] = 0;
+  _e->w[4] = 0;
+}
+inline void
+dir_clean(auto _e)
+{
+  dir_set_offset(_e, 0);
+}
 
 // INKqa11166 - Cache can not store 2 HTTP alternates simultaneously.
 // To allow this, move the vector from the CacheVC to the OpenDirEntry.
