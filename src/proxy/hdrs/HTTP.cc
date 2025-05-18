@@ -435,7 +435,7 @@ http_hdr_print(HTTPHdrImpl const *hdr, char *buf, int bufsize, int *bufindex, in
   if (!x)      \
   return 0
 
-  int   tmplen, hdrstat;
+  int   tmplen;
   char  tmpbuf[32];
   char *p;
 
@@ -515,8 +515,7 @@ http_hdr_print(HTTPHdrImpl const *hdr, char *buf, int bufsize, int *bufindex, in
       *p++       = ' ';
       *bufindex += 9;
 
-      hdrstat = http_hdr_status_get(hdr);
-      if (hdrstat == 200) {
+      if (auto hdrstat{static_cast<int32_t>(http_hdr_status_get(hdr))}; hdrstat == 200) {
         *p++   = '2';
         *p++   = '0';
         *p++   = '0';
@@ -551,7 +550,7 @@ http_hdr_print(HTTPHdrImpl const *hdr, char *buf, int bufsize, int *bufindex, in
 
       TRY(mime_mem_print(" "sv, buf, bufsize, bufindex, dumpoffset));
 
-      tmplen = mime_format_int(tmpbuf, http_hdr_status_get(hdr), sizeof(tmpbuf));
+      tmplen = mime_format_int(tmpbuf, static_cast<int32_t>(http_hdr_status_get(hdr)), sizeof(tmpbuf));
 
       TRY(mime_mem_print(std::string_view{tmpbuf, static_cast<std::string_view::size_type>(tmplen)}, buf, bufsize, bufindex,
                          dumpoffset));
@@ -764,7 +763,7 @@ void
 http_hdr_status_set(HTTPHdrImpl *hh, HTTPStatus status)
 {
   ink_assert(hh->m_polarity == HTTP_TYPE_RESPONSE);
-  hh->u.resp.m_status = status;
+  hh->u.resp.m_status = static_cast<int16_t>(status);
 }
 
 /*-------------------------------------------------------------------------
@@ -792,83 +791,86 @@ http_hdr_reason_set(HdrHeap *heap, HTTPHdrImpl *hh, const char *value, int lengt
   -------------------------------------------------------------------------*/
 
 const char *
-http_hdr_reason_lookup(unsigned status)
+http_hdr_reason_lookup(HTTPStatus status)
 {
 #define HTTP_STATUS_ENTRY(value, reason) \
   case value:                            \
     return #reason
 
   switch (status) {
-    HTTP_STATUS_ENTRY(0, None);                  // TS_HTTP_STATUS_NONE
-    HTTP_STATUS_ENTRY(100, Continue);            // [RFC2616]
-    HTTP_STATUS_ENTRY(101, Switching Protocols); // [RFC2616]
-    HTTP_STATUS_ENTRY(102, Processing);          // [RFC2518]
-    HTTP_STATUS_ENTRY(103, Early Hints);         // TODO: add RFC number
+    HTTP_STATUS_ENTRY(HTTPStatus::NONE, None);                              // TS_HTTP_STATUS_NONE
+    HTTP_STATUS_ENTRY(HTTPStatus::CONTINUE, Continue);                      // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::SWITCHING_PROTOCOL, Switching Protocols); // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::PROCESSING, Processing);                  // [RFC2518]
+    HTTP_STATUS_ENTRY(HTTPStatus::EARLY_HINTS, Early Hints);                // TODO: add RFC number
     // 103-199 Unassigned
-    HTTP_STATUS_ENTRY(200, OK);                              // [RFC2616]
-    HTTP_STATUS_ENTRY(201, Created);                         // [RFC2616]
-    HTTP_STATUS_ENTRY(202, Accepted);                        // [RFC2616]
-    HTTP_STATUS_ENTRY(203, Non - Authoritative Information); // [RFC2616]
-    HTTP_STATUS_ENTRY(204, No Content);                      // [RFC2616]
-    HTTP_STATUS_ENTRY(205, Reset Content);                   // [RFC2616]
-    HTTP_STATUS_ENTRY(206, Partial Content);                 // [RFC2616]
-    HTTP_STATUS_ENTRY(207, Multi - Status);                  // [RFC4918]
-    HTTP_STATUS_ENTRY(208, Already Reported);                // [RFC5842]
+    HTTP_STATUS_ENTRY(HTTPStatus::OK, OK);                                                         // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::CREATED, Created);                                               // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::ACCEPTED, Accepted);                                             // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::NON_AUTHORITATIVE_INFORMATION, Non - Authoritative Information); // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::NO_CONTENT, No Content);                                         // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::RESET_CONTENT, Reset Content);                                   // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::PARTIAL_CONTENT, Partial Content);                               // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::MULTI_STATUS, Multi - Status);                                   // [RFC4918]
+    HTTP_STATUS_ENTRY(HTTPStatus::ALREADY_REPORTED, Already Reported);                             // [RFC5842]
     // 209-225 Unassigned
-    HTTP_STATUS_ENTRY(226, IM Used); // [RFC3229]
+    HTTP_STATUS_ENTRY(HTTPStatus::IM_USED, IM Used); // [RFC3229]
     // 227-299 Unassigned
-    HTTP_STATUS_ENTRY(300, Multiple Choices);  // [RFC2616]
-    HTTP_STATUS_ENTRY(301, Moved Permanently); // [RFC2616]
-    HTTP_STATUS_ENTRY(302, Found);             // [RFC2616]
-    HTTP_STATUS_ENTRY(303, See Other);         // [RFC2616]
-    HTTP_STATUS_ENTRY(304, Not Modified);      // [RFC2616]
-    HTTP_STATUS_ENTRY(305, Use Proxy);         // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::MULTIPLE_CHOICES, Multiple Choices);   // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::MOVED_PERMANENTLY, Moved Permanently); // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::MOVED_TEMPORARILY, Found);             // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::SEE_OTHER, See Other);                 // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::NOT_MODIFIED, Not Modified);           // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::USE_PROXY, Use Proxy);                 // [RFC2616]
     // 306 Reserved                                                   // [RFC2616]
-    HTTP_STATUS_ENTRY(307, Temporary Redirect); // [RFC2616]
-    HTTP_STATUS_ENTRY(308, Permanent Redirect); // [RFC-reschke-http-status-308-07]
+    HTTP_STATUS_ENTRY(HTTPStatus::TEMPORARY_REDIRECT, Temporary Redirect); // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::PERMANENT_REDIRECT, Permanent Redirect); // [RFC-reschke-http-status-308-07]
     // 309-399 Unassigned
-    HTTP_STATUS_ENTRY(400, Bad Request);                     // [RFC2616]
-    HTTP_STATUS_ENTRY(401, Unauthorized);                    // [RFC2616]
-    HTTP_STATUS_ENTRY(402, Payment Required);                // [RFC2616]
-    HTTP_STATUS_ENTRY(403, Forbidden);                       // [RFC2616]
-    HTTP_STATUS_ENTRY(404, Not Found);                       // [RFC2616]
-    HTTP_STATUS_ENTRY(405, Method Not Allowed);              // [RFC2616]
-    HTTP_STATUS_ENTRY(406, Not Acceptable);                  // [RFC2616]
-    HTTP_STATUS_ENTRY(407, Proxy Authentication Required);   // [RFC2616]
-    HTTP_STATUS_ENTRY(408, Request Timeout);                 // [RFC2616]
-    HTTP_STATUS_ENTRY(409, Conflict);                        // [RFC2616]
-    HTTP_STATUS_ENTRY(410, Gone);                            // [RFC2616]
-    HTTP_STATUS_ENTRY(411, Length Required);                 // [RFC2616]
-    HTTP_STATUS_ENTRY(412, Precondition Failed);             // [RFC2616]
-    HTTP_STATUS_ENTRY(413, Request Entity Too Large);        // [RFC2616]
-    HTTP_STATUS_ENTRY(414, Request - URI Too Long);          // [RFC2616]
-    HTTP_STATUS_ENTRY(415, Unsupported Media Type);          // [RFC2616]
-    HTTP_STATUS_ENTRY(416, Requested Range Not Satisfiable); // [RFC2616]
-    HTTP_STATUS_ENTRY(417, Expectation Failed);              // [RFC2616]
-    HTTP_STATUS_ENTRY(422, Unprocessable Entity);            // [RFC4918]
-    HTTP_STATUS_ENTRY(423, Locked);                          // [RFC4918]
-    HTTP_STATUS_ENTRY(424, Failed Dependency);               // [RFC4918]
+    HTTP_STATUS_ENTRY(HTTPStatus::BAD_REQUEST, Bad Request);                                     // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::UNAUTHORIZED, Unauthorized);                                   // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::PAYMENT_REQUIRED, Payment Required);                           // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::FORBIDDEN, Forbidden);                                         // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::NOT_FOUND, Not Found);                                         // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::METHOD_NOT_ALLOWED, Method Not Allowed);                       // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::NOT_ACCEPTABLE, Not Acceptable);                               // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::PROXY_AUTHENTICATION_REQUIRED, Proxy Authentication Required); // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::REQUEST_TIMEOUT, Request Timeout);                             // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::CONFLICT, Conflict);                                           // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::GONE, Gone);                                                   // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::LENGTH_REQUIRED, Length Required);                             // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::PRECONDITION_FAILED, Precondition Failed);                     // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::REQUEST_ENTITY_TOO_LARGE, Request Entity Too Large);           // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::REQUEST_URI_TOO_LONG, Request - URI Too Long);                 // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::UNSUPPORTED_MEDIA_TYPE, Unsupported Media Type);               // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::RANGE_NOT_SATISFIABLE, Requested Range Not Satisfiable);       // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::EXPECTATION_FAILED, Expectation Failed);                       // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::UNPROCESSABLE_ENTITY, Unprocessable Entity);                   // [RFC4918]
+    HTTP_STATUS_ENTRY(HTTPStatus::LOCKED, Locked);                                               // [RFC4918]
+    HTTP_STATUS_ENTRY(HTTPStatus::FAILED_DEPENDENCY, Failed Dependency);                         // [RFC4918]
     // 425 Reserved                                                   // [RFC2817]
-    HTTP_STATUS_ENTRY(426, Upgrade Required); // [RFC2817]
+    HTTP_STATUS_ENTRY(HTTPStatus::UPGRADE_REQUIRED, Upgrade Required); // [RFC2817]
     // 427 Unassigned
-    HTTP_STATUS_ENTRY(428, Precondition Required); // [RFC6585]
-    HTTP_STATUS_ENTRY(429, Too Many Requests);     // [RFC6585]
+    HTTP_STATUS_ENTRY(HTTPStatus::PRECONDITION_REQUIRED, Precondition Required); // [RFC6585]
+    HTTP_STATUS_ENTRY(HTTPStatus::TOO_MANY_REQUESTS, Too Many Requests);         // [RFC6585]
     // 430 Unassigned
-    HTTP_STATUS_ENTRY(431, Request Header Fields Too Large); // [RFC6585]
+    HTTP_STATUS_ENTRY(HTTPStatus::REQUEST_HEADER_FIELDS_TOO_LARGE, Request Header Fields Too Large); // [RFC6585]
     // 432-499 Unassigned
-    HTTP_STATUS_ENTRY(500, Internal Server Error);      // [RFC2616]
-    HTTP_STATUS_ENTRY(501, Not Implemented);            // [RFC2616]
-    HTTP_STATUS_ENTRY(502, Bad Gateway);                // [RFC2616]
-    HTTP_STATUS_ENTRY(503, Service Unavailable);        // [RFC2616]
-    HTTP_STATUS_ENTRY(504, Gateway Timeout);            // [RFC2616]
-    HTTP_STATUS_ENTRY(505, HTTP Version Not Supported); // [RFC2616]
-    HTTP_STATUS_ENTRY(506, Variant Also Negotiates);    // [RFC2295]
-    HTTP_STATUS_ENTRY(507, Insufficient Storage);       // [RFC4918]
-    HTTP_STATUS_ENTRY(508, Loop Detected);              // [RFC5842]
+    HTTP_STATUS_ENTRY(HTTPStatus::INTERNAL_SERVER_ERROR, Internal Server Error);      // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::NOT_IMPLEMENTED, Not Implemented);                  // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::BAD_GATEWAY, Bad Gateway);                          // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::SERVICE_UNAVAILABLE, Service Unavailable);          // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::GATEWAY_TIMEOUT, Gateway Timeout);                  // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::HTTPVER_NOT_SUPPORTED, HTTP Version Not Supported); // [RFC2616]
+    HTTP_STATUS_ENTRY(HTTPStatus::VARIANT_ALSO_NEGOTIATES, Variant Also Negotiates);  // [RFC2295]
+    HTTP_STATUS_ENTRY(HTTPStatus::INSUFFICIENT_STORAGE, Insufficient Storage);        // [RFC4918]
+    HTTP_STATUS_ENTRY(HTTPStatus::LOOP_DETECTED, Loop Detected);                      // [RFC5842]
     // 509 Unassigned
-    HTTP_STATUS_ENTRY(510, Not Extended);                    // [RFC2774]
-    HTTP_STATUS_ENTRY(511, Network Authentication Required); // [RFC6585]
+    HTTP_STATUS_ENTRY(HTTPStatus::NOT_EXTENDED, Not Extended);                                       // [RFC2774]
+    HTTP_STATUS_ENTRY(HTTPStatus::NETWORK_AUTHENTICATION_REQUIRED, Network Authentication Required); // [RFC6585]
     // 512-599 Unassigned
+
+  default:
+    break;
   }
 
 #undef HTTP_STATUS_ENTRY
