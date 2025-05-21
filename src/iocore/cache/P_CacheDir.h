@@ -113,21 +113,16 @@ static constexpr auto DIR_OFFSET_MAX  = (static_cast<off_t>(1) << DIR_OFFSET_BIT
     dir_set_next(_e, next);             \
   } while (0)
 #define dir_is_empty(_e) (!dir_offset(_e))
-#define dir_clear(_e) \
-  do {                \
-    (_e)->w[0] = 0;   \
-    (_e)->w[1] = 0;   \
-    (_e)->w[2] = 0;   \
-    (_e)->w[3] = 0;   \
-    (_e)->w[4] = 0;   \
-  } while (0)
-#define dir_clean(_e) dir_set_offset(_e, 0)
+#define dir_clean(_e)    dir_set_offset(_e, 0)
 
 // OpenDir
 
 #define OPEN_DIR_BUCKETS 256
 
 struct EvacuationBlock;
+
+struct Dir;
+static inline void dir_clear(Dir *e);
 
 // Cache Directory
 
@@ -158,6 +153,16 @@ struct Dir {
   Dir() { dir_clear(this); }
 #endif
 };
+
+static inline void
+dir_clear(Dir *e)
+{
+  e->w[0] = 0;
+  e->w[1] = 0;
+  e->w[2] = 0;
+  e->w[3] = 0;
+  e->w[4] = 0;
+}
 
 #define dir_offset(_e) \
   ((int64_t)(((uint64_t)(_e)->w[0]) | (((uint64_t)((_e)->w[1] & 0xFF)) << 16) | (((uint64_t)(_e)->w[4]) << 24)))
