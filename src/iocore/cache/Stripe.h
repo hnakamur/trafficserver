@@ -36,16 +36,16 @@
 #include <cstddef>
 #include <cstdint>
 
-#define CACHE_BLOCK_SHIFT        9
-#define CACHE_BLOCK_SIZE         (1 << CACHE_BLOCK_SHIFT) // 512, smallest sector size
+// CACHE_BLOCK_SHIFT and CACHE_BLOCK_SIZE were moved to P_CacheDir.h.
+
 #define ROUND_TO_STORE_BLOCK(_x) INK_ALIGN((_x), STORE_BLOCK_SIZE)
 #define ROUND_TO_CACHE_BLOCK(_x) INK_ALIGN((_x), CACHE_BLOCK_SIZE)
 #define ROUND_TO_SECTOR(_p, _x)  INK_ALIGN((_x), _p->sector_size)
 #define ROUND_TO(_x, _y)         INK_ALIGN((_x), (_y))
 
-#define STRIPE_BLOCK_SIZE (1024 * 1024 * 128) // 128MB
-#define MIN_STRIPE_SIZE   STRIPE_BLOCK_SIZE
-#define MAX_STRIPE_SIZE   ((off_t)512 * 1024 * 1024 * 1024 * 1024) // 512TB
+static constexpr auto STRIPE_BLOCK_SIZE = 1024 * 1024 * 128; // 128MB
+static constexpr auto MIN_STRIPE_SIZE   = STRIPE_BLOCK_SIZE;
+static constexpr auto MAX_STRIPE_SIZE   = static_cast<off_t>(512) * 1024 * 1024 * 1024 * 1024; // 512TB
 
 // This is defined here so CacheVC can avoid including StripeSM.h.
 #define RECOVERY_SIZE EVACUATION_SIZE // 8MB

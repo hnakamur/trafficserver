@@ -47,11 +47,13 @@ class CacheEvacuateDocVC;
 // Constants
 
 static constexpr auto DIR_TAG_WIDTH = 12;
-inline auto
-DIR_MASK_TAG(auto _t)
+
+static inline auto
+DIR_MASK_TAG(auto t)
 {
-  return _t & ((1 << DIR_TAG_WIDTH) - 1);
+  return t & ((1 << DIR_TAG_WIDTH) - 1);
 }
+
 static constexpr auto SIZEOF_DIR            = 10;
 static constexpr auto ESTIMATED_OBJECT_SIZE = 8000;
 
@@ -67,18 +69,22 @@ DIR_BLOCK_SHIFT(uint32_t i)
 {
   return 3 * i;
 }
-static constexpr int CACHE_BLOCK_SHIFT = 9;
-static constexpr int CACHE_BLOCK_SIZE  = (1 << CACHE_BLOCK_SHIFT); // 512, smallest sector size
+
+static constexpr auto CACHE_BLOCK_SHIFT = 9;
+static constexpr auto CACHE_BLOCK_SIZE  = 1 << CACHE_BLOCK_SHIFT; // 512, smallest sector size
+
 inline uint32_t
 DIR_BLOCK_SIZE(uint32_t i)
 {
   return CACHE_BLOCK_SIZE << DIR_BLOCK_SHIFT(i);
 }
+
 inline uint32_t
 DIR_SIZE_WITH_BLOCK(uint32_t i)
 {
   return (1 << DIR_SIZE_WIDTH) * DIR_BLOCK_SIZE(i);
 }
+
 static constexpr auto DIR_OFFSET_BITS = 40;
 static constexpr auto DIR_OFFSET_MAX  = (static_cast<off_t>(1) << DIR_OFFSET_BITS) - 1;
 
