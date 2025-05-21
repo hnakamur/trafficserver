@@ -156,6 +156,8 @@ private:
   void _init_directory(std::size_t directory_size, int header_size, int footer_size);
 };
 
+#define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
+
 inline uint32_t
 Stripe::round_to_approx_size(uint32_t l) const
 {

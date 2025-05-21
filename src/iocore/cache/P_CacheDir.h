@@ -103,8 +103,6 @@ static constexpr auto DIR_OFFSET_MAX  = (static_cast<off_t>(1) << DIR_OFFSET_BIT
 #define CHECK_DIR(_d) ((void)0)
 #endif
 
-#define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
-
 // OpenDir
 
 #define OPEN_DIR_BUCKETS 256
