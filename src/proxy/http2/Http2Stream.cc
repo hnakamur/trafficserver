@@ -844,8 +844,8 @@ Http2Stream::update_write_request(bool call_update)
         auto value{field->value_get()};
         if (value == std::string_view{HTTP_VALUE_CLOSE, static_cast<std::string_view::size_type>(HTTP_LEN_CLOSE)}) {
           SCOPED_MUTEX_LOCK(lock, _proxy_ssn->mutex, this_ethread());
-          if (connection_state.get_shutdown_state() == HTTP2_SHUTDOWN_NONE) {
-            connection_state.set_shutdown_state(HTTP2_SHUTDOWN_NOT_INITIATED, Http2ErrorCode::HTTP2_ERROR_NO_ERROR);
+          if (connection_state.get_shutdown_state() == Http2ShutdownState::NONE) {
+            connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED, Http2ErrorCode::HTTP2_ERROR_NO_ERROR);
           }
         }
       }
