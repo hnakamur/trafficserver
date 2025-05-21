@@ -128,9 +128,9 @@ static const Http2WindowSize HTTP2_MAX_WINDOW_SIZE = 0x7FFFFFFF;
 
 // [RFC 7540] 5.4. Error Handling
 enum class Http2ErrorClass {
-  HTTP2_ERROR_CLASS_NONE,
-  HTTP2_ERROR_CLASS_CONNECTION,
-  HTTP2_ERROR_CLASS_STREAM,
+  NONE,
+  CONNECTION,
+  STREAM,
 };
 
 // [RFC 7540] 7. Error Codes
@@ -269,7 +269,7 @@ struct Http2FrameHeader {
 
 // [RFC 7540] 5.4. Error Handling
 struct Http2Error {
-  Http2Error(const Http2ErrorClass error_class = Http2ErrorClass::HTTP2_ERROR_CLASS_NONE,
+  Http2Error(const Http2ErrorClass error_class = Http2ErrorClass::NONE,
              const Http2ErrorCode error_code = Http2ErrorCode::HTTP2_ERROR_NO_ERROR, const char *err_msg = "")
   {
     cls  = error_class;
