@@ -222,7 +222,11 @@ dir_set_approx_size(Dir *e, uint32_t s)
     dir_set_size(e, (s - 1) / DIR_BLOCK_SIZE(3));
   }
 }
-#define dir_approx_size(_e) ((dir_size(_e) + 1) * DIR_BLOCK_SIZE(dir_big(_e)))
+inline uint64_t
+dir_approx_size(const Dir *e)
+{
+  return static_cast<uint64_t>(dir_size(e) + 1) * DIR_BLOCK_SIZE(dir_big(e));
+}
 #define round_to_approx_dir_size(_s)      \
   (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
      ROUND_TO(_s, DIR_BLOCK_SIZE(0)) :    \
