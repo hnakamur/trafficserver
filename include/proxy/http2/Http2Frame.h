@@ -72,7 +72,7 @@ class Http2DataFrame : public Http2TxFrame
 {
 public:
   Http2DataFrame(Http2StreamId stream_id, uint8_t flags, IOBufferReader *r, uint32_t l)
-    : Http2TxFrame({l, HTTP2_FRAME_TYPE_DATA, flags, stream_id}), _reader(r), _payload_len(l)
+    : Http2TxFrame({l, Http2FrameType::DATA, flags, stream_id}), _reader(r), _payload_len(l)
   {
   }
 
@@ -92,7 +92,7 @@ class Http2HeadersFrame : public Http2TxFrame
 {
 public:
   Http2HeadersFrame(Http2StreamId stream_id, uint8_t flags, uint8_t *h, uint32_t l)
-    : Http2TxFrame({l, HTTP2_FRAME_TYPE_HEADERS, flags, stream_id}), _hdr_block(h), _hdr_block_len(l)
+    : Http2TxFrame({l, Http2FrameType::HEADERS, flags, stream_id}), _hdr_block(h), _hdr_block_len(l)
   {
   }
 
@@ -112,7 +112,7 @@ class Http2PriorityFrame : public Http2TxFrame
 {
 public:
   Http2PriorityFrame(Http2StreamId stream_id, uint8_t flags, Http2Priority p)
-    : Http2TxFrame({HTTP2_PRIORITY_LEN, HTTP2_FRAME_TYPE_PRIORITY, flags, stream_id}), _params(p)
+    : Http2TxFrame({HTTP2_PRIORITY_LEN, Http2FrameType::PRIORITY, flags, stream_id}), _params(p)
   {
   }
 
@@ -129,7 +129,7 @@ class Http2RstStreamFrame : public Http2TxFrame
 {
 public:
   Http2RstStreamFrame(Http2StreamId stream_id, uint32_t e)
-    : Http2TxFrame({HTTP2_RST_STREAM_LEN, HTTP2_FRAME_TYPE_RST_STREAM, HTTP2_FRAME_NO_FLAG, stream_id}), _error_code(e)
+    : Http2TxFrame({HTTP2_RST_STREAM_LEN, Http2FrameType::RST_STREAM, HTTP2_FRAME_NO_FLAG, stream_id}), _error_code(e)
   {
   }
 
@@ -145,9 +145,9 @@ private:
 class Http2SettingsFrame : public Http2TxFrame
 {
 public:
-  Http2SettingsFrame(Http2StreamId stream_id, uint8_t flags) : Http2TxFrame({0, HTTP2_FRAME_TYPE_SETTINGS, flags, stream_id}) {}
+  Http2SettingsFrame(Http2StreamId stream_id, uint8_t flags) : Http2TxFrame({0, Http2FrameType::SETTINGS, flags, stream_id}) {}
   Http2SettingsFrame(Http2StreamId stream_id, uint8_t flags, Http2SettingsParameter *p, uint32_t s)
-    : Http2TxFrame({static_cast<uint32_t>(HTTP2_SETTINGS_PARAMETER_LEN) * s, HTTP2_FRAME_TYPE_SETTINGS, flags, stream_id}),
+    : Http2TxFrame({static_cast<uint32_t>(HTTP2_SETTINGS_PARAMETER_LEN) * s, Http2FrameType::SETTINGS, flags, stream_id}),
       _params(p),
       _psize(s)
   {
@@ -169,7 +169,7 @@ class Http2PushPromiseFrame : public Http2TxFrame
 {
 public:
   Http2PushPromiseFrame(Http2StreamId stream_id, uint8_t flags, Http2PushPromise p, uint8_t *h, uint32_t l)
-    : Http2TxFrame({l + static_cast<uint32_t>(sizeof(Http2StreamId)), HTTP2_FRAME_TYPE_PUSH_PROMISE, flags, stream_id}),
+    : Http2TxFrame({l + static_cast<uint32_t>(sizeof(Http2StreamId)), Http2FrameType::PUSH_PROMISE, flags, stream_id}),
       _params(p),
       _hdr_block(h),
       _hdr_block_len(l)
@@ -191,7 +191,7 @@ class Http2PingFrame : public Http2TxFrame
 {
 public:
   Http2PingFrame(Http2StreamId stream_id, uint8_t flags, const uint8_t *data)
-    : Http2TxFrame({HTTP2_PING_LEN, HTTP2_FRAME_TYPE_PING, flags, stream_id}), _opaque_data(data)
+    : Http2TxFrame({HTTP2_PING_LEN, Http2FrameType::PING, flags, stream_id}), _opaque_data(data)
   {
   }
 
@@ -210,7 +210,7 @@ class Http2GoawayFrame : public Http2TxFrame
 {
 public:
   Http2GoawayFrame(Http2Goaway p)
-    : Http2TxFrame({HTTP2_GOAWAY_LEN, HTTP2_FRAME_TYPE_GOAWAY, HTTP2_FRAME_NO_FLAG, HTTP2_CONNECTION_CONTROL_STREAM}), _params(p)
+    : Http2TxFrame({HTTP2_GOAWAY_LEN, Http2FrameType::GOAWAY, HTTP2_FRAME_NO_FLAG, HTTP2_CONNECTION_CONTROL_STREAM}), _params(p)
   {
   }
 
@@ -227,7 +227,7 @@ class Http2WindowUpdateFrame : public Http2TxFrame
 {
 public:
   Http2WindowUpdateFrame(Http2StreamId stream_id, uint32_t w)
-    : Http2TxFrame({HTTP2_WINDOW_UPDATE_LEN, HTTP2_FRAME_TYPE_WINDOW_UPDATE, HTTP2_FRAME_NO_FLAG, stream_id}), _window(w)
+    : Http2TxFrame({HTTP2_WINDOW_UPDATE_LEN, Http2FrameType::WINDOW_UPDATE, HTTP2_FRAME_NO_FLAG, stream_id}), _window(w)
   {
   }
 
@@ -244,7 +244,7 @@ class Http2ContinuationFrame : public Http2TxFrame
 {
 public:
   Http2ContinuationFrame(Http2StreamId stream_id, uint8_t flags, uint8_t *h, uint32_t l)
-    : Http2TxFrame({l, HTTP2_FRAME_TYPE_CONTINUATION, flags, stream_id}), _hdr_block(h), _hdr_block_len(l)
+    : Http2TxFrame({l, Http2FrameType::CONTINUATION, flags, stream_id}), _hdr_block(h), _hdr_block_len(l)
   {
   }
 

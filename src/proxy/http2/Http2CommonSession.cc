@@ -295,7 +295,7 @@ Http2CommonSession::do_start_frame_read(Http2ErrorCode &ret_error)
   Http2StreamId continued_stream_id = this->connection_state.get_continued_stream_id();
 
   if (continued_stream_id != 0 &&
-      (continued_stream_id != this->current_hdr.streamid || this->current_hdr.type != HTTP2_FRAME_TYPE_CONTINUATION)) {
+      (continued_stream_id != this->current_hdr.streamid || this->current_hdr.type != Http2FrameType::CONTINUATION)) {
     ret_error = Http2ErrorCode::PROTOCOL_ERROR;
     return -1;
   }
@@ -334,7 +334,7 @@ Http2CommonSession::do_complete_frame_read()
   ink_release_assert(this->_read_buffer_reader->read_avail() >= this->current_hdr.length);
 
   Http2Frame frame(this->current_hdr, this->_read_buffer_reader, this->cur_frame_from_early_data);
-  this->_count_received_frames(frame.header().type);
+  this->_count_received_frames(static_cast<uint32_t>(frame.header().type));
   connection_state.rcv_frame(&frame);
 
   // Check whether data is read from early data
@@ -488,8 +488,8 @@ Http2CommonSession::is_outbound() const
 void
 Http2CommonSession::_count_received_frames(uint32_t type)
 {
-  if (type > HTTP2_FRAME_TYPE_MAX) {
-    type = HTTP2_FRAME_TYPE_MAX;
+  if (type > static_cast<uint32_t>(Http2FrameType::MAX)) {
+    type = static_cast<uint32_t>(Http2FrameType::MAX);
   }
   // Global counter
   Metrics::Counter::increment(http2_frame_metrics_in[type]);
