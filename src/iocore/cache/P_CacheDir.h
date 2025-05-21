@@ -179,7 +179,11 @@ dir_set_offset(Dir *e, int64_t o)
   e->w[1] = static_cast<uint16_t>(((o >> 16) & 0xFF) | (e->w[1] & 0xFF00));
   e->w[4] = static_cast<uint16_t>(o >> 24);
 }
-#define dir_bit(_e, _w, _b)         ((uint32_t)(((_e)->w[_w] >> (_b)) & 1))
+static inline uint32_t
+dir_bit(const Dir *e, int w, int b)
+{
+  return static_cast<uint32_t>((e->w[w] >> (b)) & 1);
+}
 #define dir_set_bit(_e, _w, _b, _v) (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)))
 #define dir_big(_e)                 ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
 inline void
