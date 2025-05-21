@@ -257,7 +257,12 @@ dir_set_phase(Dir *e, int v)
   dir_set_bit(e, 2, 12, v);
 }
 
-#define dir_head(_e)           dir_bit(_e, 2, 13)
+static inline uint32_t
+dir_head(const Dir *e)
+{
+  return dir_bit(e, 2, 13);
+}
+
 #define dir_set_head(_e, _v)   dir_set_bit(_e, 2, 13, _v)
 #define dir_pinned(_e)         dir_bit(_e, 2, 14)
 #define dir_set_pinned(_e, _v) dir_set_bit(_e, 2, 14, _v)
