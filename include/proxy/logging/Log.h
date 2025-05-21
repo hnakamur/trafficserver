@@ -122,11 +122,11 @@ public:
     FULL   = 16,
   };
 
-  enum LoggingMode {
-    LOG_MODE_NONE = 0,
-    LOG_MODE_ERRORS,       // log *only* errors
-    LOG_MODE_TRANSACTIONS, // log *only* transactions
-    LOG_MODE_FULL
+  enum class LoggingMode {
+    NONE = 0,
+    ERRORS,       // log *only* errors
+    TRANSACTIONS, // log *only* transactions
+    FULL
   };
 
   enum InitFlags {
@@ -159,13 +159,13 @@ public:
   static bool
   transaction_logging_enabled()
   {
-    return (logging_mode == LOG_MODE_FULL || logging_mode == LOG_MODE_TRANSACTIONS);
+    return (logging_mode == LoggingMode::FULL || logging_mode == LoggingMode::TRANSACTIONS);
   }
 
   static bool
   error_logging_enabled()
   {
-    return (logging_mode == LOG_MODE_FULL || logging_mode == LOG_MODE_ERRORS);
+    return (logging_mode == LoggingMode::FULL || logging_mode == LoggingMode::ERRORS);
   }
 
   static int access(LogAccess *lad);
