@@ -301,7 +301,11 @@ dir_prev(const Dir *e)
   return e->w[2];
 }
 
-#define dir_set_prev(_e, _o) (_e)->w[2] = (uint16_t)(_o)
+static inline void
+dir_set_prev(Dir *e, int o)
+{
+  e->w[2] = static_cast<uint16_t>(o);
+}
 
 // INKqa11166 - Cache can not store 2 HTTP alternates simultaneously.
 // To allow this, move the vector from the CacheVC to the OpenDirEntry.
