@@ -155,7 +155,7 @@ protected:
   MIOBuffer      *write_buffer         = nullptr;
   IOBufferReader *_write_buffer_reader = nullptr;
 
-  Http2FrameHeader current_hdr              = {0, 0, 0, 0};
+  Http2FrameHeader current_hdr              = {0, Http2FrameType::DATA, 0, 0};
   uint32_t         _write_size_threshold    = 0;
   uint32_t         _write_time_threshold    = 100;
   ink_hrtime       _write_buffer_last_flush = 0;
@@ -180,7 +180,7 @@ protected:
   bool    cur_frame_from_early_data = false;
 
   // Counter for received frames
-  std::atomic<uint64_t> _frame_counts_in[HTTP2_FRAME_TYPE_MAX + 1] = {
+  std::atomic<uint64_t> _frame_counts_in[static_cast<int>(Http2FrameType::MAX) + 1] = {
     0, // DATA
     0, // HEADERS
     0, // PRIORITY

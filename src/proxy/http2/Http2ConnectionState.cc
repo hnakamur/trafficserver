@@ -63,17 +63,17 @@ DbgCtl dbg_ctl_http2_priority{"http2_priority"};
 #define Http2StreamDebug(session, stream_id, fmt, ...) \
   Dbg(dbg_ctl_http2_con, "[%" PRId64 "] [%u] " fmt, session->get_connection_id(), stream_id, ##__VA_ARGS__);
 
-const int buffer_size_index[HTTP2_FRAME_TYPE_MAX] = {
-  BUFFER_SIZE_INDEX_16K, // HTTP2_FRAME_TYPE_DATA
-  BUFFER_SIZE_INDEX_16K, // HTTP2_FRAME_TYPE_HEADERS
-  -1,                    // HTTP2_FRAME_TYPE_PRIORITY
-  -1,                    // HTTP2_FRAME_TYPE_RST_STREAM
-  -1,                    // HTTP2_FRAME_TYPE_SETTINGS
-  BUFFER_SIZE_INDEX_16K, // HTTP2_FRAME_TYPE_PUSH_PROMISE
-  -1,                    // HTTP2_FRAME_TYPE_PING
-  -1,                    // HTTP2_FRAME_TYPE_GOAWAY
-  -1,                    // HTTP2_FRAME_TYPE_WINDOW_UPDATE
-  BUFFER_SIZE_INDEX_16K, // HTTP2_FRAME_TYPE_CONTINUATION
+const int buffer_size_index[static_cast<int>(Http2FrameType::MAX)] = {
+  BUFFER_SIZE_INDEX_16K, // Http2FrameType::DATA
+  BUFFER_SIZE_INDEX_16K, // Http2FrameType::HEADERS
+  -1,                    // Http2FrameType::PRIORITY
+  -1,                    // Http2FrameType::RST_STREAM
+  -1,                    // Http2FrameType::SETTINGS
+  BUFFER_SIZE_INDEX_16K, // Http2FrameType::PUSH_PROMISE
+  -1,                    // Http2FrameType::PING
+  -1,                    // Http2FrameType::GOAWAY
+  -1,                    // Http2FrameType::WINDOW_UPDATE
+  BUFFER_SIZE_INDEX_16K, // Http2FrameType::CONTINUATION
 };
 
 inline unsigned
@@ -229,7 +229,7 @@ Http2ConnectionState::rcv_data_frame(const Http2Frame &frame)
   }
 
   if (nbytes < unpadded_length) {
-    size_t read_len = BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_DATA]);
+    size_t read_len = BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::DATA)]);
     if (nbytes + read_len > unpadded_length) {
       read_len -= nbytes + read_len - unpadded_length;
     }
@@ -432,7 +432,7 @@ Http2ConnectionState::rcv_headers_frame(const Http2Frame &frame)
 
   if (frame.header().flags & HTTP2_FLAGS_HEADERS_END_HEADERS) {
     // NOTE: If there are END_HEADERS flag, decode stored Header Blocks.
-    if (!stream->change_state(HTTP2_FRAME_TYPE_HEADERS, frame.header().flags)) {
+    if (!stream->change_state(Http2FrameType::HEADERS, frame.header().flags)) {
       return Http2Error(Http2ErrorClass::CONNECTION, Http2ErrorCode::PROTOCOL_ERROR,
                         "recv headers end headers and not trailing header");
     }
@@ -1026,7 +1026,7 @@ Http2ConnectionState::rcv_continuation_frame(const Http2Frame &frame)
     // NOTE: If there are END_HEADERS flag, decode stored Header Blocks.
     this->clear_continued_stream_id();
 
-    if (!stream->change_state(HTTP2_FRAME_TYPE_CONTINUATION, frame.header().flags)) {
+    if (!stream->change_state(Http2FrameType::CONTINUATION, frame.header().flags)) {
       return Http2Error(Http2ErrorClass::CONNECTION, Http2ErrorCode::PROTOCOL_ERROR, "continuation no state change");
     }
 
@@ -1373,8 +1373,8 @@ Http2ConnectionState::rcv_frame(const Http2Frame *frame)
 
   // [RFC 7540] 5.5. Extending HTTP/2
   //   Implementations MUST discard frames that have unknown or unsupported types.
-  if (frame->header().type >= HTTP2_FRAME_TYPE_MAX) {
-    Http2StreamDebug(session, stream_id, "Discard a frame which has unknown type, type=%x", frame->header().type);
+  if (frame->header().type >= Http2FrameType::MAX) {
+    Http2StreamDebug(session, stream_id, "Discard a frame which has unknown type, type=%x", static_cast<int>(frame->header().type));
     return;
   }
 
@@ -1390,14 +1390,15 @@ Http2ConnectionState::rcv_frame(const Http2Frame *frame)
   // WINDOW_UPDATE: YES
   // CONTINUATION:  YES (safe http methods only, same as HEADERS frame).
   if (frame->is_from_early_data() &&
-      (frame->header().type == HTTP2_FRAME_TYPE_DATA || frame->header().type == HTTP2_FRAME_TYPE_RST_STREAM ||
-       frame->header().type == HTTP2_FRAME_TYPE_PUSH_PROMISE || frame->header().type == HTTP2_FRAME_TYPE_GOAWAY)) {
-    Http2StreamDebug(session, stream_id, "Discard a frame which is received from early data and has type=%x", frame->header().type);
+      (frame->header().type == Http2FrameType::DATA || frame->header().type == Http2FrameType::RST_STREAM ||
+       frame->header().type == Http2FrameType::PUSH_PROMISE || frame->header().type == Http2FrameType::GOAWAY)) {
+    Http2StreamDebug(session, stream_id, "Discard a frame which is received from early data and has type=%x",
+                     static_cast<int>(frame->header().type));
     return;
   }
 
-  if (this->_frame_handlers[frame->header().type]) {
-    error = (this->*_frame_handlers[frame->header().type])(*frame);
+  if (this->_frame_handlers[static_cast<int>(frame->header().type)]) {
+    error = (this->*_frame_handlers[static_cast<int>(frame->header().type)])(*frame);
   } else {
     error = Http2Error(Http2ErrorClass::CONNECTION, Http2ErrorCode::INTERNAL_ERROR, "no handler");
   }
@@ -2195,7 +2196,7 @@ Http2SendDataFrameResult
 Http2ConnectionState::send_a_data_frame(Http2Stream *stream, size_t &payload_length)
 {
   const ssize_t window_size          = std::min(this->get_peer_rwnd(), stream->get_peer_rwnd());
-  const size_t  buf_len              = BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_DATA]);
+  const size_t  buf_len              = BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::DATA)]);
   const size_t  write_available_size = std::min(buf_len, static_cast<size_t>(window_size));
   payload_length                     = 0;
 
@@ -2280,7 +2281,7 @@ Http2ConnectionState::send_a_data_frame(Http2Stream *stream, size_t &payload_len
     Http2StreamDebug(session, stream->get_id(), "END_STREAM");
     stream->send_end_stream = true;
     // Setting to the same state shouldn't be erroneous
-    stream->change_state(HTTP2_FRAME_TYPE_DATA, flags);
+    stream->change_state(Http2FrameType::DATA, flags);
 
     return Http2SendDataFrameResult::DONE;
   }
@@ -2373,7 +2374,8 @@ Http2ConnectionState::send_headers_frame(Http2Stream *stream)
   }
 
   // Send a HEADERS frame
-  if (header_blocks_size <= static_cast<uint32_t>(BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_HEADERS]))) {
+  if (header_blocks_size <=
+      static_cast<uint32_t>(BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::HEADERS)]))) {
     payload_length  = header_blocks_size;
     flags          |= HTTP2_FLAGS_HEADERS_END_HEADERS;
     if (stream->is_outbound_connection()) { // Will be sending a request_header
@@ -2415,11 +2417,11 @@ Http2ConnectionState::send_headers_frame(Http2Stream *stream)
     }
     stream->mark_milestone(Http2StreamMilestone::START_TX_HEADERS_FRAMES);
   } else {
-    payload_length = BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_HEADERS]);
+    payload_length = BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::HEADERS)]);
   }
 
   // Change stream state
-  if (!stream->change_state(HTTP2_FRAME_TYPE_HEADERS, flags)) {
+  if (!stream->change_state(Http2FrameType::HEADERS, flags)) {
     this->send_goaway_frame(this->latest_streamid_in, Http2ErrorCode::PROTOCOL_ERROR);
     this->session->set_half_close_local_flag(true);
     if (fini_event == nullptr) {
@@ -2438,12 +2440,13 @@ Http2ConnectionState::send_headers_frame(Http2Stream *stream)
   flags = 0;
   while (sent < header_blocks_size) {
     Http2StreamDebug(session, stream->get_id(), "Send CONTINUATION frame");
-    payload_length = std::min(static_cast<uint32_t>(BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_CONTINUATION])),
-                              static_cast<uint32_t>(header_blocks_size - sent));
+    payload_length =
+      std::min(static_cast<uint32_t>(BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::CONTINUATION)])),
+               static_cast<uint32_t>(header_blocks_size - sent));
     if (sent + payload_length == header_blocks_size) {
       flags |= HTTP2_FLAGS_CONTINUATION_END_HEADERS;
     }
-    stream->change_state(HTTP2_FRAME_TYPE_CONTINUATION, flags);
+    stream->change_state(Http2FrameType::CONTINUATION, flags);
 
     Http2ContinuationFrame continuation_frame(stream->get_id(), flags, buf + sent, payload_length);
     this->session->xmit(continuation_frame);
@@ -2496,13 +2499,13 @@ Http2ConnectionState::send_push_promise_frame(Http2Stream *stream, URL &url, con
 
   // Send a PUSH_PROMISE frame
   Http2PushPromise push_promise;
-  if (header_blocks_size <=
-      BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_PUSH_PROMISE]) - sizeof(push_promise.promised_streamid)) {
+  if (header_blocks_size <= BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::PUSH_PROMISE)]) -
+                              sizeof(push_promise.promised_streamid)) {
     payload_length  = header_blocks_size;
     flags          |= HTTP2_FLAGS_PUSH_PROMISE_END_HEADERS;
   } else {
-    payload_length =
-      BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_PUSH_PROMISE]) - sizeof(push_promise.promised_streamid);
+    payload_length = BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::PUSH_PROMISE)]) -
+                     sizeof(push_promise.promised_streamid);
   }
 
   Http2StreamId id               = this->get_latest_stream_id_out() + 2;
@@ -2516,8 +2519,9 @@ Http2ConnectionState::send_push_promise_frame(Http2Stream *stream, URL &url, con
   flags = 0;
   while (sent < header_blocks_size) {
     Http2StreamDebug(session, stream->get_id(), "Send CONTINUATION frame");
-    payload_length = std::min(static_cast<uint32_t>(BUFFER_SIZE_FOR_INDEX(buffer_size_index[HTTP2_FRAME_TYPE_CONTINUATION])),
-                              static_cast<uint32_t>(header_blocks_size - sent));
+    payload_length =
+      std::min(static_cast<uint32_t>(BUFFER_SIZE_FOR_INDEX(buffer_size_index[static_cast<int>(Http2FrameType::CONTINUATION)])),
+               static_cast<uint32_t>(header_blocks_size - sent));
     if (sent + payload_length == header_blocks_size) {
       flags |= HTTP2_FLAGS_CONTINUATION_END_HEADERS;
     }
@@ -2547,7 +2551,7 @@ Http2ConnectionState::send_push_promise_frame(Http2Stream *stream, URL &url, con
         this->dependency_tree->add(HTTP2_PRIORITY_DEFAULT_STREAM_DEPENDENCY, id, HTTP2_PRIORITY_DEFAULT_WEIGHT, false, stream);
     }
   }
-  stream->change_state(HTTP2_FRAME_TYPE_PUSH_PROMISE, HTTP2_FLAGS_PUSH_PROMISE_END_HEADERS);
+  stream->change_state(Http2FrameType::PUSH_PROMISE, HTTP2_FLAGS_PUSH_PROMISE_END_HEADERS);
   stream->set_receive_headers(hdr);
   stream->new_transaction();
   stream->receive_end_stream = true; // No more data with the request
@@ -2570,7 +2574,7 @@ Http2ConnectionState::send_rst_stream_frame(Http2StreamId id, Http2ErrorCode ec)
   Http2Stream *stream = find_stream(id);
   if (stream != nullptr) {
     stream->set_tx_error_code({ProxyErrorClass::TXN, static_cast<uint32_t>(ec)});
-    if (!stream->change_state(HTTP2_FRAME_TYPE_RST_STREAM, 0)) {
+    if (!stream->change_state(Http2FrameType::RST_STREAM, 0)) {
       this->send_goaway_frame(this->latest_streamid_in, Http2ErrorCode::PROTOCOL_ERROR);
       this->session->set_half_close_local_flag(true);
       if (fini_event == nullptr) {
