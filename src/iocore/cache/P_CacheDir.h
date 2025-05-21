@@ -164,6 +164,7 @@ dir_offset(const Dir *e)
   return static_cast<int64_t>(
     (static_cast<uint64_t>(e->w[0]) | (static_cast<uint64_t>(e->w[1] & 0xFF) << 16) | (static_cast<uint64_t>(e->w[4]) << 24)));
 }
+
 static inline void
 dir_set_offset(Dir *e, int64_t o)
 {
@@ -171,33 +172,40 @@ dir_set_offset(Dir *e, int64_t o)
   e->w[1] = static_cast<uint16_t>(((o >> 16) & 0xFF) | (e->w[1] & 0xFF00));
   e->w[4] = static_cast<uint16_t>(o >> 24);
 }
+
 static inline uint32_t
 dir_bit(const Dir *e, int w, int b)
 {
   return static_cast<uint32_t>((e->w[w] >> (b)) & 1);
 }
+
 static inline void
 dir_set_bit(Dir *e, int w, int b, int v)
 {
   e->w[w] = static_cast<uint16_t>((e->w[w] & ~(1 << b)) | ((v ? 1 : 0) << b));
 }
+
 #define dir_big(_e) ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
-inline void
+
+static inline void
 dir_set_big(Dir *e, uint16_t v)
 {
   e->w[1] = static_cast<uint16_t>((e->w[1] & 0xFCFF) | ((static_cast<uint16_t>(v)) & 0x3) << 8);
 }
+
 static inline uint32_t
 dir_size(const Dir *e)
 {
   return static_cast<uint32_t>((e->w[1]) >> 10);
 }
-inline void
+
+static inline void
 dir_set_size(Dir *e, uint16_t v)
 {
   e->w[1] = static_cast<uint16_t>((e->w[1] & ((1 << 10) - 1)) | (v << 10));
 }
-inline void
+
+static inline void
 dir_set_approx_size(Dir *e, uint32_t s)
 {
   if (s <= DIR_SIZE_WITH_BLOCK(0)) {
@@ -214,17 +222,20 @@ dir_set_approx_size(Dir *e, uint32_t s)
     dir_set_size(e, (s - 1) / DIR_BLOCK_SIZE(3));
   }
 }
-inline uint64_t
+
+static inline uint64_t
 dir_approx_size(const Dir *e)
 {
   return static_cast<uint64_t>(dir_size(e) + 1) * DIR_BLOCK_SIZE(dir_big(e));
 }
+
 #define round_to_approx_dir_size(_s)      \
   (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
      ROUND_TO(_s, DIR_BLOCK_SIZE(0)) :    \
      (_s <= DIR_SIZE_WITH_BLOCK(1) ?      \
         ROUND_TO(_s, DIR_BLOCK_SIZE(1)) : \
         (_s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(_s, DIR_BLOCK_SIZE(2)) : ROUND_TO(_s, DIR_BLOCK_SIZE(3)))))
+
 static inline uint32_t
 dir_tag(const Dir *e)
 {
