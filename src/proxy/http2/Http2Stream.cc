@@ -222,8 +222,7 @@ Http2Stream::main_event_handler(int event, void *edata)
       Http2ConnectionState &connection_state = get_connection_state();
       {
         SCOPED_MUTEX_LOCK(lock, connection_state.mutex, this_ethread());
-        Http2Error error(Http2ErrorClass::HTTP2_ERROR_CLASS_CONNECTION, Http2ErrorCode::HTTP2_ERROR_COMPRESSION_ERROR,
-                         "stream timeout");
+        Http2Error error(Http2ErrorClass::CONNECTION, Http2ErrorCode::HTTP2_ERROR_COMPRESSION_ERROR, "stream timeout");
         connection_state.handleEvent(HTTP2_SESSION_EVENT_ERROR, &error);
       }
     } else if (_sm && read_vio.ntodo() > 0) {

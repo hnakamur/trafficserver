@@ -323,11 +323,11 @@ Http2ServerSession::new_transaction()
   this->set_session_active();
 
   // Create a new stream/transaction
-  Http2Error   error(Http2ErrorClass::HTTP2_ERROR_CLASS_NONE);
+  Http2Error   error(Http2ErrorClass::NONE);
   Http2Stream *stream = connection_state.create_initiating_stream(error);
 
   if (!stream || connection_state.is_peer_concurrent_stream_ub()) {
-    if (error.cls != Http2ErrorClass::HTTP2_ERROR_CLASS_NONE) {
+    if (error.cls != Http2ErrorClass::NONE) {
       Error("HTTP/2 stream error code=0x%02x %s", static_cast<int>(error.code), error.msg);
     }
 
