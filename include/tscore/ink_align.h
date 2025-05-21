@@ -47,7 +47,17 @@ union Alias64 {
 
 #define INK_MIN_ALIGN 8
 /* INK_ALIGN() is only to be used to align on a power of 2 boundary */
-#define INK_ALIGN(size, boundary) (((size) + ((boundary) - 1)) & ~((boundary) - 1))
+template <class T>
+static constexpr inline T
+INK_ALIGN(T size, T boundary)
+{
+  return (size + (boundary - 1)) & ~(boundary - 1);
+}
+static constexpr inline off_t
+INK_ALIGN(ptrdiff_t size, size_t boundary)
+{
+  return static_cast<off_t>((size + (boundary - 1)) & ~(boundary - 1));
+}
 
 /** Default alignment */
 #define INK_ALIGN_DEFAULT(size) INK_ALIGN(size, INK_MIN_ALIGN)

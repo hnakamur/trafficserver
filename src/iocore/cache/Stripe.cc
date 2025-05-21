@@ -41,7 +41,7 @@ namespace
 
 DbgCtl dbg_ctl_cache_init{"cache_init"};
 
-constexpr int DIRECTORY_FOOTER_SIZE{ROUND_TO_STORE_BLOCK(sizeof(StripteHeaderFooter))};
+constexpr int DIRECTORY_FOOTER_SIZE{static_cast<int>(ROUND_TO_STORE_BLOCK(sizeof(StripteHeaderFooter)))};
 
 int
 compare_ushort(void const *a, void const *b)
