@@ -46,7 +46,7 @@ enum class Http2SendDataFrameResult {
   DONE,
 };
 
-enum Http2ShutdownState { HTTP2_SHUTDOWN_NONE, HTTP2_SHUTDOWN_NOT_INITIATED, HTTP2_SHUTDOWN_INITIATED, HTTP2_SHUTDOWN_IN_PROGRESS };
+enum class Http2ShutdownState { NONE, NOT_INITIATED, INITIATED, IN_PROGRESS };
 
 class Http2ConnectionSettings
 {
@@ -404,7 +404,7 @@ private:
   int                recursion           = 0;
   int                _data_event_backoff = DATA_EVENT_BACKOFF_START;
   bool               _data_event_retry   = false;
-  Http2ShutdownState shutdown_state      = HTTP2_SHUTDOWN_NONE;
+  Http2ShutdownState shutdown_state      = Http2ShutdownState::NONE;
   Http2ErrorCode     shutdown_reason     = Http2ErrorCode::HTTP2_ERROR_MAX;
   Event             *shutdown_cont_event = nullptr;
   Event             *fini_event          = nullptr;

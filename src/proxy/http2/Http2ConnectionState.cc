@@ -1571,8 +1571,8 @@ Http2ConnectionState::main_event_handler(int event, void *edata)
   // Initiate a graceful shutdown
   case HTTP2_SESSION_EVENT_SHUTDOWN_INIT: {
     REMEMBER(event, this->recursion);
-    ink_assert(shutdown_state == HTTP2_SHUTDOWN_NOT_INITIATED);
-    shutdown_state = HTTP2_SHUTDOWN_INITIATED;
+    ink_assert(shutdown_state == Http2ShutdownState::NOT_INITIATED);
+    shutdown_state = Http2ShutdownState::INITIATED;
     // [RFC 7540] 6.8.  GOAWAY
     // A server that is attempting to gracefully shut down a
     // connection SHOULD send an initial GOAWAY frame with the last stream
@@ -1586,9 +1586,9 @@ Http2ConnectionState::main_event_handler(int event, void *edata)
   // Continue a graceful shutdown
   case HTTP2_SESSION_EVENT_SHUTDOWN_CONT: {
     REMEMBER(event, this->recursion);
-    ink_assert(shutdown_state == HTTP2_SHUTDOWN_INITIATED);
+    ink_assert(shutdown_state == Http2ShutdownState::INITIATED);
     shutdown_cont_event = nullptr;
-    shutdown_state      = HTTP2_SHUTDOWN_IN_PROGRESS;
+    shutdown_state      = Http2ShutdownState::IN_PROGRESS;
     // [RFC 7540] 6.8.  GOAWAY
     // ..., the server can send another GOAWAY frame with an updated last stream identifier
     if (shutdown_reason == Http2ErrorCode::HTTP2_ERROR_MAX) {
