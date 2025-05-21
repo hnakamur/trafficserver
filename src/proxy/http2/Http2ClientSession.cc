@@ -224,13 +224,13 @@ Http2ClientSession::main_event_handler(int event, void *edata)
   }
 
   if (!this->is_draining() && this->connection_state.get_shutdown_reason() == Http2ErrorCode::HTTP2_ERROR_MAX) {
-    this->connection_state.set_shutdown_state(HTTP2_SHUTDOWN_NONE);
+    this->connection_state.set_shutdown_state(Http2ShutdownState::NONE);
   }
 
-  if (this->connection_state.get_shutdown_state() == HTTP2_SHUTDOWN_NONE) {
+  if (this->connection_state.get_shutdown_state() == Http2ShutdownState::NONE) {
     if (this->is_draining()) { // For a case we already checked Connection header and it didn't exist
       Http2SsnDebug("Preparing for graceful shutdown because of draining state");
-      this->connection_state.set_shutdown_state(HTTP2_SHUTDOWN_NOT_INITIATED);
+      this->connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED);
     } else if (this->connection_state.get_stream_error_rate() >
                Http2::stream_error_rate_threshold) { // For a case many stream errors happened
       ip_port_text_buffer ipb;
@@ -241,11 +241,11 @@ Http2ClientSession::main_event_handler(int event, void *edata)
                            Http2::stream_error_rate_threshold);
       Http2SsnDebug("Preparing for graceful shutdown because of a high stream error rate");
       cause_of_death = Http2SessionCod::HIGH_ERROR_RATE;
-      this->connection_state.set_shutdown_state(HTTP2_SHUTDOWN_NOT_INITIATED, Http2ErrorCode::HTTP2_ERROR_ENHANCE_YOUR_CALM);
+      this->connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED, Http2ErrorCode::HTTP2_ERROR_ENHANCE_YOUR_CALM);
     }
   }
 
-  if (!set_closed && this->connection_state.get_shutdown_state() == HTTP2_SHUTDOWN_NOT_INITIATED) {
+  if (!set_closed && this->connection_state.get_shutdown_state() == Http2ShutdownState::NOT_INITIATED) {
     send_connection_event(&this->connection_state, HTTP2_SESSION_EVENT_SHUTDOWN_INIT, this);
   }
 
