@@ -252,7 +252,7 @@ Http2CommonSession::state_start_frame_read(int event, void *edata)
 int
 Http2CommonSession::do_start_frame_read(Http2ErrorCode &ret_error)
 {
-  ret_error = Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+  ret_error = Http2ErrorCode::NO_ERROR;
   ink_release_assert(this->_read_buffer_reader->read_avail() >= (int64_t)HTTP2_FRAME_HEADER_LEN);
 
   uint8_t  buf[HTTP2_FRAME_HEADER_LEN];
@@ -281,13 +281,13 @@ Http2CommonSession::do_start_frame_read(Http2ErrorCode &ret_error)
   this->_read_buffer_reader->consume(nbytes);
 
   if (!http2_frame_header_is_valid(this->current_hdr, this->connection_state.local_settings.get(HTTP2_SETTINGS_MAX_FRAME_SIZE))) {
-    ret_error = Http2ErrorCode::HTTP2_ERROR_PROTOCOL_ERROR;
+    ret_error = Http2ErrorCode::PROTOCOL_ERROR;
     return -1;
   }
 
   // If we know up front that the payload is too long, nuke this connection.
   if (this->current_hdr.length > this->connection_state.local_settings.get(HTTP2_SETTINGS_MAX_FRAME_SIZE)) {
-    ret_error = Http2ErrorCode::HTTP2_ERROR_FRAME_SIZE_ERROR;
+    ret_error = Http2ErrorCode::FRAME_SIZE_ERROR;
     return -1;
   }
 
@@ -296,7 +296,7 @@ Http2CommonSession::do_start_frame_read(Http2ErrorCode &ret_error)
 
   if (continued_stream_id != 0 &&
       (continued_stream_id != this->current_hdr.streamid || this->current_hdr.type != HTTP2_FRAME_TYPE_CONTINUATION)) {
-    ret_error = Http2ErrorCode::HTTP2_ERROR_PROTOCOL_ERROR;
+    ret_error = Http2ErrorCode::PROTOCOL_ERROR;
     return -1;
   }
   return 0;
@@ -362,13 +362,13 @@ Http2CommonSession::do_process_frame_read(int /* event ATS_UNUSED */, VIO *vio, 
 
   while (this->_read_buffer_reader->read_avail() >= static_cast<int64_t>(HTTP2_FRAME_HEADER_LEN)) {
     // Cancel reading if there was an error or connection is closed
-    if (connection_state.tx_error_code.code != static_cast<uint32_t>(Http2ErrorCode::HTTP2_ERROR_NO_ERROR) ||
+    if (connection_state.tx_error_code.code != static_cast<uint32_t>(Http2ErrorCode::NO_ERROR) ||
         connection_state.is_state_closed()) {
       Http2SsnDebug("reading a frame has been canceled (%u)", connection_state.tx_error_code.code);
       break;
     }
 
-    Http2ErrorCode err = Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+    Http2ErrorCode err = Http2ErrorCode::NO_ERROR;
     if (this->connection_state.get_stream_error_rate() > std::min(1.0, Http2::stream_error_rate_threshold * 2.0)) {
       ip_port_text_buffer ipb;
       const char         *peer_ip = ats_ip_ntop(this->get_proxy_session()->get_remote_addr(), ipb, sizeof(ipb));
@@ -376,14 +376,14 @@ Http2CommonSession::do_process_frame_read(int /* event ATS_UNUSED */, VIO *vio, 
                            " closing a connection, because its stream error rate (%f) exceeded the threshold (%f)",
                            peer_ip, this->get_connection_id(), this->connection_state.get_stream_error_rate(),
                            Http2::stream_error_rate_threshold);
-      err = Http2ErrorCode::HTTP2_ERROR_ENHANCE_YOUR_CALM;
+      err = Http2ErrorCode::ENHANCE_YOUR_CALM;
     }
 
     // Return if there was an error
-    if (err > Http2ErrorCode::HTTP2_ERROR_NO_ERROR || do_start_frame_read(err) < 0) {
+    if (err > Http2ErrorCode::NO_ERROR || do_start_frame_read(err) < 0) {
       // send an error if specified.  Otherwise, just go away
       this->connection_state.restart_receiving(nullptr);
-      if (err > Http2ErrorCode::HTTP2_ERROR_NO_ERROR) {
+      if (err > Http2ErrorCode::NO_ERROR) {
         if (!this->connection_state.is_state_closed()) {
           this->connection_state.send_goaway_frame(this->connection_state.get_latest_stream_id_in(), err);
           this->set_half_close_local_flag(true);

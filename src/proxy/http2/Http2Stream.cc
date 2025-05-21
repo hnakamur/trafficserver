@@ -222,7 +222,7 @@ Http2Stream::main_event_handler(int event, void *edata)
       Http2ConnectionState &connection_state = get_connection_state();
       {
         SCOPED_MUTEX_LOCK(lock, connection_state.mutex, this_ethread());
-        Http2Error error(Http2ErrorClass::CONNECTION, Http2ErrorCode::HTTP2_ERROR_COMPRESSION_ERROR, "stream timeout");
+        Http2Error error(Http2ErrorClass::CONNECTION, Http2ErrorCode::COMPRESSION_ERROR, "stream timeout");
         connection_state.handleEvent(HTTP2_SESSION_EVENT_ERROR, &error);
       }
     } else if (_sm && read_vio.ntodo() > 0) {
@@ -285,7 +285,7 @@ Http2Stream::decode_header_blocks(HpackHandle &hpack_handle, uint32_t maximum_ta
   Http2ErrorCode error =
     http2_decode_header_blocks(&_receive_header, (const uint8_t *)header_blocks, header_blocks_length, nullptr, hpack_handle,
                                _trailing_header_is_possible, maximum_table_size, this->is_outbound_connection());
-  if (error != Http2ErrorCode::HTTP2_ERROR_NO_ERROR) {
+  if (error != Http2ErrorCode::NO_ERROR) {
     Http2StreamDebug("Error decoding header blocks: %u", static_cast<uint32_t>(error));
   }
   return error;
@@ -562,7 +562,7 @@ Http2Stream::do_io_close(int /* flags */)
     // from the server. If a client sends a RST_STREAM, we need to keep the server side alive so
     // the background fill can function as intended.
     if (!this->is_outbound_connection() && this->is_state_writeable()) {
-      this->get_connection_state().send_rst_stream_frame(_id, Http2ErrorCode::HTTP2_ERROR_NO_ERROR);
+      this->get_connection_state().send_rst_stream_frame(_id, Http2ErrorCode::NO_ERROR);
     }
 
     // When we get here, the SM has initiated the shutdown.  Either it received a WRITE_COMPLETE, or it is shutting down.  Any
@@ -628,7 +628,7 @@ Http2Stream::initiating_close()
                      this->get_connection_state().get_peer_rwnd());
 
     if (!this->is_outbound_connection() && this->is_state_writeable()) { // Let the other end know we are going away
-      this->get_connection_state().send_rst_stream_frame(_id, Http2ErrorCode::HTTP2_ERROR_NO_ERROR);
+      this->get_connection_state().send_rst_stream_frame(_id, Http2ErrorCode::NO_ERROR);
     }
 
     // Set the state of the connection to closed
@@ -844,7 +844,7 @@ Http2Stream::update_write_request(bool call_update)
         if (value == std::string_view{HTTP_VALUE_CLOSE, static_cast<std::string_view::size_type>(HTTP_LEN_CLOSE)}) {
           SCOPED_MUTEX_LOCK(lock, _proxy_ssn->mutex, this_ethread());
           if (connection_state.get_shutdown_state() == Http2ShutdownState::NONE) {
-            connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED, Http2ErrorCode::HTTP2_ERROR_NO_ERROR);
+            connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED, Http2ErrorCode::NO_ERROR);
           }
         }
       }
@@ -1126,9 +1126,9 @@ Http2Stream::increment_peer_rwnd(size_t amount)
   double sum = std::accumulate(this->_recent_rwnd_increment.begin(), this->_recent_rwnd_increment.end(), 0.0);
   double avg = sum / this->_recent_rwnd_increment.size();
   if (avg < Http2::min_avg_window_update) {
-    return Http2ErrorCode::HTTP2_ERROR_ENHANCE_YOUR_CALM;
+    return Http2ErrorCode::ENHANCE_YOUR_CALM;
   }
-  return Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+  return Http2ErrorCode::NO_ERROR;
 }
 
 Http2ErrorCode
@@ -1136,9 +1136,9 @@ Http2Stream::decrement_peer_rwnd(size_t amount)
 {
   this->_peer_rwnd -= amount;
   if (this->_peer_rwnd < 0) {
-    return Http2ErrorCode::HTTP2_ERROR_PROTOCOL_ERROR;
+    return Http2ErrorCode::PROTOCOL_ERROR;
   } else {
-    return Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+    return Http2ErrorCode::NO_ERROR;
   }
 }
 
@@ -1152,7 +1152,7 @@ Http2ErrorCode
 Http2Stream::increment_local_rwnd(size_t amount)
 {
   this->_local_rwnd += amount;
-  return Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+  return Http2ErrorCode::NO_ERROR;
 }
 
 Http2ErrorCode
@@ -1160,9 +1160,9 @@ Http2Stream::decrement_local_rwnd(size_t amount)
 {
   this->_local_rwnd -= amount;
   if (this->_local_rwnd < 0) {
-    return Http2ErrorCode::HTTP2_ERROR_PROTOCOL_ERROR;
+    return Http2ErrorCode::PROTOCOL_ERROR;
   } else {
-    return Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+    return Http2ErrorCode::NO_ERROR;
   }
 }
 

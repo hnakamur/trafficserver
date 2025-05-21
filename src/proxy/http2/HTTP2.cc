@@ -425,12 +425,12 @@ http2_encode_header_blocks(HTTPHdr *in, uint8_t *out, uint32_t out_len, uint32_t
   // TODO: It would be better to split Cookie header value
   int64_t result = hpack_encode_header_block(handle, out, out_len, in, maximum_table_size);
   if (result < 0) {
-    return Http2ErrorCode::HTTP2_ERROR_COMPRESSION_ERROR;
+    return Http2ErrorCode::COMPRESSION_ERROR;
   }
   if (len_written) {
     *len_written = result;
   }
-  return Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+  return Http2ErrorCode::NO_ERROR;
 }
 
 /*
@@ -444,18 +444,18 @@ http2_decode_header_blocks(HTTPHdr *hdr, const uint8_t *buf_start, const uint32_
 
   if (result < 0) {
     if (result == HPACK_ERROR_COMPRESSION_ERROR) {
-      return Http2ErrorCode::HTTP2_ERROR_COMPRESSION_ERROR;
+      return Http2ErrorCode::COMPRESSION_ERROR;
     } else if (result == HPACK_ERROR_SIZE_EXCEEDED_ERROR) {
-      return Http2ErrorCode::HTTP2_ERROR_ENHANCE_YOUR_CALM;
+      return Http2ErrorCode::ENHANCE_YOUR_CALM;
     }
 
-    return Http2ErrorCode::HTTP2_ERROR_PROTOCOL_ERROR;
+    return Http2ErrorCode::PROTOCOL_ERROR;
   }
   if (len_read) {
     *len_read = result;
   }
-  return HeaderValidator::is_h2_h3_header_valid(*hdr, is_outbound, is_trailing_header) ? Http2ErrorCode::HTTP2_ERROR_NO_ERROR :
-                                                                                         Http2ErrorCode::HTTP2_ERROR_PROTOCOL_ERROR;
+  return HeaderValidator::is_h2_h3_header_valid(*hdr, is_outbound, is_trailing_header) ? Http2ErrorCode::NO_ERROR :
+                                                                                         Http2ErrorCode::PROTOCOL_ERROR;
 }
 
 // Initialize this subsystem with librecords configs (for now)
