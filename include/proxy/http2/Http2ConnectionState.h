@@ -184,7 +184,7 @@ public:
   bool is_valid_streamid(Http2StreamId id) const;
 
   Http2ShutdownState get_shutdown_state() const;
-  void               set_shutdown_state(Http2ShutdownState state, Http2ErrorCode reason = Http2ErrorCode::HTTP2_ERROR_NO_ERROR);
+  void               set_shutdown_state(Http2ShutdownState state, Http2ErrorCode reason = Http2ErrorCode::NO_ERROR);
 
   Event *get_zombie_event();
   void   schedule_zombie_event();
@@ -405,7 +405,7 @@ private:
   int                _data_event_backoff = DATA_EVENT_BACKOFF_START;
   bool               _data_event_retry   = false;
   Http2ShutdownState shutdown_state      = Http2ShutdownState::NONE;
-  Http2ErrorCode     shutdown_reason     = Http2ErrorCode::HTTP2_ERROR_MAX;
+  Http2ErrorCode     shutdown_reason     = Http2ErrorCode::MAX;
   Event             *shutdown_cont_event = nullptr;
   Event             *fini_event          = nullptr;
   Event             *zombie_event        = nullptr;

@@ -135,22 +135,22 @@ enum class Http2ErrorClass {
 
 // [RFC 7540] 7. Error Codes
 enum class Http2ErrorCode {
-  HTTP2_ERROR_NO_ERROR            = 0,
-  HTTP2_ERROR_PROTOCOL_ERROR      = 1,
-  HTTP2_ERROR_INTERNAL_ERROR      = 2,
-  HTTP2_ERROR_FLOW_CONTROL_ERROR  = 3,
-  HTTP2_ERROR_SETTINGS_TIMEOUT    = 4,
-  HTTP2_ERROR_STREAM_CLOSED       = 5,
-  HTTP2_ERROR_FRAME_SIZE_ERROR    = 6,
-  HTTP2_ERROR_REFUSED_STREAM      = 7,
-  HTTP2_ERROR_CANCEL              = 8,
-  HTTP2_ERROR_COMPRESSION_ERROR   = 9,
-  HTTP2_ERROR_CONNECT_ERROR       = 10,
-  HTTP2_ERROR_ENHANCE_YOUR_CALM   = 11,
-  HTTP2_ERROR_INADEQUATE_SECURITY = 12,
-  HTTP2_ERROR_HTTP_1_1_REQUIRED   = 13,
+  NO_ERROR            = 0,
+  PROTOCOL_ERROR      = 1,
+  INTERNAL_ERROR      = 2,
+  FLOW_CONTROL_ERROR  = 3,
+  SETTINGS_TIMEOUT    = 4,
+  STREAM_CLOSED       = 5,
+  FRAME_SIZE_ERROR    = 6,
+  REFUSED_STREAM      = 7,
+  CANCEL              = 8,
+  COMPRESSION_ERROR   = 9,
+  CONNECT_ERROR       = 10,
+  ENHANCE_YOUR_CALM   = 11,
+  INADEQUATE_SECURITY = 12,
+  HTTP_1_1_REQUIRED   = 13,
 
-  HTTP2_ERROR_MAX,
+  MAX,
 };
 
 // [RFC 7540] 5.1. Stream States
@@ -269,8 +269,8 @@ struct Http2FrameHeader {
 
 // [RFC 7540] 5.4. Error Handling
 struct Http2Error {
-  Http2Error(const Http2ErrorClass error_class = Http2ErrorClass::NONE,
-             const Http2ErrorCode error_code = Http2ErrorCode::HTTP2_ERROR_NO_ERROR, const char *err_msg = "")
+  Http2Error(const Http2ErrorClass error_class = Http2ErrorClass::NONE, const Http2ErrorCode error_code = Http2ErrorCode::NO_ERROR,
+             const char *err_msg = "")
   {
     cls  = error_class;
     code = error_code;
@@ -308,7 +308,7 @@ struct Http2HeadersParameter {
 struct Http2Goaway {
   Http2Goaway() {}
   Http2StreamId  last_streamid = 0;
-  Http2ErrorCode error_code    = Http2ErrorCode::HTTP2_ERROR_NO_ERROR;
+  Http2ErrorCode error_code    = Http2ErrorCode::NO_ERROR;
 
   // NOTE: we don't (de)serialize the variable length debug data at this layer
   // because there's
