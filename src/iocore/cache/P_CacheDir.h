@@ -238,8 +238,13 @@ dir_tag(const Dir *e)
 {
   return static_cast<uint32_t>(e->w[2] & ((1 << DIR_TAG_WIDTH) - 1));
 }
-#define dir_set_tag(_e, _t) \
-  (_e)->w[2] = (uint16_t)(((_e)->w[2] & ~((1 << DIR_TAG_WIDTH) - 1)) | ((_t) & ((1 << DIR_TAG_WIDTH) - 1)))
+
+static inline void
+dir_set_tag(Dir *e, int t)
+{
+  e->w[2] = static_cast<uint16_t>((e->w[2] & ~((1 << DIR_TAG_WIDTH) - 1)) | (t & ((1 << DIR_TAG_WIDTH) - 1)));
+}
+
 #define dir_phase(_e)          dir_bit(_e, 2, 12)
 #define dir_set_phase(_e, _v)  dir_set_bit(_e, 2, 12, _v)
 #define dir_head(_e)           dir_bit(_e, 2, 13)
