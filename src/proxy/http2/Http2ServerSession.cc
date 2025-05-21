@@ -224,7 +224,7 @@ Http2ServerSession::main_event_handler(int event, void *edata)
     break;
   }
 
-  if (!this->is_draining() && this->connection_state.get_shutdown_reason() == Http2ErrorCode::HTTP2_ERROR_MAX) {
+  if (!this->is_draining() && this->connection_state.get_shutdown_reason() == Http2ErrorCode::MAX) {
     this->connection_state.set_shutdown_state(Http2ShutdownState::NONE);
   }
 
@@ -241,7 +241,7 @@ Http2ServerSession::main_event_handler(int event, void *edata)
               client_ip, connection_id(), this->connection_state.get_stream_error_rate(), Http2::stream_error_rate_threshold);
       Http2SsnDebug("Preparing for graceful shutdown because of a high stream error rate");
       cause_of_death = Http2SessionCod::HIGH_ERROR_RATE;
-      this->connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED, Http2ErrorCode::HTTP2_ERROR_ENHANCE_YOUR_CALM);
+      this->connection_state.set_shutdown_state(Http2ShutdownState::NOT_INITIATED, Http2ErrorCode::ENHANCE_YOUR_CALM);
     } */
   }
 
