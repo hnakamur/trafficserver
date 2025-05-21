@@ -184,8 +184,12 @@ dir_bit(const Dir *e, int w, int b)
 {
   return static_cast<uint32_t>((e->w[w] >> (b)) & 1);
 }
-#define dir_set_bit(_e, _w, _b, _v) (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)))
-#define dir_big(_e)                 ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
+static inline void
+dir_set_bit(Dir *e, int w, int b, int v)
+{
+  e->w[w] = static_cast<uint16_t>((e->w[w] & ~(1 << b)) | ((v ? 1 : 0) << b));
+}
+#define dir_big(_e) ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
 inline void
 dir_set_big(Dir *e, uint16_t v)
 {
