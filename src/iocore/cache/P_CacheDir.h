@@ -195,7 +195,11 @@ dir_set_big(Dir *e, uint16_t v)
 {
   e->w[1] = static_cast<uint16_t>((e->w[1] & 0xFCFF) | ((static_cast<uint16_t>(v)) & 0x3) << 8);
 }
-#define dir_size(_e) ((uint32_t)(((_e)->w[1]) >> 10))
+static inline uint32_t
+dir_size(const Dir *e)
+{
+  return static_cast<uint32_t>((e->w[1]) >> 10);
+}
 inline void
 dir_set_size(Dir *e, uint16_t v)
 {
