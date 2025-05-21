@@ -45,7 +45,8 @@ union Alias64 {
  * Alignment macros
  */
 
-#define INK_MIN_ALIGN 8
+static constexpr auto INK_MIN_ALIGN = 8;
+
 /* INK_ALIGN() is only to be used to align on a power of 2 boundary */
 template <class T>
 static constexpr inline T
