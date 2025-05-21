@@ -60,7 +60,7 @@
 // Log global objects
 LogObject       *Log::error_log = nullptr;
 LogFieldList     Log::global_field_list;
-Log::LoggingMode Log::logging_mode = LOG_MODE_NONE;
+Log::LoggingMode Log::logging_mode = LoggingMode::NONE;
 
 // Flush thread stuff
 EventNotify   *Log::preproc_notify;
@@ -218,11 +218,11 @@ Log::periodic_tasks(long time_now)
       int val;
       val = RecGetRecordInt("proxy.config.log.logging_enabled").value_or(0);
 
-      if (val < LOG_MODE_NONE || val > LOG_MODE_FULL) {
-        logging_mode = LOG_MODE_FULL;
+      if (val < static_cast<int>(LoggingMode::NONE) || val > static_cast<int>(LoggingMode::FULL)) {
+        logging_mode = LoggingMode::FULL;
         Warning("proxy.config.log.logging_enabled has an invalid "
                 "value setting it to %d",
-                logging_mode);
+                static_cast<int>(logging_mode));
       } else {
         logging_mode = static_cast<LoggingMode>(val);
       }
@@ -232,7 +232,7 @@ Log::periodic_tasks(long time_now)
     // so that log objects are flushed
     //
     change_configuration();
-  } else if (logging_mode > LOG_MODE_NONE || config->has_api_objects()) {
+  } else if (logging_mode > LoggingMode::NONE || config->has_api_objects()) {
     Dbg(dbg_ctl_log_periodic, "Performing periodic tasks");
     Dbg(dbg_ctl_log_periodic, "Periodic task interval = %d", periodic_tasks_interval);
 
@@ -1063,7 +1063,7 @@ Log::init(int flags)
   // set the logging_mode and read config variables if needed
   //
   if (config_flags & LOGCAT) {
-    logging_mode = LOG_MODE_NONE;
+    logging_mode = LoggingMode::NONE;
   } else {
     LogConfig::register_stat_callbacks();
 
@@ -1072,11 +1072,11 @@ Log::init(int flags)
 
     int val;
     val = RecGetRecordInt("proxy.config.log.logging_enabled").value_or(0);
-    if (val < LOG_MODE_NONE || val > LOG_MODE_FULL) {
-      logging_mode = LOG_MODE_FULL;
+    if (val < static_cast<int>(LoggingMode::NONE) || val > static_cast<int>(LoggingMode::FULL)) {
+      logging_mode = LoggingMode::FULL;
       Warning("proxy.config.log.logging_enabled has an invalid "
               "value, setting it to %d",
-              logging_mode);
+              static_cast<int>(logging_mode));
     } else {
       logging_mode = static_cast<LoggingMode>(val);
     }
@@ -1098,7 +1098,7 @@ Log::init(int flags)
   if (!(config_flags & LOGCAT)) {
     RecRegisterConfigUpdateCb("proxy.config.log.logging_enabled", &Log::handle_logging_mode_change, nullptr);
 
-    Dbg(dbg_ctl_log_config, "Log::init(): logging_mode = %d init status = %d", logging_mode, init_status);
+    Dbg(dbg_ctl_log_config, "Log::init(): logging_mode = %d init status = %d", static_cast<int>(logging_mode), init_status);
     config->init();
     init_when_enabled();
   }
@@ -1120,7 +1120,7 @@ Log::init_when_enabled()
     init_status |= FULLY_INITIALIZED;
   }
 
-  Note("logging initialized[%d], logging_mode = %d", init_status, logging_mode);
+  Note("logging initialized[%d], logging_mode = %d", init_status, static_cast<int>(logging_mode));
   if (dbg_ctl_log_config.on()) {
     config->display();
   }
