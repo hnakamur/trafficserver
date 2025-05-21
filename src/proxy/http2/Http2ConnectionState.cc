@@ -132,8 +132,7 @@ Http2ConnectionState::rcv_data_frame(const Http2Frame &frame)
     }
   }
 
-  if (stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_CLOSED ||
-      stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_REMOTE) {
+  if (stream->get_state() == Http2StreamState::CLOSED || stream->get_state() == Http2StreamState::HALF_CLOSED_REMOTE) {
     this->send_rst_stream_frame(id, Http2ErrorCode::STREAM_CLOSED);
     return Http2Error(Http2ErrorClass::NONE);
   }
@@ -141,8 +140,7 @@ Http2ConnectionState::rcv_data_frame(const Http2Frame &frame)
   // If a DATA frame is received whose stream is not in "open" or "half closed
   // (local)" state,
   // the recipient MUST respond with a stream error of type STREAM_CLOSED.
-  if (stream->get_state() != Http2StreamState::HTTP2_STREAM_STATE_OPEN &&
-      stream->get_state() != Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_LOCAL) {
+  if (stream->get_state() != Http2StreamState::OPEN && stream->get_state() != Http2StreamState::HALF_CLOSED_LOCAL) {
     return Http2Error(Http2ErrorClass::STREAM, Http2ErrorCode::STREAM_CLOSED, "recv data stream closed");
   }
 
@@ -297,7 +295,7 @@ Http2ConnectionState::rcv_headers_frame(const Http2Frame &frame)
     stream = this->find_stream(stream_id);
     if (!this->session->is_outbound() && (stream == nullptr || !stream->trailing_header_is_possible())) {
       return Http2Error(Http2ErrorClass::CONNECTION, Http2ErrorCode::STREAM_CLOSED, "stream not expecting trailer header");
-    } else if (stream == nullptr || stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_CLOSED) {
+    } else if (stream == nullptr || stream->get_state() == Http2StreamState::CLOSED) {
       if (this->session->is_outbound()) {
         reset_header_after_decoding = true;
         // return Http2Error(Http2ErrorClass::NONE);
@@ -340,7 +338,7 @@ Http2ConnectionState::rcv_headers_frame(const Http2Frame &frame)
   }
 
   // HEADERS frame on a closed stream.  The HdrHeap has gone away and it will core.
-  if (stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_CLOSED) {
+  if (stream->get_state() == Http2StreamState::CLOSED) {
     Http2StreamDebug(session, stream_id, "Replaced closed stream");
     free_stream_after_decoding = true;
     stream                     = THREAD_ALLOC_INIT(http2StreamAllocator, this_ethread(), session->get_proxy_session(), stream_id,
@@ -989,9 +987,9 @@ Http2ConnectionState::rcv_continuation_frame(const Http2Frame &frame)
     }
   } else {
     switch (stream->get_state()) {
-    case Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_REMOTE:
+    case Http2StreamState::HALF_CLOSED_REMOTE:
       return Http2Error(Http2ErrorClass::CONNECTION, Http2ErrorCode::STREAM_CLOSED, "continuation half close remote");
-    case Http2StreamState::HTTP2_STREAM_STATE_IDLE:
+    case Http2StreamState::IDLE:
       break;
     default:
       return Http2Error(Http2ErrorClass::CONNECTION, Http2ErrorCode::PROTOCOL_ERROR, "continuation bad state");
@@ -1429,7 +1427,7 @@ Http2ConnectionState::rcv_frame(const Http2Frame *frame)
 
       // start closing stream on stream error
       if (Http2Stream *stream = find_stream(stream_id); stream != nullptr) {
-        ink_assert(stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_CLOSED);
+        ink_assert(stream->get_state() == Http2StreamState::CLOSED);
         stream->initiating_close();
       }
     }
@@ -1980,7 +1978,7 @@ Http2ConnectionState::delete_stream(Http2Stream *stream)
     stream->priority_node = nullptr;
   }
 
-  if (stream->get_state() != Http2StreamState::HTTP2_STREAM_STATE_CLOSED) {
+  if (stream->get_state() != Http2StreamState::CLOSED) {
     send_rst_stream_frame(stream->get_id(), Http2ErrorCode::NO_ERROR);
   }
 
@@ -2295,8 +2293,7 @@ Http2ConnectionState::send_data_frames(Http2Stream *stream)
 {
   // To follow RFC 7540 must not send more frames other than priority on
   // a closed stream.  So we return without sending
-  if (stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_LOCAL ||
-      stream->get_state() == Http2StreamState::HTTP2_STREAM_STATE_CLOSED) {
+  if (stream->get_state() == Http2StreamState::HALF_CLOSED_LOCAL || stream->get_state() == Http2StreamState::CLOSED) {
     Http2StreamDebug(this->session, stream->get_id(), "Shutdown half closed local stream");
     stream->initiating_close();
     return;

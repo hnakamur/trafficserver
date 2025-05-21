@@ -50,20 +50,20 @@ const char *
 Http2DebugNames::get_state_name(Http2StreamState id)
 {
   switch (id) {
-  case Http2StreamState::HTTP2_STREAM_STATE_IDLE:
-    return "Http2StreamState::HTTP2_STREAM_STATE_IDLE";
-  case Http2StreamState::HTTP2_STREAM_STATE_RESERVED_LOCAL:
-    return "Http2StreamState::HTTP2_STREAM_STATE_RESERVED_LOCAL";
-  case Http2StreamState::HTTP2_STREAM_STATE_RESERVED_REMOTE:
-    return "Http2StreamState::HTTP2_STREAM_STATE_RESERVED_REMOTE";
-  case Http2StreamState::HTTP2_STREAM_STATE_OPEN:
-    return "Http2StreamState::HTTP2_STREAM_STATE_OPEN";
-  case Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_LOCAL:
-    return "Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_LOCAL";
-  case Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_REMOTE:
-    return "Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_REMOTE";
-  case Http2StreamState::HTTP2_STREAM_STATE_CLOSED:
-    return "Http2StreamState::HTTP2_STREAM_STATE_CLOSED";
+  case Http2StreamState::IDLE:
+    return "Http2StreamState::IDLE";
+  case Http2StreamState::RESERVED_LOCAL:
+    return "Http2StreamState::RESERVED_LOCAL";
+  case Http2StreamState::RESERVED_REMOTE:
+    return "Http2StreamState::RESERVED_REMOTE";
+  case Http2StreamState::OPEN:
+    return "Http2StreamState::OPEN";
+  case Http2StreamState::HALF_CLOSED_LOCAL:
+    return "Http2StreamState::HALF_CLOSED_LOCAL";
+  case Http2StreamState::HALF_CLOSED_REMOTE:
+    return "Http2StreamState::HALF_CLOSED_REMOTE";
+  case Http2StreamState::CLOSED:
+    return "Http2StreamState::CLOSED";
   }
 
   return "UNKNOWN";
