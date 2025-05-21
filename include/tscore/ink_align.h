@@ -61,7 +61,12 @@ INK_ALIGN(ptrdiff_t size, size_t boundary)
 }
 
 /** Default alignment */
-#define INK_ALIGN_DEFAULT(size) INK_ALIGN(size, INK_MIN_ALIGN)
+template <class T>
+static constexpr inline T
+INK_ALIGN_DEFAULT(T size)
+{
+  return INK_ALIGN(size, INK_MIN_ALIGN);
+}
 
 //
 // Move a pointer forward until it meets the alignment width.
