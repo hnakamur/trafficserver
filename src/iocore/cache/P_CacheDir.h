@@ -166,8 +166,12 @@ dir_clear(Dir *e)
   e->w[4] = 0;
 }
 
-#define dir_offset(_e) \
-  ((int64_t)(((uint64_t)(_e)->w[0]) | (((uint64_t)((_e)->w[1] & 0xFF)) << 16) | (((uint64_t)(_e)->w[4]) << 24)))
+static inline int64_t
+dir_offset(const Dir *e)
+{
+  return static_cast<int64_t>(
+    (static_cast<uint64_t>(e->w[0]) | (static_cast<uint64_t>(e->w[1] & 0xFF) << 16) | (static_cast<uint64_t>(e->w[4]) << 24)));
+}
 #define dir_set_offset(_e, _o)                                              \
   do {                                                                      \
     (_e)->w[0] = (uint16_t)_o;                                              \
