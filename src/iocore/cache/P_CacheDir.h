@@ -233,7 +233,11 @@ dir_approx_size(const Dir *e)
      (_s <= DIR_SIZE_WITH_BLOCK(1) ?      \
         ROUND_TO(_s, DIR_BLOCK_SIZE(1)) : \
         (_s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(_s, DIR_BLOCK_SIZE(2)) : ROUND_TO(_s, DIR_BLOCK_SIZE(3)))))
-#define dir_tag(_e) ((uint32_t)((_e)->w[2] & ((1 << DIR_TAG_WIDTH) - 1)))
+static inline uint32_t
+dir_tag(const Dir *e)
+{
+  return static_cast<uint32_t>(e->w[2] & ((1 << DIR_TAG_WIDTH) - 1));
+}
 #define dir_set_tag(_e, _t) \
   (_e)->w[2] = (uint16_t)(((_e)->w[2] & ~((1 << DIR_TAG_WIDTH) - 1)) | ((_t) & ((1 << DIR_TAG_WIDTH) - 1)))
 #define dir_phase(_e)          dir_bit(_e, 2, 12)
