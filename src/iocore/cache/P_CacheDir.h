@@ -275,7 +275,12 @@ dir_pinned(const Dir *e)
   return dir_bit(e, 2, 14);
 }
 
-#define dir_set_pinned(_e, _v) dir_set_bit(_e, 2, 14, _v)
+static inline void
+dir_set_pinned(Dir *e, int v)
+{
+  dir_set_bit(e, 2, 14, v);
+}
+
 // Bit 2:15 is unused.
 #define dir_next(_e)         (_e)->w[3]
 #define dir_set_next(_e, _o) (_e)->w[3] = (uint16_t)(_o)
