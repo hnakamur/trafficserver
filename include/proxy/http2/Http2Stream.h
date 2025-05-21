@@ -206,7 +206,7 @@ private:
   HTTPParser       http_parser;
   EThread         *_thread     = nullptr;
   Http2StreamId    _id         = -1;
-  Http2StreamState _state      = Http2StreamState::HTTP2_STREAM_STATE_IDLE;
+  Http2StreamState _state      = Http2StreamState::IDLE;
   int64_t          _http_sm_id = -1;
 
   HTTPHdr   _receive_header;
@@ -400,9 +400,8 @@ Http2Stream::payload_length_is_valid() const
 inline bool
 Http2Stream::is_state_writeable() const
 {
-  return _state == Http2StreamState::HTTP2_STREAM_STATE_OPEN || _state == Http2StreamState::HTTP2_STREAM_STATE_HALF_CLOSED_REMOTE ||
-         _state == Http2StreamState::HTTP2_STREAM_STATE_RESERVED_LOCAL ||
-         (this->is_outbound_connection() && _state == Http2StreamState::HTTP2_STREAM_STATE_IDLE);
+  return _state == Http2StreamState::OPEN || _state == Http2StreamState::HALF_CLOSED_REMOTE ||
+         _state == Http2StreamState::RESERVED_LOCAL || (this->is_outbound_connection() && _state == Http2StreamState::IDLE);
 }
 
 inline bool
