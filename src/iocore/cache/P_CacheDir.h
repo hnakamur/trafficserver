@@ -98,7 +98,6 @@ static constexpr auto DIR_OFFSET_MAX  = (static_cast<off_t>(1) << DIR_OFFSET_BIT
 #endif
 
 #define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
-#define dir_clean(_e)     dir_set_offset(_e, 0)
 
 // OpenDir
 
@@ -312,6 +311,12 @@ static inline bool
 dir_is_empty(const Dir *e)
 {
   return !dir_offset(e);
+}
+
+static inline void
+dir_clean(Dir *e)
+{
+  dir_set_offset(e, 0);
 }
 
 // INKqa11166 - Cache can not store 2 HTTP alternates simultaneously.
