@@ -50,7 +50,7 @@ static VersionConverter hvc;
 // Statistics
 Http2StatsBlock http2_rsb;
 
-Metrics::Counter::AtomicType *http2_frame_metrics_in[HTTP2_FRAME_TYPE_MAX + 1];
+Metrics::Counter::AtomicType *http2_frame_metrics_in[static_cast<int>(Http2FrameType::MAX) + 1];
 
 union byte_pointer {
   byte_pointer(void *p) : ptr(p) {}
@@ -121,7 +121,7 @@ http2_frame_header_is_valid(const Http2FrameHeader &hdr, unsigned /* max_frame_s
 {
   // 6.1 If a DATA frame is received whose stream identifier field is 0x0, the recipient MUST
   // respond with a connection error (Section 5.4.1) of type PROTOCOL_ERROR.
-  if (hdr.type == HTTP2_FRAME_TYPE_DATA && hdr.streamid == 0) {
+  if (hdr.type == Http2FrameType::DATA && hdr.streamid == 0) {
     return false;
   }
 
@@ -192,7 +192,7 @@ http2_parse_frame_header(IOVec iov, Http2FrameHeader &hdr)
   memcpy_and_advance(streamid.bytes, ptr);
 
   hdr.length         = ntohl(length_and_type.value) >> 8;
-  hdr.type           = ntohl(length_and_type.value) & 0xff;
+  hdr.type           = static_cast<Http2FrameType>(ntohl(length_and_type.value) & 0xff);
   streamid.bytes[0] &= 0x7f; // Clear the high reserved bit
   hdr.streamid       = ntohl(streamid.value);
 
@@ -216,7 +216,7 @@ http2_write_frame_header(const Http2FrameHeader &hdr, IOVec iov)
   write_and_advance(ptr, length.bytes[2]);
   write_and_advance(ptr, length.bytes[3]);
 
-  write_and_advance(ptr, hdr.type);
+  write_and_advance(ptr, static_cast<uint8_t>(hdr.type));
   write_and_advance(ptr, hdr.flags);
   write_and_advance(ptr, hdr.streamid);
 

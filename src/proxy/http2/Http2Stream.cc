@@ -397,12 +397,12 @@ Http2Stream::send_headers(Http2ConnectionState & /* cstate ATS_UNUSED */)
 }
 
 bool
-Http2Stream::change_state(uint8_t type, uint8_t flags)
+Http2Stream::change_state(Http2FrameType type, uint8_t flags)
 {
   auto const initial_state = _state;
   switch (_state) {
   case Http2StreamState::IDLE:
-    if (type == HTTP2_FRAME_TYPE_HEADERS) {
+    if (type == Http2FrameType::HEADERS) {
       if (receive_end_stream) {
         _state = Http2StreamState::HALF_CLOSED_REMOTE;
       } else if (send_end_stream) {
@@ -410,7 +410,7 @@ Http2Stream::change_state(uint8_t type, uint8_t flags)
       } else {
         _state = Http2StreamState::OPEN;
       }
-    } else if (type == HTTP2_FRAME_TYPE_CONTINUATION) {
+    } else if (type == Http2FrameType::CONTINUATION) {
       if (receive_end_stream) {
         _state = Http2StreamState::HALF_CLOSED_REMOTE;
       } else if (send_end_stream) {
@@ -418,9 +418,9 @@ Http2Stream::change_state(uint8_t type, uint8_t flags)
       } else {
         _state = Http2StreamState::OPEN;
       }
-    } else if (type == HTTP2_FRAME_TYPE_PUSH_PROMISE) {
+    } else if (type == Http2FrameType::PUSH_PROMISE) {
       _state = Http2StreamState::RESERVED_LOCAL;
-    } else if (type == HTTP2_FRAME_TYPE_RST_STREAM) {
+    } else if (type == Http2FrameType::RST_STREAM) {
       _state = Http2StreamState::CLOSED;
     } else {
       return false;
@@ -428,9 +428,9 @@ Http2Stream::change_state(uint8_t type, uint8_t flags)
     break;
 
   case Http2StreamState::OPEN:
-    if (type == HTTP2_FRAME_TYPE_RST_STREAM) {
+    if (type == Http2FrameType::RST_STREAM) {
       _state = Http2StreamState::CLOSED;
-    } else if (type == HTTP2_FRAME_TYPE_HEADERS || type == HTTP2_FRAME_TYPE_DATA) {
+    } else if (type == Http2FrameType::HEADERS || type == Http2FrameType::DATA) {
       if (receive_end_stream) {
         if (send_end_stream) {
           _state = Http2StreamState::CLOSED;
@@ -453,11 +453,11 @@ Http2Stream::change_state(uint8_t type, uint8_t flags)
     break;
 
   case Http2StreamState::RESERVED_LOCAL:
-    if (type == HTTP2_FRAME_TYPE_HEADERS) {
+    if (type == Http2FrameType::HEADERS) {
       if (flags & HTTP2_FLAGS_HEADERS_END_HEADERS) {
         _state = Http2StreamState::HALF_CLOSED_REMOTE;
       }
-    } else if (type == HTTP2_FRAME_TYPE_CONTINUATION) {
+    } else if (type == Http2FrameType::CONTINUATION) {
       if (flags & HTTP2_FLAGS_CONTINUATION_END_HEADERS) {
         _state = Http2StreamState::HALF_CLOSED_REMOTE;
       }
@@ -471,18 +471,18 @@ Http2Stream::change_state(uint8_t type, uint8_t flags)
     return false;
 
   case Http2StreamState::HALF_CLOSED_LOCAL:
-    if (type == HTTP2_FRAME_TYPE_RST_STREAM || receive_end_stream) {
+    if (type == Http2FrameType::RST_STREAM || receive_end_stream) {
       _state = Http2StreamState::CLOSED;
     }
     break;
 
   case Http2StreamState::HALF_CLOSED_REMOTE:
-    if (type == HTTP2_FRAME_TYPE_RST_STREAM || send_end_stream) {
+    if (type == Http2FrameType::RST_STREAM || send_end_stream) {
       _state = Http2StreamState::CLOSED;
-    } else if (type == HTTP2_FRAME_TYPE_HEADERS) { // w/o END_STREAM flag
+    } else if (type == Http2FrameType::HEADERS) { // w/o END_STREAM flag
       // No state change here. Expect a following DATA frame with END_STREAM flag.
       return true;
-    } else if (type == HTTP2_FRAME_TYPE_CONTINUATION) { // w/o END_STREAM flag
+    } else if (type == Http2FrameType::CONTINUATION) { // w/o END_STREAM flag
       // No state change here. Expect a following DATA frame with END_STREAM flag.
       return true;
     }

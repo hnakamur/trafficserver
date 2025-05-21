@@ -160,7 +160,7 @@ public:
   void             update_sent_count(unsigned num_bytes);
   Http2StreamId    get_id() const;
   Http2StreamState get_state() const;
-  bool             change_state(uint8_t type, uint8_t flags);
+  bool             change_state(Http2FrameType type, uint8_t flags);
   void             set_peer_rwnd(Http2WindowSize new_size);
   void             set_local_rwnd(Http2WindowSize new_size);
   bool             trailing_header_is_possible() const;

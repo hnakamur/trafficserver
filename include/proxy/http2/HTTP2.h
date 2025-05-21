@@ -164,22 +164,22 @@ enum class Http2StreamState {
   CLOSED,
 };
 
-enum Http2FrameType {
-  HTTP2_FRAME_TYPE_DATA          = 0,
-  HTTP2_FRAME_TYPE_HEADERS       = 1,
-  HTTP2_FRAME_TYPE_PRIORITY      = 2,
-  HTTP2_FRAME_TYPE_RST_STREAM    = 3,
-  HTTP2_FRAME_TYPE_SETTINGS      = 4,
-  HTTP2_FRAME_TYPE_PUSH_PROMISE  = 5,
-  HTTP2_FRAME_TYPE_PING          = 6,
-  HTTP2_FRAME_TYPE_GOAWAY        = 7,
-  HTTP2_FRAME_TYPE_WINDOW_UPDATE = 8,
-  HTTP2_FRAME_TYPE_CONTINUATION  = 9,
+enum class Http2FrameType : uint8_t {
+  DATA          = 0,
+  HEADERS       = 1,
+  PRIORITY      = 2,
+  RST_STREAM    = 3,
+  SETTINGS      = 4,
+  PUSH_PROMISE  = 5,
+  PING          = 6,
+  GOAWAY        = 7,
+  WINDOW_UPDATE = 8,
+  CONTINUATION  = 9,
 
-  HTTP2_FRAME_TYPE_MAX,
+  MAX,
 };
 
-extern Metrics::Counter::AtomicType *http2_frame_metrics_in[HTTP2_FRAME_TYPE_MAX + 1];
+extern Metrics::Counter::AtomicType *http2_frame_metrics_in[static_cast<int>(Http2FrameType::MAX) + 1];
 
 // [RFC 7540] 6.1. Data
 enum Http2FrameFlagsData {
@@ -261,10 +261,10 @@ enum Http2SettingsIdentifier {
 
 // [RFC 7540] 4.1. Frame Format
 struct Http2FrameHeader {
-  uint32_t      length;
-  uint8_t       type;
-  uint8_t       flags;
-  Http2StreamId streamid;
+  uint32_t       length;
+  Http2FrameType type;
+  uint8_t        flags;
+  Http2StreamId  streamid;
 };
 
 // [RFC 7540] 5.4. Error Handling
