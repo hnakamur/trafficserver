@@ -172,12 +172,13 @@ dir_offset(const Dir *e)
   return static_cast<int64_t>(
     (static_cast<uint64_t>(e->w[0]) | (static_cast<uint64_t>(e->w[1] & 0xFF) << 16) | (static_cast<uint64_t>(e->w[4]) << 24)));
 }
-#define dir_set_offset(_e, _o)                                              \
-  do {                                                                      \
-    (_e)->w[0] = (uint16_t)_o;                                              \
-    (_e)->w[1] = (uint16_t)((((_o) >> 16) & 0xFF) | ((_e)->w[1] & 0xFF00)); \
-    (_e)->w[4] = (uint16_t)((_o) >> 24);                                    \
-  } while (0)
+static inline void
+dir_set_offset(Dir *e, int64_t o)
+{
+  e->w[0] = static_cast<uint16_t>(o);
+  e->w[1] = static_cast<uint16_t>(((o >> 16) & 0xFF) | (e->w[1] & 0xFF00));
+  e->w[4] = static_cast<uint16_t>(o >> 24);
+}
 #define dir_bit(_e, _w, _b)         ((uint32_t)(((_e)->w[_w] >> (_b)) & 1))
 #define dir_set_bit(_e, _w, _b, _v) (_e)->w[_w] = (uint16_t)(((_e)->w[_w] & ~(1 << (_b))) | (((_v) ? 1 : 0) << (_b)))
 #define dir_big(_e)                 ((uint32_t)((((_e)->w[1]) >> 8) & 0x3))
