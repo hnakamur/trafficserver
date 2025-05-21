@@ -98,14 +98,6 @@ static constexpr auto DIR_OFFSET_MAX  = (static_cast<off_t>(1) << DIR_OFFSET_BIT
 #endif
 
 #define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
-#define dir_assign(_e, _x)   \
-  do {                       \
-    (_e)->w[0] = (_x)->w[0]; \
-    (_e)->w[1] = (_x)->w[1]; \
-    (_e)->w[2] = (_x)->w[2]; \
-    (_e)->w[3] = (_x)->w[3]; \
-    (_e)->w[4] = (_x)->w[4]; \
-  } while (0)
 #define dir_assign_data(_e, _x)         \
   do {                                  \
     unsigned short next = dir_next(_e); \
@@ -153,6 +145,16 @@ struct Dir {
   Dir() { dir_clear(this); }
 #endif
 };
+
+static inline void
+dir_assign(Dir *e, const Dir *x)
+{
+  e->w[0] = x->w[0];
+  e->w[1] = x->w[1];
+  e->w[2] = x->w[2];
+  e->w[3] = x->w[3];
+  e->w[4] = x->w[4];
+}
 
 static inline void
 dir_clear(Dir *e)
