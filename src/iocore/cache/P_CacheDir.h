@@ -263,7 +263,12 @@ dir_head(const Dir *e)
   return dir_bit(e, 2, 13);
 }
 
-#define dir_set_head(_e, _v)   dir_set_bit(_e, 2, 13, _v)
+static inline void
+dir_set_head(Dir *e, int v)
+{
+  dir_set_bit(e, 2, 13, v);
+}
+
 #define dir_pinned(_e)         dir_bit(_e, 2, 14)
 #define dir_set_pinned(_e, _v) dir_set_bit(_e, 2, 14, _v)
 // Bit 2:15 is unused.
