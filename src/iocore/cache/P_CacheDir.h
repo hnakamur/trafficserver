@@ -282,7 +282,12 @@ dir_set_pinned(Dir *e, int v)
 }
 
 // Bit 2:15 is unused.
-#define dir_next(_e)         (_e)->w[3]
+static inline uint32_t
+dir_next(const Dir *e)
+{
+  return e->w[3];
+}
+
 #define dir_set_next(_e, _o) (_e)->w[3] = (uint16_t)(_o)
 #define dir_prev(_e)         (_e)->w[2]
 #define dir_set_prev(_e, _o) (_e)->w[2] = (uint16_t)(_o)
