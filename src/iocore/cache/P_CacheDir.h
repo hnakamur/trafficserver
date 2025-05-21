@@ -295,7 +295,12 @@ dir_set_next(Dir *e, int o)
   e->w[3] = static_cast<uint16_t>(o);
 }
 
-#define dir_prev(_e)         (_e)->w[2]
+static inline uint32_t
+dir_prev(const Dir *e)
+{
+  return e->w[2];
+}
+
 #define dir_set_prev(_e, _o) (_e)->w[2] = (uint16_t)(_o)
 
 // INKqa11166 - Cache can not store 2 HTTP alternates simultaneously.
