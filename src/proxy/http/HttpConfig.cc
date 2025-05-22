@@ -114,14 +114,14 @@ http_config_enum_read(const char *name, const ConfigEnumPair<T> (&list)[N], Mgmt
 ////////////////////////////////////////////////////////////////
 /// Session sharing match types.
 static const ConfigEnumPair<MgmtByte> SessionSharingMatchStrings[] = {
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE),     "none"    },
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::IP),       "ip"      },
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST),     "host"    },
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST),     "hostsni" },
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::BOTH),     "both"    },
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOSTONLY), "hostonly"},
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::SNI),      "sni"     },
-  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::CERT),     "cert"    }
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE),        "none"    },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::IP),          "ip"      },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST),        "host"    },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOSTSNISYNC), "hostsni" },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::BOTH),        "both"    },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOSTONLY),    "hostonly"},
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::SNI),         "sni"     },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::CERT),        "cert"    }
 };
 
 bool
