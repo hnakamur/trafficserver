@@ -41,14 +41,32 @@ enum class TSServerSessionSharingMatchType {
   HOST,
 };
 
-typedef enum {
-  TS_SERVER_SESSION_SHARING_MATCH_MASK_NONE        = 0,
-  TS_SERVER_SESSION_SHARING_MATCH_MASK_IP          = 0x1,
-  TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY    = 0x2,
-  TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC = 0x4,
-  TS_SERVER_SESSION_SHARING_MATCH_MASK_SNI         = 0x8,
-  TS_SERVER_SESSION_SHARING_MATCH_MASK_CERT        = 0x10,
-} TSServerSessionSharingMatchMask;
+enum class TSServerSessionSharingMatchMask : MgmtByte {
+  NONE        = 0,
+  IP          = 0x1,
+  HOSTONLY    = 0x2,
+  HOSTSNISYNC = 0x4,
+  SNI         = 0x8,
+  CERT        = 0x10,
+};
+
+inline TSServerSessionSharingMatchMask
+operator&(TSServerSessionSharingMatchMask a, TSServerSessionSharingMatchMask b)
+{
+  return static_cast<TSServerSessionSharingMatchMask>(static_cast<MgmtByte>(a) & static_cast<MgmtByte>(b));
+}
+
+inline TSServerSessionSharingMatchMask
+operator|(TSServerSessionSharingMatchMask a, TSServerSessionSharingMatchMask b)
+{
+  return static_cast<TSServerSessionSharingMatchMask>(static_cast<MgmtByte>(a) | static_cast<MgmtByte>(b));
+}
+
+inline TSServerSessionSharingMatchMask
+operator~(TSServerSessionSharingMatchMask a)
+{
+  return static_cast<TSServerSessionSharingMatchMask>(~static_cast<MgmtByte>(a));
+}
 
 /// Server session sharing values - pool
 enum class TSServerSessionSharingPoolType {

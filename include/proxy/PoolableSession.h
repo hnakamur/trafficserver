@@ -74,7 +74,7 @@ public:
   PooledState state = PooledState::INIT;
 
   // Copy of the owning SM's server session sharing settings
-  TSServerSessionSharingMatchMask sharing_match = TS_SERVER_SESSION_SHARING_MATCH_MASK_NONE;
+  TSServerSessionSharingMatchMask sharing_match = TSServerSessionSharingMatchMask::NONE;
   TSServerSessionSharingPoolType  sharing_pool  = TSServerSessionSharingPoolType::GLOBAL;
 
   void enable_outbound_connection_tracking(std::shared_ptr<ConnectionTracker::Group> group);

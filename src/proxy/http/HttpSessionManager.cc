@@ -74,11 +74,11 @@ bool
 ServerSessionPool::match(PoolableSession *ss, sockaddr const *addr, CryptoHash const &hostname_hash,
                          TSServerSessionSharingMatchMask match_style)
 {
-  bool retval = match_style != 0;
-  if (retval && (TS_SERVER_SESSION_SHARING_MATCH_MASK_IP & match_style)) {
+  bool retval = match_style != TSServerSessionSharingMatchMask::NONE;
+  if (retval && (TSServerSessionSharingMatchMask::IP & match_style) != TSServerSessionSharingMatchMask::NONE) {
     retval = ats_ip_addr_port_eq(ss->get_remote_addr(), addr);
   }
-  if (retval && (TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY & match_style)) {
+  if (retval && (TSServerSessionSharingMatchMask::HOSTONLY & match_style) != TSServerSessionSharingMatchMask::NONE) {
     retval = (ats_ip_port_cast(addr) == ats_ip_port_cast(ss->get_remote_addr()) && ss->hostname_hash == hostname_hash);
   }
   return retval;
@@ -163,7 +163,8 @@ ServerSessionPool::acquireSession(sockaddr const *addr, CryptoHash const &hostna
   HSMresult_t zret = HSMresult_t::NOT_FOUND;
   to_return        = nullptr;
 
-  if ((TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY & match_style) && !(TS_SERVER_SESSION_SHARING_MATCH_MASK_IP & match_style)) {
+  if ((TSServerSessionSharingMatchMask::HOSTONLY & match_style) != TSServerSessionSharingMatchMask::NONE &&
+      (TSServerSessionSharingMatchMask::IP & match_style) == TSServerSessionSharingMatchMask::NONE) {
     Dbg(dbg_ctl_http_ss, "Search for host name only not IP.  Pool size %zu", m_fqdn_pool.count());
     // This is broken out because only in this case do we check the host hash first. The range must be checked
     // to verify an upstream that matches port and SNI name is selected. Walk backwards to select oldest.
@@ -174,9 +175,12 @@ ServerSessionPool::acquireSession(sockaddr const *addr, CryptoHash const &hostna
     while (iter != end) {
       Dbg(dbg_ctl_http_ss, "Compare port 0x%x against 0x%x", port, ats_ip_port_cast(iter->get_remote_addr()));
       if (port == ats_ip_port_cast(iter->get_remote_addr()) &&
-          (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_SNI) || validate_sni(sm, iter->get_netvc())) &&
-          (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC) || validate_host_sni(sm, iter->get_netvc())) &&
-          (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_CERT) || validate_cert(sm, iter->get_netvc()))) {
+          ((match_style & TSServerSessionSharingMatchMask::SNI) == TSServerSessionSharingMatchMask::NONE ||
+           validate_sni(sm, iter->get_netvc())) &&
+          ((match_style & TSServerSessionSharingMatchMask::HOSTSNISYNC) == TSServerSessionSharingMatchMask::NONE ||
+           validate_host_sni(sm, iter->get_netvc())) &&
+          ((match_style & TSServerSessionSharingMatchMask::CERT) == TSServerSessionSharingMatchMask::NONE ||
+           validate_cert(sm, iter->get_netvc()))) {
         zret = HSMresult_t::DONE;
         break;
       }
@@ -190,7 +194,8 @@ ServerSessionPool::acquireSession(sockaddr const *addr, CryptoHash const &hostna
     } else if (iter != end) {
       Dbg(dbg_ctl_http_ss, "Failed find entry due to name mismatch %s", sm->t_state.current.server->name);
     }
-  } else if (TS_SERVER_SESSION_SHARING_MATCH_MASK_IP & match_style) { // matching is not disabled.
+  } else if ((TSServerSessionSharingMatchMask::IP & match_style) !=
+             TSServerSessionSharingMatchMask::NONE) { // matching is not disabled.
     auto range = m_ip_pool.equal_range(addr);
     // We want to access the sessions in LIFO order, so start from the back of the list.
     auto       iter = std::make_reverse_iterator(range.end());
@@ -198,12 +203,16 @@ ServerSessionPool::acquireSession(sockaddr const *addr, CryptoHash const &hostna
     // The range is all that is needed in the match IP case, otherwise need to scan for matching fqdn
     // And matches the other constraints as well
     // Note the port is matched as part of the address key so it doesn't need to be checked again.
-    if (match_style & (~TS_SERVER_SESSION_SHARING_MATCH_MASK_IP)) {
+    if ((match_style & (~TSServerSessionSharingMatchMask::IP)) != TSServerSessionSharingMatchMask::NONE) {
       while (iter != end) {
-        if ((!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY) || iter->hostname_hash == hostname_hash) &&
-            (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_SNI) || validate_sni(sm, iter->get_netvc())) &&
-            (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC) || validate_host_sni(sm, iter->get_netvc())) &&
-            (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_CERT) || validate_cert(sm, iter->get_netvc()))) {
+        if (((match_style & TSServerSessionSharingMatchMask::HOSTONLY) == TSServerSessionSharingMatchMask::NONE ||
+             iter->hostname_hash == hostname_hash) &&
+            ((match_style & TSServerSessionSharingMatchMask::SNI) == TSServerSessionSharingMatchMask::NONE ||
+             validate_sni(sm, iter->get_netvc())) &&
+            ((match_style & TSServerSessionSharingMatchMask::HOSTSNISYNC) == TSServerSessionSharingMatchMask::NONE ||
+             validate_host_sni(sm, iter->get_netvc())) &&
+            ((match_style & TSServerSessionSharingMatchMask::CERT) == TSServerSessionSharingMatchMask::NONE ||
+             validate_cert(sm, iter->get_netvc()))) {
           zret = HSMresult_t::DONE;
           break;
         }
@@ -372,11 +381,11 @@ HttpSessionManager::acquire_session(HttpSM *sm, sockaddr const *ip, const char *
     // the IP/hostname here seems a bit redundant too
     //
     if (ServerSessionPool::match(to_return, ip, hostname_hash, match_style) &&
-        (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_SNI) ||
+        ((match_style & TSServerSessionSharingMatchMask::SNI) == TSServerSessionSharingMatchMask::NONE ||
          ServerSessionPool::validate_sni(sm, to_return->get_netvc())) &&
-        (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC) ||
+        ((match_style & TSServerSessionSharingMatchMask::HOSTSNISYNC) == TSServerSessionSharingMatchMask::NONE ||
          ServerSessionPool::validate_host_sni(sm, to_return->get_netvc())) &&
-        (!(match_style & TS_SERVER_SESSION_SHARING_MATCH_MASK_CERT) ||
+        ((match_style & TSServerSessionSharingMatchMask::CERT) == TSServerSessionSharingMatchMask::NONE ||
          ServerSessionPool::validate_cert(sm, to_return->get_netvc()))) {
       Dbg(dbg_ctl_http_ss, "[%" PRId64 "] [acquire session] returning attached session ", to_return->connection_id());
       to_return->state = PoolableSession::PooledState::SSN_IN_USE;
