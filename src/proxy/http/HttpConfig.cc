@@ -150,10 +150,10 @@ HttpConfig::load_server_session_sharing_match(std::string_view key, MgmtByte &ma
     if (value < static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE)) {
       mask |= (1 << value);
     } else if (value == static_cast<MgmtByte>(TSServerSessionSharingMatchType::BOTH)) {
-      mask |= TS_SERVER_SESSION_SHARING_MATCH_MASK_IP | TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY |
-              TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC;
+      mask |= static_cast<MgmtByte>(TSServerSessionSharingMatchMask::IP | TSServerSessionSharingMatchMask::HOSTONLY |
+                                    TSServerSessionSharingMatchMask::HOSTSNISYNC);
     } else if (value == static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST)) {
-      mask |= TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY | TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC;
+      mask |= static_cast<MgmtByte>(TSServerSessionSharingMatchMask::HOSTONLY | TSServerSessionSharingMatchMask::HOSTSNISYNC);
     }
   } while (offset != std::string_view::npos);
   return true;

@@ -149,7 +149,7 @@ void
 Http1ServerSession::release(ProxyTransaction * /* trans ATS_UNUSED */)
 {
   Dbg(dbg_ctl_http_ss, "[%" PRId64 "] Releasing session, private_session=%d, sharing_match=%d", con_id, this->is_private(),
-      sharing_match);
+      static_cast<int>(sharing_match));
   if (state == PooledState::SSN_IN_USE) {
     // The caller should have already set the inactive timeout to the keep alive timeout
     // Unfortunately, we do not have access to that value from here.
@@ -212,7 +212,7 @@ Http1ServerSession ::release_transaction()
   released_transactions++;
 
   // Private sessions are never released back to the shared pool
-  if (this->is_private() || sharing_match == 0) {
+  if (this->is_private() || sharing_match == TSServerSessionSharingMatchMask::NONE) {
     if (this->is_private()) {
       Metrics::Counter::increment(http_rsb.origin_close_private);
     }
