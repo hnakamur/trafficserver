@@ -6062,7 +6062,7 @@ TSNetConnectTransparent(TSCont contp, sockaddr const *client_addr, sockaddr cons
   sdk_assert(ats_ip_are_compatible(client_addr, server_addr));
 
   NetVCOptions opt;
-  opt.addr_binding = NetVCOptions::FOREIGN_ADDR;
+  opt.addr_binding = NetVCOptions::addr_bind_style::FOREIGN;
   opt.local_ip.assign(client_addr);
   opt.local_port = ats_ip_port_host_order(client_addr);
 

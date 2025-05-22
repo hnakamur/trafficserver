@@ -121,7 +121,7 @@ Connection::open(NetVCOptions const &opt)
   ink_zero(local_addr);
 
   bool is_any_address = false;
-  if (NetVCOptions::FOREIGN_ADDR == opt.addr_binding || NetVCOptions::INTF_ADDR == opt.addr_binding) {
+  if (NetVCOptions::addr_bind_style::FOREIGN == opt.addr_binding || NetVCOptions::addr_bind_style::INTF == opt.addr_binding) {
     // Same for now, transparency for foreign addresses must be handled
     // *after* the socket is created, and we need to do this calculation
     // before the socket to get the IP family correct.
@@ -150,7 +150,7 @@ Connection::open(NetVCOptions const &opt)
     return -errno;
   }
 
-  if (NetVCOptions::FOREIGN_ADDR == opt.addr_binding) {
+  if (NetVCOptions::addr_bind_style::FOREIGN == opt.addr_binding) {
     static char const *const DEBUG_TEXT = "::open setsockopt() IP_TRANSPARENT";
 #if TS_USE_TPROXY
     if (-1 == sock.enable_option(SOL_IP, TS_IP_TRANSPARENT)) {

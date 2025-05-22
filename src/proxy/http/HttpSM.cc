@@ -5620,10 +5620,10 @@ HttpSM::do_http_server_open(bool raw, bool only_direct)
 
     const IpAddr &outbound_ip = AF_INET6 == opt.ip_family ? _ua.get_txn()->get_outbound_ip6() : _ua.get_txn()->get_outbound_ip4();
     if (outbound_ip.isValid()) {
-      opt.addr_binding = NetVCOptions::INTF_ADDR;
+      opt.addr_binding = NetVCOptions::addr_bind_style::INTF;
       opt.local_ip     = outbound_ip;
     } else if (_ua.get_txn()->is_outbound_transparent()) {
-      opt.addr_binding = NetVCOptions::FOREIGN_ADDR;
+      opt.addr_binding = NetVCOptions::addr_bind_style::FOREIGN;
       opt.local_ip     = t_state.client_info.src_addr;
       /* If the connection is server side transparent, we can bind to the
          port that the client chose instead of randomly assigning one at
