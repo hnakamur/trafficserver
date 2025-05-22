@@ -103,9 +103,9 @@ std::string_view
 NetVCOptions::get_proto_string() const
 {
   switch (ip_proto) {
-  case USE_TCP:
+  case ip_protocol_t::TCP:
     return IP_PROTO_TAG_TCP;
-  case USE_UDP:
+  case ip_protocol_t::UDP:
     return IP_PROTO_TAG_UDP;
   default:
     break;

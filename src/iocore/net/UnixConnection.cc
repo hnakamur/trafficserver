@@ -113,7 +113,7 @@ Connection::open(NetVCOptions const &opt)
   ink_assert(!sock.is_ok());
 
   IpEndpoint local_addr;
-  sock_type = NetVCOptions::USE_UDP == opt.ip_proto ? SOCK_DGRAM : SOCK_STREAM;
+  sock_type = NetVCOptions::ip_protocol_t::UDP == opt.ip_proto ? SOCK_DGRAM : SOCK_STREAM;
   int family;
 
   // Need to do address calculations first, so we can determine the

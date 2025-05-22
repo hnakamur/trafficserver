@@ -33,9 +33,9 @@ struct NetVCOptions {
   using self = NetVCOptions; ///< Self reference type.
 
   /// Values for valid IP protocols.
-  enum ip_protocol_t {
-    USE_TCP, ///< TCP protocol.
-    USE_UDP  ///< UDP protocol.
+  enum class ip_protocol_t {
+    TCP, ///< TCP protocol.
+    UDP  ///< UDP protocol.
   };
 
   /// IP (TCP or UDP) protocol to use on socket.

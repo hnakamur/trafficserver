@@ -86,7 +86,7 @@ QUICClient::start(int, void *)
 
   for (struct addrinfo *info = this->_remote_addr_info; info != nullptr; info = info->ai_next) {
     NetVCOptions opt;
-    opt.ip_proto            = NetVCOptions::USE_UDP;
+    opt.ip_proto            = NetVCOptions::ip_protocol_t::UDP;
     opt.ip_family           = info->ai_family;
     opt.etype               = ET_NET;
     opt.socket_recv_bufsize = 1048576;
