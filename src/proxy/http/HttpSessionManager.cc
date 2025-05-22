@@ -394,18 +394,18 @@ HttpSessionManager::acquire_session(HttpSM *sm, sockaddr const *ip, const char *
   }
 
   // Otherwise, check the thread pool first
-  if (this->get_pool_type() == TS_SERVER_SESSION_SHARING_POOL_THREAD ||
-      this->get_pool_type() == TS_SERVER_SESSION_SHARING_POOL_HYBRID) {
-    retval = _acquire_session(ip, hostname_hash, sm, match_style, TS_SERVER_SESSION_SHARING_POOL_THREAD);
+  if (this->get_pool_type() == TSServerSessionSharingPoolType::THREAD ||
+      this->get_pool_type() == TSServerSessionSharingPoolType::HYBRID) {
+    retval = _acquire_session(ip, hostname_hash, sm, match_style, TSServerSessionSharingPoolType::THREAD);
   }
 
   //  If you didn't get a match, and the global pool is an option go there.
   if (retval != HSMresult_t::DONE) {
-    if (TS_SERVER_SESSION_SHARING_POOL_GLOBAL == this->get_pool_type() ||
-        TS_SERVER_SESSION_SHARING_POOL_HYBRID == this->get_pool_type()) {
-      retval = _acquire_session(ip, hostname_hash, sm, match_style, TS_SERVER_SESSION_SHARING_POOL_GLOBAL);
-    } else if (TS_SERVER_SESSION_SHARING_POOL_GLOBAL_LOCKED == this->get_pool_type())
-      retval = _acquire_session(ip, hostname_hash, sm, match_style, TS_SERVER_SESSION_SHARING_POOL_GLOBAL_LOCKED);
+    if (TSServerSessionSharingPoolType::GLOBAL == this->get_pool_type() ||
+        TSServerSessionSharingPoolType::HYBRID == this->get_pool_type()) {
+      retval = _acquire_session(ip, hostname_hash, sm, match_style, TSServerSessionSharingPoolType::GLOBAL);
+    } else if (TSServerSessionSharingPoolType::GLOBAL_LOCKED == this->get_pool_type())
+      retval = _acquire_session(ip, hostname_hash, sm, match_style, TSServerSessionSharingPoolType::GLOBAL_LOCKED);
   }
 
   return retval;
@@ -421,7 +421,7 @@ lockSessionPool(Ptr<ProxyMutex> &mutex, EThread *const ethread, TSServerSessionS
                 MutexLock *const mlock, MutexTryLock *const tlock)
 {
   bool locked = false;
-  if (TS_SERVER_SESSION_SHARING_POOL_GLOBAL_LOCKED == pool_type) {
+  if (TSServerSessionSharingPoolType::GLOBAL_LOCKED == pool_type) {
     SCOPED_MUTEX_LOCK(lock, mutex, ethread);
     *mlock = std::move(lock);
     locked = true;
@@ -449,14 +449,14 @@ HttpSessionManager::_acquire_session(sockaddr const *ip, CryptoHash const &hostn
     // Now check to see if we have a connection in our shared connection pool
     EThread        *ethread = this_ethread();
     Ptr<ProxyMutex> pool_mutex =
-      (TS_SERVER_SESSION_SHARING_POOL_THREAD == pool_type) ? ethread->server_session_pool->mutex : m_g_pool->mutex;
+      (TSServerSessionSharingPoolType::THREAD == pool_type) ? ethread->server_session_pool->mutex : m_g_pool->mutex;
 
     MutexLock    mlock;
     MutexTryLock tlock;
     bool const   locked = lockSessionPool(pool_mutex, ethread, pool_type, &mlock, &tlock);
 
     if (locked) {
-      if (TS_SERVER_SESSION_SHARING_POOL_THREAD == pool_type) {
+      if (TSServerSessionSharingPoolType::THREAD == pool_type) {
         retval = ethread->server_session_pool->acquireSession(ip, hostname_hash, match_style, sm, to_return);
         Dbg(dbg_ctl_http_ss, "[acquire session] thread pool search %s", to_return ? "successful" : "failed");
       } else {
@@ -522,7 +522,7 @@ HttpSessionManager::release_session(PoolableSession *to_release)
 {
   EThread           *ethread = this_ethread();
   ServerSessionPool *pool =
-    TS_SERVER_SESSION_SHARING_POOL_THREAD == to_release->sharing_pool ? ethread->server_session_pool : m_g_pool;
+    TSServerSessionSharingPoolType::THREAD == to_release->sharing_pool ? ethread->server_session_pool : m_g_pool;
   bool released_p = true;
 
   // The per thread lock looks like it should not be needed but if it's not locked the close checking I/O op will crash.
@@ -534,9 +534,9 @@ HttpSessionManager::release_session(PoolableSession *to_release)
 
     if (locked) {
       pool->releaseSession(to_release);
-    } else if (this->get_pool_type() == TS_SERVER_SESSION_SHARING_POOL_HYBRID) {
+    } else if (this->get_pool_type() == TSServerSessionSharingPoolType::HYBRID) {
       // Try again with the thread pool
-      to_release->sharing_pool = TS_SERVER_SESSION_SHARING_POOL_THREAD;
+      to_release->sharing_pool = TSServerSessionSharingPoolType::THREAD;
       return release_session(to_release);
     } else {
       Dbg(dbg_ctl_http_ss, "[%" PRId64 "] [release session] could not release session due to lock contention",

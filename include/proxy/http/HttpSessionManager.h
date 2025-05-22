@@ -134,7 +134,7 @@ private:
   ServerSessionPool             *m_g_pool = nullptr;
   HSMresult_t                    _acquire_session(sockaddr const *ip, CryptoHash const &hostname_hash, HttpSM *sm,
                                                   TSServerSessionSharingMatchMask match_style, TSServerSessionSharingPoolType pool_type);
-  TSServerSessionSharingPoolType m_pool_type = TS_SERVER_SESSION_SHARING_POOL_THREAD;
+  TSServerSessionSharingPoolType m_pool_type = TSServerSessionSharingPoolType::THREAD;
 };
 
 extern HttpSessionManager httpSessionManager;

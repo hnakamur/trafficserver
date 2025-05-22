@@ -51,9 +51,9 @@ typedef enum {
 } TSServerSessionSharingMatchMask;
 
 /// Server session sharing values - pool
-typedef enum {
-  TS_SERVER_SESSION_SHARING_POOL_GLOBAL,
-  TS_SERVER_SESSION_SHARING_POOL_THREAD,
-  TS_SERVER_SESSION_SHARING_POOL_HYBRID,
-  TS_SERVER_SESSION_SHARING_POOL_GLOBAL_LOCKED,
-} TSServerSessionSharingPoolType;
+enum class TSServerSessionSharingPoolType {
+  GLOBAL,
+  THREAD,
+  HYBRID,
+  GLOBAL_LOCKED,
+};

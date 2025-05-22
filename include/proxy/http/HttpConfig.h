@@ -791,7 +791,7 @@ public:
   MgmtByte send_100_continue_response = 0;
   MgmtByte disallow_post_100_continue = 0;
 
-  MgmtByte server_session_sharing_pool = TS_SERVER_SESSION_SHARING_POOL_THREAD;
+  MgmtByte server_session_sharing_pool = static_cast<MgmtByte>(TSServerSessionSharingPoolType::THREAD);
 
   ConnectionTracker::GlobalConfig global_connection_tracker_config;
 
