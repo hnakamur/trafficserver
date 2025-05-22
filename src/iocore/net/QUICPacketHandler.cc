@@ -315,7 +315,7 @@ QUICPacketHandlerIn::_recv_packet(int /* event ATS_UNUSED */, UDPPacket *udp_pac
     vc->action_     = *this->action_;
     vc->set_is_transparent(this->opt.f_inbound_transparent);
     vc->set_context(NetVConnectionContext_t::IN);
-    vc->options.ip_proto  = NetVCOptions::USE_UDP;
+    vc->options.ip_proto  = NetVCOptions::ip_protocol_t::UDP;
     vc->options.ip_family = udp_packet->from.sa.sa_family;
     eth->schedule_imm(vc, EVENT_NONE, nullptr);
     qc = vc;

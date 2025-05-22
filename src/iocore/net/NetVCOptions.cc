@@ -29,7 +29,7 @@
 void
 NetVCOptions::reset()
 {
-  ip_proto  = USE_TCP;
+  ip_proto  = ip_protocol_t::TCP;
   ip_family = AF_INET;
   local_ip.invalidate();
   local_port    = 0;
