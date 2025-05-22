@@ -75,7 +75,7 @@ public:
 
   // Copy of the owning SM's server session sharing settings
   TSServerSessionSharingMatchMask sharing_match = TS_SERVER_SESSION_SHARING_MATCH_MASK_NONE;
-  TSServerSessionSharingPoolType  sharing_pool  = TS_SERVER_SESSION_SHARING_POOL_GLOBAL;
+  TSServerSessionSharingPoolType  sharing_pool  = TSServerSessionSharingPoolType::GLOBAL;
 
   void enable_outbound_connection_tracking(std::shared_ptr<ConnectionTracker::Group> group);
   void release_outbound_connection_tracking();

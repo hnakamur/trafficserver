@@ -61,7 +61,7 @@ Http1ServerSession::destroy()
   }
 
   mutex.clear();
-  if (httpSessionManager.get_pool_type() == TS_SERVER_SESSION_SHARING_POOL_THREAD) {
+  if (httpSessionManager.get_pool_type() == TSServerSessionSharingPoolType::THREAD) {
     THREAD_FREE(this, httpServerSessionAllocator, this_thread());
   } else {
     httpServerSessionAllocator.free(this);
