@@ -268,7 +268,7 @@ UnixNetVConnection::do_io_close(int alerrno /* = -1 */)
   read.vio.nbytes = 0;
   read.vio.op     = VIO::NONE;
 
-  if (netvc_context == NET_VCONNECTION_OUT) {
+  if (netvc_context == NetVConnectionContext_t::OUT) {
     // do not clear the iobufs yet to guard
     // against race condition with session pool closing
     Dbg(dbg_ctl_iocore_net, "delay vio buffer clear to protect against  race for vc %p", this);
@@ -665,7 +665,7 @@ UnixNetVConnection::net_write_io(NetHandler *nh)
 
     int err{0}, ret{0};
 
-    if (this->get_context() == NET_VCONNECTION_OUT) {
+    if (this->get_context() == NetVConnectionContext_t::OUT) {
       ret = this->sslStartHandShake(SSL_EVENT_CLIENT, err);
     } else {
       ret = this->sslStartHandShake(SSL_EVENT_SERVER, err);
@@ -1263,12 +1263,12 @@ UnixNetVConnection::clear()
   read.vio.vc_server  = nullptr;
   write.vio.vc_server = nullptr;
   options.reset();
-  if (netvc_context == NET_VCONNECTION_OUT) {
+  if (netvc_context == NetVConnectionContext_t::OUT) {
     read.vio.buffer.clear();
     write.vio.buffer.clear();
   }
   closed        = 0;
-  netvc_context = NET_VCONNECTION_UNSET;
+  netvc_context = NetVConnectionContext_t::UNSET;
   ink_assert(!read.ready_link.prev && !read.ready_link.next);
   ink_assert(!read.enable_link.next);
   ink_assert(!write.ready_link.prev && !write.ready_link.next);
@@ -1295,9 +1295,9 @@ UnixNetVConnection::free_thread(EThread *t)
 
     Metrics::Gauge::decrement(([&]() -> Metrics::Gauge::AtomicType * {
       switch (get_context()) {
-      case NET_VCONNECTION_IN:
+      case NetVConnectionContext_t::IN:
         return net_rsb.tunnel_current_client_connections_blind_tcp;
-      case NET_VCONNECTION_OUT:
+      case NetVConnectionContext_t::OUT:
         return net_rsb.tunnel_current_server_connections_blind_tcp;
       default:
         ink_release_assert(false);
@@ -1532,10 +1532,10 @@ UnixNetVConnection::mark_as_tunnel_endpoint()
   _is_tunnel_endpoint = true;
 
   switch (get_context()) {
-  case NET_VCONNECTION_IN:
+  case NetVConnectionContext_t::IN:
     _in_context_tunnel();
     break;
-  case NET_VCONNECTION_OUT:
+  case NetVConnectionContext_t::OUT:
     _out_context_tunnel();
     break;
   default:

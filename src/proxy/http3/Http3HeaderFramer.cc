@@ -93,7 +93,7 @@ Http3HeaderFramer::_generate_header_block()
   int         bytes_used   = 0;
   ParseResult parse_result = ParseResult::ERROR;
 
-  if (this->_transaction->direction() == NET_VCONNECTION_OUT) {
+  if (this->_transaction->direction() == NetVConnectionContext_t::OUT) {
     this->_header.create(HTTPType::REQUEST, HTTP_3_0);
     parse_result = this->_header.parse_req(&this->_http_parser, this->_source_vio->get_reader(), &bytes_used, false);
   } else {

@@ -139,7 +139,7 @@ net_accept(NetAccept *na, void *ep, bool blockable)
     vc->action_     = *na->action_;
     vc->set_is_transparent(na->opt.f_inbound_transparent);
     vc->set_is_proxy_protocol(na->opt.f_proxy_protocol);
-    vc->set_context(NET_VCONNECTION_IN);
+    vc->set_context(NetVConnectionContext_t::IN);
     if (na->opt.f_mptcp) {
       vc->set_mptcp_state(); // Try to get the MPTCP state, and update accordingly
     }
@@ -432,7 +432,7 @@ NetAccept::do_blocking_accept(EThread *t)
     vc->options.packet_notsent_lowat = opt.packet_notsent_lowat;
     vc->options.ip_family            = opt.ip_family;
     vc->apply_options();
-    vc->set_context(NET_VCONNECTION_IN);
+    vc->set_context(NetVConnectionContext_t::IN);
     if (opt.f_mptcp) {
       vc->set_mptcp_state(); // Try to get the MPTCP state, and update accordingly
     }
@@ -598,7 +598,7 @@ NetAccept::acceptFastEvent(int event, void *ep)
     vc->options.packet_notsent_lowat = opt.packet_notsent_lowat;
     vc->options.ip_family            = opt.ip_family;
     vc->apply_options();
-    vc->set_context(NET_VCONNECTION_IN);
+    vc->set_context(NetVConnectionContext_t::IN);
     if (opt.f_mptcp) {
       vc->set_mptcp_state(); // Try to get the MPTCP state, and update accordingly
     }

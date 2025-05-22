@@ -398,7 +398,7 @@ Http3App::_set_qpack_stream(Http3StreamType type, QUICStreamVCAdapter *adapter)
 {
   // Change app to QPACK from Http3
   if (type == Http3StreamType::QPACK_ENCODER) {
-    if (this->_qc->direction() == NET_VCONNECTION_IN) {
+    if (this->_qc->direction() == NetVConnectionContext_t::IN) {
       this->_ssn->remote_qpack()->set_encoder_stream(adapter->stream().id());
       this->_update_vio_cont_to_QPACK(this->_ssn->remote_qpack(), adapter);
     } else {
@@ -406,7 +406,7 @@ Http3App::_set_qpack_stream(Http3StreamType type, QUICStreamVCAdapter *adapter)
       this->_update_vio_cont_to_QPACK(this->_ssn->local_qpack(), adapter);
     }
   } else if (type == Http3StreamType::QPACK_DECODER) {
-    if (this->_qc->direction() == NET_VCONNECTION_IN) {
+    if (this->_qc->direction() == NetVConnectionContext_t::IN) {
       this->_ssn->local_qpack()->set_decoder_stream(adapter->stream().id());
       this->_update_vio_cont_to_QPACK(this->_ssn->local_qpack(), adapter);
     } else {

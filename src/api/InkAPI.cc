@@ -5763,7 +5763,7 @@ TSVConnFdCreate(int fd)
   vc->submit_time = ink_get_hrtime();
   vc->mutex       = new_ProxyMutex();
   vc->set_is_transparent(false);
-  vc->set_context(NetVConnectionContext_t::NET_VCONNECTION_OUT);
+  vc->set_context(NetVConnectionContext_t::OUT);
 
   // We should take the nh's lock and vc's lock before we get into the connectUp
   SCOPED_MUTEX_LOCK(lock, get_NetHandler(t)->mutex, t);

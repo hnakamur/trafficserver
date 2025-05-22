@@ -186,7 +186,7 @@ UnixNetProcessor::connect_re(Continuation *cont, sockaddr const *target, NetVCOp
 
   vc->options = opt;
 
-  vc->set_context(NET_VCONNECTION_OUT);
+  vc->set_context(NetVConnectionContext_t::OUT);
 
   const bool using_socks = (socks_conf_stuff->socks_needed && opt.socks_support != NO_SOCKS &&
                             (opt.socks_version != SOCKS_DEFAULT_VERSION ||

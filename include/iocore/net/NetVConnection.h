@@ -43,11 +43,11 @@
 #define SSL_EVENT_CLIENT 1
 
 // Indicator the context for a NetVConnection
-typedef enum {
-  NET_VCONNECTION_UNSET = 0,
-  NET_VCONNECTION_IN,  // Client <--> ATS, Client-Side
-  NET_VCONNECTION_OUT, // ATS <--> Server, Server-Side
-} NetVConnectionContext_t;
+enum class NetVConnectionContext_t {
+  UNSET = 0,
+  IN,  // Client <--> ATS, Client-Side
+  OUT, // ATS <--> Server, Server-Side
+};
 
 /**
   A VConnection for a network socket. Abstraction for a net connection.
@@ -297,7 +297,7 @@ public:
   void
   set_context(NetVConnectionContext_t context)
   {
-    ink_assert(NET_VCONNECTION_UNSET == netvc_context);
+    ink_assert(NetVConnectionContext_t::UNSET == netvc_context);
     netvc_context = context;
   }
 
@@ -529,7 +529,7 @@ protected:
   /// Set if the next write IO that empties the write buffer should generate an event.
   int write_buffer_empty_event = 0;
   /// NetVConnection Context.
-  NetVConnectionContext_t netvc_context = NET_VCONNECTION_UNSET;
+  NetVConnectionContext_t netvc_context = NetVConnectionContext_t::UNSET;
 
   template <typename S> void _set_service(S *instance);
 

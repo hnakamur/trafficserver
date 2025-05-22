@@ -272,7 +272,7 @@ QUICNetVConnection::_start_application()
 
     this->set_negotiated_protocol_id({reinterpret_cast<const char *>(app_name), static_cast<size_t>(app_name_len)});
 
-    if (netvc_context == NET_VCONNECTION_IN) {
+    if (netvc_context == NetVConnectionContext_t::IN) {
       if (!this->setSelectedProtocol(app_name, app_name_len)) {
         // this->_handle_error(std::make_unique<QUICConnectionError>(QUICTransErrorCode::PROTOCOL_VIOLATION));
       } else {
@@ -483,7 +483,7 @@ QUICNetVConnection::pmtu() const
 NetVConnectionContext_t
 QUICNetVConnection::direction() const
 {
-  return NET_VCONNECTION_IN;
+  return NetVConnectionContext_t::IN;
 }
 
 QUICVersion
@@ -825,7 +825,7 @@ QUICNetVConnection::_verify_certificate(X509_STORE_CTX * /* ctx ATS_UNUSED */)
   APIHook     *hook = nullptr;
 
   // TODO Simply call callHooks once QUICNetVC implements TLSEventSupport
-  if (get_context() == NET_VCONNECTION_IN) {
+  if (get_context() == NetVConnectionContext_t::IN) {
     eventId = TS_EVENT_SSL_VERIFY_CLIENT;
     hookId  = TS_SSL_VERIFY_CLIENT_HOOK;
   } else {
