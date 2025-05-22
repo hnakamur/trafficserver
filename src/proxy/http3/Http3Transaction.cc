@@ -425,7 +425,7 @@ Http3Transaction::Http3Transaction(Http3Session *session, QUICStreamVCAdapter::I
   // this->_frame_collector.add_generator(this->_push_controller);
 
   HTTPType http_type = HTTPType::UNKNOWN;
-  if (this->direction() == NET_VCONNECTION_OUT) {
+  if (this->direction() == NetVConnectionContext_t::OUT) {
     http_type = HTTPType::RESPONSE;
   } else {
     http_type = HTTPType::REQUEST;

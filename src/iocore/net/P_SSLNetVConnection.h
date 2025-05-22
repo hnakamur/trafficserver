@@ -261,7 +261,7 @@ public:
   int
   provided_cert() const override
   {
-    if (this->get_context() == NET_VCONNECTION_OUT) {
+    if (this->get_context() == NetVConnectionContext_t::OUT) {
       return this->sent_cert;
     } else {
       return 1;

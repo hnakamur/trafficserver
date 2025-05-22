@@ -51,7 +51,7 @@ Http3SettingsFramer::generate_frame()
   }
 
   // Server side only
-  if (this->_context == NET_VCONNECTION_IN) {
+  if (this->_context == NetVConnectionContext_t::IN) {
     if (params->num_placeholders() != HTTP3_DEFAULT_NUM_PLACEHOLDERS) {
       frame->set(Http3SettingsId::NUM_PLACEHOLDERS, params->num_placeholders());
     }

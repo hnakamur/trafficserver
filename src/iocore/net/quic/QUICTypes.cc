@@ -80,12 +80,12 @@ QUICTypeUtil::detect_stream_direction(QUICStreamId id, NetVConnectionContext_t c
   case QUICStreamType::SERVER_BIDI:
     return QUICStreamDirection::BIDIRECTIONAL;
   case QUICStreamType::CLIENT_UNI:
-    if (context == NET_VCONNECTION_OUT) {
+    if (context == NetVConnectionContext_t::OUT) {
       return QUICStreamDirection::SEND;
     }
     return QUICStreamDirection::RECEIVE;
   case QUICStreamType::SERVER_UNI:
-    if (context == NET_VCONNECTION_IN) {
+    if (context == NetVConnectionContext_t::IN) {
       return QUICStreamDirection::SEND;
     }
     return QUICStreamDirection::RECEIVE;

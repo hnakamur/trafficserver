@@ -101,7 +101,7 @@ SSLNetVConnection::_make_ssl_connection(SSL_CTX *ctx)
 {
   if (likely(this->ssl = SSL_new(ctx))) {
     // Only set up the bio stuff for the server side
-    if (this->get_context() == NET_VCONNECTION_OUT) {
+    if (this->get_context() == NetVConnectionContext_t::OUT) {
       BIO *bio = BIO_new(const_cast<BIO_METHOD *>(BIO_s_fastopen()));
       BIO_set_fd(bio, this->get_socket(), BIO_NOCLOSE);
 
@@ -501,7 +501,7 @@ SSLNetVConnection::net_read_io(NetHandler *nh)
   if (!getSSLHandShakeComplete()) {
     int err = 0;
 
-    if (get_context() == NET_VCONNECTION_OUT) {
+    if (get_context() == NetVConnectionContext_t::OUT) {
       ret = sslStartHandShake(SSL_EVENT_CLIENT, err);
     } else {
       ret = sslStartHandShake(SSL_EVENT_SERVER, err);
@@ -836,7 +836,7 @@ void
 SSLNetVConnection::do_io_close(int lerrno)
 {
   if (this->ssl != nullptr) {
-    if (get_context() == NET_VCONNECTION_OUT) {
+    if (get_context() == NetVConnectionContext_t::OUT) {
       callHooks(TS_EVENT_VCONN_OUTBOUND_CLOSE);
     } else {
       callHooks(TS_EVENT_VCONN_CLOSE);
@@ -935,10 +935,10 @@ SSLNetVConnection::free_thread(EThread *t)
   con.close();
 
   if (is_tunnel_endpoint()) {
-    ink_assert(get_context() != NET_VCONNECTION_UNSET);
+    ink_assert(get_context() != NetVConnectionContext_t::UNSET);
 
     Metrics::Gauge::decrement(([&]() -> Metrics::Gauge::AtomicType * {
-      if (get_context() == NET_VCONNECTION_IN) {
+      if (get_context() == NetVConnectionContext_t::IN) {
         switch (get_tunnel_type()) {
         case SNIRoutingType::BLIND:
           return net_rsb.tunnel_current_client_connections_tls_tunnel;
@@ -950,7 +950,7 @@ SSLNetVConnection::free_thread(EThread *t)
           return net_rsb.tunnel_current_client_connections_tls_http;
         }
       }
-      // NET_VCONNECTION_OUT - Never a tunnel type for out (to server) context.
+      // NetVConnectionContext_t::OUT - Never a tunnel type for out (to server) context.
       ink_assert(get_tunnel_type() == SNIRoutingType::NONE);
 
       return net_rsb.tunnel_current_server_connections_tls;
@@ -1645,7 +1645,7 @@ SSLNetVConnection::populate(Connection &con, Continuation *c, void *arg)
 void
 SSLNetVConnection::_in_context_tunnel()
 {
-  ink_assert(get_context() == NET_VCONNECTION_IN);
+  ink_assert(get_context() == NetVConnectionContext_t::IN);
 
   Metrics::Counter::AtomicType *t;
   Metrics::Gauge::AtomicType   *c;
@@ -1675,7 +1675,7 @@ SSLNetVConnection::_in_context_tunnel()
 void
 SSLNetVConnection::_out_context_tunnel()
 {
-  ink_assert(get_context() == NET_VCONNECTION_OUT);
+  ink_assert(get_context() == NetVConnectionContext_t::OUT);
 
   // Never a tunnel type for out (to server) context.
   ink_assert(get_tunnel_type() == SNIRoutingType::NONE);
@@ -1971,7 +1971,7 @@ SSLNetVConnection::_verify_certificate(X509_STORE_CTX * /* ctx ATS_UNUSED */)
   // We could pass a structure that has both a cert to verify and a NetVC.
   // It would allow us to remove confusing TSSslVerifyCTX and its internal implementation that are only available during a very
   // limited time.
-  if (get_context() == NET_VCONNECTION_IN) {
+  if (get_context() == NetVConnectionContext_t::IN) {
     this->callHooks(TS_EVENT_SSL_VERIFY_CLIENT /* , ctx */);
   } else {
     this->callHooks(TS_EVENT_SSL_VERIFY_SERVER /* , ctx */);

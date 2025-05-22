@@ -153,7 +153,7 @@ class MockQUICConnectionInfoProvider : public QUICConnectionInfoProvider
   NetVConnectionContext_t
   direction() const override
   {
-    return NET_VCONNECTION_OUT;
+    return NetVConnectionContext_t::OUT;
   }
 
   bool
@@ -231,7 +231,7 @@ private:
 class MockNetVConnection : public NetVConnection
 {
 public:
-  MockNetVConnection(NetVConnectionContext_t context = NET_VCONNECTION_OUT) : NetVConnection() { netvc_context = context; }
+  MockNetVConnection(NetVConnectionContext_t context = NetVConnectionContext_t::OUT) : NetVConnection() { netvc_context = context; }
   VIO *
   do_io_read(Continuation * /* c ATS_UNUSED */, int64_t /* nbytes ATS_UNUSED */, MIOBuffer * /* buf ATS_UNUSED */) override
   {
@@ -297,7 +297,7 @@ public:
 class MockQUICConnection : public QUICConnection
 {
 public:
-  MockQUICConnection(NetVConnectionContext_t context = NET_VCONNECTION_OUT) : QUICConnection(), _direction(context)
+  MockQUICConnection(NetVConnectionContext_t context = NetVConnectionContext_t::OUT) : QUICConnection(), _direction(context)
   {
     this->_mutex = new_ProxyMutex();
   };

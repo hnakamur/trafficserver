@@ -193,7 +193,7 @@ QUICNetProcessor::connect_re(Continuation *cont, sockaddr const *remote_addr, Ne
 
   // Connection ID will be changed
   vc->id = net_next_connection_number();
-  vc->set_context(NET_VCONNECTION_OUT);
+  vc->set_context(NetVConnectionContext_t::OUT);
   vc->con.setRemote(remote_addr);
   vc->submit_time = ink_get_hrtime();
   vc->mutex       = cont->mutex;
