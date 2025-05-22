@@ -5442,7 +5442,8 @@ HttpSM::do_http_server_open(bool raw, bool only_direct)
   }
 
   bool try_reuse = false;
-  if ((raw == false) && TS_SERVER_SESSION_SHARING_MATCH_NONE != t_state.txn_conf->server_session_sharing_match &&
+  if ((raw == false) &&
+      static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE) != t_state.txn_conf->server_session_sharing_match &&
       (t_state.txn_conf->keep_alive_post_out == 1 || t_state.hdr_info.request_content_length <= 0) && !is_private() &&
       _ua.get_txn() != nullptr) {
     HSMresult_t shared_result;
@@ -5475,7 +5476,8 @@ HttpSM::do_http_server_open(bool raw, bool only_direct)
   }
   // Avoid a problem where server session sharing is disabled and we have keep-alive, we are trying to open a new server
   // session when we already have an attached server session.
-  else if ((TS_SERVER_SESSION_SHARING_MATCH_NONE == t_state.txn_conf->server_session_sharing_match || is_private()) &&
+  else if ((static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE) == t_state.txn_conf->server_session_sharing_match ||
+            is_private()) &&
            (_ua.get_txn() != nullptr)) {
     PoolableSession *existing_ss = _ua.get_txn()->get_server_session();
 
@@ -5514,7 +5516,7 @@ HttpSM::do_http_server_open(bool raw, bool only_direct)
 
   if (!try_reuse) {
     Metrics::Counter::increment(http_rsb.origin_make_new);
-    if (TS_SERVER_SESSION_SHARING_MATCH_NONE == t_state.txn_conf->server_session_sharing_match) {
+    if (static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE) == t_state.txn_conf->server_session_sharing_match) {
       Metrics::Counter::increment(http_rsb.origin_no_sharing);
     } else if ((t_state.txn_conf->keep_alive_post_out != 1 && t_state.hdr_info.request_content_length > 0)) {
       Metrics::Counter::increment(http_rsb.origin_body);
@@ -5927,9 +5929,9 @@ HttpSM::release_server_session(bool serve_from_cache)
     return;
   }
 
-  if (TS_SERVER_SESSION_SHARING_MATCH_NONE != t_state.txn_conf->server_session_sharing_match && t_state.current.server != nullptr &&
-      t_state.current.server->keep_alive == HTTPKeepAlive::KEEPALIVE && t_state.hdr_info.server_response.valid() &&
-      t_state.hdr_info.server_request.valid() &&
+  if (static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE) != t_state.txn_conf->server_session_sharing_match &&
+      t_state.current.server != nullptr && t_state.current.server->keep_alive == HTTPKeepAlive::KEEPALIVE &&
+      t_state.hdr_info.server_response.valid() && t_state.hdr_info.server_request.valid() &&
       (t_state.hdr_info.server_response.status_get() == HTTPStatus::NOT_MODIFIED ||
        (t_state.hdr_info.server_request.method_get_wksidx() == HTTP_WKSIDX_HEAD &&
         t_state.www_auth_content != HttpTransact::CacheAuth_t::NONE)) &&
@@ -5946,7 +5948,7 @@ HttpSM::release_server_session(bool serve_from_cache)
     }
   } else {
     server_txn->do_io_close();
-    if (TS_SERVER_SESSION_SHARING_MATCH_NONE == t_state.txn_conf->server_session_sharing_match) {
+    if (static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE) == t_state.txn_conf->server_session_sharing_match) {
       Metrics::Counter::increment(http_rsb.origin_shutdown_release_no_sharing);
     } else if (t_state.current.server == nullptr) {
       Metrics::Counter::increment(http_rsb.origin_shutdown_release_no_server);

@@ -113,15 +113,15 @@ http_config_enum_read(const char *name, const ConfigEnumPair<T> (&list)[N], Mgmt
 //
 ////////////////////////////////////////////////////////////////
 /// Session sharing match types.
-static const ConfigEnumPair<TSServerSessionSharingMatchType> SessionSharingMatchStrings[] = {
-  {TS_SERVER_SESSION_SHARING_MATCH_NONE,     "none"    },
-  {TS_SERVER_SESSION_SHARING_MATCH_IP,       "ip"      },
-  {TS_SERVER_SESSION_SHARING_MATCH_HOST,     "host"    },
-  {TS_SERVER_SESSION_SHARING_MATCH_HOST,     "hostsni" },
-  {TS_SERVER_SESSION_SHARING_MATCH_BOTH,     "both"    },
-  {TS_SERVER_SESSION_SHARING_MATCH_HOSTONLY, "hostonly"},
-  {TS_SERVER_SESSION_SHARING_MATCH_SNI,      "sni"     },
-  {TS_SERVER_SESSION_SHARING_MATCH_CERT,     "cert"    }
+static const ConfigEnumPair<MgmtByte> SessionSharingMatchStrings[] = {
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE),     "none"    },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::IP),       "ip"      },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST),     "host"    },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST),     "hostsni" },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::BOTH),     "both"    },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOSTONLY), "hostonly"},
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::SNI),      "sni"     },
+  {static_cast<MgmtByte>(TSServerSessionSharingMatchType::CERT),     "cert"    }
 };
 
 bool
@@ -147,12 +147,12 @@ HttpConfig::load_server_session_sharing_match(std::string_view key, MgmtByte &ma
       }
       start = offset + 1;
     }
-    if (value < TS_SERVER_SESSION_SHARING_MATCH_NONE) {
+    if (value < static_cast<MgmtByte>(TSServerSessionSharingMatchType::NONE)) {
       mask |= (1 << value);
-    } else if (value == TS_SERVER_SESSION_SHARING_MATCH_BOTH) {
+    } else if (value == static_cast<MgmtByte>(TSServerSessionSharingMatchType::BOTH)) {
       mask |= TS_SERVER_SESSION_SHARING_MATCH_MASK_IP | TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY |
               TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC;
-    } else if (value == TS_SERVER_SESSION_SHARING_MATCH_HOST) {
+    } else if (value == static_cast<MgmtByte>(TSServerSessionSharingMatchType::HOST)) {
       mask |= TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTONLY | TS_SERVER_SESSION_SHARING_MATCH_MASK_HOSTSNISYNC;
     }
   } while (offset != std::string_view::npos);
@@ -220,7 +220,7 @@ http_server_session_sharing_cb(const char *name, RecDataT dtype, RecData data, v
   if (0 == strcasecmp("proxy.config.http.server_session_sharing.match", name)) {
     MgmtByte &match = c->oride.server_session_sharing_match;
     if (RECD_INT == dtype) {
-      match = static_cast<TSServerSessionSharingMatchType>(data.rec_int);
+      match = static_cast<MgmtByte>(data.rec_int);
     } else if (RECD_STRING == dtype && HttpConfig::load_server_session_sharing_match(data.rec_string, match)) {
       // empty
     } else {
