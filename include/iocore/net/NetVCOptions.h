@@ -61,14 +61,14 @@ struct NetVCOptions {
   /** The set of ways in which the local address should be bound.
 
       The protocol is set by the contents of @a local_addr regardless
-      of this value. @c ANY_ADDR will override only the address.
+      of this value. @c addr_bind_style::ANY will override only the address.
 
-      @note The difference between @c INTF_ADDR and @c FOREIGN_ADDR is
+      @note The difference between @c addr_bind_style::INTF and @c addr_bind_style::FOREIGN is
       whether transparency is enabled on the socket. It is the
       client's responsibility to set this correctly based on whether
       the address in @a local_addr is associated with an interface on
-      the local system ( @c INTF_ADDR ) or is owned by a foreign
-      system ( @c FOREIGN_ADDR ).  A binding style of @c ANY_ADDR
+      the local system ( @c addr_bind_style::INTF ) or is owned by a foreign
+      system ( @c addr_bind_style::FOREIGN ).  A binding style of @c addr_bind_style::ANY
       causes the value in @a local_addr to be ignored.
 
       The IP address and port are separate because most clients treat
@@ -78,10 +78,10 @@ struct NetVCOptions {
       @see local_addr
       @see addr_binding
    */
-  enum addr_bind_style {
-    ANY_ADDR,    ///< Bind to any available local address (don't care, default).
-    INTF_ADDR,   ///< Bind to interface address in @a local_addr.
-    FOREIGN_ADDR ///< Bind to foreign address in @a local_addr.
+  enum class addr_bind_style {
+    ANY,    ///< Bind to any available local address (don't care, default).
+    INTF,   ///< Bind to interface address in @a local_addr.
+    FOREIGN ///< Bind to foreign address in @a local_addr.
   };
 
   /** Local address for the connection.
@@ -91,7 +91,7 @@ struct NetVCOptions {
       inbound connections the family of this value overrides @a
       ip_family if set.
 
-      @note Ignored if @a addr_binding is @c ANY_ADDR.
+      @note Ignored if @a addr_binding is @c addr_bind_style::ANY.
       @see addr_binding
       @see ip_family
   */
@@ -103,7 +103,7 @@ struct NetVCOptions {
   uint16_t local_port;
 
   /// How to bind the local address.
-  /// @note Default is @c ANY_ADDR.
+  /// @note Default is @c addr_bind_style::ANY.
   addr_bind_style addr_binding;
 
   /// Make the socket blocking on I/O (default: @c false)

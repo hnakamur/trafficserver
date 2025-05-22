@@ -1048,7 +1048,7 @@ UDPNetProcessor::CreateUDPSocket(int *resfd, sockaddr const *remote_addr, Action
   ink_zero(local_addr);
 
   bool is_any_address = false;
-  if (NetVCOptions::FOREIGN_ADDR == opt.addr_binding || NetVCOptions::INTF_ADDR == opt.addr_binding) {
+  if (NetVCOptions::addr_bind_style::FOREIGN == opt.addr_binding || NetVCOptions::addr_bind_style::INTF == opt.addr_binding) {
     // Same for now, transparency for foreign addresses must be handled
     // *after* the socket is created, and we need to do this calculation
     // before the socket to get the IP family correct.

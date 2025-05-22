@@ -36,7 +36,7 @@
 char const *
 NetVCOptions::toString(addr_bind_style s)
 {
-  return ANY_ADDR == s ? "any" : INTF_ADDR == s ? "interface" : "foreign";
+  return addr_bind_style::ANY == s ? "any" : addr_bind_style::INTF == s ? "interface" : "foreign";
 }
 
 Connection::Connection()
