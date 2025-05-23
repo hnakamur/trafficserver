@@ -154,7 +154,11 @@ private:
   void _init_directory(std::size_t directory_size, int header_size, int footer_size);
 };
 
-#define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
+inline Dir *
+dir_index(Stripe *e, int i)
+{
+  return reinterpret_cast<Dir *>(reinterpret_cast<char *>(e->directory.dir) + (SIZEOF_DIR * i));
+}
 
 inline uint32_t
 ROUND_TO_SECTOR(const Stripe *p, uint32_t x)
