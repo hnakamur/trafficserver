@@ -36,8 +36,6 @@
 #include <cstddef>
 #include <cstdint>
 
-// CACHE_BLOCK_SHIFT and CACHE_BLOCK_SIZE were moved to P_CacheDir.h.
-
 #define ROUND_TO_STORE_BLOCK(_x) INK_ALIGN((_x), STORE_BLOCK_SIZE)
 #define ROUND_TO_CACHE_BLOCK(_x) INK_ALIGN((_x), CACHE_BLOCK_SIZE)
 
