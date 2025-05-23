@@ -116,10 +116,10 @@ enum class HttpSmPost_t {
   SUCCESS     = 3,
 };
 
-enum {
-  HTTP_SM_TRANSFORM_OPEN   = 0,
-  HTTP_SM_TRANSFORM_CLOSED = 1,
-  HTTP_SM_TRANSFORM_FAIL   = 2,
+enum class HttpSmTransform_t {
+  OPEN   = 0,
+  CLOSED = 1,
+  FAIL   = 2,
 };
 
 enum class HttpApiState_t {

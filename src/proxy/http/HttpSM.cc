@@ -1222,7 +1222,7 @@ HttpSM::state_common_wait_for_transform_read(HttpTransformInfo *t_info, HttpSMHa
     ink_assert(c != nullptr);
     ink_assert(c->vc == t_info->entry->vc);
 
-    if (c->handler_state == HTTP_SM_TRANSFORM_FAIL) {
+    if (c->handler_state == static_cast<int>(HttpSmTransform_t::FAIL)) {
       // Case 1 we failed to complete the write to the
       //  transform fall through to vc event error case
       ink_assert(c->write_success == false);
@@ -1260,7 +1260,7 @@ HttpSM::state_common_wait_for_transform_read(HttpTransformInfo *t_info, HttpSMHa
     // In Case 1: error due to transform write,
     // we need to keep the original t_info->vc for transform_cleanup()
     // to skip do_io_close(); otherwise, set it to NULL.
-    if (c->handler_state != HTTP_SM_TRANSFORM_FAIL) {
+    if (c->handler_state != static_cast<int>(HttpSmTransform_t::FAIL)) {
       t_info->vc = nullptr;
     }
     if (c->producer->vc_type == HttpTunnelType_t::HTTP_CLIENT) {
@@ -3964,7 +3964,7 @@ HttpSM::tunnel_handler_post_server(int event, HttpTunnelConsumer *c)
     //   want to close the transform
     HttpTunnelProducer *ua_producer;
     if (c->producer->vc_type == HttpTunnelType_t::TRANSFORM) {
-      if (c->producer->handler_state == HTTP_SM_TRANSFORM_OPEN) {
+      if (c->producer->handler_state == static_cast<int>(HttpSmTransform_t::OPEN)) {
         ink_assert(c->producer->vc == post_transform_info.vc);
         c->producer->vc->do_io_close();
         c->producer->alive                = false;
@@ -4183,7 +4183,7 @@ HttpSM::tunnel_handler_transform_write(int event, HttpTunnelConsumer *c)
   case VC_EVENT_ERROR:
     // Transform error
     tunnel.chain_abort_all(c->producer);
-    c->handler_state = HTTP_SM_TRANSFORM_FAIL;
+    c->handler_state = static_cast<int>(HttpSmTransform_t::FAIL);
     c->vc->do_io_close(EHTTP_ERROR);
     break;
   case VC_EVENT_EOS:
@@ -4285,7 +4285,7 @@ HttpSM::tunnel_handler_transform_read(int event, HttpTunnelProducer *p)
     Metrics::Counter::increment(http_rsb.origin_shutdown_tunnel_transform_read);
     p->vc->do_io_close();
   }
-  p->handler_state = HTTP_SM_TRANSFORM_CLOSED;
+  p->handler_state = static_cast<int>(HttpSmTransform_t::CLOSED);
 
   return 0;
 }
@@ -6099,7 +6099,7 @@ HttpSM::handle_server_setup_error(int event, void *data)
     // event for server connection to post_transform_info
     if (c == nullptr && post_transform_info.vc) {
       c = tunnel.get_consumer(post_transform_info.vc);
-      // c->handler_state = HTTP_SM_TRANSFORM_FAIL;
+      // c->handler_state = HttpSmTransform_t::FAIL;
 
       // No point in proceeding if there is no consumer
       // Do we need to do additional clean up in the c == NULL case?
@@ -6128,7 +6128,7 @@ HttpSM::handle_server_setup_error(int event, void *data)
   } else {
     if (post_transform_info.vc) {
       HttpTunnelConsumer *c = tunnel.get_consumer(post_transform_info.vc);
-      if (c && c->handler_state == HTTP_SM_TRANSFORM_OPEN) {
+      if (c && c->handler_state == static_cast<int>(HttpSmTransform_t::OPEN)) {
         vc_table.cleanup_entry(post_transform_info.entry);
         post_transform_info.entry = nullptr;
         tunnel.deallocate_buffers();
