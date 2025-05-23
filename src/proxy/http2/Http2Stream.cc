@@ -515,7 +515,7 @@ Http2Stream::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *buf)
   read_vio.nbytes    = nbytes;
   read_vio.ndone     = 0;
   read_vio.vc_server = this;
-  read_vio.op        = VIO::READ;
+  read_vio.op        = VIO::Op::READ;
 
   // TODO: re-enable read_vio
 
@@ -535,7 +535,7 @@ Http2Stream::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader *abuffe
   write_vio.nbytes    = nbytes;
   write_vio.ndone     = 0;
   write_vio.vc_server = this;
-  write_vio.op        = VIO::WRITE;
+  write_vio.op        = VIO::Op::WRITE;
   _send_reader        = abuffer;
 
   if (c != nullptr && nbytes > 0 && this->is_state_writeable()) {
@@ -896,7 +896,7 @@ Http2Stream::update_write_request(bool call_update)
 void
 Http2Stream::signal_read_event(int event)
 {
-  if (this->read_vio.cont == nullptr || this->read_vio.cont->mutex == nullptr || this->read_vio.op == VIO::NONE ||
+  if (this->read_vio.cont == nullptr || this->read_vio.cont->mutex == nullptr || this->read_vio.op == VIO::Op::NONE ||
       this->terminate_stream) {
     return;
   }
@@ -925,7 +925,7 @@ void
 Http2Stream::signal_write_event(int event, bool call_update)
 {
   // Don't signal a write event if in fact nothing was written
-  if (this->write_vio.cont == nullptr || this->write_vio.cont->mutex == nullptr || this->write_vio.op == VIO::NONE ||
+  if (this->write_vio.cont == nullptr || this->write_vio.cont->mutex == nullptr || this->write_vio.op == VIO::Op::NONE ||
       this->terminate_stream) {
     return;
   }
@@ -998,10 +998,10 @@ void
 Http2Stream::reenable(VIO *vio)
 {
   if (this->_proxy_ssn) {
-    if (vio->op == VIO::WRITE) {
+    if (vio->op == VIO::Op::WRITE) {
       SCOPED_MUTEX_LOCK(lock, this->mutex, this_ethread());
       update_write_request(true);
-    } else if (vio->op == VIO::READ) {
+    } else if (vio->op == VIO::Op::READ) {
       SCOPED_MUTEX_LOCK(ssn_lock, _proxy_ssn->mutex, this_ethread());
       Http2ConnectionState &connection_state = this->get_connection_state();
       connection_state.restart_receiving(this);

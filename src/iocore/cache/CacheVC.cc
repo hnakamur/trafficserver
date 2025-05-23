@@ -168,7 +168,7 @@ CacheVC::CacheVC()
 VIO *
 CacheVC::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *abuf)
 {
-  ink_assert(vio.op == VIO::READ);
+  ink_assert(vio.op == VIO::Op::READ);
   vio.set_writer(abuf);
   vio.set_continuation(c);
   vio.ndone     = 0;
@@ -186,7 +186,7 @@ CacheVC::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *abuf)
 VIO *
 CacheVC::do_io_pread(Continuation *c, int64_t nbytes, MIOBuffer *abuf, int64_t offset)
 {
-  ink_assert(vio.op == VIO::READ);
+  ink_assert(vio.op == VIO::Op::READ);
   vio.set_writer(abuf);
   vio.set_continuation(c);
   vio.ndone     = 0;
@@ -205,7 +205,7 @@ CacheVC::do_io_pread(Continuation *c, int64_t nbytes, MIOBuffer *abuf, int64_t o
 VIO *
 CacheVC::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader *abuf, bool owner)
 {
-  ink_assert(vio.op == VIO::WRITE);
+  ink_assert(vio.op == VIO::Op::WRITE);
   ink_assert(!owner);
   vio.set_reader(abuf);
   vio.set_continuation(c);
@@ -242,7 +242,7 @@ CacheVC::reenable(VIO *avio)
 #endif
   if (!trigger) {
 #ifndef USELESS_REENABLES
-    if (vio.op == VIO::READ) {
+    if (vio.op == VIO::Op::READ) {
       if (vio.buffer.mbuf->max_read_avail() > vio.get_writer->water_mark)
         ink_assert(!"useless reenable of cache read");
     } else if (!vio.get_reader()->read_avail())
@@ -413,7 +413,7 @@ CacheVC::handleReadDone(int event, Event * /* e ATS_UNUSED */)
         unmarshal_helper(doc, buf, okay);
       }
       // Put the request in the ram cache only if its a open_read or lookup
-      if (vio.op == VIO::READ && okay) {
+      if (vio.op == VIO::Op::READ && okay) {
         bool cutoff_check;
         // cutoff_check :
         // doc_len == 0 for the first fragment (it is set from the vector)
@@ -436,7 +436,7 @@ CacheVC::handleReadDone(int event, Event * /* e ATS_UNUSED */)
           stripe->first_fragment_offset = dir_offset(&dir);
           stripe->first_fragment_data   = buf;
         }
-      } // end VIO::READ check
+      } // end VIO::Op::READ check
       // If it could be compressed, unmarshal after
       if (http_copy_hdr && doc->doc_type == CACHE_FRAG_TYPE_HTTP && doc->hlen && okay) {
         unmarshal_helper(doc, buf, okay);
@@ -1076,7 +1076,7 @@ CacheVC::set_pin_in_cache(time_t time_pin)
     ink_assert(!"should Pin the document before writing");
     return false;
   }
-  if (vio.op != VIO::WRITE) {
+  if (vio.op != VIO::Op::WRITE) {
     ink_assert(!"Pinning only allowed while writing objects to the cache");
     return false;
   }

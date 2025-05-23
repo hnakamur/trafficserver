@@ -25,7 +25,7 @@
 #include "iocore/eventsystem/VIO.h"
 
 TS_INLINE
-VIO::VIO(int aop) : op(aop), buffer(), mutex(nullptr) {}
+VIO::VIO(Op aop) : op(aop), buffer(), mutex(nullptr) {}
 
 TS_INLINE
 VIO::VIO() : buffer(), mutex(nullptr) {}

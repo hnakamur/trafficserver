@@ -216,7 +216,7 @@ UnixNetVConnection::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *buf)
     Error("do_io_read invoked on closed vc %p, cont %p, nbytes %" PRId64 ", buf %p", this, c, nbytes, buf);
     return nullptr;
   }
-  read.vio.op        = VIO::READ;
+  read.vio.op        = VIO::Op::READ;
   read.vio.mutex     = c ? c->mutex : this->mutex;
   read.vio.cont      = c;
   read.vio.nbytes    = nbytes;
@@ -241,7 +241,7 @@ UnixNetVConnection::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader 
     Error("do_io_write invoked on closed vc %p, cont %p, nbytes %" PRId64 ", reader %p", this, c, nbytes, reader);
     return nullptr;
   }
-  write.vio.op        = VIO::WRITE;
+  write.vio.op        = VIO::Op::WRITE;
   write.vio.mutex     = c ? c->mutex : this->mutex;
   write.vio.cont      = c;
   write.vio.nbytes    = nbytes;
@@ -266,7 +266,7 @@ UnixNetVConnection::do_io_close(int alerrno /* = -1 */)
   read.enabled    = 0;
   write.enabled   = 0;
   read.vio.nbytes = 0;
-  read.vio.op     = VIO::NONE;
+  read.vio.op     = VIO::Op::NONE;
 
   if (netvc_context == NetVConnectionContext_t::OUT) {
     // do not clear the iobufs yet to guard
@@ -279,7 +279,7 @@ UnixNetVConnection::do_io_close(int alerrno /* = -1 */)
   }
 
   write.vio.nbytes = 0;
-  write.vio.op     = VIO::NONE;
+  write.vio.op     = VIO::Op::NONE;
 
   EThread *t            = this_ethread();
   bool     close_inline = !recursion && (!nh || nh->mutex->thread_holding == t);
@@ -493,7 +493,7 @@ UnixNetVConnection::net_read_io(NetHandler *nh)
     return;
   }
   // if it is not enabled.
-  if (!s->enabled || s->vio.op != VIO::READ || s->vio.is_disabled()) {
+  if (!s->enabled || s->vio.op != VIO::Op::READ || s->vio.is_disabled()) {
     read_disable(nh, this);
     return;
   }
@@ -701,7 +701,7 @@ UnixNetVConnection::net_write_io(NetHandler *nh)
   }
 
   // If it is not enabled,add to WaitList.
-  if (!s->enabled || s->vio.op != VIO::WRITE) {
+  if (!s->enabled || s->vio.op != VIO::Op::WRITE) {
     write_disable(nh, this);
     return;
   }
@@ -1099,14 +1099,14 @@ UnixNetVConnection::mainEvent(int event, Event *e)
     return EVENT_DONE;
   }
 
-  if (read.vio.op == VIO::READ && !(f.shutdown & NetEvent::SHUTDOWN_READ)) {
+  if (read.vio.op == VIO::Op::READ && !(f.shutdown & NetEvent::SHUTDOWN_READ)) {
     reader_cont = read.vio.cont;
     if (read_signal_and_update(signal_event, this) == EVENT_DONE) {
       return EVENT_DONE;
     }
   }
 
-  if (!*signal_timeout_at && !closed && write.vio.op == VIO::WRITE && !(f.shutdown & NetEvent::SHUTDOWN_WRITE) &&
+  if (!*signal_timeout_at && !closed && write.vio.op == VIO::Op::WRITE && !(f.shutdown & NetEvent::SHUTDOWN_WRITE) &&
       reader_cont != write.vio.cont && writer_cont == write.vio.cont) {
     if (write_signal_and_update(signal_event, this) == EVENT_DONE) {
       return EVENT_DONE;

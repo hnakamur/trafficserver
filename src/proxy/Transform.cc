@@ -181,8 +181,8 @@ TransformTerminus::handle_event(int event, void *edata)
       delete m_tvc;
       return 0;
     }
-  } else if (m_write_vio.op == VIO::WRITE) {
-    if (m_read_vio.op == VIO::NONE) {
+  } else if (m_write_vio.op == VIO::Op::WRITE) {
+    if (m_read_vio.op == VIO::Op::NONE) {
       if (!m_called_user) {
         Dbg(dbg_ctl_transform, "TransformVConnection calling user: %d %d [0x%lx] [0x%lx]", m_event_count, event, (long)m_tvc,
             (long)m_tvc->m_cont);
@@ -209,7 +209,7 @@ TransformTerminus::handle_event(int event, void *edata)
         return 0;
       }
 
-      if (m_write_vio.op == VIO::NONE) {
+      if (m_write_vio.op == VIO::Op::NONE) {
         return 0;
       }
 
@@ -298,7 +298,7 @@ TransformTerminus::handle_event(int event, void *edata)
 VIO *
 TransformTerminus::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *buf)
 {
-  m_read_vio.op = VIO::READ;
+  m_read_vio.op = VIO::Op::READ;
   m_read_vio.set_continuation(c);
   m_read_vio.nbytes    = nbytes;
   m_read_vio.ndone     = 0;
@@ -333,7 +333,7 @@ TransformTerminus::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader *
 {
   // In the process of eliminating 'owner' mode so asserting against it
   ink_assert(!owner);
-  m_write_vio.op = VIO::WRITE;
+  m_write_vio.op = VIO::Op::WRITE;
   m_write_vio.set_continuation(c);
   m_write_vio.nbytes    = nbytes;
   m_write_vio.ndone     = 0;
@@ -379,10 +379,10 @@ TransformTerminus::do_io_close(int error)
     m_closed = TS_VC_CLOSE_NORMAL;
   }
 
-  m_read_vio.op = VIO::NONE;
+  m_read_vio.op = VIO::Op::NONE;
   m_read_vio.buffer.clear();
 
-  m_write_vio.op = VIO::NONE;
+  m_write_vio.op = VIO::Op::NONE;
   m_write_vio.buffer.clear();
 
   this_ethread()->schedule_imm_local(this);
@@ -395,12 +395,12 @@ void
 TransformTerminus::do_io_shutdown(ShutdownHowTo_t howto)
 {
   if ((howto == IO_SHUTDOWN_READ) || (howto == IO_SHUTDOWN_READWRITE)) {
-    m_read_vio.op = VIO::NONE;
+    m_read_vio.op = VIO::Op::NONE;
     m_read_vio.buffer.clear();
   }
 
   if ((howto == IO_SHUTDOWN_WRITE) || (howto == IO_SHUTDOWN_READWRITE)) {
-    m_write_vio.op = VIO::NONE;
+    m_write_vio.op = VIO::Op::NONE;
     m_write_vio.buffer.clear();
   }
 }
@@ -717,7 +717,7 @@ NullTransform::handle_event(int event, void *edata)
         return 0;
       }
 
-      if (m_write_vio.op == VIO::NONE) {
+      if (m_write_vio.op == VIO::Op::NONE) {
         m_output_vio->nbytes = m_write_vio.ndone;
         m_output_vio->reenable();
         return 0;
@@ -880,7 +880,7 @@ RangeTransform::handle_event(int event, void *edata)
         return 0;
       }
 
-      if (m_write_vio.op == VIO::NONE) {
+      if (m_write_vio.op == VIO::Op::NONE) {
         m_output_vio->nbytes = m_done;
         m_output_vio->reenable();
         return 0;

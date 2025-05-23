@@ -56,7 +56,8 @@ class ProxyMutex;
 class VIO
 {
 public:
-  explicit VIO(int aop);
+  enum class Op;
+  explicit VIO(Op aop);
   VIO();
   ~VIO() {}
 
@@ -128,7 +129,7 @@ public:
   void disable();
   bool is_disabled() const;
 
-  enum {
+  enum class Op {
     NONE = 0,
     READ,
     WRITE,
@@ -167,7 +168,7 @@ public:
     The type of operation that this VIO represents.
 
   */
-  int op = VIO::NONE;
+  Op op = VIO::Op::NONE;
 
   // This is a little odd location, but this saves on padding, and an entire cache line
 private:

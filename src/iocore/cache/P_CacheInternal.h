@@ -201,7 +201,7 @@ free_CacheVCCommon(CacheVC *cont)
   cont->vector.clear();
   cont->vio.buffer.clear();
   cont->vio.mutex.clear();
-  if (cont->vio.op == VIO::WRITE && cont->alternate_index == CACHE_ALT_INDEX_DEFAULT) {
+  if (cont->vio.op == VIO::Op::WRITE && cont->alternate_index == CACHE_ALT_INDEX_DEFAULT) {
     cont->alternate.destroy();
   } else {
     cont->alternate.clear();
@@ -298,7 +298,7 @@ CacheVC::cancel_trigger()
 inline int
 CacheVC::die()
 {
-  if (vio.op == VIO::WRITE) {
+  if (vio.op == VIO::Op::WRITE) {
     if (f.update && total_len) {
       alternate.object_key_set(earliest_key);
     }

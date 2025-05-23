@@ -57,7 +57,7 @@ struct CacheVC : public CacheVConnection {
   bool
   is_ram_cache_hit() const override
   {
-    ink_assert(vio.op == VIO::READ);
+    ink_assert(vio.op == VIO::Op::READ);
     return !f.not_from_ram_cache;
   }
 
@@ -120,7 +120,7 @@ struct CacheVC : public CacheVConnection {
   bool
   is_compressed_in_ram() const override
   {
-    ink_assert(vio.op == VIO::READ);
+    ink_assert(vio.op == VIO::Op::READ);
     return f.compressed_in_ram;
   }
 
