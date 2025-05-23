@@ -27,6 +27,7 @@
 #include "iocore/cache/CacheDefs.h"
 #include "iocore/eventsystem/Continuation.h"
 #include "iocore/aio/AIO.h"
+#include "tscore/ink_align.h"
 #include "tscore/Version.h"
 
 #include <cstdint>
@@ -235,6 +236,12 @@ static inline uint64_t
 dir_approx_size(const Dir *e)
 {
   return static_cast<uint64_t>(dir_size(e) + 1) * DIR_BLOCK_SIZE(dir_big(e));
+}
+
+static inline uint64_t
+ROUND_TO(uint64_t x, uint64_t y)
+{
+  return INK_ALIGN(x, y);
 }
 
 #define round_to_approx_dir_size(_s)      \

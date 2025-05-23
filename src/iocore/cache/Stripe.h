@@ -41,7 +41,6 @@
 #define ROUND_TO_STORE_BLOCK(_x) INK_ALIGN((_x), STORE_BLOCK_SIZE)
 #define ROUND_TO_CACHE_BLOCK(_x) INK_ALIGN((_x), CACHE_BLOCK_SIZE)
 #define ROUND_TO_SECTOR(_p, _x)  INK_ALIGN((_x), _p->sector_size)
-#define ROUND_TO(_x, _y)         INK_ALIGN((_x), (_y))
 
 static constexpr auto STRIPE_BLOCK_SIZE = 1024 * 1024 * 128; // 128MB
 static constexpr auto MIN_STRIPE_SIZE   = STRIPE_BLOCK_SIZE;
