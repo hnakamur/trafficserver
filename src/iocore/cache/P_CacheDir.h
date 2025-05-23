@@ -238,18 +238,21 @@ dir_approx_size(const Dir *e)
   return static_cast<uint64_t>(dir_size(e) + 1) * DIR_BLOCK_SIZE(dir_big(e));
 }
 
-static inline uint64_t
-ROUND_TO(uint64_t x, uint64_t y)
+static inline uint32_t
+ROUND_TO(uint32_t x, uint32_t y)
 {
   return INK_ALIGN(x, y);
 }
 
-#define round_to_approx_dir_size(_s)      \
-  (_s <= DIR_SIZE_WITH_BLOCK(0) ?         \
-     ROUND_TO(_s, DIR_BLOCK_SIZE(0)) :    \
-     (_s <= DIR_SIZE_WITH_BLOCK(1) ?      \
-        ROUND_TO(_s, DIR_BLOCK_SIZE(1)) : \
-        (_s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(_s, DIR_BLOCK_SIZE(2)) : ROUND_TO(_s, DIR_BLOCK_SIZE(3)))))
+static inline uint32_t
+round_to_approx_dir_size(uint32_t s)
+{
+  return (s <= DIR_SIZE_WITH_BLOCK(0) ?
+            ROUND_TO(s, DIR_BLOCK_SIZE(0)) :
+            (s <= DIR_SIZE_WITH_BLOCK(1) ?
+               ROUND_TO(s, DIR_BLOCK_SIZE(1)) :
+               (s <= DIR_SIZE_WITH_BLOCK(2) ? ROUND_TO(s, DIR_BLOCK_SIZE(2)) : ROUND_TO(s, DIR_BLOCK_SIZE(3)))));
+}
 
 static inline uint32_t
 dir_tag(const Dir *e)
