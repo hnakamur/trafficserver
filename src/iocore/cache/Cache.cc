@@ -309,7 +309,7 @@ Cache::lookup(Continuation *cont, const CacheKey *key, CacheFragType type, std::
   StripeSM *stripe = key_to_stripe(key, hostname);
   CacheVC  *c      = new_CacheVC(cont);
   SET_CONTINUATION_HANDLER(c, &CacheVC::openReadStartHead);
-  c->vio.op  = VIO::READ;
+  c->vio.op  = VIO::Op::READ;
   c->op_type = static_cast<int>(CacheOpType::Lookup);
   ts::Metrics::Gauge::increment(cache_rsb.status[c->op_type].active);
   ts::Metrics::Gauge::increment(stripe->cache_vol->vol_rsb.status[c->op_type].active);
@@ -345,7 +345,7 @@ Cache::open_read(Continuation *cont, const CacheKey *key, CacheFragType type, st
     if (!lock.is_locked() || (od = stripe->open_read(key)) || dir_probe(key, stripe, &result, &last_collision)) {
       c = new_CacheVC(cont);
       SET_CONTINUATION_HANDLER(c, &CacheVC::openReadStartHead);
-      c->vio.op  = VIO::READ;
+      c->vio.op  = VIO::Op::READ;
       c->op_type = static_cast<int>(CacheOpType::Read);
       ts::Metrics::Gauge::increment(cache_rsb.status[c->op_type].active);
       ts::Metrics::Gauge::increment(stripe->cache_vol->vol_rsb.status[c->op_type].active);
@@ -408,7 +408,7 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheFragType frag_ty
   intptr_t res = 0;
   CacheVC *c   = new_CacheVC(cont);
   SCOPED_MUTEX_LOCK(lock, c->mutex, this_ethread());
-  c->vio.op        = VIO::WRITE;
+  c->vio.op        = VIO::Op::WRITE;
   c->op_type       = static_cast<int>(CacheOpType::Write);
   c->stripe        = key_to_stripe(key, hostname);
   StripeSM *stripe = c->stripe;
@@ -485,7 +485,7 @@ Cache::remove(Continuation *cont, const CacheKey *key, CacheFragType type, std::
   mutex = cont->mutex;
 
   CacheVC *c   = new_CacheVC(cont);
-  c->vio.op    = VIO::NONE;
+  c->vio.op    = VIO::Op::NONE;
   c->frag_type = type;
   c->op_type   = static_cast<int>(CacheOpType::Remove);
   ts::Metrics::Gauge::increment(cache_rsb.status[c->op_type].active);
@@ -549,7 +549,7 @@ Cache::open_read(Continuation *cont, const CacheKey *key, CacheHTTPHdr *request,
       c            = new_CacheVC(cont);
       c->first_key = c->key = c->earliest_key = *key;
       c->stripe                               = stripe;
-      c->vio.op                               = VIO::READ;
+      c->vio.op                               = VIO::Op::READ;
       c->op_type                              = static_cast<int>(CacheOpType::Read);
       ts::Metrics::Gauge::increment(cache_rsb.status[c->op_type].active);
       ts::Metrics::Gauge::increment(stripe->cache_vol->vol_rsb.status[c->op_type].active);
@@ -615,7 +615,7 @@ Cache::open_write(Continuation *cont, const CacheKey *key, CacheHTTPInfo *info, 
   intptr_t err        = 0;
   int      if_writers = reinterpret_cast<uintptr_t>(info) == CACHE_ALLOW_MULTIPLE_WRITES;
   CacheVC *c          = new_CacheVC(cont);
-  c->vio.op           = VIO::WRITE;
+  c->vio.op           = VIO::Op::WRITE;
   c->first_key        = *key;
   /*
      The transition from single fragment document to a multi-fragment document

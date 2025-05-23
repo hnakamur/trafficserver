@@ -852,7 +852,7 @@ CacheVC::openReadStartEarliest(int /* event ATS_UNUSED */, Event * /* e ATS_UNUS
           earliest_key.clear();
 
           // set up this VC as a alternate delete write_vc
-          vio.op          = VIO::WRITE;
+          vio.op          = VIO::Op::WRITE;
           total_len       = 0;
           f.update        = 1;
           alternate_index = CACHE_ALT_REMOVED;
@@ -921,7 +921,7 @@ CacheVC::openReadVecWrite(int /* event ATS_UNUSED */, Event * /* e ATS_UNUSED */
       f.update        = 0;
       alternate_index = CACHE_ALT_INDEX_DEFAULT;
       f.use_first_key = 0;
-      vio.op          = VIO::READ;
+      vio.op          = VIO::Op::READ;
       dir_overwrite(&first_key, stripe, &dir, &od->first_dir);
       if (od->move_resident_alt) {
         dir_insert(&od->single_doc_key, stripe, &od->single_doc_dir);

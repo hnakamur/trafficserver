@@ -128,7 +128,7 @@ HQTransaction::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *buf)
   this->_read_vio.nbytes    = nbytes;
   this->_read_vio.ndone     = 0;
   this->_read_vio.vc_server = this;
-  this->_read_vio.op        = VIO::READ;
+  this->_read_vio.op        = VIO::Op::READ;
 
   if (buf) {
     this->_process_read_vio();
@@ -152,7 +152,7 @@ HQTransaction::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader *buf,
   this->_write_vio.nbytes    = nbytes;
   this->_write_vio.ndone     = 0;
   this->_write_vio.vc_server = this;
-  this->_write_vio.op        = VIO::WRITE;
+  this->_write_vio.op        = VIO::Op::WRITE;
 
   if (c != nullptr && nbytes > 0) {
     // TODO Return nullptr if the stream is not on writable state
@@ -168,12 +168,12 @@ HQTransaction::do_io_close(int /* lerrno ATS_UNUSED */)
 {
   this->_read_vio.buffer.clear();
   this->_read_vio.nbytes = 0;
-  this->_read_vio.op     = VIO::NONE;
+  this->_read_vio.op     = VIO::Op::NONE;
   this->_read_vio.cont   = nullptr;
 
   this->_write_vio.buffer.clear();
   this->_write_vio.nbytes = 0;
-  this->_write_vio.op     = VIO::NONE;
+  this->_write_vio.op     = VIO::Op::NONE;
   this->_write_vio.cont   = nullptr;
 }
 
@@ -186,14 +186,14 @@ HQTransaction::do_io_shutdown(ShutdownHowTo_t /* howto ATS_UNUSED */)
 void
 HQTransaction::reenable(VIO *vio)
 {
-  if (vio->op == VIO::READ) {
+  if (vio->op == VIO::Op::READ) {
     int64_t len = this->_process_read_vio();
     this->_info.read_vio->reenable();
 
     if (len > 0) {
       this->_signal_read_event();
     }
-  } else if (vio->op == VIO::WRITE) {
+  } else if (vio->op == VIO::Op::WRITE) {
     int64_t len = this->_process_write_vio();
     this->_info.write_vio->reenable();
 
@@ -371,7 +371,7 @@ HQTransaction::_signal_event(int event, Event *edata)
 void
 HQTransaction::_signal_read_event()
 {
-  if (this->_read_vio.cont == nullptr || this->_read_vio.op == VIO::NONE) {
+  if (this->_read_vio.cont == nullptr || this->_read_vio.op == VIO::Op::NONE) {
     return;
   }
   int event = this->_read_vio.nbytes == INT64_MAX ? VC_EVENT_READ_READY : VC_EVENT_READ_COMPLETE;
@@ -388,7 +388,7 @@ HQTransaction::_signal_read_event()
 void
 HQTransaction::_signal_write_event()
 {
-  if (this->_write_vio.cont == nullptr || this->_write_vio.op == VIO::NONE) {
+  if (this->_write_vio.cont == nullptr || this->_write_vio.op == VIO::Op::NONE) {
     return;
   }
   int event = this->_write_vio.ntodo() ? VC_EVENT_WRITE_READY : VC_EVENT_WRITE_COMPLETE;
@@ -577,7 +577,7 @@ Http3Transaction::is_response_body_sent() const
 int64_t
 Http3Transaction::_process_read_vio()
 {
-  if (this->_info.read_vio->cont == nullptr || this->_info.read_vio->op == VIO::NONE) {
+  if (this->_info.read_vio->cont == nullptr || this->_info.read_vio->op == VIO::Op::NONE) {
     return 0;
   }
 
@@ -598,7 +598,7 @@ Http3Transaction::_process_read_vio()
 int64_t
 Http3Transaction::_process_write_vio()
 {
-  if (this->_info.write_vio->cont == nullptr || this->_info.write_vio->op == VIO::NONE) {
+  if (this->_info.write_vio->cont == nullptr || this->_info.write_vio->op == VIO::Op::NONE) {
     return 0;
   }
 
@@ -758,7 +758,7 @@ Http09Transaction::state_stream_closed(int event, Event *data)
 int64_t
 Http09Transaction::_process_read_vio()
 {
-  if (this->_read_vio.cont == nullptr || this->_read_vio.op == VIO::NONE) {
+  if (this->_read_vio.cont == nullptr || this->_read_vio.op == VIO::Op::NONE) {
     return 0;
   }
 
@@ -838,7 +838,7 @@ static constexpr char http_1_1_version[] = "HTTP/1.1";
 int64_t
 Http09Transaction::_process_write_vio()
 {
-  if (this->_write_vio.cont == nullptr || this->_write_vio.op == VIO::NONE) {
+  if (this->_write_vio.cont == nullptr || this->_write_vio.op == VIO::Op::NONE) {
     return 0;
   }
 

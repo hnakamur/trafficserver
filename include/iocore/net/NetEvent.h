@@ -44,7 +44,7 @@ struct NetState {
   int             in_enabled_list = 0;
   int             triggered       = 0;
 
-  NetState() : vio(VIO::NONE) {}
+  NetState() : vio(VIO::Op::NONE) {}
 };
 
 // this class is used to NetHandler to hide some detail of NetEvent.

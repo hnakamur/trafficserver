@@ -70,7 +70,7 @@ INKVConnInternal::destroy()
 VIO *
 INKVConnInternal::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *buf)
 {
-  m_read_vio.op = VIO::READ;
+  m_read_vio.op = VIO::Op::READ;
   m_read_vio.set_continuation(c);
   m_read_vio.nbytes    = nbytes;
   m_read_vio.ndone     = 0;
@@ -93,7 +93,7 @@ VIO *
 INKVConnInternal::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader *buf, bool owner)
 {
   ink_assert(!owner);
-  m_write_vio.op = VIO::WRITE;
+  m_write_vio.op = VIO::Op::WRITE;
   m_write_vio.set_continuation(c);
   m_write_vio.nbytes    = nbytes;
   m_write_vio.ndone     = 0;
@@ -136,10 +136,10 @@ INKVConnInternal::do_io_close(int error)
     m_closed = TS_VC_CLOSE_NORMAL;
   }
 
-  m_read_vio.op = VIO::NONE;
+  m_read_vio.op = VIO::Op::NONE;
   m_read_vio.buffer.clear();
 
-  m_write_vio.op = VIO::NONE;
+  m_write_vio.op = VIO::Op::NONE;
   m_write_vio.buffer.clear();
 
   if (m_output_vc) {
@@ -154,12 +154,12 @@ void
 INKVConnInternal::do_io_shutdown(ShutdownHowTo_t howto)
 {
   if ((howto == IO_SHUTDOWN_READ) || (howto == IO_SHUTDOWN_READWRITE)) {
-    m_read_vio.op = VIO::NONE;
+    m_read_vio.op = VIO::Op::NONE;
     m_read_vio.buffer.clear();
   }
 
   if ((howto == IO_SHUTDOWN_WRITE) || (howto == IO_SHUTDOWN_READWRITE)) {
-    m_write_vio.op = VIO::NONE;
+    m_write_vio.op = VIO::Op::NONE;
     m_write_vio.buffer.clear();
   }
 

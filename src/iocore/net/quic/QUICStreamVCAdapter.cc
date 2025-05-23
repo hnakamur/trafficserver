@@ -61,7 +61,7 @@ int64_t
 QUICStreamVCAdapter::write(QUICOffset offset, const uint8_t *data, uint64_t data_length, bool fin)
 {
   uint64_t bytes_added = -1;
-  if (this->_read_vio.op == VIO::READ) {
+  if (this->_read_vio.op == VIO::Op::READ) {
     SCOPED_MUTEX_LOCK(lock, this->_read_vio.mutex, this_ethread());
 
     bytes_added = this->_read_vio.get_writer()->write(data, data_length);
@@ -80,7 +80,7 @@ QUICStreamVCAdapter::_read(size_t len)
 {
   Ptr<IOBufferBlock> block;
 
-  if (this->_write_vio.op == VIO::WRITE) {
+  if (this->_write_vio.op == VIO::Op::WRITE) {
     SCOPED_MUTEX_LOCK(lock, this->_write_vio.mutex, this_ethread());
 
     IOBufferReader *reader = this->_write_vio.get_reader();
@@ -99,7 +99,7 @@ QUICStreamVCAdapter::_read(size_t len)
 bool
 QUICStreamVCAdapter::is_eos()
 {
-  if (this->_write_vio.op == VIO::WRITE) {
+  if (this->_write_vio.op == VIO::Op::WRITE) {
     SCOPED_MUTEX_LOCK(lock, this->_write_vio.mutex, this_ethread());
 
     if (this->_write_vio.nbytes == INT64_MAX) {
@@ -117,7 +117,7 @@ QUICStreamVCAdapter::is_eos()
 uint64_t
 QUICStreamVCAdapter::unread_len()
 {
-  if (this->_write_vio.op == VIO::WRITE) {
+  if (this->_write_vio.op == VIO::Op::WRITE) {
     SCOPED_MUTEX_LOCK(lock, this->_write_vio.mutex, this_ethread());
     return this->_write_vio.get_reader()->block_read_avail();
   } else {
@@ -128,7 +128,7 @@ QUICStreamVCAdapter::unread_len()
 uint64_t
 QUICStreamVCAdapter::read_len()
 {
-  if (this->_write_vio.op == VIO::WRITE) {
+  if (this->_write_vio.op == VIO::Op::WRITE) {
     SCOPED_MUTEX_LOCK(lock, this->_write_vio.mutex, this_ethread());
     return this->_write_vio.ndone;
   } else {
@@ -139,7 +139,7 @@ QUICStreamVCAdapter::read_len()
 uint64_t
 QUICStreamVCAdapter::total_len()
 {
-  if (this->_write_vio.op == VIO::WRITE) {
+  if (this->_write_vio.op == VIO::Op::WRITE) {
     SCOPED_MUTEX_LOCK(lock, this->_write_vio.mutex, this_ethread());
     return this->_write_vio.nbytes;
   } else {
@@ -153,7 +153,7 @@ QUICStreamVCAdapter::total_len()
 void
 QUICStreamVCAdapter::encourge_read()
 {
-  if (this->_read_vio.op == VIO::READ) {
+  if (this->_read_vio.op == VIO::Op::READ) {
     SCOPED_MUTEX_LOCK(lock, this->_read_vio.mutex, this_ethread());
 
     if (this->_read_vio.cont == nullptr) {
@@ -178,7 +178,7 @@ QUICStreamVCAdapter::encourge_read()
 void
 QUICStreamVCAdapter::encourge_write()
 {
-  if (this->_write_vio.op == VIO::WRITE) {
+  if (this->_write_vio.op == VIO::Op::WRITE) {
     SCOPED_MUTEX_LOCK(lock, this->_write_vio.mutex, this_ethread());
 
     if (this->_write_vio.cont == nullptr) {
@@ -204,7 +204,7 @@ QUICStreamVCAdapter::encourge_write()
 void
 QUICStreamVCAdapter::notify_eos()
 {
-  if (this->_read_vio.op == VIO::READ) {
+  if (this->_read_vio.op == VIO::Op::READ) {
     if (this->_read_vio.cont == nullptr) {
       return;
     }
@@ -271,7 +271,7 @@ QUICStreamVCAdapter::do_io_read(Continuation *c, int64_t nbytes, MIOBuffer *buf)
   this->_read_vio.nbytes    = nbytes;
   this->_read_vio.ndone     = 0;
   this->_read_vio.vc_server = this;
-  this->_read_vio.op        = VIO::READ;
+  this->_read_vio.op        = VIO::Op::READ;
 
   return &this->_read_vio;
 }
@@ -290,7 +290,7 @@ QUICStreamVCAdapter::do_io_write(Continuation *c, int64_t nbytes, IOBufferReader
   this->_write_vio.nbytes    = nbytes;
   this->_write_vio.ndone     = 0;
   this->_write_vio.vc_server = this;
-  this->_write_vio.op        = VIO::WRITE;
+  this->_write_vio.op        = VIO::Op::WRITE;
 
   return &this->_write_vio;
 }
@@ -302,13 +302,13 @@ QUICStreamVCAdapter::do_io_close(int /* lerrno ATS_UNUSED */)
 
   this->_read_vio.buffer.clear();
   this->_read_vio.nbytes    = 0;
-  this->_read_vio.op        = VIO::NONE;
+  this->_read_vio.op        = VIO::Op::NONE;
   this->_read_vio.cont      = nullptr;
   this->_read_vio.vc_server = nullptr;
 
   this->_write_vio.buffer.clear();
   this->_write_vio.nbytes    = 0;
-  this->_write_vio.op        = VIO::NONE;
+  this->_write_vio.op        = VIO::Op::NONE;
   this->_write_vio.cont      = nullptr;
   this->_write_vio.vc_server = nullptr;
 }
