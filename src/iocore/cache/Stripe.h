@@ -40,7 +40,6 @@
 
 #define ROUND_TO_STORE_BLOCK(_x) INK_ALIGN((_x), STORE_BLOCK_SIZE)
 #define ROUND_TO_CACHE_BLOCK(_x) INK_ALIGN((_x), CACHE_BLOCK_SIZE)
-#define ROUND_TO_SECTOR(_p, _x)  INK_ALIGN((_x), _p->sector_size)
 
 static constexpr auto STRIPE_BLOCK_SIZE = 1024 * 1024 * 128; // 128MB
 static constexpr auto MIN_STRIPE_SIZE   = STRIPE_BLOCK_SIZE;
@@ -156,6 +155,12 @@ private:
 };
 
 #define dir_index(_e, _i) ((Dir *)((char *)(_e)->directory.dir + (SIZEOF_DIR * (_i))))
+
+inline uint32_t
+ROUND_TO_SECTOR(const Stripe *p, uint32_t x)
+{
+  return INK_ALIGN(x, p->sector_size);
+}
 
 inline uint32_t
 Stripe::round_to_approx_size(uint32_t l) const
