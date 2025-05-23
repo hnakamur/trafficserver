@@ -53,12 +53,12 @@ make_span_error(int error)
 {
   switch (error) {
   case ENOENT:
-    return SPAN_ERROR_NOT_FOUND;
+    return span_error_t::NOT_FOUND;
   case EPERM: /* fallthrough */
   case EACCES:
-    return SPAN_ERROR_NO_ACCESS;
+    return span_error_t::NO_ACCESS;
   default:
-    return SPAN_ERROR_UNKNOWN;
+    return span_error_t::UNKNOWN;
   }
 }
 
@@ -163,19 +163,19 @@ const char *
 Span::errorstr(span_error_t serr)
 {
   switch (serr) {
-  case SPAN_ERROR_OK:
+  case span_error_t::OK:
     return "no error";
-  case SPAN_ERROR_NOT_FOUND:
+  case span_error_t::NOT_FOUND:
     return "file not found";
-  case SPAN_ERROR_NO_ACCESS:
+  case span_error_t::NO_ACCESS:
     return "unable to access file";
-  case SPAN_ERROR_MISSING_SIZE:
+  case span_error_t::MISSING_SIZE:
     return "missing size specification";
-  case SPAN_ERROR_UNSUPPORTED_DEVTYPE:
+  case span_error_t::UNSUPPORTED_DEVTYPE:
     return "unsupported cache file type";
-  case SPAN_ERROR_MEDIA_PROBE:
+  case span_error_t::MEDIA_PROBE:
     return "failed to probe device geometry";
-  case SPAN_ERROR_UNKNOWN: /* fallthrough */
+  case span_error_t::UNKNOWN: /* fallthrough */
   default:
     return "unknown error";
   }
@@ -391,7 +391,7 @@ Span::init(const char *path, int64_t size)
   if (S_ISDIR(sbuf.st_mode)) {
     if (size <= 0) {
       Warning("cache %s '%s' requires a size > 0", span_file_typename(sbuf.st_mode), path);
-      serr = SPAN_ERROR_MISSING_SIZE;
+      serr = span_error_t::MISSING_SIZE;
       goto fail;
     }
   }
@@ -408,7 +408,7 @@ Span::init(const char *path, int64_t size)
 #if defined(__linux__)
     if (major(sbuf.st_rdev) == RAW_MAJOR && minor(sbuf.st_rdev) == 0) {
       Warning("cache %s '%s' is the raw device control interface", span_file_typename(sbuf.st_mode), path);
-      serr = SPAN_ERROR_UNSUPPORTED_DEVTYPE;
+      serr = span_error_t::UNSUPPORTED_DEVTYPE;
       goto fail;
     }
 #endif
@@ -470,7 +470,7 @@ Span::init(const char *path, int64_t size)
     break;
 
   default:
-    serr = SPAN_ERROR_UNSUPPORTED_DEVTYPE;
+    serr = span_error_t::UNSUPPORTED_DEVTYPE;
     goto fail;
   }
 
