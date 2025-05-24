@@ -425,11 +425,11 @@ main([[maybe_unused]] int argc, const char **argv)
   init_pair(colorPair::border, COLOR_WHITE, COLOR_BLUE);
   //  mvchgat(0, 0, -1, A_BLINK, 1, nullptr);
 
-  enum Page {
+  enum class Page {
     MAIN_PAGE,
     RESPONSE_PAGE,
   };
-  Page   page     = MAIN_PAGE;
+  auto   page     = Page::MAIN_PAGE;
   string page_alt = "(r)esponse";
 
   int animation_index{0};
@@ -458,9 +458,9 @@ main([[maybe_unused]] int argc, const char **argv)
     attroff(COLOR_PAIR(colorPair::border));
     attroff(A_BOLD);
 
-    if (page == MAIN_PAGE) {
+    if (page == Page::MAIN_PAGE) {
       main_stats_page(stats);
-    } else if (page == RESPONSE_PAGE) {
+    } else if (page == Page::RESPONSE_PAGE) {
       response_code_page(stats);
     }
 
@@ -476,11 +476,11 @@ main([[maybe_unused]] int argc, const char **argv)
     case 'q':
       goto quit;
     case 'm':
-      page     = MAIN_PAGE;
+      page     = Page::MAIN_PAGE;
       page_alt = "(r)esponse";
       break;
     case 'r':
-      page     = RESPONSE_PAGE;
+      page     = Page::RESPONSE_PAGE;
       page_alt = "(m)ain";
       break;
     case 'a':
