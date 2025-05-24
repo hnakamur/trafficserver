@@ -788,11 +788,11 @@ enum HTTPMethod {
 };
 
 // Enum for URL schemes
-enum URLScheme {
-  SCHEME_HTTP,
-  SCHEME_HTTPS,
-  SCHEME_NONE,
-  SCHEME_OTHER,
+enum class URLScheme {
+  HTTP,
+  HTTPS,
+  NONE,
+  OTHER,
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1176,13 +1176,13 @@ update_methods(OriginStats *stat, int method, int size)
 ///////////////////////////////////////////////////////////////////////////////
 // Update the "schemes" stats for a particular record
 inline void
-update_schemes(OriginStats *stat, int scheme, int size)
+update_schemes(OriginStats *stat, URLScheme scheme, int size)
 {
-  if (SCHEME_HTTP == scheme) {
+  if (URLScheme::HTTP == scheme) {
     update_counter(stat->schemes.http, size);
-  } else if (SCHEME_HTTPS == scheme) {
+  } else if (URLScheme::HTTPS == scheme) {
     update_counter(stat->schemes.https, size);
-  } else if (SCHEME_NONE == scheme) {
+  } else if (URLScheme::NONE == scheme) {
     update_counter(stat->schemes.none, size);
   } else {
     update_counter(stat->schemes.other, size);
@@ -1310,7 +1310,7 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
     state   = P_STATE_ELAPSED;
     o_stats = nullptr;
     method  = METHOD_OTHER;
-    scheme  = SCHEME_OTHER;
+    scheme  = URLScheme::OTHER;
 
     while ((field = fieldlist->next(field))) {
       switch (state) {
@@ -1425,11 +1425,11 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
           if (HTTP_AS_INT == *reinterpret_cast<int *>(tok)) {
             tok += 4;
             if (':' == *tok) {
-              scheme   = SCHEME_HTTP;
+              scheme   = URLScheme::HTTP;
               tok     += 3;
               tok_len  = strlen(tok) + 7;
             } else if ('s' == *tok) {
-              scheme   = SCHEME_HTTPS;
+              scheme   = URLScheme::HTTPS;
               tok     += 4;
               tok_len  = strlen(tok) + 8;
             } else {
@@ -1437,7 +1437,7 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
             }
           } else {
             if ('/' == *tok) {
-              scheme = SCHEME_NONE;
+              scheme = URLScheme::NONE;
             }
             tok_len = strlen(tok);
           }
@@ -1454,7 +1454,7 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         } else {
           // No method given
           if ('/' == *read_from) {
-            scheme = SCHEME_NONE;
+            scheme = URLScheme::NONE;
           }
           tok_len = strlen(read_from);
         }
