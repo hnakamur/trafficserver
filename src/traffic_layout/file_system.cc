@@ -252,13 +252,13 @@ ts_copy_function(const char *src_path, const struct stat *sb, int flag)
     }
     // hardlink bin executable
     if (sb->st_mode & S_IEXEC) {
-      if (copy_style == SOFT) {
+      if (copy_style == CopyStyle::SOFT) {
         if (symlink(src_path, dst_path.c_str()) != 0 && errno != EEXIST) {
           ink_warning("failed to create symlink - %s", strerror(errno));
         } else {
           return 0;
         }
-      } else if (copy_style == HARD) {
+      } else if (copy_style == CopyStyle::HARD) {
         if (link(src_path, dst_path.c_str()) != 0 && errno != EEXIST) {
           ink_warning("failed to create hard link - %s", strerror(errno));
         } else {
