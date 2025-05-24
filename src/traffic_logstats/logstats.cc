@@ -757,20 +757,7 @@ struct ExitStatus {
 };
 
 // Enum for parsing a log line
-enum ParseStates {
-  P_STATE_ELAPSED,
-  P_STATE_IP,
-  P_STATE_RESULT,
-  P_STATE_CODE,
-  P_STATE_SIZE,
-  P_STATE_METHOD,
-  P_STATE_URL,
-  P_STATE_RFC931,
-  P_STATE_HIERARCHY,
-  P_STATE_PEER,
-  P_STATE_TYPE,
-  P_STATE_END
-};
+enum class ParseState { ELAPSED, IP, RESULT, CODE, SIZE, METHOD, URL, RFC931, HIERARCHY, PEER, TYPE, END };
 
 // Enum for HTTP methods
 enum HTTPMethod {
@@ -1262,7 +1249,7 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
   LogEntryHeader   *entry;
   LogBufferIterator buf_iter(buf_header);
   LogField         *field = nullptr;
-  ParseStates       state;
+  ParseState        state;
 
   char *read_from;
   char *tok;
@@ -1307,21 +1294,21 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
       break;
     }
 
-    state   = P_STATE_ELAPSED;
+    state   = ParseState::ELAPSED;
     o_stats = nullptr;
     method  = METHOD_OTHER;
     scheme  = URLScheme::OTHER;
 
     while ((field = fieldlist->next(field))) {
       switch (state) {
-      case P_STATE_ELAPSED:
-        state      = P_STATE_IP;
+      case ParseState::ELAPSED:
+        state      = ParseState::IP;
         elapsed    = *((int64_t *)(read_from));
         read_from += INK_MIN_ALIGN;
         break;
 
-      case P_STATE_IP:
-        state = P_STATE_RESULT;
+      case ParseState::IP:
+        state = ParseState::RESULT;
         // Just skip the IP, we no longer assume it's always the same.
         {
           LogFieldIp *ip  = reinterpret_cast<LogFieldIp *>(read_from);
@@ -1337,36 +1324,36 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         }
         break;
 
-      case P_STATE_RESULT:
-        state      = P_STATE_CODE;
+      case ParseState::RESULT:
+        state      = ParseState::CODE;
         result     = *((int64_t *)(read_from));
         read_from += INK_MIN_ALIGN;
         if ((result < 32) || (result > 255)) {
           flag  = 1;
-          state = P_STATE_END;
+          state = ParseState::END;
         }
         break;
 
-      case P_STATE_CODE:
-        state      = P_STATE_SIZE;
+      case ParseState::CODE:
+        state      = ParseState::SIZE;
         http_code  = *((int64_t *)(read_from));
         read_from += INK_MIN_ALIGN;
         if ((http_code < 0) || (http_code > 999)) {
           flag  = 1;
-          state = P_STATE_END;
+          state = ParseState::END;
         }
         break;
 
-      case P_STATE_SIZE:
+      case ParseState::SIZE:
         // Warning: This is not 64-bit safe, when converting the log format,
         // this needs to be fixed as well.
-        state      = P_STATE_METHOD;
+        state      = ParseState::METHOD;
         size       = *((int64_t *)(read_from));
         read_from += INK_MIN_ALIGN;
         break;
 
-      case P_STATE_METHOD:
-        state = P_STATE_URL;
+      case ParseState::METHOD:
+        state = ParseState::URL;
         flag  = 0;
 
         // Small optimization for common (3-4 char) cases
@@ -1413,8 +1400,8 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         }
         break;
 
-      case P_STATE_URL:
-        state = P_STATE_RFC931;
+      case ParseState::URL:
+        state = ParseState::RFC931;
         if (urls) {
           urls->add_stat(read_from, size, elapsed, result, http_code, cl.as_object);
         }
@@ -1464,8 +1451,8 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         }
         break;
 
-      case P_STATE_RFC931:
-        state = P_STATE_HIERARCHY;
+      case ParseState::RFC931:
+        state = ParseState::HIERARCHY;
 
         if (aggregate_per_userid) {
           if (!summary) {
@@ -1481,8 +1468,8 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         }
         break;
 
-      case P_STATE_HIERARCHY:
-        state = P_STATE_PEER;
+      case ParseState::HIERARCHY:
+        state = ParseState::PEER;
         hier  = *((int64_t *)(read_from));
         switch (static_cast<SquidHierarchyCode>(hier)) {
         case SquidHierarchyCode::NONE:
@@ -1533,8 +1520,8 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         read_from += INK_MIN_ALIGN;
         break;
 
-      case P_STATE_PEER:
-        state = P_STATE_TYPE;
+      case ParseState::PEER:
+        state = ParseState::TYPE;
         if ('-' == *read_from) {
           read_from += LogAccess::round_strlen(1 + 1);
         } else {
@@ -1542,8 +1529,8 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         }
         break;
 
-      case P_STATE_TYPE:
-        state = P_STATE_END;
+      case ParseState::TYPE:
+        state = ParseState::END;
         if (IMAG_AS_INT == *reinterpret_cast<int *>(read_from)) {
           update_counter(totals.content.image.total, size);
           if (o_stats != nullptr) {
@@ -1755,7 +1742,7 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         flag       = 0; // We exited this state without errors
         break;
 
-      case P_STATE_END:
+      case ParseState::END:
         // Nothing to do really
         if (flag) {
           parse_errors++;
