@@ -67,7 +67,7 @@ struct CacheInfo {
 
 class FileImpl
 {
-  enum {
+  enum class Mode {
     CLOSED = 0,
     READ   = 1,
     WRITE  = 2,
@@ -86,7 +86,7 @@ public:
 
 public:
   int    m_fd;
-  int    m_mode;
+  Mode   m_mode;
   char  *m_buf;
   size_t m_bufsize;
   size_t m_bufpos;
