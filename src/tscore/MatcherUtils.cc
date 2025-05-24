@@ -427,7 +427,7 @@ const matcher_tags socks_server_tags = {nullptr, nullptr, "dest_ip", nullptr, nu
 const char *
 parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
 {
-  enum pState {
+  enum class pState {
     FIND_LABEL,
     PARSE_LABEL,
     PARSE_VAL,
@@ -435,7 +435,7 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
     CONSUME,
   };
 
-  pState       state       = FIND_LABEL;
+  auto         state       = pState::FIND_LABEL;
   bool         inQuote     = false;
   char        *copyForward = nullptr;
   char        *copyFrom    = nullptr;
@@ -454,21 +454,21 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
 
   do {
     switch (state) {
-    case FIND_LABEL:
+    case pState::FIND_LABEL:
       if (!isspace(*s)) {
-        state = PARSE_LABEL;
+        state = pState::PARSE_LABEL;
         label = s;
       }
       s++;
       break;
-    case PARSE_LABEL:
+    case pState::PARSE_LABEL:
       if (*s == '=') {
         *s    = '\0';
-        state = START_PARSE_VAL;
+        state = pState::START_PARSE_VAL;
       }
       s++;
       break;
-    case START_PARSE_VAL:
+    case pState::START_PARSE_VAL:
       // Init state needed for parsing values
       copyForward = nullptr;
       copyFrom    = nullptr;
@@ -485,14 +485,14 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
       }
 
       if (inQuote == false && (isspace(*s) || *(s + 1) == '\0')) {
-        state = CONSUME;
+        state = pState::CONSUME;
       } else {
-        state = PARSE_VAL;
+        state = pState::PARSE_VAL;
       }
 
       s++;
       break;
-    case PARSE_VAL:
+    case pState::PARSE_VAL:
       if (inQuote == true) {
         if (*s == '\\') {
           // The next character is escaped
@@ -526,7 +526,7 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
             break;
           }
         } else if (*s == '"') {
-          state = CONSUME;
+          state = pState::CONSUME;
           *s    = '\0';
         }
       } else if ((*s == '\\' && ParseRules::is_digit(*(s + 1))) || !ParseRules::is_char(*s)) {
@@ -535,7 +535,7 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
         // right now ignore the entry
         return "Unrecognized encoding scheme";
       } else if (isspace(*s)) {
-        state = CONSUME;
+        state = pState::CONSUME;
         *s    = '\0';
       }
 
@@ -544,14 +544,14 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
       // If we are now at the end of the line,
       //   we need to consume final data
       if (*s == '\0') {
-        state = CONSUME;
+        state = pState::CONSUME;
       }
       break;
-    case CONSUME:
+    case pState::CONSUME:
       break;
     }
 
-    if (state == CONSUME) {
+    if (state == pState::CONSUME) {
       // See if there are any quote copy overs
       //   we've pushed into the future
       if (copyForward != nullptr) {
@@ -598,13 +598,13 @@ parseConfigLine(char *line, matcher_line *p_line, const matcher_tags *tags)
         return "Malformed line: Too many tokens";
       }
 
-      state = FIND_LABEL;
+      state = pState::FIND_LABEL;
     }
   } while (*s != '\0');
 
   p_line->num_el = num_el;
 
-  if (state != CONSUME && state != FIND_LABEL) {
+  if (state != pState::CONSUME && state != pState::FIND_LABEL) {
     return "Malformed entry";
   }
 
