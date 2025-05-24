@@ -526,40 +526,40 @@ ats_ip_getbestaddrinfo(const char *host, IpEndpoint *ip4, IpEndpoint *ip6)
 
     if (0 == zret) {
       // Walk the returned addresses and pick the "best".
-      enum {
+      enum class AddrType {
         NA, // Not an (IP) Address.
         LO, // Loopback.
         LL, // Link Local.
         PR, // Private.
         MC, // Multicast.
         GL  // Global.
-      } spot_type = NA,
-        ip4_type = NA, ip6_type = NA;
+      };
+      auto            spot_type = AddrType::NA, ip4_type = AddrType::NA, ip6_type = AddrType::NA;
       sockaddr const *ip4_src = nullptr;
       sockaddr const *ip6_src = nullptr;
 
       for (addrinfo *ai_spot = ai_result; ai_spot; ai_spot = ai_spot->ai_next) {
         sockaddr const *ai_ip = ai_spot->ai_addr;
         if (!ats_is_ip(ai_ip)) {
-          spot_type = NA;
+          spot_type = AddrType::NA;
         } else if (ats_is_ip_loopback(ai_ip)) {
-          spot_type = LO;
+          spot_type = AddrType::LO;
         } else if (ats_is_ip_linklocal(ai_ip)) {
-          spot_type = LL;
+          spot_type = AddrType::LL;
         } else if (ats_is_ip_private(ai_ip)) {
-          spot_type = PR;
+          spot_type = AddrType::PR;
         } else if (ats_is_ip_multicast(ai_ip)) {
-          spot_type = MC;
+          spot_type = AddrType::MC;
         } else {
-          spot_type = GL;
+          spot_type = AddrType::GL;
         }
 
-        if (spot_type == NA) {
+        if (spot_type == AddrType::NA) {
           continue; // Next!
         }
 
         if (ats_is_ip4(ai_ip)) {
-          if (spot_type > ip4_type) {
+          if (static_cast<int>(spot_type) > static_cast<int>(ip4_type)) {
             ip4_src  = ai_ip;
             ip4_type = spot_type;
           }
@@ -570,10 +570,10 @@ ats_ip_getbestaddrinfo(const char *host, IpEndpoint *ip4, IpEndpoint *ip6)
           }
         }
       }
-      if (ip4 && ip4_type > NA) {
+      if (ip4 && static_cast<int>(ip4_type) > static_cast<int>(AddrType::NA)) {
         ats_ip_copy(ip4, ip4_src);
       }
-      if (ip6 && ip6_type > NA) {
+      if (ip6 && static_cast<int>(ip6_type) > static_cast<int>(AddrType::NA)) {
         ats_ip_copy(ip6, ip6_src);
       }
       freeaddrinfo(ai_result); // free *after* the copy.
