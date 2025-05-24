@@ -254,11 +254,9 @@ open_output_file(char *output_file_p)
 int
 main(int /* argc ATS_UNUSED */, const char *argv[])
 {
-  enum {
-    NO_ERROR              = 0,
-    CMD_LINE_OPTION_ERROR = 1,
-    DATA_PROCESSING_ERROR = 2,
-  };
+  static constexpr auto NO_ERROR              = 0;
+  static constexpr auto CMD_LINE_OPTION_ERROR = 1;
+  static constexpr auto DATA_PROCESSING_ERROR = 2;
 
   // build the application information structure
   //
