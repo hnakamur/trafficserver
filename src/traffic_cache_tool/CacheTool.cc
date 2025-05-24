@@ -58,7 +58,7 @@ using ts::Doc;
 using ts::Megabytes;
 using ts::StripeMeta;
 
-enum { SILENT = 0, NORMAL, VERBOSE } Verbosity = NORMAL;
+enum class Verbosity { SILENT = 0, NORMAL, VERBOSE } Verbosity = Verbosity::NORMAL;
 extern int              cache_config_min_average_object_size;
 extern CacheStoreBlocks Vol_hash_alloc_size;
 extern int              OPEN_RW_FLAG;
@@ -389,7 +389,7 @@ VolumeAllocator::allocateFor(Span &span)
   static const int64_t SCALE        = 1000;
   int64_t              total_shares = 0;
 
-  if (Verbosity >= NORMAL) {
+  if (Verbosity >= Verbosity::NORMAL) {
     std::cout << "Allocating " << CacheStripeBlocks(round_down(span._len)).count() << " stripe blocks from span "
               << span._path.string() << std::endl;
   }
@@ -424,7 +424,7 @@ VolumeAllocator::allocateFor(Span &span)
       span_used    += n;
       total_shares -= v._shares;
       Errata z      = _cache.allocStripe(&span, v._config._idx, round_up(n));
-      if (Verbosity >= NORMAL) {
+      if (Verbosity >= Verbosity::NORMAL) {
         std::cout << "           " << n << " to volume " << v._config._idx << std::endl;
       }
       if (!z) {
@@ -432,17 +432,17 @@ VolumeAllocator::allocateFor(Span &span)
       }
     }
   }
-  if (Verbosity >= NORMAL) {
+  if (Verbosity >= Verbosity::NORMAL) {
     std::cout << "     Total " << span_used << std::endl;
   }
   if (OPEN_RW_FLAG) {
-    if (Verbosity >= NORMAL) {
+    if (Verbosity >= Verbosity::NORMAL) {
       std::cout << " Updating Header ... ";
     }
     zret = span.updateHeader();
   }
   _cache.dumpVolumes(); // debug
-  if (Verbosity >= NORMAL) {
+  if (Verbosity >= Verbosity::NORMAL) {
     if (zret) {
       std::cout << " Done" << std::endl;
     } else {
