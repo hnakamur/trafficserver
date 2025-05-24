@@ -760,19 +760,7 @@ struct ExitStatus {
 enum class ParseState { ELAPSED, IP, RESULT, CODE, SIZE, METHOD, URL, RFC931, HIERARCHY, PEER, TYPE, END };
 
 // Enum for HTTP methods
-enum HTTPMethod {
-  METHOD_OPTIONS,
-  METHOD_GET,
-  METHOD_HEAD,
-  METHOD_POST,
-  METHOD_PUT,
-  METHOD_DELETE,
-  METHOD_TRACE,
-  METHOD_CONNECT,
-  METHOD_PURGE,
-  METHOD_NONE,
-  METHOD_OTHER
-};
+enum class HTTPMethod { OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT, PURGE, NONE, OTHER };
 
 // Enum for URL schemes
 enum class URLScheme {
@@ -1110,47 +1098,47 @@ update_codes(OriginStats *stat, int code, int size)
 ///////////////////////////////////////////////////////////////////////////////
 // Update the "methods" stats for a particular record
 inline void
-update_methods(OriginStats *stat, int method, int size)
+update_methods(OriginStats *stat, HTTPMethod method, int size)
 {
   // We're so lopsided on GETs, so makes most sense to test 'out of order'.
   switch (method) {
-  case METHOD_GET:
+  case HTTPMethod::GET:
     update_counter(stat->methods.get, size);
     break;
 
-  case METHOD_OPTIONS:
+  case HTTPMethod::OPTIONS:
     update_counter(stat->methods.options, size);
     break;
 
-  case METHOD_HEAD:
+  case HTTPMethod::HEAD:
     update_counter(stat->methods.head, size);
     break;
 
-  case METHOD_POST:
+  case HTTPMethod::POST:
     update_counter(stat->methods.post, size);
     break;
 
-  case METHOD_PUT:
+  case HTTPMethod::PUT:
     update_counter(stat->methods.put, size);
     break;
 
-  case METHOD_DELETE:
+  case HTTPMethod::DELETE:
     update_counter(stat->methods.del, size);
     break;
 
-  case METHOD_TRACE:
+  case HTTPMethod::TRACE:
     update_counter(stat->methods.trace, size);
     break;
 
-  case METHOD_CONNECT:
+  case HTTPMethod::CONNECT:
     update_counter(stat->methods.connect, size);
     break;
 
-  case METHOD_PURGE:
+  case HTTPMethod::PURGE:
     update_counter(stat->methods.purge, size);
     break;
 
-  case METHOD_NONE:
+  case HTTPMethod::NONE:
     update_counter(stat->methods.none, size);
     break;
 
@@ -1296,7 +1284,7 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
 
     state   = ParseState::ELAPSED;
     o_stats = nullptr;
-    method  = METHOD_OTHER;
+    method  = HTTPMethod::OTHER;
     scheme  = URLScheme::OTHER;
 
     while ((field = fieldlist->next(field))) {
@@ -1359,31 +1347,31 @@ parse_log_buff(LogBufferHeader *buf_header, bool summary = false, bool aggregate
         // Small optimization for common (3-4 char) cases
         switch (*reinterpret_cast<int *>(read_from)) {
         case GET_AS_INT:
-          method     = METHOD_GET;
+          method     = HTTPMethod::GET;
           read_from += LogAccess::round_strlen(3 + 1);
           break;
         case PUT_AS_INT:
-          method     = METHOD_PUT;
+          method     = HTTPMethod::PUT;
           read_from += LogAccess::round_strlen(3 + 1);
           break;
         case HEAD_AS_INT:
-          method     = METHOD_HEAD;
+          method     = HTTPMethod::HEAD;
           read_from += LogAccess::round_strlen(4 + 1);
           break;
         case POST_AS_INT:
-          method     = METHOD_POST;
+          method     = HTTPMethod::POST;
           read_from += LogAccess::round_strlen(4 + 1);
           break;
         default:
           tok_len = strlen(read_from);
           if ((5 == tok_len) && (0 == strncmp(read_from, "PURGE", 5))) {
-            method = METHOD_PURGE;
+            method = HTTPMethod::PURGE;
           } else if ((6 == tok_len) && (0 == strncmp(read_from, "DELETE", 6))) {
-            method = METHOD_DELETE;
+            method = HTTPMethod::DELETE;
           } else if ((7 == tok_len) && (0 == strncmp(read_from, "OPTIONS", 7))) {
-            method = METHOD_OPTIONS;
+            method = HTTPMethod::OPTIONS;
           } else if ((1 == tok_len) && ('-' == *read_from)) {
-            method = METHOD_NONE;
+            method = HTTPMethod::NONE;
             flag   = 1; // No method, so no need to parse the URL
           } else {
             ptr = read_from;
