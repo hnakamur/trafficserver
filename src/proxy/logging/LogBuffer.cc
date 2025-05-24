@@ -49,9 +49,7 @@ struct FieldListCacheElement {
   char         *symbol_str;
 };
 
-enum {
-  FIELDLIST_CACHE_SIZE = 256,
-};
+static constexpr auto FIELDLIST_CACHE_SIZE = 256;
 
 FieldListCacheElement fieldlist_cache[FIELDLIST_CACHE_SIZE];
 int                   fieldlist_cache_entries = 0;
