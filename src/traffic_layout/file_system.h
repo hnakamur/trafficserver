@@ -30,7 +30,7 @@
 #define OPEN_MAX_FILE 256
 
 // full copy, hardlink, softlink
-enum CopyStyle { FULL, HARD, SOFT };
+enum class CopyStyle { FULL, HARD, SOFT };
 
 // append slash & remove slash of path for convenient use
 void append_slash(std::string &path);
@@ -50,4 +50,4 @@ bool filter_ts_directories(const std::string &dir, const std::string &dst_path);
 bool filter_ts_files(const std::string &dir, const std::string &dst_path);
 
 // copy directory recursively
-bool copy_directory(const std::string &src, const std::string &dst, const std::string &dir = "", CopyStyle style = HARD);
+bool copy_directory(const std::string &src, const std::string &dst, const std::string &dir = "", CopyStyle style = CopyStyle::HARD);
