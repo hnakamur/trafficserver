@@ -301,7 +301,7 @@ int TS_HTTP_LEN_PUSH;
 // FileImpl
 //
 ////////////////////////////////////////////////////////////////////
-FileImpl::FileImpl() : m_fd(-1), m_mode(CLOSED), m_buf(nullptr), m_bufsize(0), m_bufpos(0) {}
+FileImpl::FileImpl() : m_fd(-1), m_mode(Mode::CLOSED), m_buf(nullptr), m_bufsize(0), m_bufpos(0) {}
 
 FileImpl::~FileImpl()
 {
@@ -317,24 +317,24 @@ FileImpl::fopen(const char *filename, const char *mode)
     if (mode[1] != '\0') {
       return 0;
     }
-    m_mode = READ;
+    m_mode = Mode::READ;
     m_fd   = open(filename, O_RDONLY);
   } else if (mode[0] == 'w') {
     if (mode[1] != '\0') {
       return 0;
     }
-    m_mode = WRITE;
+    m_mode = Mode::WRITE;
     m_fd   = open(filename, O_WRONLY | O_CREAT, 0644);
   } else if (mode[0] == 'a') {
     if (mode[1] != '\0') {
       return 0;
     }
-    m_mode = WRITE;
+    m_mode = Mode::WRITE;
     m_fd   = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
   }
 
   if (m_fd < 0) {
-    m_mode = CLOSED;
+    m_mode = Mode::CLOSED;
     return 0;
   } else {
     return 1;
@@ -349,7 +349,7 @@ FileImpl::fclose()
 
     close(m_fd);
     m_fd   = -1;
-    m_mode = CLOSED;
+    m_mode = Mode::CLOSED;
   }
 
   ats_free(m_buf);
@@ -364,7 +364,7 @@ FileImpl::fread(void *buf, size_t length)
   size_t  amount;
   ssize_t err;
 
-  if ((m_mode != READ) || (m_fd == -1)) {
+  if ((m_mode != Mode::READ) || (m_fd == -1)) {
     return -1;
   }
 
@@ -417,7 +417,7 @@ FileImpl::fwrite(const void *buf, size_t length)
   const char *p, *e;
   size_t      avail;
 
-  if ((m_mode != WRITE) || (m_fd == -1)) {
+  if ((m_mode != Mode::WRITE) || (m_fd == -1)) {
     return -1;
   }
 
@@ -457,7 +457,7 @@ FileImpl::fflush()
   char   *p, *e;
   ssize_t err = 0;
 
-  if ((m_mode != WRITE) || (m_fd == -1)) {
+  if ((m_mode != Mode::WRITE) || (m_fd == -1)) {
     return -1;
   }
 
