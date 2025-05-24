@@ -40,11 +40,9 @@ class ConfigProcessor
 public:
   ConfigProcessor() = default;
 
-  enum {
-    // The number of seconds to wait before garbage collecting stale ConfigInfo objects. There's
-    // no good reason to tune this, outside of regression tests, so don't.
-    CONFIG_PROCESSOR_RELEASE_SECS = 60
-  };
+  // The number of seconds to wait before garbage collecting stale ConfigInfo objects. There's
+  // no good reason to tune this, outside of regression tests, so don't.
+  static constexpr auto CONFIG_PROCESSOR_RELEASE_SECS = 60;
 
   template <typename ClassType, typename ConfigType> struct scoped_config {
     scoped_config() : ptr(ClassType::acquire()) {}
