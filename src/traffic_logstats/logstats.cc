@@ -720,22 +720,22 @@ CommandLineArgs::parse_arguments(const char **argv)
 }
 
 // Enum for return code levels.
-enum ExitLevel {
-  EXIT_OK       = 0,
-  EXIT_WARNING  = 1,
-  EXIT_CRITICAL = 2,
-  EXIT_UNKNOWN  = 3,
+enum class ExitLevel {
+  OK       = 0,
+  WARNING  = 1,
+  CRITICAL = 2,
+  UNKNOWN  = 3,
 };
 
 struct ExitStatus {
-  ExitLevel level = EXIT_OK;
+  ExitLevel level = ExitLevel::OK;
   char      notice[1024];
 
   ExitStatus() { memset(notice, 0, sizeof(notice)); }
   void
   set(ExitLevel l, const char *n = nullptr)
   {
-    if (l > level) {
+    if (static_cast<int>(l) > static_cast<int>(level)) {
       level = l;
     }
     if (n) {
@@ -2300,25 +2300,25 @@ my_exit(const ExitStatus &status)
     } else {
       std::cout << "]" << std::endl;
     }
-    ::exit(status.level);
+    ::exit(static_cast<int>(status.level));
   }
 
   if (cl.json) {
     // TODO: produce output
   } else {
     switch (status.level) {
-    case EXIT_OK:
+    case ExitLevel::OK:
       break;
-    case EXIT_WARNING:
+    case ExitLevel::WARNING:
       std::cout << "warning: " << status.notice << std::endl;
       break;
-    case EXIT_CRITICAL:
+    case ExitLevel::CRITICAL:
       std::cout << "critical: " << status.notice << std::endl;
-      ::exit(status.level);
+      ::exit(static_cast<int>(status.level));
       break;
-    case EXIT_UNKNOWN:
+    case ExitLevel::UNKNOWN:
       std::cout << "unknown: " << status.notice << std::endl;
-      ::exit(status.level);
+      ::exit(static_cast<int>(status.level));
       break;
     }
   }
@@ -2395,7 +2395,7 @@ my_exit(const ExitStatus &status)
     std::cout << std::endl << "}" << std::endl;
   }
 
-  ::exit(status.level);
+  ::exit(static_cast<int>(status.level));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2540,7 +2540,7 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
   if (cl.incremental) {
     // Change directory to the log dir
     if (chdir(Layout::get()->logdir.c_str()) < 0) {
-      exit_status.set(EXIT_CRITICAL, " can't chdir to ");
+      exit_status.set(ExitLevel::CRITICAL, " can't chdir to ");
       exit_status.append(Layout::get()->logdir);
       my_exit(exit_status);
     }
@@ -2561,13 +2561,13 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
         sf_name.append(".");
         sf_name.append(pwd->pw_name);
       } else {
-        exit_status.set(EXIT_CRITICAL, " can't get current UID");
+        exit_status.set(ExitLevel::CRITICAL, " can't get current UID");
         my_exit(exit_status);
       }
     }
 
     if ((state_fd = open(sf_name.c_str(), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)) < 0) {
-      exit_status.set(EXIT_CRITICAL, " can't open state file ");
+      exit_status.set(ExitLevel::CRITICAL, " can't open state file ");
       exit_status.append(sf_name);
       my_exit(exit_status);
     }
@@ -2585,14 +2585,14 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
         sleep(2);
         break;
       default:
-        exit_status.set(EXIT_CRITICAL, " locking failure");
+        exit_status.set(ExitLevel::CRITICAL, " locking failure");
         my_exit(exit_status);
         break;
       }
     }
 
     if (res < 0) {
-      exit_status.set(EXIT_CRITICAL, " can't lock state file");
+      exit_status.set(ExitLevel::CRITICAL, " can't lock state file");
       my_exit(exit_status);
     }
     // Fetch previous state information, allow for concurrent accesses.
@@ -2604,7 +2604,7 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
         sleep(1);
         break;
       default:
-        exit_status.set(EXIT_CRITICAL, " can't read state file");
+        exit_status.set(ExitLevel::CRITICAL, " can't read state file");
         my_exit(exit_status);
         break;
       }
@@ -2617,13 +2617,13 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
     }
 
     if ((main_fd = open_main_log(exit_status)) < 0) {
-      exit_status.set(EXIT_CRITICAL);
+      exit_status.set(ExitLevel::CRITICAL);
       my_exit(exit_status);
     }
 
     // Get stat's from the main log file.
     if (fstat(main_fd, &stat_buf) < 0) {
-      exit_status.set(EXIT_CRITICAL, " can't stat squid.blog");
+      exit_status.set(ExitLevel::CRITICAL, " can't stat squid.blog");
       my_exit(exit_status);
     }
     // Make sure the last_state.st_ino is sane.
@@ -2644,24 +2644,24 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
       // Find the old log file.
       dirp = opendir(Layout::get()->logdir.c_str());
       if (nullptr == dirp) {
-        exit_status.set(EXIT_WARNING, " can't read log directory");
+        exit_status.set(ExitLevel::WARNING, " can't read log directory");
       } else {
         while ((dp = readdir(dirp)) != nullptr) {
           // coverity[fs_check_call]
           if (stat(dp->d_name, &stat_buf) < 0) {
-            exit_status.set(EXIT_WARNING, " can't stat ");
+            exit_status.set(ExitLevel::WARNING, " can't stat ");
             exit_status.append(dp->d_name);
           } else if (stat_buf.st_ino == old_inode) {
             int old_fd = open(dp->d_name, O_RDONLY);
 
             if (old_fd < 0) {
-              exit_status.set(EXIT_WARNING, " can't open ");
+              exit_status.set(ExitLevel::WARNING, " can't open ");
               exit_status.append(dp->d_name);
               break; // Don't attempt any more files
             }
             // Process it
             if (process_file(old_fd, last_state.offset, max_age) != 0) {
-              exit_status.set(EXIT_WARNING, " can't read ");
+              exit_status.set(ExitLevel::WARNING, " can't read ");
               exit_status.append(dp->d_name);
             }
             close(old_fd);
@@ -2680,44 +2680,44 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
 
     // Process the main file (always)
     if (process_file(main_fd, last_state.offset, max_age) != 0) {
-      exit_status.set(EXIT_CRITICAL, " can't parse log");
+      exit_status.set(ExitLevel::CRITICAL, " can't parse log");
       last_state.offset = 0;
       last_state.st_ino = 0;
     } else {
       // Save the current file offset.
       last_state.offset = lseek(main_fd, 0, SEEK_CUR);
       if (last_state.offset < 0) {
-        exit_status.set(EXIT_WARNING, " can't lseek squid.blog");
+        exit_status.set(ExitLevel::WARNING, " can't lseek squid.blog");
         last_state.offset = 0;
       }
     }
 
     // Save the state, release the lock, and close the FDs.
     if (lseek(state_fd, 0, SEEK_SET) < 0) {
-      exit_status.set(EXIT_WARNING, " can't lseek state file");
+      exit_status.set(ExitLevel::WARNING, " can't lseek state file");
     } else {
       if (-1 == write(state_fd, &last_state, sizeof(last_state))) {
-        exit_status.set(EXIT_WARNING, " can't write state_fd ");
+        exit_status.set(ExitLevel::WARNING, " can't write state_fd ");
       }
     }
     // flock(state_fd, LOCK_UN);
     lck.l_type = F_UNLCK;
     if (fcntl(state_fd, F_SETLK, &lck) < 0) {
-      exit_status.set(EXIT_WARNING, " can't unlock state_fd ");
+      exit_status.set(ExitLevel::WARNING, " can't unlock state_fd ");
     }
     close(main_fd);
     close(state_fd);
   } else {
     main_fd = cl.log_file[0] ? open(cl.log_file, O_RDONLY) : open_main_log(exit_status);
     if (main_fd < 0) {
-      exit_status.set(EXIT_CRITICAL, " can't open log file ");
+      exit_status.set(ExitLevel::CRITICAL, " can't open log file ");
       exit_status.append(cl.log_file);
       my_exit(exit_status);
     }
 
     if (cl.tail > 0) {
       if (lseek(main_fd, 0, SEEK_END) < 0) {
-        exit_status.set(EXIT_CRITICAL, " can't lseek squid.blog");
+        exit_status.set(ExitLevel::CRITICAL, " can't lseek squid.blog");
         my_exit(exit_status);
       }
       sleep(cl.tail);
@@ -2725,7 +2725,7 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
 
     if (process_file(main_fd, 0, max_age) != 0) {
       close(main_fd);
-      exit_status.set(EXIT_CRITICAL, " can't parse log file ");
+      exit_status.set(ExitLevel::CRITICAL, " can't parse log file ");
       exit_status.append(cl.log_file);
       my_exit(exit_status);
     }
@@ -2733,7 +2733,7 @@ main(int /* argc ATS_UNUSED */, const char *argv[])
   }
 
   // All done.
-  if (EXIT_OK == exit_status.level) {
+  if (ExitLevel::OK == exit_status.level) {
     exit_status.append(" OK");
   }
   my_exit(exit_status);
