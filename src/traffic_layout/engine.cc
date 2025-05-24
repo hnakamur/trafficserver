@@ -193,16 +193,16 @@ LayoutEngine::create_runroot()
     return;
   }
   // deal with the copy style
-  CopyStyle   copy_style = HARD;
+  CopyStyle   copy_style = CopyStyle::HARD;
   std::string style      = arguments.get("copy-style").value();
   if (!style.empty()) {
     transform(style.begin(), style.end(), style.begin(), ::tolower);
     if (style == "full") {
-      copy_style = FULL;
+      copy_style = CopyStyle::FULL;
     } else if (style == "soft") {
-      copy_style = SOFT;
+      copy_style = CopyStyle::SOFT;
     } else if (style == "hard") {
-      copy_style = HARD;
+      copy_style = CopyStyle::HARD;
     } else {
       ink_error("Unknown copy style: '%s'", style.c_str());
       status_code = EX_USAGE;
