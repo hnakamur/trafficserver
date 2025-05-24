@@ -60,15 +60,15 @@ getbestaddrinfo(swoc::TextView name)
   name.assign(tmp, name.size());
 
   // List of address types, in order of worst to best.
-  enum {
+  enum class AddrType {
     NA, // Not an (IP) Address.
     LO, // Loopback.
     LL, // Link Local.
     PR, // Private.
     MC, // Multicast.
     GL  // Global.
-  } spot_type = NA,
-    ip4_type = NA, ip6_type = NA;
+  };
+  auto       spot_type = AddrType::NA, ip4_type = AddrType::NA, ip6_type = AddrType::NA;
   addrinfo   ai_hints{};
   addrinfo  *ai_result;
   IPAddrPair zret;
@@ -81,20 +81,20 @@ getbestaddrinfo(swoc::TextView name)
     for (addrinfo *ai_spot = ai_result; ai_spot; ai_spot = ai_spot->ai_next) {
       swoc::IPAddr addr(ai_spot->ai_addr);
       if (!addr.is_valid()) {
-        spot_type = NA;
+        spot_type = AddrType::NA;
       } else if (addr.is_loopback()) {
-        spot_type = LO;
+        spot_type = AddrType::LO;
       } else if (addr.is_link_local()) {
-        spot_type = LL;
+        spot_type = AddrType::LL;
       } else if (addr.is_private()) {
-        spot_type = PR;
+        spot_type = AddrType::PR;
       } else if (addr.is_multicast()) {
-        spot_type = MC;
+        spot_type = AddrType::MC;
       } else {
-        spot_type = GL;
+        spot_type = AddrType::GL;
       }
 
-      if (spot_type == NA) {
+      if (spot_type == AddrType::NA) {
         continue; // Next!
       }
 
