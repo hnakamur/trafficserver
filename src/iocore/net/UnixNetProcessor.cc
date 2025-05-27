@@ -188,7 +188,7 @@ UnixNetProcessor::connect_re(Continuation *cont, sockaddr const *target, NetVCOp
 
   vc->set_context(NetVConnectionContext_t::OUT);
 
-  const bool using_socks = (socks_conf_stuff->socks_needed && opt.socks_support != NO_SOCKS &&
+  const bool using_socks = (socks_conf_stuff->socks_needed && opt.socks_support != Socks::Cmd::NO_SOCKS &&
                             (opt.socks_version != SOCKS_DEFAULT_VERSION ||
                              /* This implies we are tunnelling.
                               * we need to connect using socks server even

@@ -35,11 +35,13 @@
 #define SOCKS5_REQ_GRANTED    0
 #define SOCKS5_CONN_FAILED    1
 
-enum {
+struct Socks {
   // For these two, we need to pick two values which are not used for any of the
   //"commands" (eg: CONNECT, BIND) in SOCKS protocols.
-  NORMAL_SOCKS = 0,
-  NO_SOCKS     = 48
+  enum Cmd : unsigned char {
+    NORMAL_SOCKS = 0,
+    NO_SOCKS     = 48,
+  };
 };
 
 struct SocksAddrType {

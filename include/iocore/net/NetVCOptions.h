@@ -117,7 +117,7 @@ struct NetVCOptions {
   bool f_tcp_fastopen = false;
 
   /// Control use of SOCKS.
-  /// Set to @c NO_SOCKS to disable use of SOCKS. Otherwise SOCKS is
+  /// Set to @c SocksCmd::NO_SOCKS to disable use of SOCKS. Otherwise SOCKS is
   /// used if available.
   unsigned char socks_support;
   /// Version of SOCKS to use.

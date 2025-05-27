@@ -103,7 +103,7 @@ struct SocksEntry : public Continuation {
   bool write_done = false;
 
   SocksAuthHandler auth_handler = nullptr;
-  unsigned char    socks_cmd    = NORMAL_SOCKS;
+  unsigned char    socks_cmd    = Socks::Cmd::NORMAL_SOCKS;
 
   // socks server selection:
   ParentConfigParams *server_params = nullptr;

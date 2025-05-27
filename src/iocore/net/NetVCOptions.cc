@@ -34,7 +34,7 @@ NetVCOptions::reset()
   local_ip.invalidate();
   local_port    = 0;
   addr_binding  = addr_bind_style::ANY;
-  socks_support = NORMAL_SOCKS;
+  socks_support = Socks::Cmd::NORMAL_SOCKS;
   socks_version = SOCKS_DEFAULT_VERSION;
   socket_recv_bufsize =
 #if defined(RECV_BUF_SIZE)

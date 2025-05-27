@@ -227,7 +227,7 @@ SocksEntry::startEvent(int event, void *data)
     write_done = false;
 
     NetVCOptions options;
-    options.socks_support = NO_SOCKS;
+    options.socks_support = Socks::Cmd::NO_SOCKS;
     netProcessor.connect_re(this, &server_addr.sa, options);
   }
 
@@ -252,7 +252,7 @@ SocksEntry::mainEvent(int event, void *data)
       n_bytes = invokeSocksAuthHandler(auth_handler, SOCKS_AUTH_OPEN, p);
     } else {
       p[n_bytes++] = version;
-      p[n_bytes++] = (socks_cmd == NORMAL_SOCKS) ? SOCKS_CONNECT : socks_cmd;
+      p[n_bytes++] = (socks_cmd == Socks::Cmd::NORMAL_SOCKS) ? SOCKS_CONNECT : socks_cmd;
       ts           = ats_ip_port_cast(&target_addr);
 
       if (version == SOCKS5_VERSION) {
@@ -314,7 +314,7 @@ SocksEntry::mainEvent(int event, void *data)
 
     if (auth_handler) {
       n_bytes = invokeSocksAuthHandler(auth_handler, SOCKS_AUTH_WRITE_COMPLETE, nullptr);
-    } else if (socks_cmd == NORMAL_SOCKS) {
+    } else if (socks_cmd == Socks::Cmd::NORMAL_SOCKS) {
       n_bytes = (version == SOCKS5_VERSION) ? SOCKS5_REP_LEN : SOCKS4_REP_LEN;
     } else {
       Dbg(dbg_ctl_Socks, "Tunnelling the connection");
