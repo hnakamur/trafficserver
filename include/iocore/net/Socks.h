@@ -42,15 +42,15 @@ enum {
   NO_SOCKS     = 48
 };
 
-enum {
-  SOCKS_ATYPE_NONE = 0,
-  SOCKS_ATYPE_IPV4 = 1,
-  SOCKS_ATYPE_FQHN = 3,
-  SOCKS_ATYPE_IPV6 = 4,
-};
-
 struct SocksAddrType {
-  unsigned char type = SOCKS_ATYPE_NONE;
+  enum Type : unsigned char {
+    NONE = 0,
+    IPV4 = 1,
+    FQHN = 3,
+    IPV6 = 4,
+  };
+
+  unsigned char type = SocksAddrType::NONE;
   union {
     // mostly it is ipv4. in other cases we will xalloc().
     unsigned char  ipv4[4];

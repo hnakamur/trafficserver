@@ -341,13 +341,13 @@ SocksEntry::mainEvent(int event, void *data)
         int reply_len;
 
         switch (p[3]) {
-        case SOCKS_ATYPE_IPV4:
+        case SocksAddrType::IPV4:
           reply_len = 10;
           break;
-        case SOCKS_ATYPE_FQHN:
+        case SocksAddrType::FQHN:
           reply_len = 7 + p[4];
           break;
-        case SOCKS_ATYPE_IPV6:
+        case SocksAddrType::IPV6:
           Dbg(dbg_ctl_Socks, "Who is using IPv6 Addr?");
           reply_len = 22;
           break;
@@ -697,10 +697,10 @@ socks5PasswdAuthHandler(int event, unsigned char *p, void (**h_ptr)(void))
 void
 SocksAddrType::reset()
 {
-  if (type != SOCKS_ATYPE_IPV4 && addr.buf) {
+  if (type != SocksAddrType::IPV4 && addr.buf) {
     ats_free(addr.buf);
   }
 
   addr.buf = nullptr;
-  type     = SOCKS_ATYPE_NONE;
+  type     = SocksAddrType::NONE;
 }

@@ -348,7 +348,7 @@ SocksProxy::state_read_socks4_client_request([[maybe_unused]] int event, [[maybe
 
   if (p[i] == 0) {
     port                      = p[2] * 256 + p[3];
-    clientVC->socks_addr.type = SOCKS_ATYPE_IPV4;
+    clientVC->socks_addr.type = SocksAddrType::IPV4;
     reader->consume(i + 1);
     state = State::AUTH_DONE;
 
@@ -460,13 +460,13 @@ SocksProxy::state_read_socks5_client_request(int event, [[maybe_unused]] void *d
   }
   int req_len;
   switch (p[3]) {
-  case SOCKS_ATYPE_IPV4:
+  case SocksAddrType::IPV4:
     req_len = 10;
     break;
-  case SOCKS_ATYPE_FQHN:
+  case SocksAddrType::FQHN:
     req_len = 7 + p[4];
     break;
-  case SOCKS_ATYPE_IPV6:
+  case SocksAddrType::IPV6:
     req_len = 22;
     break;
   default:
@@ -511,7 +511,7 @@ SocksProxy::parse_socks_client_request(unsigned char *p)
     SOCKSPROXY_INC_STAT(socksproxy_tunneled_connections_stat);
     Dbg(dbg_ctl_SocksProxy, "Tunnelling the connection for port %d", port);
 
-    if (clientVC->socks_addr.type != SOCKS_ATYPE_IPV4) {
+    if (clientVC->socks_addr.type != SocksAddrType::IPV4) {
       // We dont support other kinds of addresses for tunnelling
       // if this is a hostname we could do host look up here
       ret = mainEvent(NET_EVENT_OPEN_FAILED, nullptr);
@@ -621,7 +621,7 @@ SocksProxy::sendResp(bool granted)
     p[0] = SOCKS5_VERSION;
     p[1] = (granted) ? SOCKS5_REQ_GRANTED : SOCKS5_CONN_FAILED;
     p[2] = 0;
-    p[3] = SOCKS_ATYPE_IPV4;
+    p[3] = SocksAddrType::IPV4;
     p[4] = p[5] = p[6] = p[7] = p[8] = p[9] = 0;
     n_bytes                                 = 10;
   }
@@ -642,25 +642,25 @@ SocksProxy::setupHttpRequest(unsigned char *p)
   // read the ip addr buf
   // In both SOCKS4 and SOCKS5 addr starts after 4 octets
   switch (a->type) {
-  case SOCKS_ATYPE_IPV4:
+  case SocksAddrType::IPV4:
     a->addr.ipv4[0] = p[4];
     a->addr.ipv4[1] = p[5];
     a->addr.ipv4[2] = p[6];
     a->addr.ipv4[3] = p[7];
     break;
 
-  case SOCKS_ATYPE_FQHN:
+  case SocksAddrType::FQHN:
     // This is stored as a zero terminated string
     a->addr.buf = (unsigned char *)ats_malloc(p[4] + 1);
     memcpy(a->addr.buf, &p[5], p[4]);
     a->addr.buf[p[4]] = 0;
     break;
-  case SOCKS_ATYPE_IPV6:
+  case SocksAddrType::IPV6:
     // a->addr.buf = (unsigned char *)ats_malloc(16);
     // memcpy(a->addr.buf, &p[4], 16);
     // dont think we will use "proper" IPv6 addr anytime soon.
     // just use the last 4 octets as IPv4 addr:
-    a->type         = SOCKS_ATYPE_IPV4;
+    a->type         = SocksAddrType::IPV4;
     a->addr.ipv4[0] = p[16];
     a->addr.ipv4[1] = p[17];
     a->addr.ipv4[2] = p[18];
