@@ -264,7 +264,7 @@ RamCacheCLFUS::get(CryptoHash *key, Ptr<IOBufferData> *ret_data, uint64_t auxkey
           this->_lru[e->flag_bits.lru].enqueue(e);
         }
         e->hits++;
-        uint32_t ram_hit_state = RAM_HIT_COMPRESS_NONE;
+        uint32_t ram_hit_state = RamHitCompress::NONE;
         if (e->flag_bits.compressed) {
           b = static_cast<char *>(ats_malloc(e->len));
           switch (e->flag_bits.compressed) {
@@ -275,7 +275,7 @@ RamCacheCLFUS::get(CryptoHash *key, Ptr<IOBufferData> *ret_data, uint64_t auxkey
             if ((l != fastlz_decompress(e->data->data(), e->compressed_len, b, l))) {
               goto Lfailed;
             }
-            ram_hit_state = RAM_HIT_COMPRESS_FASTLZ;
+            ram_hit_state = RamHitCompress::FASTLZ;
             break;
           }
           case CACHE_COMPRESSION_LIBZ: {
@@ -284,7 +284,7 @@ RamCacheCLFUS::get(CryptoHash *key, Ptr<IOBufferData> *ret_data, uint64_t auxkey
                 uncompress(reinterpret_cast<Bytef *>(b), &l, reinterpret_cast<Bytef *>(e->data->data()), e->compressed_len)) {
               goto Lfailed;
             }
-            ram_hit_state = RAM_HIT_COMPRESS_LIBZ;
+            ram_hit_state = RamHitCompress::LIBZ;
             break;
           }
 #ifdef HAVE_LZMA_H
@@ -295,7 +295,7 @@ RamCacheCLFUS::get(CryptoHash *key, Ptr<IOBufferData> *ret_data, uint64_t auxkey
                                                      e->compressed_len, reinterpret_cast<uint8_t *>(b), &opos, l)) {
               goto Lfailed;
             }
-            ram_hit_state = RAM_HIT_COMPRESS_LIBLZMA;
+            ram_hit_state = RamHitCompress::LIBLZMA;
             break;
           }
 #endif
