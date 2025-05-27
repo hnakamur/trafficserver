@@ -245,7 +245,7 @@ HttpTransactHeaders::copy_header_fields(HTTPHdr *src_hdr, HTTPHdr *new_hdr, bool
       continue;
     }
 
-    HdrTokenInfoFlags field_flags = hdrtoken_index_to_flags(field.m_wks_idx);
+    uint32_t field_flags = hdrtoken_index_to_flags(field.m_wks_idx);
 
     if ((field_flags & HdrTokenInfoFlags::HOPBYHOP) != HdrTokenInfoFlags::NONE) {
       std::string_view name(field.name_get());
