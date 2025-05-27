@@ -115,10 +115,10 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /** Used in VConnection::shutdown(). */
-enum ShutdownHowTo_t {
-  IO_SHUTDOWN_READ = 0,
-  IO_SHUTDOWN_WRITE,
-  IO_SHUTDOWN_READWRITE,
+enum class ShutdownHowTo_t {
+  READ = 0,
+  WRITE,
+  READWRITE,
 };
 
 /** Used in VConnection::get_data(). */
@@ -284,17 +284,17 @@ public:
         <td align="center"><b>Meaning</b></td>
       </tr>
       <tr>
-        <td>IO_SHUTDOWN_READ</td>
+        <td>ShutdownHowTo_t::READ</td>
         <td>Indicates that this VConnection should not generate any more
         read events</td>
       </tr>
       <tr>
-        <td>IO_SHUTDOWN_WRITE</td>
+        <td>ShutdownHowTo_t::WRITE</td>
         <td>Indicates that this VConnection should not generate any more
         write events</td>
       </tr>
       <tr>
-        <td>IO_SHUTDOWN_READWRITE</td>
+        <td>ShutdownHowTo_t::READWRITE</td>
         <td>Indicates that this VConnection should not generate any more
         read nor write events</td>
       </tr>

@@ -859,7 +859,7 @@ HttpSM::state_watch_for_client_abort(int event, void *data)
       NetVConnection *netvc = _ua.get_txn()->get_netvc();
       if (_ua.get_txn()->allow_half_open() || tunnel.has_consumer_besides_client()) {
         if (netvc) {
-          netvc->do_io_shutdown(IO_SHUTDOWN_READ);
+          netvc->do_io_shutdown(ShutdownHowTo_t::READ);
         }
       } else {
         _ua.get_txn()->do_io_close();
@@ -3958,7 +3958,7 @@ HttpSM::tunnel_handler_post_server(int event, HttpTunnelConsumer *c)
     // we should wait to shutdown read side of the
     // client to prevent sending a reset
     server_entry->eos = true;
-    c->vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+    c->vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
 
     // We may be reading from a transform.  In that case, we
     //   want to close the transform
@@ -3990,7 +3990,7 @@ HttpSM::tunnel_handler_post_server(int event, HttpTunnelConsumer *c)
     if (enable_redirection) {
       if (ua_producer->vc_type == HttpTunnelType_t::STATIC && event != VC_EVENT_ERROR && event != VC_EVENT_EOS) {
         _ua.get_entry()->read_vio = ua_producer->vc->do_io_read(this, INT64_MAX, _ua.get_txn()->get_remote_reader()->mbuf);
-        // ua_producer->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+        // ua_producer->vc->do_io_shutdown(ShutdownHowTo_t::READ);
       } else {
         if (ua_producer->vc_type == HttpTunnelType_t::STATIC && t_state.redirect_info.redirect_in_process) {
           post_failed = true;
@@ -3999,7 +3999,7 @@ HttpSM::tunnel_handler_post_server(int event, HttpTunnelConsumer *c)
     } else {
       _ua.get_entry()->read_vio = ua_producer->vc->do_io_read(this, INT64_MAX, _ua.get_txn()->get_remote_reader()->mbuf);
       // we should not shutdown read side of the client here to prevent sending a reset
-      // ua_producer->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+      // ua_producer->vc->do_io_shutdown(ShutdownHowTo_t::READ);
     } // end of added logic
 
     // We want to shutdown the tunnel here and see if there
@@ -4042,7 +4042,7 @@ HttpSM::tunnel_handler_ssl_producer(int event, HttpTunnelProducer *p)
     // The write side of this connection is still alive
     //  so half-close the read
     if (p->self_consumer->alive) {
-      p->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+      p->vc->do_io_shutdown(ShutdownHowTo_t::READ);
       tunnel.local_finish_all(p);
       break;
     }
@@ -4063,7 +4063,7 @@ HttpSM::tunnel_handler_ssl_producer(int event, HttpTunnelProducer *p)
     if (p->self_consumer->producer->alive) {
       p->self_consumer->producer->alive = false;
       if (p->self_consumer->producer->self_consumer->alive) {
-        p->self_consumer->producer->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+        p->self_consumer->producer->vc->do_io_shutdown(ShutdownHowTo_t::READ);
       } else {
         tunnel.close_vc(p->self_consumer->producer);
       }
@@ -4109,7 +4109,7 @@ HttpSM::tunnel_handler_ssl_consumer(int event, HttpTunnelConsumer *c)
     if (c->producer->alive) {
       c->producer->alive = false;
       if (c->producer->self_consumer->alive) {
-        c->producer->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+        c->producer->vc->do_io_shutdown(ShutdownHowTo_t::READ);
       } else {
         tunnel.close_vc(c->producer);
       }
@@ -4133,7 +4133,7 @@ HttpSM::tunnel_handler_ssl_consumer(int event, HttpTunnelConsumer *c)
     // ink_assert(c->producer->alive == false);
     c->write_success = true;
     if (c->self_producer->alive == true) {
-      c->vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+      c->vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
     } else {
       c->vc->do_io_close();
     }
@@ -4203,7 +4203,7 @@ HttpSM::tunnel_handler_transform_write(int event, HttpTunnelConsumer *c)
   case VC_EVENT_WRITE_COMPLETE:
     // write to transform complete - shutdown the write side
     c->write_success = true;
-    c->vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+    c->vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
 
     // If the read side has not started up yet, then the
     //  this transform_vc is no longer owned by the tunnel
@@ -6110,7 +6110,7 @@ HttpSM::handle_server_setup_error(int event, void *data)
         _ua.get_entry()->vc_read_handler  = &HttpSM::state_watch_for_client_abort;
         _ua.get_entry()->vc_write_handler = &HttpSM::state_watch_for_client_abort;
         _ua.get_entry()->read_vio         = ua_producer->vc->do_io_read(this, INT64_MAX, c->producer->read_buffer);
-        ua_producer->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+        ua_producer->vc->do_io_shutdown(ShutdownHowTo_t::READ);
 
         ua_producer->alive         = false;
         ua_producer->handler_state = static_cast<int>(HttpSmPost_t::SERVER_FAIL);
@@ -6409,7 +6409,7 @@ HttpSM::do_setup_client_request_body_tunnel(HttpVC_t to_vc_type)
   // now that we have the tunnel operational.
   // HttpTunnel could broken due to bad chunked data and close all vc by chain_abort_all().
   if (static_cast<HttpSmPost_t>(p->handler_state) != HttpSmPost_t::UA_FAIL && _ua.get_txn()->get_half_close_flag()) {
-    p->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+    p->vc->do_io_shutdown(ShutdownHowTo_t::READ);
   }
 }
 
@@ -7401,7 +7401,7 @@ HttpSM::setup_blind_tunnel(bool send_response_hdr, IOBufferReader *initial)
   // If we're half closed, we got a FIN from the client. Forward it on to the origin server
   // now that we have the tunnel operational.
   if (_ua.get_txn() && _ua.get_txn()->get_half_close_flag()) {
-    p_ua->vc->do_io_shutdown(IO_SHUTDOWN_READ);
+    p_ua->vc->do_io_shutdown(ShutdownHowTo_t::READ);
   }
 }
 

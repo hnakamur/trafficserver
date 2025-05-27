@@ -394,12 +394,12 @@ TransformTerminus::do_io_close(int error)
 void
 TransformTerminus::do_io_shutdown(ShutdownHowTo_t howto)
 {
-  if ((howto == IO_SHUTDOWN_READ) || (howto == IO_SHUTDOWN_READWRITE)) {
+  if ((howto == ShutdownHowTo_t::READ) || (howto == ShutdownHowTo_t::READWRITE)) {
     m_read_vio.op = VIO::Op::NONE;
     m_read_vio.buffer.clear();
   }
 
-  if ((howto == IO_SHUTDOWN_WRITE) || (howto == IO_SHUTDOWN_READWRITE)) {
+  if ((howto == ShutdownHowTo_t::WRITE) || (howto == ShutdownHowTo_t::READWRITE)) {
     m_write_vio.op = VIO::Op::NONE;
     m_write_vio.buffer.clear();
   }
@@ -522,9 +522,9 @@ TransformVConnection::do_io_close(int error)
 void
 TransformVConnection::do_io_shutdown(ShutdownHowTo_t howto)
 {
-  ink_assert(howto == IO_SHUTDOWN_WRITE);
+  ink_assert(howto == ShutdownHowTo_t::WRITE);
 
-  Dbg(dbg_ctl_transform, "TransformVConnection do_io_shutdown: %d [0x%lx]", howto, (long)this);
+  Dbg(dbg_ctl_transform, "TransformVConnection do_io_shutdown: %d [0x%lx]", static_cast<int>(howto), (long)this);
 
   m_transform->do_io_shutdown(howto);
 }
@@ -692,7 +692,7 @@ NullTransform::handle_event(int event, void *edata)
       // has also completed.
       ink_assert(m_write_vio.ntodo() == 0);
 
-      m_output_vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+      m_output_vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
       break;
     case VC_EVENT_WRITE_READY:
     default: {
@@ -847,7 +847,7 @@ RangeTransform::handle_event(int event, void *edata)
       break;
     case VC_EVENT_WRITE_COMPLETE:
       ink_assert(m_output_vio == (VIO *)edata);
-      m_output_vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+      m_output_vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
       break;
     case VC_EVENT_WRITE_READY:
     default:

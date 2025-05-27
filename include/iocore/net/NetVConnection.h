@@ -140,8 +140,8 @@ public:
   /**
     Shuts down read side, write side, or both. do_io_shutdown() can
     be used to terminate one or both sides of the VConnection. The
-    howto is one of IO_SHUTDOWN_READ, IO_SHUTDOWN_WRITE,
-    IO_SHUTDOWN_READWRITE. Once a side of a VConnection is shutdown,
+    howto is one of ShutdownHowTo_t::READ, ShutdownHowTo_t::WRITE,
+    ShutdownHowTo_t::READWRITE. Once a side of a VConnection is shutdown,
     no further I/O can be done on that side of the connections and
     the underlying processor MUST NOT send any further events
     (INCLUDING TIMEOUT EVENTS) to the state machine. The state machine
@@ -150,7 +150,7 @@ public:
     machine MUST still call do_io_close() when it wishes the
     VConnection to be deallocated.
 
-    @param howto IO_SHUTDOWN_READ, IO_SHUTDOWN_WRITE, IO_SHUTDOWN_READWRITE
+    @param howto ShutdownHowTo_t::READ, ShutdownHowTo_t::WRITE, ShutdownHowTo_t::READWRITE
 
   */
   void do_io_shutdown(ShutdownHowTo_t howto) override = 0;

@@ -399,13 +399,13 @@ PluginVC::do_io_shutdown(ShutdownHowTo_t howto)
   ink_assert(magic == PluginVCMagic_t::ALIVE);
 
   switch (howto) {
-  case IO_SHUTDOWN_READ:
+  case ShutdownHowTo_t::READ:
     read_state.shutdown = true;
     break;
-  case IO_SHUTDOWN_WRITE:
+  case ShutdownHowTo_t::WRITE:
     write_state.shutdown = true;
     break;
-  case IO_SHUTDOWN_READWRITE:
+  case ShutdownHowTo_t::READWRITE:
     read_state.shutdown  = true;
     write_state.shutdown = true;
     break;

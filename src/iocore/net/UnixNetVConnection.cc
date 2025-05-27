@@ -310,7 +310,7 @@ void
 UnixNetVConnection::do_io_shutdown(ShutdownHowTo_t howto)
 {
   switch (howto) {
-  case IO_SHUTDOWN_READ:
+  case ShutdownHowTo_t::READ:
     this->con.sock.shutdown(0);
     read.enabled = 0;
     read.vio.buffer.clear();
@@ -318,7 +318,7 @@ UnixNetVConnection::do_io_shutdown(ShutdownHowTo_t howto)
     read.vio.cont    = nullptr;
     f.shutdown      |= NetEvent::SHUTDOWN_READ;
     break;
-  case IO_SHUTDOWN_WRITE:
+  case ShutdownHowTo_t::WRITE:
     this->con.sock.shutdown(1);
     write.enabled = 0;
     write.vio.buffer.clear();
@@ -326,7 +326,7 @@ UnixNetVConnection::do_io_shutdown(ShutdownHowTo_t howto)
     write.vio.cont    = nullptr;
     f.shutdown       |= NetEvent::SHUTDOWN_WRITE;
     break;
-  case IO_SHUTDOWN_READWRITE:
+  case ShutdownHowTo_t::READWRITE:
     this->con.sock.shutdown(2);
     read.enabled  = 0;
     write.enabled = 0;

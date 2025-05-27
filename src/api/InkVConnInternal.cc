@@ -153,12 +153,12 @@ INKVConnInternal::do_io_close(int error)
 void
 INKVConnInternal::do_io_shutdown(ShutdownHowTo_t howto)
 {
-  if ((howto == IO_SHUTDOWN_READ) || (howto == IO_SHUTDOWN_READWRITE)) {
+  if ((howto == ShutdownHowTo_t::READ) || (howto == ShutdownHowTo_t::READWRITE)) {
     m_read_vio.op = VIO::Op::NONE;
     m_read_vio.buffer.clear();
   }
 
-  if ((howto == IO_SHUTDOWN_WRITE) || (howto == IO_SHUTDOWN_READWRITE)) {
+  if ((howto == ShutdownHowTo_t::WRITE) || (howto == ShutdownHowTo_t::READWRITE)) {
     m_write_vio.op = VIO::Op::NONE;
     m_write_vio.buffer.clear();
   }

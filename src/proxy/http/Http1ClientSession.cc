@@ -257,7 +257,7 @@ Http1ClientSession::do_io_close(int alerrno)
     HttpSsnDbg("[%" PRId64 "] session half close", con_id);
 
     if (_vc) {
-      _vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+      _vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
 
       ka_vio = _vc->do_io_read(this, INT64_MAX, read_buffer);
       ink_assert(slave_ka_vio != ka_vio);

@@ -230,7 +230,7 @@ NetVCTest::write_finished()
     test_vc->do_io_close();
     finished();
   } else {
-    test_vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+    test_vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
   }
 }
 
@@ -248,7 +248,7 @@ NetVCTest::read_finished()
     test_vc->do_io_close();
     finished();
   } else {
-    test_vc->do_io_shutdown(IO_SHUTDOWN_READ);
+    test_vc->do_io_shutdown(ShutdownHowTo_t::READ);
   }
 }
 

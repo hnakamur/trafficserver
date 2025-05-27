@@ -5874,11 +5874,11 @@ TSVConnShutdown(TSVConn connp, int read, int write)
   VConnection *vc = reinterpret_cast<VConnection *>(connp);
 
   if (read && write) {
-    vc->do_io_shutdown(IO_SHUTDOWN_READWRITE);
+    vc->do_io_shutdown(ShutdownHowTo_t::READWRITE);
   } else if (read) {
-    vc->do_io_shutdown(IO_SHUTDOWN_READ);
+    vc->do_io_shutdown(ShutdownHowTo_t::READ);
   } else if (write) {
-    vc->do_io_shutdown(IO_SHUTDOWN_WRITE);
+    vc->do_io_shutdown(ShutdownHowTo_t::WRITE);
   }
 }
 
