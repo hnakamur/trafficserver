@@ -51,9 +51,7 @@ enum class ParseResult {
   OK    = 3, // This is only used internally in mime_parser_parse and not returned to the user
 };
 
-enum {
-  UNDEFINED_COUNT = -1,
-};
+static inline constexpr int64_t UNDEFINED_COUNT = -1;
 
 /// Parsing state.
 enum class MimeParseState {
