@@ -1,0 +1,6 @@
+foo:ab\td/ef	foo-slice:\td
+foo:-	foo-slice:
+foo:-	foo-slice:
+foo:abd/ef	foo-slice:d
+foo:ab	foo-slice:
+foo:ab\\d/ef	foo-slice:\\d

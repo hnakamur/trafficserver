@@ -33,7 +33,7 @@
 #include "proxy/logging/LogFieldAliasMap.h"
 #include "proxy/Milestones.h"
 
-enum LogEscapeType { LOG_ESCAPE_NONE, LOG_ESCAPE_JSON };
+enum LogEscapeType { LOG_ESCAPE_NONE, LOG_ESCAPE_JSON, LOG_ESCAPE_LTSV };
 
 class LogAccess;
 
