@@ -3102,3 +3102,8 @@ TSReturnCode TSVConnPPInfoGet(TSVConn vconn, uint16_t key, const char **value, i
 
 */
 TSReturnCode TSVConnPPInfoIntGet(TSVConn vconn, uint16_t key, TSMgmtInt *value);
+
+/*
+ * Get entry count in parent.config.
+ */
+int TSHttpParentTableGetEntryCount(TSHttpTxn txnp);

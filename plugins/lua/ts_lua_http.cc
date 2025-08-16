@@ -128,6 +128,8 @@ static int  ts_lua_http_req_transform_get_downstream_watermark_bytes(lua_State *
 static int  ts_lua_http_req_transform_set_downstream_watermark_bytes(lua_State *L);
 static int  ts_lua_http_req_transform_set_upstream_bytes(lua_State *L);
 
+static int ts_lua_http_get_parent_table_entry_count(lua_State *L);
+
 void
 ts_lua_inject_http_api(lua_State *L)
 {
@@ -321,6 +323,9 @@ ts_lua_inject_http_misc_api(lua_State *L)
 
   lua_pushcfunction(L, ts_lua_http_get_ssn_remote_addr);
   lua_setfield(L, -2, "get_ssn_remote_addr");
+
+  lua_pushcfunction(L, ts_lua_http_get_parent_table_entry_count);
+  lua_setfield(L, -2, "get_parent_table_entry_count");
 
   ts_lua_inject_server_state_variables(L);
 }
@@ -1194,4 +1199,16 @@ static int
 ts_lua_http_req_transform_set_upstream_bytes(lua_State *L)
 {
   return ts_lua_http_resp_transform_set_downstream_bytes(L);
+}
+
+static int
+ts_lua_http_get_parent_table_entry_count(lua_State *L)
+{
+  ts_lua_http_ctx *http_ctx;
+
+  GET_HTTP_CONTEXT(http_ctx, L);
+
+  int count = TSHttpParentTableGetEntryCount(http_ctx->txnp);
+  lua_pushinteger(L, (lua_Integer)count);
+  return 1;
 }
