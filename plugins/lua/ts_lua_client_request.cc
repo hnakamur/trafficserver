@@ -76,6 +76,9 @@ static int  ts_lua_client_request_get_ssl_protocol(lua_State *L);
 static void ts_lua_inject_client_request_ssl_curve_api(lua_State *L);
 static int  ts_lua_client_request_get_ssl_curve(lua_State *L);
 
+static void ts_lua_inject_client_request_normalize_accept_encoding(lua_State *L);
+static int  ts_lua_client_request_normalize_accept_encoding(lua_State *L);
+
 void
 ts_lua_inject_client_request_api(lua_State *L)
 {
@@ -96,6 +99,7 @@ ts_lua_inject_client_request_api(lua_State *L)
   ts_lua_inject_client_request_ssl_cipher_api(L);
   ts_lua_inject_client_request_ssl_protocol_api(L);
   ts_lua_inject_client_request_ssl_curve_api(L);
+  ts_lua_inject_client_request_normalize_accept_encoding(L);
 
   lua_setfield(L, -2, "client_request");
 }
@@ -1136,4 +1140,24 @@ ts_lua_client_request_get_ssl_curve(lua_State *L)
   lua_pushstring(L, ssl_curve);
 
   return 1;
+}
+
+static void
+ts_lua_inject_client_request_normalize_accept_encoding(lua_State *L)
+{
+  lua_pushcfunction(L, ts_lua_client_request_normalize_accept_encoding);
+  lua_setfield(L, -2, "normalize_accept_encoding");
+}
+
+static int
+ts_lua_client_request_normalize_accept_encoding(lua_State *L)
+{
+  int              normalize_ae;
+  ts_lua_http_ctx *http_ctx;
+
+  GET_HTTP_CONTEXT(http_ctx, L);
+
+  normalize_ae = luaL_checkint(L, 1);
+  TSHttpTxnNormalizeAcceptEncoding(http_ctx->txnp, http_ctx->client_request_bufp, normalize_ae);
+  return 0;
 }
