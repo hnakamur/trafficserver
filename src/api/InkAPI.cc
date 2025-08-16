@@ -49,6 +49,7 @@
 #include "proxy/PoolableSession.h"
 #include "proxy/http/HttpSM.h"
 #include "proxy/http/HttpConfig.h"
+#include "proxy/http/HttpTransactHeaders.h"
 #include "proxy/PluginHttpConnect.h"
 #include "../iocore/net/P_Net.h"
 #include "../iocore/net/P_UnixNet.h"
@@ -9037,4 +9038,23 @@ TSHttpParentTableGetEntryCount(TSHttpTxn txnp)
   HttpSM              *sm = reinterpret_cast<HttpSM *>(txnp);
   HttpTransact::State *s  = &(sm->t_state);
   return s->parent_params && s->parent_params->parent_table ? s->parent_params->parent_table->getEntryCount() : 0;
+}
+
+void
+TSHttpTxnNormalizeAcceptEncoding(TSHttpTxn txnp, TSMBuffer request, int normalize_ae)
+{
+  sdk_assert(sdk_sanity_check_txn(txnp) == TS_SUCCESS);
+  HttpSM  *sm = (HttpSM *)txnp;
+  HTTPHdr *req;
+
+  // We allow for either request to be empty, in
+  // which case we default to the transactions request.
+  if (request) {
+    sdk_assert(sdk_sanity_check_mbuffer(request) == TS_SUCCESS);
+    req = reinterpret_cast<HTTPHdr *>(request);
+  } else {
+    req = &(sm->t_state.hdr_info.client_request);
+  }
+
+  HttpTransactHeaders::normalize_accept_encoding(normalize_ae, req);
 }

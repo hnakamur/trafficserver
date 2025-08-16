@@ -1258,6 +1258,28 @@ Here is an example:
 
 :ref:`TOP <admin-plugins-ts-lua>`
 
+ts.client_request.normalize_accept_encoding
+-----------------------------------------------
+**syntax:** *ts.client_request.normalize_accept_encoding(normalize_ae)*
+
+**context:** do_remap or do_global_read_request
+
+**description**: This function can be used to normalize the Accept-Encoding request header.
+
+Possible values for normalize_ae is the same as those for `proxy.config.http.normalize_ae` config.
+
+Here is an example:
+
+::
+
+    function do_remap()
+        ts.client_request.normalize_ae(3)
+        return 0
+    end
+
+
+:ref:`TOP <admin-plugins-ts-lua>`
+
 ts.http.set_cache_url
 ---------------------
 **syntax:** *ts.http.set_cache_url(KEY_URL)*
