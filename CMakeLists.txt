@@ -650,6 +650,8 @@ add_compile_options(
 )
 add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-Wno-format-truncation>")
 
+include(hardening)
+
 if(NOT EXTERNAL_YAML_CPP)
   include(subproject_version)
   subproject_version(YAML_CPP YAMLCPP_LIB_VERSION)
