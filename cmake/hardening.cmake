@@ -2,13 +2,15 @@
 # Hardening Guide for C and C++ by the Open Source Security Foundation (OpenSSF)
 # Best Practices Working Group, 2023-11-29
 # https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html
-# with changes: * change -O2 to -O3 * remove -Wl,-z,nodlopen since built plugins
-# cannot be loaded
+# with changes:
+#
+# * remove -Wl,-z,nodlopen since built plugins cannot be loaded
+# * remove -Wconversion since there are a lot of narrowing conversions
+#
 add_compile_options(
-  -O3
+  -O2
   -Wall
   -Wformat=2
-  -Wconversion
   -Wimplicit-fallthrough
   -U_FORTIFY_SOURCE
   -D_FORTIFY_SOURCE=3
