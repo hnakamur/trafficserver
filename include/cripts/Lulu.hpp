@@ -371,7 +371,7 @@ public:
 
   operator integer() const;
   operator bool() const;
-  operator float() const { return std::stod(*this); }
+  operator float() const { return std::stof(*this); }
 
   [[nodiscard]] integer
   ToInteger() const
@@ -382,7 +382,7 @@ public:
   [[nodiscard]] double
   ToFloat() const
   {
-    return float(*this);
+    return std::stod(*this);
   }
 
   [[nodiscard]] bool
