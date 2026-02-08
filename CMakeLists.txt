@@ -707,9 +707,8 @@ add_subdirectory(lib)
 # there are warnings, we can't do anything about it.
 # Note: -DCMAKE_COMPILE_WARNING_AS_ERROR=ON will turn warnings into errors.
 add_compile_options(-pipe -Wall -Wextra)
-add_compile_options(
-  "$<$<COMPILE_LANGUAGE:CXX>:-Wno-noexcept-type;-Wsuggest-override;-Wno-vla-extension;-fno-strict-aliasing>"
-)
+add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-Wno-noexcept-type;-Wsuggest-override;-fno-strict-aliasing>")
+add_compile_options("$<$<CXX_COMPILER_ID:AppleClang>:-Wno-vla-extension>")
 add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-Wno-format-truncation>")
 
 if(NOT EXTERNAL_YAML_CPP)
