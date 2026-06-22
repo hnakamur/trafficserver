@@ -676,6 +676,7 @@ initialize_process_manager()
   LibRecordsConfigInit();
 
   // Start up manager
+  printf("starting ProcessManager with remote_management_flag=%d\n", remote_management_flag);
   pmgmt = new ProcessManager(remote_management_flag);
 
   // Lifecycle callbacks can potentially be invoked from this thread, so force thread initialization
