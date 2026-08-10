@@ -818,6 +818,7 @@ public:
   MgmtByte disable_ssl_parenting = 0;
 
   MgmtByte no_dns_forward_to_parent = 0;
+  MgmtByte disable_forward_to_parent_when_empty = 0;
   MgmtByte no_origin_server_dns     = 0;
   MgmtByte use_client_target_addr   = 0;
   MgmtByte use_client_source_port   = 0;

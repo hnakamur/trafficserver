@@ -1577,6 +1577,9 @@ static const RecordElement RecordsConfig[] =
   //#
   //###########
   {RECT_CONFIG, "proxy.config.http.host_sni_policy", RECD_INT, "2", RECU_NULL, RR_NULL, RECC_NULL, "[0-2]", RECA_NULL},
+
+  // Controls for overriding no_dns_just_forward_to_parent when parents are empty
+  {RECT_CONFIG, "proxy.config.http.disable_just_forward_to_parent_when_empty", RECD_INT, "0", RECU_DYNAMIC, RR_NULL, RECC_INT, "[0-1]", RECA_NULL},
 };
 // clang-format on
 
