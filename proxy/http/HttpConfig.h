@@ -817,10 +817,11 @@ public:
   ///////////////////////////////////////////////////////////////////
   MgmtByte disable_ssl_parenting = 0;
 
-  MgmtByte no_dns_forward_to_parent = 0;
-  MgmtByte no_origin_server_dns     = 0;
-  MgmtByte use_client_target_addr   = 0;
-  MgmtByte use_client_source_port   = 0;
+  MgmtByte no_dns_forward_to_parent                  = 0;
+  MgmtByte disable_just_forward_to_parent_when_empty = 0; // When enabled and there are no parents, allow origin server DNS lookups
+  MgmtByte no_origin_server_dns                      = 0;
+  MgmtByte use_client_target_addr                    = 0;
+  MgmtByte use_client_source_port                    = 0;
 
   MgmtByte enable_http_stats = 1; // Can be "slow"
 

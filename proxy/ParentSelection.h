@@ -374,6 +374,7 @@ public:
   void findParent(HttpRequestData *rdata, ParentResult *result, unsigned int fail_threshold, unsigned int retry_time);
   void nextParent(HttpRequestData *rdata, ParentResult *result, unsigned int fail_threshold, unsigned int retry_time);
   bool parentExists(HttpRequestData *rdata);
+  bool hasAnyParent() const;
 
   // implementation of functions from ParentSelectionStrategy.
   void

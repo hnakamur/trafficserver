@@ -1177,6 +1177,8 @@ HttpConfig::startup()
   HttpEstablishStaticConfigByte(c.oride.forward_connect_method, "proxy.config.http.forward_connect_method");
 
   HttpEstablishStaticConfigByte(c.no_dns_forward_to_parent, "proxy.config.http.no_dns_just_forward_to_parent");
+  HttpEstablishStaticConfigByte(c.disable_just_forward_to_parent_when_empty,
+                                "proxy.config.http.disable_just_forward_to_parent_when_empty");
   HttpEstablishStaticConfigByte(c.oride.uncacheable_requests_bypass_parent, "proxy.config.http.uncacheable_requests_bypass_parent");
   HttpEstablishStaticConfigByte(c.oride.doc_in_cache_skip_dns, "proxy.config.http.doc_in_cache_skip_dns");
 
@@ -1456,14 +1458,15 @@ HttpConfig::reconfigure()
   params->outbound_ip4 = m_master.outbound_ip4;
   params->outbound_ip6 = m_master.outbound_ip6;
 
-  params->proxy_hostname                           = ats_strdup(m_master.proxy_hostname);
-  params->proxy_hostname_len                       = (params->proxy_hostname) ? strlen(params->proxy_hostname) : 0;
-  params->no_dns_forward_to_parent                 = INT_TO_BOOL(m_master.no_dns_forward_to_parent);
-  params->oride.uncacheable_requests_bypass_parent = INT_TO_BOOL(m_master.oride.uncacheable_requests_bypass_parent);
-  params->no_origin_server_dns                     = INT_TO_BOOL(m_master.no_origin_server_dns);
-  params->use_client_target_addr                   = m_master.use_client_target_addr;
-  params->use_client_source_port                   = INT_TO_BOOL(m_master.use_client_source_port);
-  params->oride.maintain_pristine_host_hdr         = INT_TO_BOOL(m_master.oride.maintain_pristine_host_hdr);
+  params->proxy_hostname                            = ats_strdup(m_master.proxy_hostname);
+  params->proxy_hostname_len                        = (params->proxy_hostname) ? strlen(params->proxy_hostname) : 0;
+  params->no_dns_forward_to_parent                  = INT_TO_BOOL(m_master.no_dns_forward_to_parent);
+  params->disable_just_forward_to_parent_when_empty = INT_TO_BOOL(m_master.disable_just_forward_to_parent_when_empty);
+  params->oride.uncacheable_requests_bypass_parent  = INT_TO_BOOL(m_master.oride.uncacheable_requests_bypass_parent);
+  params->no_origin_server_dns                      = INT_TO_BOOL(m_master.no_origin_server_dns);
+  params->use_client_target_addr                    = m_master.use_client_target_addr;
+  params->use_client_source_port                    = INT_TO_BOOL(m_master.use_client_source_port);
+  params->oride.maintain_pristine_host_hdr          = INT_TO_BOOL(m_master.oride.maintain_pristine_host_hdr);
 
   params->disable_ssl_parenting        = INT_TO_BOOL(m_master.disable_ssl_parenting);
   params->oride.forward_connect_method = INT_TO_BOOL(m_master.oride.forward_connect_method);

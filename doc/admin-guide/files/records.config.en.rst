@@ -1394,6 +1394,14 @@ Parent Proxy Configuration
 
    Don't try to resolve DNS, forward all DNS requests to the parent. This is off (``0``) by default.
 
+.. ts:cv:: CONFIG proxy.config.http.disable_just_forward_to_parent_when_empty INT 0
+   :reloadable:
+
+   When enabled, ignore ``proxy.config.http.no_dns_just_forward_to_parent`` when there are
+   no parents configured (for example, after reloading an empty ``parent.config``). In that
+   case Traffic Server performs the origin server DNS lookup and contacts the origin directly
+   instead of failing the request. This is off (``0``) by default.
+
 .. ts:cv:: CONFIG proxy.local.http.parent_proxy.disable_connect_tunneling INT 0
 
 .. ts:cv:: CONFIG proxy.config.http.parent_proxy.self_detect INT 2

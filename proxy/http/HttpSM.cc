@@ -7850,7 +7850,8 @@ HttpSM::set_next_state()
       call_transact_and_set_next_state(nullptr);
       break;
     } else if (t_state.dns_info.looking_up == HttpTransact::ORIGIN_SERVER && t_state.http_config_param->no_dns_forward_to_parent &&
-               t_state.parent_result.result != PARENT_UNDEFINED) {
+               t_state.parent_result.result != PARENT_UNDEFINED &&
+               (!t_state.http_config_param->disable_just_forward_to_parent_when_empty || t_state.parent_params->hasAnyParent())) {
       t_state.dns_info.lookup_success = true;
       call_transact_and_set_next_state(nullptr);
       break;

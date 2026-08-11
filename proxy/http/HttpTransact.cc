@@ -704,8 +704,11 @@ find_server_and_update_current_info(HttpTransact::State *s)
 
   case PARENT_DIRECT:
     // if the configuration does not allow the origin to be dns'd
-    // we're unable to go direct to the origin.
-    if (s->http_config_param->no_dns_forward_to_parent) {
+    // we're unable to go direct to the origin. When
+    // proxy.config.http.disable_just_forward_to_parent_when_empty is enabled and
+    // there are no parents configured, allow the origin server DNS lookup.
+    if (s->http_config_param->no_dns_forward_to_parent &&
+        (!s->http_config_param->disable_just_forward_to_parent_when_empty || s->parent_params->hasAnyParent())) {
       Warning("no available parents and the config proxy.config.http.no_dns_just_forward_to_parent, prevents origin lookups.");
       s->parent_result.result = PARENT_FAIL;
       return HttpTransact::HOST_NONE;
@@ -1870,7 +1873,9 @@ HttpTransact::PPDNSLookup(State *s)
     if (!s->current.server->dst_addr.isValid()) {
       if (s->current.request_to == PARENT_PROXY) {
         TRANSACT_RETURN(SM_ACTION_DNS_LOOKUP, PPDNSLookupAPICall);
-      } else if (s->parent_result.result == PARENT_DIRECT && s->http_config_param->no_dns_forward_to_parent != 1) {
+      } else if (s->parent_result.result == PARENT_DIRECT &&
+                 (s->http_config_param->no_dns_forward_to_parent == 0 ||
+                  (s->http_config_param->disable_just_forward_to_parent_when_empty && !s->parent_params->hasAnyParent()))) {
         // We ran out of parents but parent configuration allows us to go to Origin Server directly
         CallOSDNSLookup(s);
         return;
@@ -3435,7 +3440,9 @@ HttpTransact::HandleCacheOpenReadMiss(State *s)
     if (!s->current.server->dst_addr.isValid()) {
       ink_release_assert(s->parent_result.result == PARENT_DIRECT || s->current.request_to == PARENT_PROXY ||
                          s->http_config_param->no_dns_forward_to_parent != 0);
-      if (s->parent_result.result == PARENT_DIRECT && s->http_config_param->no_dns_forward_to_parent != 1) {
+      if (s->parent_result.result == PARENT_DIRECT &&
+          (s->http_config_param->no_dns_forward_to_parent == 0 ||
+           (s->http_config_param->disable_just_forward_to_parent_when_empty && !s->parent_params->hasAnyParent()))) {
         return CallOSDNSLookup(s);
       }
       if (s->current.request_to == PARENT_PROXY) {

@@ -257,6 +257,15 @@ ParentConfigParams::parentExists(HttpRequestData *rdata)
   return false;
 }
 
+bool
+ParentConfigParams::hasAnyParent() const
+{
+  // Return true if any parent rule (entry) is configured, regardless of whether a
+  // particular request matches it or any parent is currently available. An empty
+  // parent.config results in getEntryCount() == 0 and DefaultParent == nullptr.
+  return DefaultParent != nullptr || parent_table->getEntryCount() > 0;
+}
+
 int ParentConfig::m_id = 0;
 
 void
