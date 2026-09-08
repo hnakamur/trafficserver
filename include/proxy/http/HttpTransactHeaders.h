@@ -78,6 +78,7 @@ public:
   static bool is_request_proxy_authorized(HTTPHdr *incoming_hdr);
 
   static void normalize_accept_encoding(const OverridableHttpConfigParams *ohcp, HTTPHdr *header);
+  static void normalize_accept_encoding(int normalize_ae, HTTPHdr *header);
 
   static void remove_conditional_headers(HTTPHdr *outgoing);
   static void remove_100_continue_headers(HttpTransact::State *s, HTTPHdr *outgoing);

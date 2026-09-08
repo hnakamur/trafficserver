@@ -3373,3 +3373,14 @@ std::tuple<int, int> TSLogAddrUnmarshal(char **buf, char *dest, int len);
  * Get entry count in parent.config.
  */
 int TSHttpParentTableGetEntryCount(TSHttpTxn txnp);
+
+/**
+ * Normalize Accept Encoding request header.
+ *
+ * @param txnp the transaction pointer
+ * @param request the client request header. If null, use the transactions client request.
+ * @param normalize_ae Specifies normalization, if any, of Accept-Encoding: headers.
+ *
+ * @see https://docs.trafficserver.apache.org/en/latest/admin-guide/files/records.yaml.en.html
+ */
+void TSHttpTxnNormalizeAcceptEncoding(TSHttpTxn txnp, TSMBuffer request, int normalize_ae);

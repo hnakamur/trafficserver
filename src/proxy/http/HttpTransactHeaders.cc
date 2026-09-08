@@ -1230,10 +1230,8 @@ HttpTransactHeaders::remove_privacy_headers_from_request(HttpConfigParams       
 }
 
 void
-HttpTransactHeaders::normalize_accept_encoding(const OverridableHttpConfigParams *ohcp, HTTPHdr *header)
+HttpTransactHeaders::normalize_accept_encoding(int normalize_ae, HTTPHdr *header)
 {
-  int normalize_ae = ohcp->normalize_ae;
-
   if (normalize_ae) {
     MIMEField *ae_field = header->field_find(static_cast<std::string_view>(MIME_FIELD_ACCEPT_ENCODING));
 
@@ -1332,6 +1330,12 @@ HttpTransactHeaders::normalize_accept_encoding(const OverridableHttpConfigParams
       }
     }
   }
+}
+
+void
+HttpTransactHeaders::normalize_accept_encoding(const OverridableHttpConfigParams *ohcp, HTTPHdr *header)
+{
+  HttpTransactHeaders::normalize_accept_encoding(ohcp->normalize_ae, header);
 }
 
 void
