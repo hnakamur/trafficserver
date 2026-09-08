@@ -3368,3 +3368,8 @@ std::tuple<int, int> TSLogIntUnmarshal(char **buf, char *dest, int len);
    Helper function to unmarshal an address
 */
 std::tuple<int, int> TSLogAddrUnmarshal(char **buf, char *dest, int len);
+
+/*
+ * Get entry count in parent.config.
+ */
+int TSHttpParentTableGetEntryCount(TSHttpTxn txnp);

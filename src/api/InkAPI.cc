@@ -9329,3 +9329,14 @@ TSLogAddrUnmarshal(char **buf, char *dest, int len)
 
   return {-1, -1};
 }
+
+/*
+ * Get entry count in parent.config.
+ */
+int
+TSHttpParentTableGetEntryCount(TSHttpTxn txnp)
+{
+  HttpSM              *sm = reinterpret_cast<HttpSM *>(txnp);
+  HttpTransact::State *s  = &(sm->t_state);
+  return s->parent_params && s->parent_params->parent_table ? s->parent_params->parent_table->getEntryCount() : 0;
+}
